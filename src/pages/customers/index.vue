@@ -168,7 +168,7 @@
 
             <VMenu activator="parent">
               <VList>
-                <VListItem link>
+                <VListItem link @click="isUserInfoEditDialogVisible = true">
                   <template #prepend>
                     <VIcon icon="mdi-pencil-outline" />
                   </template>
@@ -244,6 +244,11 @@
       v-model:isDrawerOpen="isAddNewUserDrawerVisible"
       @user-data="addNewUser"
     />
+
+    <!-- <UserInfoEditDialog
+    v-model:isDialogVisible="isUserInfoEditDialogVisible"
+    :user-data="props.userData"
+  /> -->
   </section>
 </template>
 
@@ -263,6 +268,7 @@ const totalPage = ref(1);
 const totalUsers = ref(0);
 const customers = ref([]);
 const refInputEl = ref();
+const isUserInfoEditDialogVisible = ref(false);
 
 const options = ref({
   page: 1,

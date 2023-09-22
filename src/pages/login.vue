@@ -165,7 +165,9 @@ const login = () => {
       loading.value = false;
       // localStorage.setItem('userAbilities', JSON.stringify(userAbilities))
 
-      localStorage.setItem("userData", JSON.stringify(userData));
+      localStorage.setItem("userData", userData);
+      localStorage.setItem("token", userData.token);
+
       // localStorage.setItem('accessToken', JSON.stringify(accessToken))
       if (res.status == 200) {
         router.replace(route.query.to ? String(route.query.to) : "/");
