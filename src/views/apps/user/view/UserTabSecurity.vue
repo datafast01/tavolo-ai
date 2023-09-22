@@ -1,6 +1,6 @@
 <script setup>
-import { VDataTable } from 'vuetify/labs/VDataTable'
-import chrome from '@images/logos/chrome.png'
+import { VDataTable } from 'vuetify/labs/VDataTable';
+// import chrome from '@images/logos/chrome.png'
 
 const isNewPasswordVisible = ref(false)
 const isConfirmPasswordVisible = ref(false)
@@ -30,28 +30,28 @@ const recentDeviceHeader = [
 const recentDevices = [
   {
     browser: 'Chrome on Windows',
-    logo: chrome,
+    logo: '',
     device: 'Dell XPS 15',
     location: 'United States',
     activity: '10, Jan 2020 20:07',
   },
   {
     browser: 'Chrome on Android',
-    logo: chrome,
+    logo: '',
     device: 'Google Pixel 3a',
     location: 'Ghana',
     activity: '11, Jan 2020 10:16',
   },
   {
     browser: 'Chrome on MacOS',
-    logo: chrome,
+    logo: '',
     device: 'Apple iMac',
     location: 'Mayotte',
     activity: '11, Jan 2020 12:10',
   },
   {
     browser: 'Chrome on iPhone',
-    logo: chrome,
+    logo: '',
     device: 'Apple iPhone XR',
     location: 'Mauritania',
     activity: '12, Jan 2020 8:29',
