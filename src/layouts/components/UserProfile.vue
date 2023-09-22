@@ -5,7 +5,7 @@ import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
 
 const router = useRouter()
 // const ability = useAppAbility()
-const userData = JSON.parse(localStorage.getItem('userData') || 'null')
+// const userData = JSON.parse(localStorage.getItem('userData') || 'null')
 
 const logout = () => {
 
@@ -99,15 +99,15 @@ const avatarBadgeProps = {
   <VBadge v-bind="avatarBadgeProps">
     <VAvatar
       class="cursor-pointer"
-      :color="!(userData && userData.avatar) ? 'primary' : undefined"
-      :variant="!(userData && userData.avatar) ? 'tonal' : undefined"
+      color="primary"
+      variant="tonal"
     >
-      <VImg
+      <!-- <VImg
         v-if="userData && userData.avatar"
         :src="userData.avatar"
-      />
+      /> -->
       <VIcon
-        v-else
+        
         icon="mdi-account-outline"
       />
 
@@ -125,15 +125,15 @@ const avatarBadgeProps = {
               <VListItemAction start>
                 <VBadge v-bind="avatarBadgeProps">
                   <VAvatar
-                    :color="!(userData && userData.avatar) ? 'primary' : undefined"
-                    :variant="!(userData && userData.avatar) ? 'tonal' : undefined"
+                    color="primary"
+                    variant="tonal"
                   >
-                    <VImg
+                    <!-- <VImg
                       v-if="userData && userData.avatar"
                       :src="userData.avatar"
-                    />
+                    /> -->
                     <VIcon
-                      v-else
+                     
                       icon="mdi-account-outline"
                     />
                   </VAvatar>
@@ -142,9 +142,9 @@ const avatarBadgeProps = {
             </template>
 
             <VListItemTitle class="font-weight-medium">
-              {{ userData.fullName || userData.username }}
+              User Name
             </VListItemTitle>
-            <VListItemSubtitle>{{ userData.role }}</VListItemSubtitle>
+            <VListItemSubtitle>User Role</VListItemSubtitle>
           </VListItem>
 
           <VDivider />

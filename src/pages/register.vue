@@ -1,79 +1,4 @@
-<script setup>
-import authV2MaskDark from '@images/pages/auth-v2-mask-dark.png'
-import authV2MaskLight from '@images/pages/auth-v2-mask-light.png'
-import authV2RegisterIllustrationBorderedDark from '@images/pages/auth-v2-register-illustration-bordered-dark.png'
-import authV2RegisterIllustrationBorderedLight from '@images/pages/auth-v2-register-illustration-bordered-light.png'
-import authV2RegisterIllustrationDark from '@images/pages/auth-v2-register-illustration-dark.png'
-import authV2RegisterIllustrationLight from '@images/pages/auth-v2-register-illustration-light.png'
-import tree2 from '@images/pages/tree-2.png'
-import { VForm } from 'vuetify/components/VForm'
-// import { useAppAbility } from '@/plugins/casl/useAppAbility'
-import AuthProvider from '@/views/pages/authentication/AuthProvider.vue'
-import axios from '@axios'
-import { useGenerateImageVariant } from '@core/composable/useGenerateImageVariant'
-import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
-import { themeConfig } from '@themeConfig'
-import {
-alphaDashValidator,
-emailValidator,
-requiredValidator,
-} from '@validators'
 
-const refVForm = ref()
-const username = ref('johnDoe')
-const email = ref('john@example.com')
-const password = ref('john@MATERIO#123')
-const privacyPolicies = ref(true)
-
-// Router
-// const route = useRoute()
-// const router = useRouter()
-
-// Ability
-// const ability = useAppAbility()
-
-// Form Errors
-const errors = ref({
-  email: undefined,
-  password: undefined,
-})
-
-const register = () => {
-  axios.post('/auth/register', {
-    username: username.value,
-    email: email.value,
-    password: password.value,
-  }).then(r => {
-    const { accessToken, userData, userAbilities } = r.data
-
-    localStorage.setItem('userAbilities', JSON.stringify(userAbilities))
-    ability.update(userAbilities)
-    localStorage.setItem('userData', JSON.stringify(userData))
-    localStorage.setItem('accessToken', JSON.stringify(accessToken))
-
-    // Redirect to `to` query if exist or redirect to index route
-    router.replace(route.query.to ? String(route.query.to) : '/')
-    
-    return null
-  }).catch(e => {
-    const { errors: formErrors } = e.response.data
-
-    errors.value = formErrors
-    console.error(e.response.data)
-  })
-}
-
-const imageVariant = useGenerateImageVariant(authV2RegisterIllustrationLight, authV2RegisterIllustrationDark, authV2RegisterIllustrationBorderedLight, authV2RegisterIllustrationBorderedDark, true)
-const authThemeMask = useGenerateImageVariant(authV2MaskLight, authV2MaskDark)
-const isPasswordVisible = ref(false)
-
-const onSubmit = () => {
-  refVForm.value?.validate().then(({ valid: isValid }) => {
-    if (isValid)
-      register()
-  })
-}
-</script>
 
 <template>
   <div>
@@ -142,9 +67,19 @@ const onSubmit = () => {
                 <!-- Username -->
                 <VCol cols="12">
                   <VTextField
-                    v-model="username"
-                    :rules="[requiredValidator, alphaDashValidator]"
-                    label="Username"
+                    v-model="firstName"
+                    :rules="[requiredValidator]"
+                    label="First Name"
+                    type="text"
+                    
+                  />
+                </VCol>
+                  <VCol cols="12">
+                 <VTextField
+                    v-model="lastName"
+                    :rules="[requiredValidator]"
+                    label="Last Name"
+                    type="text"
                   />
                 </VCol>
 
@@ -155,6 +90,24 @@ const onSubmit = () => {
                     :rules="[requiredValidator, emailValidator]"
                     label="Email"
                     type="email"
+                  />
+                </VCol>
+                <VCol cols="12">
+                  <VTextField
+                    v-model="phoneNo"
+                    :rules="[requiredValidator]"
+                    label="Phone Number"
+                    type="text"
+                    
+                  />
+                </VCol>
+                <VCol cols="12">
+                  <VTextField
+                    v-model="restaurantName"
+                    :rules="[requiredValidator]"
+                    label="Resturant Name"
+                    type="text"
+                    
                   />
                 </VCol>
 
@@ -168,26 +121,19 @@ const onSubmit = () => {
                     :append-inner-icon="isPasswordVisible ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
                     @click:append-inner="isPasswordVisible = !isPasswordVisible"
                   />
-
-                  <div class="d-flex align-center mt-1 mb-4">
-                    <VCheckbox
-                      id="privacy-policy"
-                      v-model="privacyPolicies"
-                      inline
-                    />
-                    <VLabel
-                      for="privacy-policy"
-                      class="pb-1"
-                      style="opacity: 1;"
-                    >
-                      <span class="me-1">I agree to</span>
-                      <a
-                        href="javascript:void(0)"
-                        class="text-primary"
-                      >privacy policy & terms</a>
-                    </VLabel>
-                  </div>
-
+                  </VCol>
+                   <VCol cols="12">
+                  <VTextField
+                    v-model="confirmPassword"
+                    :rules="[requiredValidator]"
+                    label="Confirm Password"
+                    :type="isConfirmPasswordVisible ? 'text' : 'password'"
+                    :append-inner-icon="isConfirmPasswordVisible ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
+                    @click:append-inner="isConfirmPasswordVisible = !isConfirmPasswordVisible"
+                  />
+</VCol>
+                 
+ <VCol cols="12">
                   <VBtn
                     block
                     type="submit"
@@ -210,22 +156,9 @@ const onSubmit = () => {
                   </RouterLink>
                 </VCol>
 
-                <VCol
-                  cols="12"
-                  class="d-flex align-center"
-                >
-                  <VDivider />
-                  <span class="mx-4">or</span>
-                  <VDivider />
-                </VCol>
-
+             
                 <!-- auth providers -->
-                <VCol
-                  cols="12"
-                  class="text-center"
-                >
-                  <AuthProvider />
-                </VCol>
+               
               </VRow>
             </VForm>
           </VCardText>
@@ -234,6 +167,96 @@ const onSubmit = () => {
     </VRow>
   </div>
 </template>
+
+
+<script setup>
+import authV2MaskDark from '@images/pages/auth-v2-mask-dark.png'
+import authV2MaskLight from '@images/pages/auth-v2-mask-light.png'
+import authV2RegisterIllustrationBorderedDark from '@images/pages/auth-v2-register-illustration-bordered-dark.png'
+import authV2RegisterIllustrationBorderedLight from '@images/pages/auth-v2-register-illustration-bordered-light.png'
+import authV2RegisterIllustrationDark from '@images/pages/auth-v2-register-illustration-dark.png'
+import authV2RegisterIllustrationLight from '@images/pages/auth-v2-register-illustration-light.png'
+import tree2 from '@images/pages/tree-2.png'
+import { VForm } from 'vuetify/components/VForm'
+// import { useAppAbility } from '@/plugins/casl/useAppAbility'
+// import router from '@/router'
+import axios from '@axios'
+import { useGenerateImageVariant } from '@core/composable/useGenerateImageVariant'
+import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
+import { themeConfig } from '@themeConfig'
+import {
+emailValidator,
+requiredValidator
+} from '@validators'
+
+const refVForm = ref()
+const firstName = ref('')
+const lastName = ref('')
+const phoneNo = ref('')
+const restaurantName = ref('')
+const email = ref('')
+const password = ref('')
+const confirmPassword = ref('')
+
+
+
+// Router
+// const route = useRoute()
+const router = useRouter()
+
+// Ability
+// const ability = useAppAbility()
+
+// Form Errors
+const errors = ref({
+  email: undefined,
+  password: undefined,
+})
+
+const register = () => {
+  axios.post('/signup', {
+    firstName: firstName.value,
+    lastName: lastName.value,
+    phoneNo: phoneNo.value,
+    confirmPassword: confirmPassword.value,
+    email: email.value,
+    password: password.value,
+    restaurantName: restaurantName.value
+  }).then(res => {
+    console.log(res, 'here is the response')
+    // const { accessToken, userData, userAbilities } = r.data
+
+    // localStorage.setItem('userAbilities', JSON.stringify(userAbilities))
+    // ability.update(userAbilities)
+    // localStorage.setItem('userData', JSON.stringify(userData))
+    // localStorage.setItem('accessToken', JSON.stringify(accessToken))
+
+    // Redirect to `to` query if exist or redirect to index route
+    router.replace('/login')
+    
+    return null
+  }).catch(err => {
+    console.log(err, 'err here')
+    
+    const { message } = err.response.data
+    console.log(message)
+
+    
+  })
+}
+
+const imageVariant = useGenerateImageVariant(authV2RegisterIllustrationLight, authV2RegisterIllustrationDark, authV2RegisterIllustrationBorderedLight, authV2RegisterIllustrationBorderedDark, true)
+const authThemeMask = useGenerateImageVariant(authV2MaskLight, authV2MaskDark)
+const isPasswordVisible = ref(false)
+const isConfirmPasswordVisible = ref(false)
+
+const onSubmit = () => {
+  refVForm.value?.validate().then(({ valid: isValid }) => {
+    if (isValid)
+      register()
+  })
+}
+</script>
 
 <style lang="scss">
 @use "@core/scss/template/pages/page-auth.scss";

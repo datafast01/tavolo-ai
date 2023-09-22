@@ -4,7 +4,7 @@ import axios from 'axios'
 const axiosIns = axios.create({
 // You can add your headers here
 // ================================
-baseURL: 'http://ec2-3-85-224-233.compute-1.amazonaws.com:8083/api/',
+baseURL: 'http://server.tavolo.ai/api/',
 // timeout: 1000,
 // headers: {'X-Custom-Header': 'foobar'}
 })

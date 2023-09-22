@@ -223,8 +223,16 @@ const onSubmit = () => {
   })
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @use "@core/scss/template/pages/page-auth.scss";
+.v-img__img, .v-img__picture, .v-img__gradient, .v-img__placeholder, .v-img__error {
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 24px;
+    width: 100%;
+    height: 100%;
+}
 </style>
 
 <route lang="yaml">
