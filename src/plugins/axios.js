@@ -2,8 +2,7 @@ import router from '@/router'
 import axios from 'axios'
 
 const userData = localStorage.getItem('userData')
-const token = JSON.parse(userData)
-console.log(token.token)
+
 const axiosIns = axios.create({
   
 // You can add your headers here
@@ -27,8 +26,7 @@ axiosIns.interceptors.request.use(config => {
 
         return config;
 
-  // Return modified config
-  return config
+ 
 })
 
 // ℹ️ Add response interceptor to handle 401 response
