@@ -34,8 +34,10 @@ import routes from '~pages'
 
 
 // Docs: https://router.vuejs.org/guide/advanced/navigation-guards.html#global-before-guards
-// router.beforeEach(to => {
-//   const isLoggedIn = isUserLoggedIn()
+// router.beforeEach((to, from, next) => {
+//   const isLoggedIn = !!(localStorage.getItem('userData') && localStorage.getItem('accessToken'))
+
+  
 
   
   
@@ -45,6 +47,7 @@ import routes from '~pages'
 //       // Redirect to login if not logged in
 //       // ℹ️ Only add `to` query param if `to` route is not index route
 //       if (!isLoggedIn)
+    
 //         return next({ name: 'login', query: { to: to.name !== 'index' ? to.fullPath : undefined } })
   
 //       // If logged in => not authorized
@@ -58,15 +61,15 @@ import routes from '~pages'
 //     return next()
   
     
-//   // if (canNavigate(to)) {
-//   //   if (to.meta.redirectIfLoggedIn && isLoggedIn)
-//   //     return '/'
-//   // }
-//   // else {
-//   //   if (isLoggedIn)
-//   //     return { name: 'not-authorized' }
-//   //   else
-//   //     return { name: 'login', query: { to: to.name !== 'index' ? to.fullPath : undefined } }
-//   // }
+  // if (canNavigate(to)) {
+  //   if (to.meta.redirectIfLoggedIn && isLoggedIn)
+  //     return '/'
+  // }
+  // else {
+  //   if (isLoggedIn)
+  //     return { name: 'not-authorized' }
+  //   else
+  //     return { name: 'login', query: { to: to.name !== 'index' ? to.fullPath : undefined } }
+  // }
 // })
 export default router

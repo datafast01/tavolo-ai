@@ -100,12 +100,12 @@
                       v-model="rememberMe"
                       label="Remember me"
                     />
-                    <RouterLink
+                    <!-- <RouterLink
                       class="text-primary ms-2 mb-1"
                       :to="{ name: 'forgot-password' }"
                     >
                       Forgot Password?
-                    </RouterLink>
+                    </RouterLink> -->
                   </div>
 
                   <VBtn
@@ -130,7 +130,7 @@
                     Create an account
                   </RouterLink>
                 </VCol>
-                <!-- <VCol
+                <VCol
                   cols="12"
                   class="d-flex align-center"
                 >
@@ -145,7 +145,7 @@
                   class="text-center"
                 >
                   <AuthProvider />
-                </VCol> -->
+                </VCol>
               </VRow>
             </VForm>
           </VCardText>
@@ -188,8 +188,8 @@ const errors = ref({
 })
 
 const refVForm = ref()
-const email = ref('tayyab12@gmail.com')
-const password = ref('1234')
+const email = ref('')
+const password = ref('')
 const rememberMe = ref(false)
 const loading = ref(false)
 
@@ -207,9 +207,11 @@ loading.value = false
    
     localStorage.setItem('userData', JSON.stringify(userData))
     // localStorage.setItem('accessToken', JSON.stringify(accessToken))
-
+if(res.status == 200){
+  router.replace(route.query.to ? String(route.query.to) : '/')
+}
     // Redirect to `to` query if exist or redirect to index route
-    router.replace(route.query.to ? String(route.query.to) : '/')
+    // router.replace(route.query.to ? String(route.query.to) : '/')
   }).catch(e => {
     loading.value = false
     console.error(e)
