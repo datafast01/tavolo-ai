@@ -1,9 +1,9 @@
 export default [
  
    {
-    title: 'Auto Email Sending',
+    title: 'List Customers',
     icon: { icon: 'mdi-email-outline' },
-     to: 'email',
+     to: 'customers',
    
   },
   

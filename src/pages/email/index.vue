@@ -1,122 +1,131 @@
-
-
 <template>
-  <VCard
-    class="email-compose-dialog"
-    elevation="24"
-  >
-    <VCardItem class="py-3 px-5">
-      <div class="d-flex align-center">
-        <span class="font-weight-medium">Compose Mail</span>
-        <VSpacer />
-        <VIcon
-          size="20"
-          icon="mdi-minus"
-          class="me-4"
-          @click="$emit('close')"
-        />
-        <VIcon
-          size="20"
-          icon="mdi-close"
-          @click="$emit('close'); resetValues()"
-        />
-      </div>
-    </VCardItem>
-
-    <div class="pe-5">
-      <VTextField
-        v-model="to"
-        density="compact"
-      >
-        <template #prepend-inner>
-          <div class="text-sm text-disabled">
-            Select Segment:
-          </div>
-        </template>
-        
-      </VTextField>
+  <div class="d-flex flex-column">
+    <div class="autoDatePicker">
+      <AppDateTimePicker
+        v-model="scheduleDate"
+        label="Schedule Date"
+        clear-icon="mdi-close"
+        clearable
+      />
+      <VRadioGroup v-model="selectedSchedule" :inline="true">
+        <VRadio label="Auto Sending" value="notSchedule" color="primary" />
+        <VRadio label="Scheduled" value="schedule" color="primary" />
+      </VRadioGroup>
     </div>
-
-    <VDivider />
-
-    <VTextField
-      v-model="subject"
-      density="compact"
-    >
-      <template #prepend-inner>
-        <div class="text-sm text-disabled">
-          Subject:
+    <VCard class="email-compose-dialog" elevation="24">
+      <VCardItem class="py-3 px-5">
+        <div class="d-flex align-center">
+          <span class="font-weight-medium">Compose Mail</span>
+          <VSpacer />
         </div>
-      </template>
-    </VTextField>
+      </VCardItem>
+      <div class="px-4">
+        <div class="mt-4">
+          <VSelect
+            v-model="segment"
+            :items="segments"
+            density="compact"
+            item-title="name"
+            item-value="_id"
+            single-line
+          >
+            <template #prepend-inner>
+              <div class="text-disabled" style="width: max-content">
+                Select Segment:
+              </div>
+            </template>
+          </VSelect>
+        </div>
 
-    <VDivider />
+        <VTextField v-model="subject" density="compact" class="my-4">
+          <template #prepend-inner>
+            <div class="text-sm text-disabled">Subject:</div>
+          </template>
+        </VTextField>
 
-    <VTextarea
-      v-model="message"
-      placeholder="Message"
-    />
+        <VDivider />
 
-    <VDivider />
+        <VTextarea v-model="message" placeholder="Message" />
+      </div>
 
-    <div class="d-flex align-center px-5 py-4">
-      <VBtnGroup
-        color="primary"
-        divided
-        density="comfortable"
-      >
-        <VBtn>Send</VBtn>
-        <VBtn
-          icon
-          @click="() => isMenuOpen = !isMenuOpen"
-        >
-          <VIcon
-            :icon="isMenuOpen ? 'mdi-menu-up' : 'mdi-menu-down' "
-            size="24"
-          />
-          <VMenu activator="parent">
-            <VList :items="['Schedule Mail', 'Save Draft']" />
-          </VMenu>
-        </VBtn>
-      </VBtnGroup>
-      <VIcon
-        icon="mdi-attachment"
-        size="20"
-        class="ms-4 cursor-pointer"
-      />
+      <VDivider />
 
-      <VSpacer />
+      <div class="d-flex align-center px-5 py-4">
+        <VBtnGroup color="primary" divided density="comfortable">
+          <VBtn @click="sendEmail">Send</VBtn>
+          <VBtn icon @click="() => (isMenuOpen = !isMenuOpen)">
+            <VIcon
+              :icon="isMenuOpen ? 'mdi-menu-up' : 'mdi-menu-down'"
+              size="24"
+            />
+            <VMenu activator="parent">
+              <VList :items="['Schedule Mail']" />
+            </VMenu>
+          </VBtn>
+        </VBtnGroup>
 
-      <VIcon
-        icon="mdi-dots-vertical"
-        size="20"
-        class="cursor-pointer"
-      />
-      <VIcon
-        icon="mdi-delete-outline"
-        size="20"
-        class="ms-4 cursor-pointer"
-        @click="$emit('close'); resetValues()"
-      />
-    </div>
-  </VCard>
+        <VSpacer />
+      </div>
+    </VCard>
+  </div>
 </template>
 
-
 <script setup>
-const emit = defineEmits(['close'])
+import axios from "@axios";
+const emit = defineEmits(["close"]);
 
-const to = ref('')
-const subject = ref('')
-const message = ref('')
-const isMenuOpen = ref(false)
+const segment = ref("650e0f5b6df52a436ca3f12e");
+const subject = ref("Celebrate Mother’s Day!");
+const message = ref(
+  "This Sunday, on Mother's Day, we're giving all moms a free glass of rosé or mimosa when they dine in. \nJoin us at any Urban Skillet location.Our tables are set and we can't wait to celebrate!\nWe can't wait to serve you soon.\nBest regards,\nUrban Skillet Team!"
+);
+const isMenuOpen = ref(false);
+const scheduleDate = ref(null);
+const selectedSchedule = ref("schedule");
 
-const resetValues = () => {
-  to.value = subject.value = message.value = ''
-}
+const segments = ref([]);
+
+//Methods
+const getEmailSegmnts = () => {
+  axios
+    .get(`dashboard/segmant`)
+    .then((res) => {
+      console.log(res.data.data, "=============>>>");
+      segments.value = res.data.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const sendEmail = () => {
+  let payload = {
+    segmantId: segment.value,
+    subject: subject.value,
+    text: message.value,
+    schedule: selectedSchedule.value == "schedule" ? true : false,
+    scheduleDate: scheduleDate.value,
+  };
+  axios
+    .post(`dashboard/email`, payload)
+    .then((res) => {
+      console.log(res.data.data, "=============>>>");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+getEmailSegmnts();
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.autoDatePicker {
+  margin-bottom: 30px;
+  width: 300px;
+  float: right;
+}
+
 .email-compose-dialog {
   z-index: 910 !important;
 
