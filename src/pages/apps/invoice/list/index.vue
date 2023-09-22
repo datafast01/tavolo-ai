@@ -1,8 +1,8 @@
 <script setup>
-import { VDataTableServer } from 'vuetify/labs/VDataTable'
-import { paginationMeta } from '@/@fake-db/utils'
-import { useInvoiceStore } from '@/views/apps/invoice/useInvoiceStore'
-import { avatarText } from '@core/utils/formatters'
+import { VDataTableServer } from 'vuetify/labs/VDataTable';
+// import { paginationMeta } from '@/@fake-db/utils'
+import { useInvoiceStore } from '@/views/apps/invoice/useInvoiceStore';
+import { avatarText } from '@core/utils/formatters';
 
 const invoiceListStore = useInvoiceStore()
 const searchQuery = ref('')
@@ -394,7 +394,7 @@ watchEffect(() => {
               />
             </div>
 
-            <span class="d-flex align-center text-sm text-high-emphasis me-2">{{ paginationMeta(options, totalInvoices) }}</span>
+            <!-- <span class="d-flex align-center text-sm text-high-emphasis me-2">{{ paginationMeta(options, totalInvoices) }}</span> -->
 
             <div class="d-flex gap-x-2 align-center me-2">
               <VBtn

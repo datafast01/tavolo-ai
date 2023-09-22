@@ -1,6 +1,6 @@
 <script setup>
 import { VDataTableServer } from 'vuetify/labs/VDataTable'
-import { paginationMeta } from '@/@fake-db/utils'
+// import { paginationMeta } from '@/@fake-db/utils'
 import { useInvoiceStore } from '@/views/apps/invoice/useInvoiceStore'
 
 const invoiceListStore = useInvoiceStore()
@@ -266,7 +266,7 @@ watchEffect(() => {
               />
             </div>
 
-            <span class="d-flex align-center text-sm text-high-emphasis">{{ paginationMeta(options, totalInvoices) }}</span>
+            <!-- <span class="d-flex align-center text-sm text-high-emphasis">{{ paginationMeta(options, totalInvoices) }}</span> -->
 
             <div class="d-flex gap-x-2 align-center me-2">
               <VBtn

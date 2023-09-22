@@ -1,9 +1,9 @@
 <script setup>
-import { VDataTableServer } from 'vuetify/labs/VDataTable'
-import { paginationMeta } from '@/@fake-db/utils'
-import AddNewUserDrawer from '@/views/apps/user/list/AddNewUserDrawer.vue'
-import { useUserListStore } from '@/views/apps/user/useUserListStore'
-import { avatarText } from '@core/utils/formatters'
+import { VDataTableServer } from 'vuetify/labs/VDataTable';
+// import { paginationMeta } from '@/@fake-db/utils'
+import AddNewUserDrawer from '@/views/apps/user/list/AddNewUserDrawer.vue';
+import { useUserListStore } from '@/views/apps/user/useUserListStore';
+import { avatarText } from '@core/utils/formatters';
 
 const userListStore = useUserListStore()
 const searchQuery = ref('')
@@ -405,7 +405,7 @@ const deleteUser = id => {
               />
             </div>
 
-            <span class="d-flex align-center text-sm me-2 text-high-emphasis">{{ paginationMeta(options, totalUsers) }}</span>
+            <!-- <span class="d-flex align-center text-sm me-2 text-high-emphasis">{{ paginationMeta(options, totalUsers) }}</span> -->
 
             <div class="d-flex gap-x-2 align-center me-2">
               <VBtn

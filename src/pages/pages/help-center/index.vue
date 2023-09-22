@@ -1,19 +1,18 @@
 <script setup>
-import HelpCenterLandingArticlesOverview from '@/views/pages/help-center/HelpCenterLandingArticlesOverview.vue'
-import HelpCenterLandingFooter from '@/views/pages/help-center/HelpCenterLandingFooter.vue'
-import HelpCenterLandingKnowledgeBase from '@/views/pages/help-center/HelpCenterLandingKnowledgeBase.vue'
-import axios from '@axios'
+import HelpCenterLandingArticlesOverview from '@/views/pages/help-center/HelpCenterLandingArticlesOverview.vue';
+import HelpCenterLandingFooter from '@/views/pages/help-center/HelpCenterLandingFooter.vue';
+import HelpCenterLandingKnowledgeBase from '@/views/pages/help-center/HelpCenterLandingKnowledgeBase.vue';
 
 const apiData = ref()
 
-// fetching data from the @fake-db
-const fetchHelpCenterData = () => {
-  return axios.get('/pages/help-center/landing').then(res => {
-    apiData.value = res.data
-  })
-}
+// // fetching data from the @fake-db
+// const fetchHelpCenterData = () => {
+//   return axios.get('/pages/help-center/landing').then(res => {
+//     apiData.value = res.data
+//   })
+// }
 
-fetchHelpCenterData()
+// fetchHelpCenterData()
 </script>
 
 <template>

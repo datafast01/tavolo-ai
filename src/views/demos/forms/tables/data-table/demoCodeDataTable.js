@@ -505,10 +505,10 @@ const resolveStatusVariant = status => {
 export const externalPagination = { ts: `<script setup lang="ts">
 import { VDataTable } from 'vuetify/labs/VDataTable'
 import { avatarText } from '@/@core/utils/formatters'
-import type { Data } from '@/@fake-db/types'
+// import type { Data } from '@/@fake-db/types'
 import data from '@/views/demos/forms/tables/data-table/datatable'
 
-const userList = ref<Data[]>([])
+// const userList = ref<Data[]>([])
 const options = ref({ page: 1, itemsPerPage: 5, sortBy: [''], sortDesc: [false] })
 
 // headers
@@ -1658,11 +1658,11 @@ const resolveStatusVariant = status => {
 
 export const kitchenSink = { ts: `<script setup lang="ts">
 import { VDataTable } from 'vuetify/labs/VDataTable'
-import type { SalesDetails } from '@/@fake-db/types'
+// import type { SalesDetails } from '@/@fake-db/types'
 import axios from '@axios'
 
 const search = ref('')
-const productList = ref<SalesDetails[]>([])
+// const productList = ref<SalesDetails[]>([])
 
 // headers
 const headers = [
@@ -2162,7 +2162,7 @@ onMounted(() => {
 export const rowEditingViaDialog = { ts: `<script setup lang="ts">
 import { VDataTable } from 'vuetify/labs/VDataTable'
 import { avatarText } from '@/@core/utils/formatters'
-import type { Data } from '@/@fake-db/types'
+// import type { Data } from '@/@fake-db/types'
 import data from '@/views/demos/forms/tables/data-table/datatable'
 
 const editDialog = ref(false)
@@ -2185,7 +2185,7 @@ const defaultItem = ref<Data>({
 
 const editedItem = ref<Data>(defaultItem.value)
 const editedIndex = ref(-1)
-const userList = ref<Data[]>([])
+// const userList = ref<Data[]>([])
 
 // status options
 const selectedOptions = [

@@ -1,7 +1,7 @@
 <script setup>
-import { VDataTableServer } from 'vuetify/labs/VDataTable'
-import { paginationMeta } from '@/@fake-db/utils'
-import axios from '@axios'
+import { VDataTableServer } from 'vuetify/labs/VDataTable';
+// import { paginationMeta } from '@/@fake-db/utils'
+import axios from '@axios';
 
 const headers = [
   {
@@ -195,7 +195,7 @@ const editPermission = name => {
                   :items="[10, 20, 25, 50, 100]"
                 />
               </div>
-              <span class="d-flex align-center text-sm me-2 text-high-emphasis">{{ paginationMeta(options, totalPermissions) }}</span>
+              <!-- <span class="d-flex align-center text-sm me-2 text-high-emphasis">{{ paginationMeta(options, totalPermissions) }}</span> -->
               <div class="d-flex gap-x-2 align-center me-2">
                 <VBtn
                   icon="mdi-chevron-left"
