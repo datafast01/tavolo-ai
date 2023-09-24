@@ -51,7 +51,7 @@
         </VBtn> -->
         <VBtn color="primary" @click="refInputEl?.click()">
           <VIcon icon="mdi-cloud-upload-outline" class="d-sm-none" />
-          <span class="d-none d-sm-block">Upload new photo</span>
+          <span class="d-none d-sm-block">Upload Customers</span>
         </VBtn>
         <input
           ref="refInputEl"
