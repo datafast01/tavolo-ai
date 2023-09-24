@@ -1,4 +1,4 @@
-// import router from '@/router'
+import router from '@/router';
 // import axios from 'axios'
 
 
@@ -75,6 +75,22 @@ instance.interceptors.request.use(
         return Promise.reject(error);
     }
 );
+
+instance.interceptors.response.use(response => {
+  return response
+}, error => {
+  // Handle error
+  console.log(error)
+  if (error.response.status == 401) {
+    // ℹ️ Logout user and redirect to login page
+   
+    localStorage.removeItem('token')
+    router.push('/login')
+  }
+  else {
+    return Promise.reject(error)
+  }
+})
 
 export default instance;
 
