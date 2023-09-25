@@ -1,54 +1,7 @@
 <template>
   <section>
-    <!-- <VCard title="Filters" class="mb-6">
-      <VCardText>
-        <VRow>
-        
-          <VCol cols="12" sm="4">
-            <VSelect
-              v-model="selectedRole"
-              label="Select Role"
-              :items="roles"
-              clearable
-              clear-icon="mdi-close"
-            />
-          </VCol>
-
-        
-          <VCol cols="12" sm="4">
-            <VSelect
-              v-model="selectedPlan"
-              label="Select Plan"
-              :items="plans"
-              clearable
-              clear-icon="mdi-close"
-            />
-          </VCol>
-
-         
-          <VCol cols="12" sm="4">
-            <VSelect
-              v-model="selectedStatus"
-              label="Select Status"
-              :items="status"
-              clearable
-              clear-icon="mdi-close"
-            />
-          </VCol>
-        </VRow>
-      </VCardText>
-    </VCard> -->
-
     <VCard>
       <VCardText class="d-flex flex-wrap gap-4">
-        <!-- 👉 Export button -->
-        <!-- <VBtn
-          variant="outlined"
-          color="secondary"
-          prepend-icon="mdi-tray-arrow-up"
-        >
-          Import CSV
-        </VBtn> -->
         <VBtn color="primary" @click="refInputEl?.click()">
           <VIcon icon="mdi-cloud-upload-outline" class="d-sm-none" />
           <span class="d-none d-sm-block">Upload Customers</span>
@@ -59,7 +12,7 @@
           name="file"
           accept=".csv"
           hidden
-          @input="changeAvatar"
+          @input="uploadCustomerCsv"
         />
 
         <VSpacer />
@@ -88,66 +41,11 @@
         class="rounded-0"
         @update:options="options = $event"
       >
-        <!-- User -->
-        <!-- <template #item.user="{ item }">
-          <div class="d-flex">
-            <VAvatar
-              size="34"
-              :variant="!item.raw.avatar ? 'tonal' : undefined"
-              :color="
-                !item.raw.avatar
-                  ? resolveUserRoleVariant(item.raw.role).color
-                  : undefined
-              "
-              class="me-3"
-            >
-              <VImg v-if="item.raw.avatar" :src="item.raw.avatar" />
-              <span v-else>{{ avatarText(item.raw.fullName) }}</span>
-            </VAvatar>
-
-            <div class="d-flex flex-column">
-              <h6 class="text-sm">
-                <RouterLink
-                  :to="{
-                    name: 'apps-user-view-id',
-                    params: { id: item.raw.id },
-                  }"
-                  class="font-weight-medium user-list-name"
-                >
-                  {{ item.raw.fullName }}
-                </RouterLink>
-              </h6>
-
-              <span class="text-xs text-medium-emphasis"
-                >@{{ item.raw.username }}</span
-              >
-            </div>
-          </div>
-        </template> -->
-
         <!-- Email -->
         <!-- <template #item.email="{ item }">
           <span class="text-sm">
             {{ item.raw.email }}
           </span>
-        </template> -->
-
-        <!-- Role -->
-        <!-- <template #item.role="{ item }">
-          <div class="d-flex gap-2">
-            <VIcon
-              :icon="resolveUserRoleVariant(item.raw.role).icon"
-              :color="resolveUserRoleVariant(item.raw.role).color"
-            />
-            <span class="text-capitalize">{{ item.raw.role }}</span>
-          </div>
-        </template> -->
-
-        <!-- Plan -->
-        <!-- <template #item.plan="{ item }">
-          <span class="text-capitalize text-high-emphasis">{{
-            item.raw.currentPlan
-          }}</span>
         </template> -->
 
         <!-- Status -->
@@ -312,7 +210,7 @@ const headers = [
   },
 ];
 
-const changeAvatar = (file) => {
+const uploadCustomerCsv = (file) => {
   const fileReader = new FileReader();
   const { files } = file.target;
   const myCSV = files[0];
@@ -348,49 +246,6 @@ const fetchCustomers = () => {
 };
 
 watchEffect(fetchCustomers);
-
-const resolveUserRoleVariant = (role) => {
-  const roleLowerCase = role.toLowerCase();
-  if (roleLowerCase === "subscriber")
-    return {
-      color: "primary",
-      icon: "mdi-account-outline",
-    };
-  if (roleLowerCase === "author")
-    return {
-      color: "warning",
-      icon: "mdi-cog-outline",
-    };
-  if (roleLowerCase === "maintainer")
-    return {
-      color: "success",
-      icon: "mdi-chart-donut",
-    };
-  if (roleLowerCase === "editor")
-    return {
-      color: "info",
-      icon: "mdi-pencil-outline",
-    };
-  if (roleLowerCase === "admin")
-    return {
-      color: "error",
-      icon: "mdi-laptop",
-    };
-
-  return {
-    color: "primary",
-    icon: "mdi-account-outline",
-  };
-};
-
-const resolveUserStatusVariant = (stat) => {
-  const statLowerCase = stat.toLowerCase();
-  if (statLowerCase === "pending") return "warning";
-  if (statLowerCase === "active") return "success";
-  if (statLowerCase === "inactive") return "secondary";
-
-  return "primary";
-};
 
 const isAddNewUserDrawerVisible = ref(false);
 

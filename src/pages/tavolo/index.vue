@@ -69,7 +69,7 @@
         class="chat-contacts-list px-3"
         :options="{ wheelPropagation: false }"
       >
-        <li>
+        <li class="my-3">
           <span
             class="chat-contact-header d-block text-primary text-xl font-weight-medium"
             >Example Prompts</span
