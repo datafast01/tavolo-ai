@@ -133,16 +133,6 @@ const currencies = [
                 hidden
                 @input="changeAvatar"
               />
-
-              <VBtn
-                type="reset"
-                color="error"
-                variant="tonal"
-                @click="resetAvatar"
-              >
-                <span class="d-none d-sm-block">Reset</span>
-                <VIcon icon="mdi-refresh" class="d-sm-none" />
-              </VBtn>
             </div>
 
             <p class="text-xs mb-0">

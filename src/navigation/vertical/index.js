@@ -5,5 +5,6 @@ import askTavolo from './askTavolo'
 import customers from './customers'
 import email from './email'
 import messages from './messages'
+import profile from './profile'
 
-export default [...dashboard, ...appAndPages, ...askTavolo, ...email, ...messages, ...customers]
+export default [...dashboard, ...appAndPages, ...askTavolo, ...email, ...messages, ...customers, ...profile]

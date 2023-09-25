@@ -4,9 +4,10 @@ import customers from './customers'
 import dashboard from './dashboard'
 import email from './email'
 import messages from './messages'
+import profile from './profile'
 
 // import others from './others'
 import pages from './pages'
 
 
-export default [...dashboard, ...apps, ...pages,askTavolo, ...email, ...messages, ...customers]
+export default [...dashboard, ...apps, ...pages,askTavolo, ...email, ...messages, ...customers, ...profile]
