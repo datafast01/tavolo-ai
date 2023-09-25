@@ -105,7 +105,6 @@ import CrmTotalSales from "@/views/dashboards/crm/CrmTotalSales.vue";
 import CrmTransactions from "@/views/dashboards/crm/CrmTransactions.vue";
 import axios from "@axios";
 import { useGenerateImageVariant } from "@core/composable/useGenerateImageVariant";
-import illustration1 from "@images/cards/illustration-1.png";
 import illustration2 from "@images/cards/illustration-2.png";
 import pages404 from "@images/pages/404.png";
 import miscMaskDark from "@images/pages/misc-mask-dark.png";
@@ -120,7 +119,7 @@ const statisticsWithImages = [
     subtitle: "Year of 2021",
     stats: "13k",
     change: 15.6,
-    image: illustration1,
+    icon: "mdi-currency-usd",
     color: "primary",
   },
   {
@@ -130,6 +129,7 @@ const statisticsWithImages = [
     change: 22,
     image: illustration2,
     color: "secondary",
+    icon: "mdi-currency-usd",
   },
 ];
 const headers = [

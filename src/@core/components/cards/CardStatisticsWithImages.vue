@@ -18,16 +18,23 @@ const props = defineProps({
   },
   image: {
     type: String,
-    required: true,
+    required: false,
+  },
+  icon: {
+    type: String,
+    required: false,
   },
   color: {
     type: String,
     required: false,
-    default: 'primary',
+    default: "primary",
   },
-})
+});
 
-const isPositive = controlledComputed(() => props.change, () => Math.sign(props.change) === 1)
+const isPositive = controlledComputed(
+  () => props.change,
+  () => Math.sign(props.change) === 1
+);
 </script>
 
 <template>
@@ -49,11 +56,7 @@ const isPositive = controlledComputed(() => props.change, () => Math.sign(props.
           </span>
         </div>
 
-        <VChip
-          v-if="props.subtitle"
-          density="compact"
-          :color="props.color"
-        >
+        <VChip v-if="props.subtitle" density="compact" :color="props.color">
           <span class="text-xs font-weight-medium">
             {{ props.subtitle }}
           </span>
@@ -63,11 +66,7 @@ const isPositive = controlledComputed(() => props.change, () => Math.sign(props.
       <VSpacer />
 
       <div class="illustrator-img">
-        <VImg
-          v-if="props.image"
-          :src="props.image"
-          :width="110"
-        />
+        <VImg v-if="props.image" :src="props.image" :width="110" />
       </div>
     </div>
   </VCard>
