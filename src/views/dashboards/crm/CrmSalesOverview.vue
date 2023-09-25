@@ -68,7 +68,7 @@ const options = controlledComputed(theme, () => {
   };
 });
 
-const series = [12, 25, 13, 50];
+const series = [3, 2, 3, 7];
 
 const salesOverviews = [
   {
@@ -123,7 +123,7 @@ const salesOverviews = [
 
             <div>
               <p class="mb-0">Number of Sales</p>
-              <h6 class="text-h6">$86,400</h6>
+              <h6 class="text-h6">$15,372</h6>
             </div>
           </div>
 
