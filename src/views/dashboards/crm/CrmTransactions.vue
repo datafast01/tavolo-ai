@@ -2,19 +2,19 @@
 const statistics = [
   {
     title: "Sales",
-    stats: "245k",
+    stats: "1.2k",
     icon: "mdi-trending-up",
     color: "primary",
   },
   {
     title: "Customers",
-    stats: "12.5k",
+    stats: "894",
     icon: "mdi-account-outline",
     color: "success",
   },
   {
     title: "Online Conversions",
-    stats: "1.54k",
+    stats: "23%",
     icon: "mdi-cellphone-link",
     color: "warning",
   },

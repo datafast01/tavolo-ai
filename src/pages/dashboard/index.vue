@@ -117,7 +117,7 @@ const statisticsWithImages = [
   {
     title: "Revenue",
     subtitle: "Year of 2021",
-    stats: "13k",
+    stats: "15.3k",
     change: 15.6,
     icon: "mdi-currency-usd",
     color: "primary",
@@ -125,7 +125,7 @@ const statisticsWithImages = [
   {
     title: "Repeated Customers",
     subtitle: "Last Week",
-    stats: "56",
+    stats: "382",
     change: 22,
     image: illustration2,
     color: "secondary",
