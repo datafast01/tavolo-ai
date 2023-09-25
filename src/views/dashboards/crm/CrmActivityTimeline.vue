@@ -1,6 +1,4 @@
-<script setup>
-import avatar2 from '@images/avatars/avatar-2.png'
-</script>
+<script setup></script>
 
 <template>
   <VCard title="Activity Timeline">
@@ -11,82 +9,61 @@ import avatar2 from '@images/avatars/avatar-2.png'
         line-inset="8"
         truncate-line="both"
       >
-        <VTimelineItem
-          dot-color="error"
-          size="x-small"
-        >
+        <VTimelineItem dot-color="error" size="x-small">
           <div class="d-flex justify-space-between align-center flex-wrap">
             <h4 class="app-timeline-title me-1 mb-2">
-              8 Invoices have been paid
+              Email Campaign Launched
             </h4>
             <small class="app-timeline-meta text-no-wrap">Wednesday</small>
           </div>
-          <p class="mb-0 app-timeline-text">
-            Invoices have been paid to the company.
-          </p>
+          <p class="mb-0 app-timeline-text">34 conversions in last 2 days</p>
           <span class="d-flex align-center mt-2">
-            <VIcon
+            <!-- <VIcon
               color="error"
               icon="mdi-file-pdf-box"
               class="me-1"
-            />
-            <span class="font-weight-medium text-sm">invoice.pdf</span>
+            /> -->
+            <span class="font-weight-medium text-sm">$853 in sales</span>
           </span>
         </VTimelineItem>
 
-        <VTimelineItem
-          dot-color="primary"
-          size="x-small"
-        >
+        <VTimelineItem dot-color="primary" size="x-small">
           <div class="d-flex justify-space-between align-center flex-wrap">
             <h4 class="app-timeline-title me-1 mb-2">
-              Create a new project for client 😎
+              Text Campaign Launched 😎
             </h4>
-            <small class="app-timeline-meta text-no-wrap">April, 18</small>
+            <small class="app-timeline-meta text-no-wrap">Wednesday</small>
           </div>
 
-          <p class="mb-1 app-timeline-text">
-            Invoices have been paid to the company.
-          </p>
+          <p class="mb-1 app-timeline-text">51 conversions in last 2 days</p>
 
           <div class="d-flex align-center mt-3">
-            <VAvatar
+            <!-- <VAvatar
               size="24"
               class="me-2"
               :image="avatar2"
-            />
+            /> -->
             <div>
-              <p class="font-weight-medium mb-0">
-                John Doe (Client)
-              </p>
+              <p class="font-weight-medium mb-0">$1,083 in sales</p>
             </div>
           </div>
         </VTimelineItem>
 
-        <VTimelineItem
-          dot-color="info"
-          size="x-small"
-        >
+        <VTimelineItem dot-color="info" size="x-small">
           <div class="d-flex justify-space-between align-center flex-wrap">
             <h4 class="app-timeline-title me-1 mb-2">
-              Order #37745 from September
+              Organic Video Launched on 4 Platforms
             </h4>
-            <small class="app-timeline-meta text-no-wrap">January, 10</small>
+            <small class="app-timeline-meta text-no-wrap">Wednesday</small>
           </div>
-          <p class="mb-0 app-timeline-text">
-            Invoices have been paid to the company.
-          </p>
+          <p class="mb-0 app-timeline-text">382k impressions in last 7 days</p>
         </VTimelineItem>
 
-        <VTimelineItem
-          dot-color="warning"
-          size="x-small"
-        >
+        <VTimelineItem dot-color="warning" size="x-small">
           <div class="d-flex justify-space-between align-center flex-wrap">
             <h4 class="app-timeline-title me-1">
-              Public Meeting
+              New campaign generated go to email & auto sending pages to review.
             </h4>
-            <small class="app-timeline-meta text-no-wrap">September, 30</small>
           </div>
         </VTimelineItem>
       </VTimeline>

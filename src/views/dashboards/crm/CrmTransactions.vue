@@ -1,36 +1,31 @@
 <script setup>
 const statistics = [
   {
-    title: 'Sales',
-    stats: '245k',
-    icon: 'mdi-trending-up',
-    color: 'primary',
+    title: "Sales",
+    stats: "245k",
+    icon: "mdi-trending-up",
+    color: "primary",
   },
   {
-    title: 'Customers',
-    stats: '12.5k',
-    icon: 'mdi-account-outline',
-    color: 'success',
+    title: "Customers",
+    stats: "12.5k",
+    icon: "mdi-account-outline",
+    color: "success",
   },
   {
-    title: 'Product',
-    stats: '1.54k',
-    icon: 'mdi-cellphone-link',
-    color: 'warning',
+    title: "Online Conversions",
+    stats: "1.54k",
+    icon: "mdi-cellphone-link",
+    color: "warning",
   },
-]
+];
 </script>
 
 <template>
   <VCard title="Transactions">
     <VCardText>
       <VRow>
-        <VCol
-          v-for="item in statistics"
-          :key="item.title"
-          cols="12"
-          sm="4"
-        >
+        <VCol v-for="item in statistics" :key="item.title" cols="12" sm="4">
           <div class="d-flex align-center">
             <div class="me-3">
               <VAvatar
@@ -39,10 +34,7 @@ const statistics = [
                 size="40"
                 class="elevation-1"
               >
-                <VIcon
-                  size="24"
-                  :icon="item.icon"
-                />
+                <VIcon size="24" :icon="item.icon" />
               </VAvatar>
             </div>
 

@@ -194,7 +194,7 @@ const headers = [
   },
   {
     title: "Phone",
-    key: "role",
+    key: "phone",
   },
   {
     title: "Customers AOV",

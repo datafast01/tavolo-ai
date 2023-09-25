@@ -116,7 +116,7 @@ const authThemeMask = useGenerateImageVariant(miscMaskLight, miscMaskDark);
 
 const statisticsWithImages = [
   {
-    title: "Ratings",
+    title: "Revenue",
     subtitle: "Year of 2021",
     stats: "13k",
     change: 15.6,
@@ -124,10 +124,10 @@ const statisticsWithImages = [
     color: "primary",
   },
   {
-    title: "Sessions",
+    title: "Repeated Customers",
     subtitle: "Last Week",
-    stats: "24.5k",
-    change: -22,
+    stats: "56",
+    change: 22,
     image: illustration2,
     color: "secondary",
   },
