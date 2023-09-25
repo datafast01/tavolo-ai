@@ -116,7 +116,7 @@ const authThemeMask = useGenerateImageVariant(miscMaskLight, miscMaskDark);
 const statisticsWithImages = [
   {
     title: "Revenue",
-    subtitle: "Year of 2021",
+    subtitle: "This week",
     stats: "15.3k",
     change: 15.6,
     icon: "mdi-currency-usd",
@@ -124,7 +124,7 @@ const statisticsWithImages = [
   },
   {
     title: "Repeated Customers",
-    subtitle: "Last Week",
+    subtitle: "This Week",
     stats: "382",
     change: 22,
     image: illustration2,
