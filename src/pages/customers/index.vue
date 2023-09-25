@@ -49,15 +49,13 @@
         </template> -->
 
         <!-- Status -->
-        <!-- <template #item.status="{ item }">
-          <VChip
-            :color="resolveUserStatusVariant(item.raw.status)"
-            density="comfortable"
-            class="text-capitalize"
-          >
-            {{ item.raw.status }}
-          </VChip>
-        </template> -->
+        <template #item.repeated="{ item }">
+          <VIcon
+            icon="mdi-check-outline"
+            color="primary"
+            v-if="item.raw.repeated"
+          />
+        </template>
 
         <!-- Actions -->
         <template #item.actions="{ item }">
@@ -66,14 +64,14 @@
 
             <VMenu activator="parent">
               <VList>
-                <VListItem link @click="isUserInfoEditDialogVisible = true">
+                <VListItem link @click="editCustomerData(item.raw)">
                   <template #prepend>
                     <VIcon icon="mdi-pencil-outline" />
                   </template>
                   <VListItemTitle>Edit</VListItemTitle>
                 </VListItem>
 
-                <VListItem @click="deleteUser(item.raw.id)">
+                <VListItem @click="deleteUser(item.raw._id)">
                   <template #prepend>
                     <VIcon icon="mdi-delete-outline" />
                   </template>
@@ -138,24 +136,27 @@
     </VCard>
 
     <!-- 👉 Add New User -->
-    <AddNewUserDrawer
+    <AddNewCustomer
       v-model:isDrawerOpen="isAddNewUserDrawerVisible"
       @user-data="addNewUser"
     />
 
-    <!-- <UserInfoEditDialog
-    v-model:isDialogVisible="isUserInfoEditDialogVisible"
-    :user-data="props.userData"
-  /> -->
+    <EditCustomer
+      v-model:isDrawerOpen="isUserInfoEditDialogVisible"
+      :customerData="myCustomer"
+      @user-data="updateCustomer"
+    />
   </section>
 </template>
 
 <script setup>
 import { VDataTableServer } from "vuetify/labs/VDataTable";
 // import { paginationMeta } from '@/@fake-db/utils'
-import AddNewUserDrawer from "@/views/apps/user/list/AddNewUserDrawer.vue";
+// import AddNewUserDrawer from "@/views/apps/user/list/AddNewUserDrawer.vue";
 import { useUserListStore } from "@/views/apps/user/useUserListStore";
 import axios from "@axios";
+import AddNewCustomer from "./AddNewCustomer.vue";
+import EditCustomer from "./EditCustomer.vue";
 
 const userListStore = useUserListStore();
 const searchQuery = ref("");
@@ -166,11 +167,12 @@ const totalPage = ref(1);
 const totalUsers = ref(0);
 const customers = ref([]);
 const refInputEl = ref();
-const isUserInfoEditDialogVisible = ref(false);
+let isUserInfoEditDialogVisible = ref(false);
+let myCustomer = ref({});
 
 const options = ref({
   page: 1,
-  itemsPerPage: 10,
+  itemsPerPage: 100,
   sortBy: [],
   groupBy: [],
   search: undefined,
@@ -235,7 +237,7 @@ const uploadCustomerCsv = (file) => {
 // 👉 Fetching users
 const fetchCustomers = () => {
   axios
-    .get(`list-customers?pageSize=10&pageNo=1`)
+    .get(`list-customers?pageSize=100&pageNo=1`)
     .then((response) => {
       console.log("user", response.data);
       customers.value = response.data.data;
@@ -245,22 +247,51 @@ const fetchCustomers = () => {
     });
 };
 
+const editCustomerData = (data) => {
+  isUserInfoEditDialogVisible.value = true;
+  console.log(data);
+  myCustomer.value = data;
+};
 watchEffect(fetchCustomers);
 
 const isAddNewUserDrawerVisible = ref(false);
 
 const addNewUser = (userData) => {
-  userListStore.addUser(userData);
-
-  // refetch User
-  fetchCustomers();
+  customers.value.push(userData);
 };
 
-const deleteUser = (id) => {
-  userListStore.deleteUser(id);
+const updateCustomer = (userData) => {
+  let payload = {
+    firstname: userData.firstname,
+    lastname: userData.lastname,
+    email: userData.email,
+    phone: userData.phone,
+    aov: userData.aov,
+    repeated: userData.repeated,
+    customerId: userData._id,
+  };
+  axios
+    .post(`edit-customers`, payload)
+    .then((response) => {
+      console.log("user", response.data);
 
-  // refetch User
-  fetchCustomers();
+      fetchCustomers();
+    })
+    .catch((err) => {
+      console.log(err.response.status);
+    });
+};
+const deleteUser = (id) => {
+  console.log(id);
+  axios
+    .get(`delete-customers/${id}`)
+    .then((response) => {
+      console.log("user", response.data);
+      fetchCustomers();
+    })
+    .catch((err) => {
+      console.log(err.response.status);
+    });
 };
 </script>
 
