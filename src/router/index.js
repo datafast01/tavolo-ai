@@ -11,6 +11,7 @@ import routes from '~pages'
     {
       path: '/',
       redirect: () => ({  name: 'dashboard' }),
+      meta: true
     },
      {
       path: '/auto-email',
@@ -37,9 +38,23 @@ import routes from '~pages'
 // router.beforeEach((to, from, next) => {
 //   const isLoggedIn = !!(localStorage.getItem('token'))  
 
-//   console.log(isLoggedIn)
+//   console.log(isLoggedIn, to)
+// if(!isLoggedIn){
+//   console.log('here')
+//   return { name: 'login' }
+// } 
+  router.beforeEach((to, from, next) => {
+    const isLoggedIn = !(localStorage.getItem('token'))  
+    console.log(isLoggedIn)
+  if (to.name !== "login" && isLoggedIn) 
+  {
+   
+ next({ name: 'login' })
+ 
+  }
+ 
+  else next()
 
-  
   
 //     // ℹ️ Commented code is legacy code
   
@@ -71,5 +86,5 @@ import routes from '~pages'
   //   else
   //     return { name: 'login', query: { to: to.name !== 'index' ? to.fullPath : undefined } }
   // }
-// })
+})
 export default router
