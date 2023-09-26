@@ -109,12 +109,15 @@ getUserProfile();
 
               <!-- 👉 Organization -->
               <VCol cols="12" md="6">
-                <VTextField v-model="userData.resturant" label="Resturant" />
+                <VTextField
+                  v-model="userData.restaurantName"
+                  label="Resturant"
+                />
               </VCol>
 
               <!-- 👉 Phone -->
               <VCol cols="12" md="6">
-                <VTextField v-model="userData.phone" label="Phone Number" />
+                <VTextField v-model="userData.phoneNo" label="Phone Number" />
               </VCol>
 
               <!-- 👉 Address -->

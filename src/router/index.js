@@ -35,9 +35,9 @@ import routes from '~pages'
 
 // Docs: https://router.vuejs.org/guide/advanced/navigation-guards.html#global-before-guards
 // router.beforeEach((to, from, next) => {
-//   const isLoggedIn = !!(localStorage.getItem('userData') && localStorage.getItem('accessToken'))
+//   const isLoggedIn = !!(localStorage.getItem('token'))  
 
-  
+//   console.log(isLoggedIn)
 
   
   
