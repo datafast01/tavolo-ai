@@ -2,7 +2,7 @@ export default [
  
    {
     title: 'Ask Tavolo',
-    icon: { icon: 'mdi-email-outline' },
+    icon: { icon: 'mdi-comment-outline' },
      to: 'tavolo',
    
   },

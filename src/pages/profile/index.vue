@@ -4,18 +4,6 @@ import avatar1 from "@images/avatars/avatar-1.png";
 
 const accountData = {
   avatarImg: avatar1,
-  firstName: "john",
-  lastName: "Doe",
-  email: "johnDoe@example.com",
-  org: "ThemeSelection",
-  phone: "+1 (917) 543-9876",
-  address: "123 Main St, New York, NY 10001",
-  state: "New York",
-  zip: "10001",
-  country: "USA",
-  language: "English",
-  timezone: "(GMT-11:00) International Date Line West",
-  currency: "USD",
 };
 
 const refInputEl = ref();
@@ -24,6 +12,7 @@ const refInputCus = ref();
 const isConfirmDialogOpen = ref(false);
 const accountDataLocal = ref(structuredClone(accountData));
 const isAccountDeactivated = ref(false);
+let userData = ref({});
 const validateAccountDeactivation = [
   (v) => !!v || "Please confirm account deactivation",
 ];
@@ -63,6 +52,20 @@ const updateCustomer = (file) => {
       console.log(error);
     });
 };
+
+const getUserProfile = () => {
+  // console.log("submit form", ApiService);
+  axios
+    .get(`getprofile`)
+    .then((response) => {
+      console.log("user", response.data);
+      userData.value = response.data;
+    })
+    .catch((err) => {
+      console.log(err.response.status);
+    });
+};
+getUserProfile();
 </script>
 
 <template>
@@ -87,24 +90,18 @@ const updateCustomer = (file) => {
             <VRow>
               <!-- 👉 First Name -->
               <VCol md="6" cols="12">
-                <VTextField
-                  v-model="accountDataLocal.firstName"
-                  label="First Name"
-                />
+                <VTextField v-model="userData.firstName" label="First Name" />
               </VCol>
 
               <!-- 👉 Last Name -->
               <VCol md="6" cols="12">
-                <VTextField
-                  v-model="accountDataLocal.lastName"
-                  label="Last Name"
-                />
+                <VTextField v-model="userData.lastName" label="Last Name" />
               </VCol>
 
               <!-- 👉 Email -->
               <VCol cols="12" md="6">
                 <VTextField
-                  v-model="accountDataLocal.email"
+                  v-model="userData.email"
                   label="E-mail"
                   type="email"
                 />
@@ -112,15 +109,12 @@ const updateCustomer = (file) => {
 
               <!-- 👉 Organization -->
               <VCol cols="12" md="6">
-                <VTextField v-model="accountDataLocal.org" label="Resturant" />
+                <VTextField v-model="userData.resturant" label="Resturant" />
               </VCol>
 
               <!-- 👉 Phone -->
               <VCol cols="12" md="6">
-                <VTextField
-                  v-model="accountDataLocal.phone"
-                  label="Phone Number"
-                />
+                <VTextField v-model="userData.phone" label="Phone Number" />
               </VCol>
 
               <!-- 👉 Address -->
@@ -213,7 +207,9 @@ const updateCustomer = (file) => {
         <VCardText>
           <!-- 👉 Checkbox and Button  -->
           <div class="d-flex justify-space-between">
-            <span> Clover </span>
+            <span>
+              <img src="../../assets/images/logos/clover-logo.svg" alt="" />
+            </span>
             <VBtn>SignIn to clover</VBtn>
           </div>
         </VCardText>

@@ -2,7 +2,7 @@ export default [
  
    {
     title: 'Profile',
-    icon: { icon: 'mdi-home-outline' },
+    icon: { icon: 'mdi-face-profile' },
      to: 'profile',
    
   },
