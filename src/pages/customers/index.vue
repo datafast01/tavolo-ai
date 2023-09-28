@@ -1,5 +1,8 @@
 <template>
   <section>
+    <VSnackbar v-model="show" :timeout="2000" :color="color">
+      {{ snkMsg }}
+    </VSnackbar>
     <VCard>
       <VCardText class="d-flex flex-wrap gap-4">
         <VBtn color="primary" @click="refInputEl?.click()">
@@ -169,7 +172,9 @@ const customers = ref([]);
 const refInputEl = ref();
 let isUserInfoEditDialogVisible = ref(false);
 let myCustomer = ref({});
-
+let show = ref(false);
+let snkMsg = ref("");
+let color = ref("#9575CD");
 const options = ref({
   page: 1,
   itemsPerPage: 100,
@@ -262,11 +267,20 @@ const addNewUser = (userData) => {
     .post(`add-customer`, userData)
     .then((response) => {
       console.log("user", response.data);
+      show.value = true;
+      snkMsg.value = "Customer has been added successfully";
 
       fetchCustomers();
     })
     .catch((err) => {
-      console.log(err.response.status);
+      console.log(err.response);
+      show.value = true;
+      if (err.response.status == 400) {
+        snkMsg.value = err.response.data.error;
+      } else {
+        snkMsg.value = "Something went wrong";
+      }
+      color.value = "error";
     });
 };
 
@@ -284,11 +298,19 @@ const updateCustomer = (userData) => {
     .post(`edit-customers`, payload)
     .then((response) => {
       console.log("user", response.data);
-
+      show.value = true;
+      snkMsg.value = "Customer has been updated successfully";
       fetchCustomers();
     })
     .catch((err) => {
-      console.log(err.response.status);
+      console.log(err.response);
+      show.value = true;
+      if (err.response.status == 400) {
+        snkMsg.value = err.response.data.error;
+      } else {
+        snkMsg.value = "Something went wrong";
+      }
+      color.value = "error";
     });
 };
 const deleteUser = (id) => {
@@ -297,10 +319,19 @@ const deleteUser = (id) => {
     .get(`delete-customers/${id}`)
     .then((response) => {
       console.log("user", response.data);
+      show.value = true;
+      snkMsg.value = "Customer has been deleted successfully";
       fetchCustomers();
     })
     .catch((err) => {
-      console.log(err.response.status);
+      console.log(err.response);
+      show.value = true;
+      if (err.response.status == 400) {
+        snkMsg.value = err.response.data.error;
+      } else {
+        snkMsg.value = "Something went wrong";
+      }
+      color.value = "error";
     });
 };
 </script>
