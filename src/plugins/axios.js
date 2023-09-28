@@ -60,7 +60,9 @@ import axios from 'axios';
 
 
 const instance = axios.create({
-    baseURL: 'https://server.tavolo.ai/api/', // Replace with your API endpoint
+    baseURL: 'https://server.tavolo.ai/api/',
+    // baseURL: 'http://localhost:8080/api/',
+
 });
 
 // Request Interceptor

@@ -165,7 +165,7 @@ const login = () => {
       loading.value = false;
       // localStorage.setItem('userAbilities', JSON.stringify(userAbilities))
 
-      localStorage.setItem("userData", userData);
+      localStorage.setItem("userData", JSON.stringify(userData));
       localStorage.setItem("token", userData.token);
 
       // localStorage.setItem('accessToken', JSON.stringify(accessToken))
