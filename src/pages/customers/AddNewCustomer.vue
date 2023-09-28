@@ -17,7 +17,7 @@ const firstname = ref("");
 const lastname = ref("");
 const email = ref("");
 const aov = ref("");
-const repeated = ref("");
+const repeated = ref(false);
 const phone = ref("");
 
 // 👉 drawer close
@@ -40,6 +40,7 @@ const onSubmit = () => {
           repeated: repeated.value,
           email: email.value,
           aov: aov.value,
+          phone: phone.value,
         },
         emit("update:isDrawerOpen", false)
       );

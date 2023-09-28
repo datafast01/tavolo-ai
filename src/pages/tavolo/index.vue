@@ -212,8 +212,8 @@
 <script setup>
 import ChatActiveChatUserProfileSidebarContent from "@/views/apps/chat/ChatActiveChatUserProfileSidebarContent.vue";
 import { useChatStore } from "@/views/apps/chat/useChatStore";
+import axios from "@axios";
 import { useResponsiveLeftSidebar } from "@core/composable/useResponsiveSidebar";
-import axios from "axios";
 import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 import { useDisplay } from "vuetify";
 const vuetifyDisplays = useDisplay();
@@ -250,22 +250,18 @@ let selectedFile = ref("");
 const sendMessage = async () => {
   isPrompt.value = true;
   loading.value = true;
-  prompt.value = msg.value;
-  const formData = new FormData();
-  formData.append("csvFile", selectedFile.value);
-  formData.append("text", prompt);
+
+  const payload = {
+    customer: false,
+    text: msg.value,
+  };
   try {
-    await axios
-      .post(
-        "http://ec2-3-85-224-233.compute-1.amazonaws.com:3001/upload",
-        formData
-      )
-      .then((res) => {
-        console.log(res);
-        AiResponse.value = res.data.reply;
-        loading.value = false;
-        isResponse.value = true;
-      });
+    await axios.post("ask-tavolo", payload).then((res) => {
+      console.log(res);
+      AiResponse.value = res.data.reply;
+      loading.value = false;
+      isResponse.value = true;
+    });
   } catch (error) {
     console.error("Error uploading file:", error);
     loading.value = false;

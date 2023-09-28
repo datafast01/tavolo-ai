@@ -258,6 +258,16 @@ const isAddNewUserDrawerVisible = ref(false);
 
 const addNewUser = (userData) => {
   customers.value.push(userData);
+  axios
+    .post(`add-customer`, userData)
+    .then((response) => {
+      console.log("user", response.data);
+
+      fetchCustomers();
+    })
+    .catch((err) => {
+      console.log(err.response.status);
+    });
 };
 
 const updateCustomer = (userData) => {
