@@ -1,5 +1,8 @@
 <template>
   <div class="d-flex flex-column">
+    <VSnackbar v-model="show" :timeout="2000" :color="color">
+      {{ snkMsg }}
+    </VSnackbar>
     <div class="autoDatePicker">
       <AppDateTimePicker
         v-model="scheduleDate"
@@ -83,10 +86,16 @@ import axios from "@axios";
 const emit = defineEmits(["close"]);
 
 const segment = ref("650e0f5b6df52a436ca3f12e");
-
+let show = ref(false);
+let snkMsg = ref("");
+let color = ref("#9575CD");
 const message = ref("");
 const isMenuOpen = ref(false);
-const scheduleDate = ref(null);
+const scheduleDate = ref(
+  new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+    .toISOString()
+    .substr(0, 10)
+);
 const selectedSchedule = ref("schedule");
 
 const resetValues = () => {
@@ -125,9 +134,18 @@ const sendEmail = () => {
     .post(`dashboard/message`, payload)
     .then((res) => {
       console.log(res.data.data, "=============>>>");
+      show.value = true;
+      snkMsg.value = "Message sent successfully";
     })
     .catch((err) => {
-      console.log(err);
+      console.log(err.response);
+      show.value = true;
+      if (err.response.status == 400) {
+        snkMsg.value = err.response.data.error;
+      } else {
+        snkMsg.value = "Something went wrong";
+      }
+      color.value = "error";
     });
 };
 </script>

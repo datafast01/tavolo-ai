@@ -48,7 +48,7 @@
         @show-user-profile="isUserProfileSidebarOpen = true"
         @close="isLeftSidebarOpen = false"
       /> -->
-      <div class="chat-list-header">
+      <!-- <div class="chat-list-header">
         <VBtn color="primary" @click="refInputEl?.click()">
           <VIcon icon="mdi-cloud-upload-outline" class="d-sm-none" />
           <span class="d-none d-sm-block">Upload Customers</span>
@@ -61,7 +61,7 @@
           hidden
           @input="uploadFile"
         />
-      </div>
+      </div> -->
 
       <VDivider />
       <PerfectScrollbar
@@ -129,7 +129,7 @@
       <!-- 👉 Right content: Active Chat -->
       <div class="d-flex flex-column h-100">
         <!-- 👉 Active chat header -->
-        <div class="active-chat-header d-flex text-medium-emphasis">
+        <!-- <div class="active-chat-header d-flex text-medium-emphasis">
           Selected File: {{ fileName }}
           <VIcon
             v-if="fileName"
@@ -139,7 +139,7 @@
             class="ml-2"
             >mdi-close-circle-outline</VIcon
           >
-        </div>
+        </div> -->
 
         <VDivider />
 
@@ -249,6 +249,7 @@ let fileName = ref("");
 let selectedFile = ref("");
 const sendMessage = async () => {
   isPrompt.value = true;
+  prompt.value = msg.value;
   loading.value = true;
 
   const payload = {
@@ -258,7 +259,7 @@ const sendMessage = async () => {
   try {
     await axios.post("ask-tavolo", payload).then((res) => {
       console.log(res);
-      AiResponse.value = res.data.reply;
+      AiResponse.value = res.data.data;
       loading.value = false;
       isResponse.value = true;
     });

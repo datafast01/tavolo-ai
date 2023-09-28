@@ -1,4 +1,8 @@
 <template>
+  <VSnackbar v-model="show" :timeout="2000" :color="color">
+    {{ snkMsg }}
+  </VSnackbar>
+
   <div class="d-flex flex-column">
     <div class="autoDatePicker">
       <AppDateTimePicker
@@ -76,15 +80,22 @@ const emit = defineEmits(["close"]);
 
 const segment = ref("650e0f5b6df52a436ca3f12e");
 const subject = ref("Celebrate Mother’s Day!");
+
 const message = ref(
   "This Sunday, on Mother's Day, we're giving all moms a free glass of rosé or mimosa when they dine in. \nJoin us at any Urban Skillet location.Our tables are set and we can't wait to celebrate!\nWe can't wait to serve you soon.\nBest regards,\nUrban Skillet Team!"
 );
 const isMenuOpen = ref(false);
-const scheduleDate = ref(null);
+const scheduleDate = ref(
+  new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+    .toISOString()
+    .substr(0, 10)
+);
 const selectedSchedule = ref("schedule");
 
 const segments = ref([]);
-
+let show = ref(false);
+let snkMsg = ref("");
+let color = ref("#9575CD");
 //Methods
 const getEmailSegmnts = () => {
   axios
@@ -110,9 +121,18 @@ const sendEmail = () => {
     .post(`dashboard/email`, payload)
     .then((res) => {
       console.log(res.data.data, "=============>>>");
+      show.value = true;
+      snkMsg.value = "Email sent successfully";
     })
     .catch((err) => {
-      console.log(err);
+      console.log(err.response);
+      show.value = true;
+      if (err.response.status == 400) {
+        snkMsg.value = err.response.data.error;
+      } else {
+        snkMsg.value = "Something went wrong";
+      }
+      color.value = "error";
     });
 };
 

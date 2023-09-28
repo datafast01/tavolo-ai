@@ -1,5 +1,8 @@
 <template>
   <div>
+    <VSnackbar v-model="show" :timeout="2000" :color="color">
+      {{ snkMsg }}
+    </VSnackbar>
     <!-- Title and Logo -->
     <div class="auth-logo d-flex align-start gap-x-3">
       <VNodeRenderer :nodes="themeConfig.app.logo" />
@@ -151,6 +154,10 @@ const password = ref("");
 const rememberMe = ref(false);
 const loading = ref(false);
 
+let show = ref(false);
+let snkMsg = ref("");
+let color = ref("#9575CD");
+
 const login = () => {
   loading.value = true;
   axios
@@ -160,7 +167,8 @@ const login = () => {
     })
     .then((res) => {
       console.log(res.data);
-
+      show.value = true;
+      snkMsg.value = "Successfully logged in";
       const userData = res.data;
       loading.value = false;
       // localStorage.setItem('userAbilities', JSON.stringify(userAbilities))
@@ -175,9 +183,16 @@ const login = () => {
       // Redirect to `to` query if exist or redirect to index route
       // router.replace(route.query.to ? String(route.query.to) : '/')
     })
-    .catch((e) => {
+    .catch((err) => {
       loading.value = false;
-      console.error(e);
+      console.error(err);
+      show.value = true;
+      if (err.response.status == 404) {
+        snkMsg.value = err.response.data.message;
+      } else {
+        snkMsg.value = "Something went wrong";
+      }
+      color.value = "error";
     });
 };
 
