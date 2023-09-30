@@ -1,4 +1,3 @@
-import appAndPages from './app-and-pages'
 import dashboard from './dashboard'
 // import others from './others'
 import askTavolo from './askTavolo'
@@ -8,4 +7,4 @@ import messages from './messages'
 import profile from './profile'
 import schedule from './schedule'
 
-export default [...dashboard, ...appAndPages, ...askTavolo, ...email, ...messages, ...customers, ...schedule, ...profile]
+export default [...dashboard, ...askTavolo, ...email, ...messages, ...customers, ...schedule, ...profile]
