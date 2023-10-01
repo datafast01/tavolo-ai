@@ -177,7 +177,7 @@ let snkMsg = ref("");
 let color = ref("#9575CD");
 const options = ref({
   page: 1,
-  itemsPerPage: 100,
+  itemsPerPage: 10,
   sortBy: [],
   groupBy: [],
   search: undefined,
@@ -242,7 +242,9 @@ const uploadCustomerCsv = (file) => {
 // 👉 Fetching users
 const fetchCustomers = () => {
   axios
-    .get(`list-customers?pageSize=100&pageNo=1`)
+    .get(
+      `list-customers?pageSize=${options.value.itemsPerPage}&pageNo=${options.value.page}`
+    )
     .then((response) => {
       console.log("user", response.data);
       customers.value = response.data.data;

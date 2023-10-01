@@ -65,6 +65,19 @@ const getUserProfile = () => {
       console.log(err.response.status);
     });
 };
+
+const updateProfile = () => {
+  // console.log("submit form", ApiService);
+
+  axios
+    .post(`editprofile`, userData.value)
+    .then((response) => {
+      console.log("user", response.data);
+    })
+    .catch((err) => {
+      console.log(err.response.status);
+    });
+};
 getUserProfile();
 </script>
 
@@ -149,7 +162,7 @@ getUserProfile();
 
               <!-- 👉 Form Actions -->
               <VCol cols="12" class="d-flex flex-wrap gap-4">
-                <VBtn>Save changes</VBtn>
+                <VBtn @click="updateProfile">Save changes</VBtn>
               </VCol>
             </VRow>
           </VForm>
