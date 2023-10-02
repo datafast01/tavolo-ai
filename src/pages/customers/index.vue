@@ -264,13 +264,13 @@ watchEffect(fetchCustomers);
 const isAddNewUserDrawerVisible = ref(false);
 
 const addNewUser = (userData) => {
-  customers.value.push(userData);
   axios
     .post(`add-customer`, userData)
     .then((response) => {
       console.log("user", response.data);
       show.value = true;
       snkMsg.value = "Customer has been added successfully";
+      customers.value.push(userData);
 
       fetchCustomers();
     })
