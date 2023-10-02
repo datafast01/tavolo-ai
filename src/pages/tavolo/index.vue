@@ -16,6 +16,7 @@
     </VNavigationDrawer> -->
 
     <!-- 👉 Active Chat sidebar -->
+
     <VNavigationDrawer
       v-model="isActiveChatUserProfileSidebarOpen"
       width="374"
@@ -70,6 +71,10 @@
         :options="{ wheelPropagation: false }"
       >
         <li class="my-3">
+          <VCheckbox
+            label="Search from tavolo customers"
+            v-model="isCustomer"
+          ></VCheckbox>
           <span
             class="chat-contact-header d-block text-primary text-xl font-weight-medium"
             >Example Prompts</span
@@ -223,6 +228,7 @@ const { isLeftSidebarOpen } = useResponsiveLeftSidebar(
 );
 
 //ask tavolo
+let isCustomer = ref(false);
 let prompt = ref("");
 let AiResponse = ref("");
 const loading = ref(false);
@@ -245,15 +251,13 @@ const scrollToBottomInChatLog = () => {
 // Chat message
 const msg = ref("");
 
-let fileName = ref("");
-let selectedFile = ref("");
 const sendMessage = async () => {
   isPrompt.value = true;
   prompt.value = msg.value;
   loading.value = true;
 
   const payload = {
-    customer: false,
+    customer: isCustomer.value,
     text: msg.value,
   };
   try {
@@ -277,17 +281,6 @@ const sendMessage = async () => {
   });
 };
 
-const uploadFile = async (file) => {
-  const { files } = file.target;
-  const myCSV = files[0];
-  console.log(myCSV.name);
-  fileName.value = myCSV.name;
-  selectedFile.value = myCSV;
-};
-
-const removeFile = () => {
-  fileName.value = null;
-};
 const active = (type, text) => {
   console.log(text);
   isActive.value = type;
@@ -297,30 +290,6 @@ const active = (type, text) => {
 const isActiveChatUserProfileSidebarOpen = ref(false);
 
 // file input
-const refInputEl = ref();
-
-const moreList = [
-  {
-    title: "View Contact",
-    value: "View Contact",
-  },
-  {
-    title: "Mute Notifications",
-    value: "Mute Notifications",
-  },
-  {
-    title: "Block Contact",
-    value: "Block Contact",
-  },
-  {
-    title: "Clear Chat",
-    value: "Clear Chat",
-  },
-  {
-    title: "Report",
-    value: "Report",
-  },
-];
 </script>
 
 <route lang="yaml">
