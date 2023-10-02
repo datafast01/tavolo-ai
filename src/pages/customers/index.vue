@@ -229,6 +229,7 @@ const uploadCustomerCsv = (file) => {
 
     .then((res) => {
       console.log(res);
+      fetchCustomers();
     })
     .catch((error) => {});
   // if (files && files.length) {
