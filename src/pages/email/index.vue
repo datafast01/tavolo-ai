@@ -114,7 +114,7 @@ const sendEmail = () => {
     segmantId: segment.value,
     subject: subject.value,
     text: message.value,
-    schedule: selectedSchedule.value == "schedule" ? true : false,
+    schedule: selectedSchedule.value == "schedule" ? "true" : "false",
     scheduleDate: scheduleDate.value,
   };
   axios
