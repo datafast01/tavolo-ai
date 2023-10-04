@@ -10,6 +10,7 @@
         label="Schedule Date"
         clear-icon="mdi-close"
         clearable
+        style="width: 100%"
       />
       <VRadioGroup v-model="selectedSchedule" :inline="true">
         <VRadio label="Auto Sending" value="notSchedule" color="primary" />

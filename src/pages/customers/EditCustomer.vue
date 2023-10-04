@@ -17,20 +17,10 @@ const emit = defineEmits(["update:isDrawerOpen", "userData"]);
 
 const isFormValid = ref(false);
 const refForm = ref();
-const firstname = ref("");
-const lastname = ref("");
-const email = ref("");
-const aov = ref("");
-const repeated = ref("");
-const phone = ref("");
 
 // 👉 drawer close
 const closeNavigationDrawer = () => {
   emit("update:isDrawerOpen", false);
-  nextTick(() => {
-    refForm.value?.reset();
-    refForm.value?.resetValidation();
-  });
 };
 
 const onSubmit = () => {
@@ -119,6 +109,29 @@ const handleDrawerModelValueUpdate = (val) => {
                   label="Customer's AOV"
                 />
               </VCol>
+              <VCol cols="12">
+                <VTextField
+                  v-model="customerData.totalVisits"
+                  type="number"
+                  :rules="[requiredValidator]"
+                  label="Total Visits"
+                />
+              </VCol>
+
+              <VCol cols="12">
+                <VTextField
+                  v-model="customerData.lastDiningBehaviour"
+                  :rules="[requiredValidator]"
+                  label="Last Dining Behavior"
+                />
+              </VCol>
+              <AppDateTimePicker
+                v-model="customerData.lastVisitedDate"
+                label="Last Visit Date"
+                clear-icon="mdi-close"
+                clearable
+                style="width: 100%"
+              />
               <!-- 👉 Status -->
               <VCol cols="12">
                 <VSelect
@@ -150,3 +163,9 @@ const handleDrawerModelValueUpdate = (val) => {
     </PerfectScrollbar>
   </VNavigationDrawer>
 </template>
+
+<style scoped>
+.app-picker-field {
+  width: 100% !important;
+}
+</style>

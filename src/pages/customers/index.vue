@@ -40,9 +40,9 @@
         :items="customers"
         :items-length="totalUsers"
         :headers="headers"
-        show-select
         class="rounded-0"
         @update:options="options = $event"
+        :loading="isLoading"
       >
         <!-- Email -->
         <!-- <template #item.email="{ item }">
@@ -163,10 +163,7 @@ import EditCustomer from "./EditCustomer.vue";
 
 const userListStore = useUserListStore();
 const searchQuery = ref("");
-const selectedRole = ref();
-const selectedPlan = ref();
-const selectedStatus = ref();
-const totalPage = ref(1);
+let isLoading = ref(false);
 const totalUsers = ref(0);
 const customers = ref([]);
 const refInputEl = ref();
@@ -188,10 +185,12 @@ const headers = [
   {
     title: "First Name",
     key: "firstname",
+    width: "130",
   },
   {
     title: "Last Name",
     key: "lastname",
+    width: "130",
   },
   {
     title: "Email",
@@ -206,8 +205,18 @@ const headers = [
     key: "aov",
   },
   {
+    title: "Total Visits",
+    key: "totalVisits",
+    width: "40",
+  },
+  {
+    title: "Last Dining Behaviour",
+    key: "lastDiningBehaviour",
+  },
+  {
     title: "Repeated Customer",
     key: "repeated",
+    width: "1o0",
   },
 
   {
@@ -242,6 +251,7 @@ const uploadCustomerCsv = (file) => {
 };
 // 👉 Fetching users
 const fetchCustomers = () => {
+  isLoading.value = true;
   axios
     .get(
       `list-customers?pageSize=${options.value.itemsPerPage}&pageNo=${options.value.page}`
@@ -249,6 +259,7 @@ const fetchCustomers = () => {
     .then((response) => {
       console.log("user", response.data);
       customers.value = response.data.data;
+      isLoading.value = false;
     })
     .catch((err) => {
       console.log(err.response.status);

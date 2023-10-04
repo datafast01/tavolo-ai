@@ -19,6 +19,14 @@ const email = ref("");
 const aov = ref("");
 const repeated = ref(false);
 const phone = ref("");
+const lastDiningBehaviour = ref("");
+
+const totalVisits = ref("");
+const lastVisitedDate = ref(
+  new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+    .toISOString()
+    .substr(0, 10)
+);
 
 // 👉 drawer close
 const closeNavigationDrawer = () => {
@@ -41,6 +49,9 @@ const onSubmit = () => {
           email: email.value,
           aov: aov.value,
           phone: phone.value,
+          totalVisits: totalVisits.value,
+          lastDiningBehaviour: lastDiningBehaviour.value,
+          lastVisitedDate: lastVisitedDate.value,
         },
         emit("update:isDrawerOpen", false)
       );
@@ -126,6 +137,29 @@ const handleDrawerModelValueUpdate = (val) => {
                   label="Customer's AOV"
                 />
               </VCol>
+              <VCol cols="12">
+                <VTextField
+                  v-model="totalVisits"
+                  type="number"
+                  :rules="[requiredValidator]"
+                  label="Total Visits"
+                />
+              </VCol>
+
+              <VCol cols="12">
+                <VTextField
+                  v-model="lastDiningBehaviour"
+                  :rules="[requiredValidator]"
+                  label="Last Dining Behavior"
+                />
+              </VCol>
+              <AppDateTimePicker
+                v-model="lastVisitedDate"
+                label="Last Visit Date"
+                clear-icon="mdi-close"
+                clearable
+                style="width: 100%"
+              />
               <!-- 👉 Status -->
               <VCol cols="12">
                 <VSelect
@@ -157,3 +191,9 @@ const handleDrawerModelValueUpdate = (val) => {
     </PerfectScrollbar>
   </VNavigationDrawer>
 </template>
+
+<style scoped>
+.app-picker-field {
+  width: 100% !important;
+}
+</style>
