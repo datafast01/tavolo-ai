@@ -1,22 +1,5 @@
 <template>
   <VLayout class="chat-app-layout bg-surface">
-    <!-- 👉 user profile sidebar -->
-    <!-- <VNavigationDrawer
-      v-model="isUserProfileSidebarOpen"
-      temporary
-      touchless
-      absolute
-      class="user-profile-sidebar"
-      location="start"
-      width="370"
-    >
-      <ChatUserProfileSidebarContent
-        @close="isUserProfileSidebarOpen = false"
-      />
-    </VNavigationDrawer> -->
-
-    <!-- 👉 Active Chat sidebar -->
-
     <VNavigationDrawer
       v-model="isActiveChatUserProfileSidebarOpen"
       width="374"
@@ -42,28 +25,6 @@
       class="chat-list-sidebar"
       :permanent="$vuetify.display.mdAndUp"
     >
-      <!-- <ChatLeftSidebarContent
-        v-model:isDrawerOpen="isLeftSidebarOpen"
-        v-model:search="q"
-        @open-chat-of-contact="openChatOfContact"
-        @show-user-profile="isUserProfileSidebarOpen = true"
-        @close="isLeftSidebarOpen = false"
-      /> -->
-      <!-- <div class="chat-list-header">
-        <VBtn color="primary" @click="refInputEl?.click()">
-          <VIcon icon="mdi-cloud-upload-outline" class="d-sm-none" />
-          <span class="d-none d-sm-block">Upload Customers</span>
-        </VBtn>
-        <input
-          ref="refInputEl"
-          type="file"
-          name="file"
-          accept=".csv"
-          hidden
-          @input="uploadFile"
-        />
-      </div> -->
-
       <VDivider />
       <PerfectScrollbar
         tag="ul"
@@ -74,58 +35,26 @@
           <VCheckbox
             label="Search from tavolo customers"
             v-model="isCustomer"
+            @change="handleChange"
           ></VCheckbox>
+        </li>
+        <div v-if="isCustomer">
           <span
-            class="chat-contact-header d-block text-primary text-xl font-weight-medium"
+            class="chat-contact-header d-block text-primary text-xl font-weight-medium my-3"
             >Example Prompts</span
           >
-        </li>
-        <li
-          class="chat-contact cursor-pointer d-flex align-center"
-          :class="isActive == 1 ? 'chat-contact-active' : ''"
-          @click="
-            active(1, 'Who are my customers that generate the highest revenue?')
-          "
-        >
-          <div class="flex-grow-1 ms-4 overflow-hidden">
-            <span>Who are my customers that generate the highest revenue?</span>
-          </div>
-        </li>
-        <li
-          class="chat-contact cursor-pointer d-flex align-center"
-          :class="isActive == 2 ? 'chat-contact-active' : ''"
-          @click="active(2, 'What are my highest revenue menu items?')"
-        >
-          <div class="flex-grow-1 ms-4 overflow-hidden">
-            <span>What are my highest revenue menu items?</span>
-          </div>
-        </li>
-        <li
-          class="chat-contact cursor-pointer d-flex align-center"
-          :class="isActive == 3 ? 'chat-contact-active' : ''"
-          @click="active(3, 'Create an email about my Skillet Burger')"
-        >
-          <div class="flex-grow-1 ms-4 overflow-hidden">
-            <span>Create an email about my Skillet Burger</span>
-          </div>
-        </li>
-        <li
-          class="chat-contact cursor-pointer d-flex align-center"
-          :class="isActive == 4 ? 'chat-contact-active' : ''"
-          @click="
-            active(
-              4,
-              'Create an email that can help me get more sales on my Skillet Burger'
-            )
-          "
-        >
-          <div class="flex-grow-1 ms-4 overflow-hidden">
-            <span>
-              Create an email that can help me get more sales on my Skillet
-              Burger</span
-            >
-          </div>
-        </li>
+          <li
+            v-for="prompt in promptsListing"
+            :key="prompt.key"
+            class="chat-contact cursor-pointer d-flex align-center"
+            :class="isActive == prompt.key ? 'chat-contact-active' : ''"
+            @click="active(prompt)"
+          >
+            <div class="flex-grow-1 ms-4 overflow-hidden">
+              <span>{{ prompt.value }}</span>
+            </div>
+          </li>
+        </div>
       </PerfectScrollbar>
     </VNavigationDrawer>
 
@@ -133,19 +62,6 @@
     <VMain class="chat-content-container">
       <!-- 👉 Right content: Active Chat -->
       <div class="d-flex flex-column h-100">
-        <!-- 👉 Active chat header -->
-        <!-- <div class="active-chat-header d-flex text-medium-emphasis">
-          Selected File: {{ fileName }}
-          <VIcon
-            v-if="fileName"
-            @click="removeFile"
-            size="20"
-            color="red"
-            class="ml-2"
-            >mdi-close-circle-outline</VIcon
-          >
-        </div> -->
-
         <VDivider />
 
         <!-- Chat log -->
@@ -177,7 +93,7 @@
                 <p
                   class="chat-content text-sm py-3 px-4 elevation-1 bg-primary text-white chat-right mb-1"
                 >
-                  {{ prompt }}
+                  {{ msgValue }}
                 </p>
               </div>
             </div>
@@ -190,7 +106,7 @@
           @submit.prevent="sendMessage"
         >
           <VTextField
-            v-model="msg"
+            v-model="msgValue"
             variant="solo"
             class="chat-message-input"
             placeholder="Type your message..."
@@ -234,9 +150,10 @@ let AiResponse = ref("");
 const loading = ref(false);
 const isPrompt = ref(false);
 const isResponse = ref(false);
-let isActive = ref(1);
+let isActive = ref("");
 // Perfect scrollbar
 const chatLogPS = ref();
+let promptsListing = ref([]);
 
 const scrollToBottomInChatLog = () => {
   const scrollEl = chatLogPS.value.$el || chatLogPS.value;
@@ -281,10 +198,40 @@ const sendMessage = async () => {
   });
 };
 
-const active = (type, text) => {
-  console.log(text);
-  isActive.value = type;
-  msg.value = text;
+// get prompts
+const getPrompts = async () => {
+  try {
+    await axios.get("list-prompts").then((res) => {
+      console.log(res);
+      promptsListing.value = res.data.data;
+    });
+  } catch (error) {
+    console.error("Error uploading file:", error);
+  }
+
+  // Reset message input
+  msg.value = "";
+
+  // Scroll to bottom
+  nextTick(() => {
+    scrollToBottomInChatLog();
+  });
+};
+
+const msgValue = ref("");
+getPrompts();
+
+const active = (prompt) => {
+  isActive.value = prompt.key;
+  msg.value = prompt.key;
+  msgValue.value = prompt.value;
+};
+
+const handleChange = () => {
+  if (isCustomer.value == false) {
+    isResponse.value = false;
+    msgValue.value = "";
+  }
 };
 // Active chat user profile sidebar
 const isActiveChatUserProfileSidebarOpen = ref(false);
