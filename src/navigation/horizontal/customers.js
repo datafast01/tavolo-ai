@@ -1,7 +1,7 @@
 export default [
  
    {
-    title: 'List Customers',
+    title: 'Customers',
     icon: { icon: 'mdi-account-multiple' },
      to: 'customers',
    

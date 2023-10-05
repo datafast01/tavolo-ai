@@ -1,16 +1,16 @@
 export default [
  
    {
-    title: 'List Schedule',
+    title: 'List Campaigns',
     icon: { icon: 'mdi-account-multiple' },
      children: [
       {
-        title: 'Schedule Emails',
+        title: 'List Emails Campaigns',
         icon: { icon: 'mdi-account-circle-outline' },
        to: { name: 'schedule-emails' },
       },
       {
-        title: 'Schedule Messages',
+        title: 'List Messages Campaigns',
         icon: { icon: 'mdi-account-circle-outline' },
         to: { name: 'schedule-messages' },
       },

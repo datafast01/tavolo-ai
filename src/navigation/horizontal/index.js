@@ -10,4 +10,4 @@ import schedule from './schedule'
 // import others from './others'
 
 
-export default [...dashboard,askTavolo, ...email, ...messages, ...customers, ...schedule, ...profile]
+export default [...dashboard,askTavolo, ...email, ...messages, ...customers, ...schedule,  ...profile]
