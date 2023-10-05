@@ -111,6 +111,7 @@
             class="chat-message-input"
             placeholder="Type your message..."
             autofocus
+            :readonly="isCustomer"
           >
             <template #append-inner>
               <VBtn @click="sendMessage" :loading="loading">
