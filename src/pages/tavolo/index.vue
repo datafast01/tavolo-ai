@@ -176,7 +176,7 @@ const sendMessage = async () => {
 
   const payload = {
     customer: isCustomer.value,
-    text: msg.value,
+    text: isCustomer.value ? msg.value : msgValue.value,
   };
   try {
     await axios.post("ask-tavolo", payload).then((res) => {
@@ -231,6 +231,7 @@ const active = (prompt) => {
 const handleChange = () => {
   if (isCustomer.value == false) {
     isResponse.value = false;
+    isPrompt.value = false;
     msgValue.value = "";
   }
 };
