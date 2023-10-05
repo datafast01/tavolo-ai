@@ -29,9 +29,7 @@
       >
         <VCard flat :max-width="500" class="mt-12 mt-sm-0 pa-4">
           <VCardText>
-            <h5 class="text-h5 mb-1">
-              Welcome to {{ themeConfig.app.title }}! 👋🏻
-            </h5>
+            <h5 class="text-h5 mb-1">Welcome to Tavolo! 👋🏻</h5>
             <p class="mb-0">
               Please sign-in to your account and start the adventure
             </p>

@@ -38,7 +38,7 @@
         <VCard flat :max-width="500" class="mt-12 mt-sm-0 pa-4">
           <VCardText>
             <h5 class="text-h5 mb-1">Adventure starts here 🚀</h5>
-            <p class="mb-0">Make your app management easy and fun!</p>
+            <p class="mb-0">Make your resturant management easy and fun!</p>
           </VCardText>
 
           <VCardText>

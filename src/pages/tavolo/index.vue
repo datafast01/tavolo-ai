@@ -1,138 +1,140 @@
 <template>
-  <VLayout class="chat-app-layout bg-surface">
-    <VNavigationDrawer
-      v-model="isActiveChatUserProfileSidebarOpen"
-      width="374"
-      absolute
-      temporary
-      location="end"
-      touchless
-      class="active-chat-user-profile-sidebar"
-    >
-      <ChatActiveChatUserProfileSidebarContent
-        @close="isActiveChatUserProfileSidebarOpen = false"
-      />
-    </VNavigationDrawer>
+  <div class="d-flex flex-column">
+    <VCheckbox
+      label="Search from tavolo customers"
+      v-model="isCustomer"
+      @change="handleChange"
+      class="ml-3"
+    ></VCheckbox>
 
-    <!-- 👉 Left sidebar   -->
-    <VNavigationDrawer
-      v-model="isLeftSidebarOpen"
-      absolute
-      touchless
-      location="start"
-      width="370"
-      :temporary="$vuetify.display.smAndDown"
-      class="chat-list-sidebar"
-      :permanent="$vuetify.display.mdAndUp"
-    >
-      <VDivider />
-      <PerfectScrollbar
-        tag="ul"
-        class="chat-contacts-list px-3"
-        :options="{ wheelPropagation: false }"
+    <VLayout class="chat-app-layout bg-surface ml-3" style="height: 505px">
+      <VNavigationDrawer
+        v-model="isActiveChatUserProfileSidebarOpen"
+        width="374"
+        absolute
+        temporary
+        location="end"
+        touchless
+        class="active-chat-user-profile-sidebar"
       >
-        <li class="my-3">
-          <VCheckbox
-            label="Search from tavolo customers"
-            v-model="isCustomer"
-            @change="handleChange"
-          ></VCheckbox>
-        </li>
-        <div v-if="isCustomer">
-          <span
-            class="chat-contact-header d-block text-primary text-xl font-weight-medium my-3"
-            >Example Prompts</span
-          >
-          <li
-            v-for="prompt in promptsListing"
-            :key="prompt.key"
-            class="chat-contact cursor-pointer d-flex align-center"
-            :class="isActive == prompt.key ? 'chat-contact-active' : ''"
-            @click="active(prompt)"
-          >
-            <div class="flex-grow-1 ms-4 overflow-hidden">
-              <span>{{ prompt.value }}</span>
-            </div>
-          </li>
-        </div>
-      </PerfectScrollbar>
-    </VNavigationDrawer>
+        <ChatActiveChatUserProfileSidebarContent
+          @close="isActiveChatUserProfileSidebarOpen = false"
+        />
+      </VNavigationDrawer>
 
-    <!-- 👉 Chat content -->
-    <VMain class="chat-content-container">
-      <!-- 👉 Right content: Active Chat -->
-      <div class="d-flex flex-column h-100">
+      <!-- 👉 Left sidebar   -->
+      <VNavigationDrawer
+        v-if="isCustomer"
+        v-model="isLeftSidebarOpen"
+        absolute
+        touchless
+        location="start"
+        width="370"
+        :temporary="$vuetify.display.smAndDown"
+        class="chat-list-sidebar"
+        :permanent="$vuetify.display.mdAndUp"
+      >
         <VDivider />
-
-        <!-- Chat log -->
         <PerfectScrollbar
-          ref="chatLogPS"
           tag="ul"
+          class="chat-contacts-list px-3"
           :options="{ wheelPropagation: false }"
-          class="flex-grow-1"
         >
-          <div class="chat-log pa-5">
-            <div class="chat-group d-flex justify-space-between">
-              <div
-                class="chat-body d-inline-flex flex-column align-start"
-                style="max-width: 358px"
-                v-if="isResponse"
-              >
-                <span
-                  class="chat-content text-sm py-3 px-4 elevation-1 bg-surface chat-left mt-5"
-                >
-                  <div style="white-space: break-spaces">
-                    {{ AiResponse }}
-                  </div>
-                </span>
+          <div v-if="isCustomer">
+            <span
+              class="chat-contact-header d-block text-primary text-xl font-weight-medium my-3"
+              >Example Prompts</span
+            >
+            <li
+              v-for="prompt in promptsListing"
+              :key="prompt.key"
+              class="chat-contact cursor-pointer d-flex align-center"
+              :class="isActive == prompt.key ? 'chat-contact-active' : ''"
+              @click="active(prompt)"
+            >
+              <div class="flex-grow-1 ms-4 overflow-hidden">
+                <span>{{ prompt.value }}</span>
               </div>
-              <div
-                class="chat-body d-inline-flex flex-column align-end"
-                v-if="isPrompt"
-              >
-                <p
-                  class="chat-content text-sm py-3 px-4 elevation-1 bg-primary text-white chat-right mb-1"
-                >
-                  {{ msgValue }}
-                </p>
-              </div>
-            </div>
+            </li>
           </div>
         </PerfectScrollbar>
+      </VNavigationDrawer>
 
-        <!-- Message form -->
-        <VForm
-          class="chat-log-message-form mb-5 mx-5"
-          @submit.prevent="sendMessage"
-        >
-          <VTextField
-            v-model="msgValue"
-            variant="solo"
-            class="chat-message-input"
-            placeholder="Type your message..."
-            autofocus
-            :readonly="isCustomer"
+      <!-- 👉 Chat content -->
+      <VMain class="chat-content-container">
+        <!-- 👉 Right content: Active Chat -->
+        <div class="d-flex flex-column h-100">
+          <VDivider />
+
+          <!-- Chat log -->
+          <PerfectScrollbar
+            ref="chatLogPS"
+            tag="ul"
+            :options="{ wheelPropagation: false }"
+            class="flex-grow-1"
           >
-            <template #append-inner>
-              <VBtn @click="sendMessage" :loading="loading">
-                Send
+            <div class="chat-log pa-5">
+              <div class="chat-group d-flex justify-space-between">
+                <div
+                  class="chat-body d-inline-flex flex-column align-start"
+                  style="max-width: 358px"
+                  v-if="isResponse"
+                >
+                  <span
+                    class="chat-content text-sm py-3 px-4 elevation-1 bg-surface chat-left mt-5"
+                  >
+                    <div style="white-space: break-spaces">
+                      {{ AiResponse }}
+                    </div>
+                  </span>
+                </div>
+                <div
+                  class="chat-body d-inline-flex flex-column align-end"
+                  v-if="isPrompt"
+                >
+                  <p
+                    class="chat-content text-sm py-3 px-4 elevation-1 bg-primary text-white chat-right mb-1"
+                  >
+                    {{ msgValue }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </PerfectScrollbar>
 
-                <template v-slot:loader>
-                  <v-progress-linear indeterminate></v-progress-linear>
-                </template>
-              </VBtn>
-            </template>
-          </VTextField>
-        </VForm>
-      </div>
+          <!-- Message form -->
+          <VForm
+            class="chat-log-message-form mb-5 mx-5"
+            @submit.prevent="sendMessage"
+          >
+            <VTextField
+              v-model="msgValue"
+              variant="solo"
+              class="chat-message-input"
+              placeholder="Type your message..."
+              autofocus
+              :readonly="isCustomer"
+            >
+              <template #append-inner>
+                <VBtn @click="sendMessage" :loading="loading">
+                  Send
 
-      <!-- 👉 Start conversation -->
-    </VMain>
-  </VLayout>
+                  <template v-slot:loader>
+                    <v-progress-linear indeterminate></v-progress-linear>
+                  </template>
+                </VBtn>
+              </template>
+            </VTextField>
+          </VForm>
+        </div>
+
+        <!-- 👉 Start conversation -->
+      </VMain>
+    </VLayout>
+  </div>
 </template>
 
 <script setup>
-import ChatActiveChatUserProfileSidebarContent from "@/views/apps/chat/ChatActiveChatUserProfileSidebarContent.vue";
 import { useChatStore } from "@/views/apps/chat/useChatStore";
 import axios from "@axios";
 import { useResponsiveLeftSidebar } from "@core/composable/useResponsiveSidebar";

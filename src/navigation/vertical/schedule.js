@@ -1,17 +1,17 @@
 export default [
  
    {
-    title: 'List Campaigns',
-    icon: { icon: 'mdi-account-multiple' },
+    title: 'Campaigns',
+    icon: { icon: 'mdi-voice' },
      children: [
       {
-        title: 'List Emails Campaigns',
-        icon: { icon: 'mdi-account-circle-outline' },
+        title: 'Emails Campaigns',
+        icon: { icon: 'mdi-email' },
        to: { name: 'schedule-emails' },
       },
       {
-        title: 'List Messages Campaigns',
-        icon: { icon: 'mdi-account-circle-outline' },
+        title: 'Messages Campaigns',
+        icon: { icon: 'mdi-message-text-outline' },
         to: { name: 'schedule-messages' },
       },
    ]
