@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-column">
     <VCheckbox
-      label="Search from tavolo customers"
+      label="Search From Tavolo Customers"
       v-model="isCustomer"
       @change="handleChange"
       class="ml-3"
