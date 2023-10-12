@@ -1,5 +1,5 @@
 <template>
-  <VSnackbar v-model="show" :timeout="2000" :color="color">
+  <!-- <VSnackbar v-model="show" :timeout="2000" :color="color">
     {{ snkMsg }}
   </VSnackbar>
 
@@ -72,81 +72,252 @@
         <VSpacer />
       </div>
     </VCard>
+  </div> -->
+  <!-- <v-dialog width="500" v-model="showModal">
+    <v-card>
+      <div class="autoDatePicker">
+        <VRadioGroup v-model="selectedSchedule" :inline="true">
+          <VRadio label="Auto Sending" value="notSchedule" color="primary" />
+          <VRadio label="Scheduled" value="schedule" color="primary" />
+        </VRadioGroup>
+        <AppDateTimePicker
+          v-model="scheduleDate"
+          label="Schedule Date"
+          clear-icon="mdi-close"
+          clearable
+          style="width: 100%"
+          v-if="selectedSchedule == 'schedule'"
+        />
+      </div>
+      <VSelect
+        v-model="segment"
+        :items="segments"
+        density="compact"
+        item-title="name"
+        item-value="_id"
+        single-line
+      >
+      </VSelect>
+
+      <v-card-actions>
+        <v-spacer></v-spacer>
+
+        <v-btn text="Close Dialog" @click="showModal = false"></v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog> -->
+
+  <VDialog v-model="showModal" max-width="600">
+    <!-- Dialog Activator -->
+
+    <!-- Dialog Content -->
+    <VCard title="Select Campaign Type">
+      <DialogCloseBtn variant="text" size="small" @click="showModal = false" />
+
+      <VCardText>
+        <VRow>
+          <VCol cols="12">
+            <VSelect
+              v-model="segment"
+              :items="segments"
+              density="compact"
+              item-title="name"
+              item-value="_id"
+              single-line
+            >
+            </VSelect>
+          </VCol>
+          <VCol cols="12" sm="6">
+            <VRadioGroup v-model="selectedSchedule" :inline="true">
+              <VRadio
+                label="Auto Sending"
+                value="notSchedule"
+                color="primary"
+              />
+              <VRadio label="Scheduled" value="schedule" color="primary" />
+            </VRadioGroup>
+          </VCol>
+          <VCol cols="12" sm="6">
+            <!-- <AppDateTimePicker
+              v-model="scheduleDate"
+              label="Schedule Date"
+              clear-icon="mdi-close"
+              clearable
+              style="width: 100%"
+              v-if="selectedSchedule == 'schedule'"
+            /> -->
+            <VTextField
+              dense
+              type="date"
+              v-model="scheduleDate"
+              label="Schedule Date"
+              clear-icon="mdi-close"
+              v-if="selectedSchedule == 'schedule'"
+            />
+          </VCol>
+        </VRow>
+      </VCardText>
+
+      <VCardActions>
+        <VSpacer />
+        <VBtn color="secondary" @click="showModal = false"> Cancel </VBtn>
+        <VBtn color="primary" @click="sendCampaign"> Send To Campaign </VBtn>
+      </VCardActions>
+    </VCard>
+  </VDialog>
+  <div>
+    <!-- <Templates :templates="templates" /> -->
+    <v-row>
+      <v-col cols="12" md="3" @click="handleSocialMedia">
+        <div
+          v-for="template in templates"
+          :key="template"
+          class="mb-6 cursor-pointer"
+          :class="activeTemplate == template.key ? 'active-border' : ''"
+        >
+          <img
+            src="../../assets/images/email-templates/template01.png"
+            alt=""
+            style="height: 275px; width: 258px"
+            @click="selectTemplate(template)"
+          />
+        </div>
+      </v-col>
+      <v-divider :thickness="3" vertical></v-divider>
+      <v-col cols="12" md="8" class="">
+        <Template01 ref="t01" :template="templates[0]" />
+      </v-col>
+    </v-row>
+    <VBtnGroup
+      color="primary"
+      divided
+      density="comfortable"
+      class="d-flex justify-end"
+      style="width: 100%"
+    >
+      <VBtn @click="sendEmail">Send</VBtn>
+    </VBtnGroup>
   </div>
 </template>
 
-<script setup>
+<script>
 import axios from "@axios";
-const emit = defineEmits(["close"]);
+// import Templates from "./Templates.vue";
+import Template01 from "./Template01.vue";
 
-const segment = ref("650e0f5b6df52a436ca3f12e");
-const subject = ref("Celebrate Mother’s Day!");
+export default {
+  components: { Template01 },
+  data() {
+    return {
+      showModal: false,
+      segment: "650e0f5b6df52a436ca3f12e",
+      scheduleDate: new Date(
+        Date.now() - new Date().getTimezoneOffset() * 60000
+      )
+        .toISOString()
+        .substr(0, 10),
+      selectedSchedule: "notSchedule",
+      segments: [],
+      show: false,
+      snkMsg: "",
+      color: "#9575CD",
+      templates: [],
+      activeTemplate: "t01",
+      base64Image: null,
+      loading: false,
+    };
+  },
+  methods: {
+    getEmailSegmnts() {
+      axios
+        .get(`dashboard/segmant`)
+        .then((res) => {
+          console.log(res.data.data, "=============>>>");
+          this.segments = res.data.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    sendCampaign() {
+      console.log(this.$refs.t01.message);
 
-const message = ref(
-  "This Sunday, on Mother's Day, we're giving all moms a free glass of rosé or mimosa when they dine in. \nJoin us at any Urban Skillet location.Our tables are set and we can't wait to celebrate!\nWe can't wait to serve you soon.\nBest regards,\nUrban Skillet Team!"
-);
-const isMenuOpen = ref(false);
-const scheduleDate = ref(
-  new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-    .toISOString()
-    .substr(0, 10)
-);
-const selectedSchedule = ref("schedule");
+      let payload = {
+        segmantId: this.segment,
+        subject: this.$refs.t01.subject,
+        text: this.$refs.t01.message,
+        schedule: this.selectedSchedule == "schedule" ? "true" : "false",
+        scheduleDate: this.scheduleDate,
+      };
 
-const segments = ref([]);
-let show = ref(false);
-let snkMsg = ref("");
-let color = ref("#9575CD");
+      console.log(payload);
+      axios
+        .post(`dashboard/email`, payload)
+        .then((res) => {
+          console.log(res.data.data, "=============>>>");
+          this.show = true;
+          this.snkMsg = "Email sent successfully";
+          this.showModal = false;
+        })
+        .catch((err) => {
+          console.log(err.response);
+          this.show = true;
+
+          if (err.response.status == 400) {
+            this.snkMsg = err.response.data.error;
+          } else {
+            this.snkMsg = "Something went wrong";
+          }
+          this.color = "error";
+        });
+    },
+    sendEmail() {
+      this.showModal = true;
+    },
+
+    getTemplates() {
+      this.loading = true;
+      axios
+        .get(`dashboard/list-email-templates`)
+        .then((res) => {
+          console.log(res.data, "=============>>>");
+          this.templates = res.data.data;
+          this.base64Image =
+            "data:image;base64," + this.templates[0].userFiles.companyLogo;
+          console.log(this.base64Image);
+          this.loading = false;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    selectTemplate(template) {
+      this.activeTemplate = template.key;
+    },
+    templateIsSelected() {
+      let payload = {
+        templateId: this.activeTemplate,
+      };
+      axios
+        .post(`dashboard/select-email-template`, payload)
+        .then((res) => {
+          console.log(res.data.data, "=============>>>");
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    },
+  },
+  mounted() {
+    this.getTemplates();
+    this.getEmailSegmnts();
+  },
+};
+
 //Methods
-const getEmailSegmnts = () => {
-  axios
-    .get(`dashboard/segmant`)
-    .then((res) => {
-      console.log(res.data.data, "=============>>>");
-      segments.value = res.data.data;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
-
-const sendEmail = () => {
-  let payload = {
-    segmantId: segment.value,
-    subject: subject.value,
-    text: message.value,
-    schedule: selectedSchedule.value == "schedule" ? "true" : "false",
-    scheduleDate: scheduleDate.value,
-  };
-  axios
-    .post(`dashboard/email`, payload)
-    .then((res) => {
-      console.log(res.data.data, "=============>>>");
-      show.value = true;
-      snkMsg.value = "Email sent successfully";
-    })
-    .catch((err) => {
-      console.log(err.response);
-      show.value = true;
-      if (err.response.status == 400) {
-        snkMsg.value = err.response.data.error;
-      } else {
-        snkMsg.value = "Something went wrong";
-      }
-      color.value = "error";
-    });
-};
-
-getEmailSegmnts();
 </script>
 
 <style lang="scss" scoped>
-.autoDatePicker {
-  margin-bottom: 30px;
-  width: 300px;
-  float: right;
-}
-
 .email-compose-dialog {
   z-index: 910 !important;
 
@@ -165,5 +336,24 @@ getEmailSegmnts();
   .v-field__outline {
     display: none;
   }
+}
+
+.active-border {
+  border: 6px solid rgb(var(--v-theme-primary));
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+.top-logo {
+  height: 150px;
+  width: 150px;
+  border: 3px dotted rgb(var(--v-theme-primary));
+}
+.center-logo {
+  height: 150px;
+  width: 450px;
+  border: 3px dotted rgb(var(--v-theme-primary));
+}
+.cursor-pointer {
+  cursor: pointer;
 }
 </style>

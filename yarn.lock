@@ -1517,6 +1517,11 @@
   "resolved" "https://registry.npmjs.org/convert-source-map/-/convert-source-map-1.9.0.tgz"
   "version" "1.9.0"
 
+"core-js@^3.8.3":
+  "integrity" "sha512-HoZr92+ZjFEKar5HS6MC776gYslNOKHt75mEBKWKnPeFDpZ6nH5OeF3S6HFT1mUAUZKrzkez05VboaX8myjSuw=="
+  "resolved" "https://registry.npmjs.org/core-js/-/core-js-3.33.0.tgz"
+  "version" "3.33.0"
+
 "cosmiconfig@^7.1.0":
   "integrity" "sha512-AdmX6xUzdNASswsFtmwSt7Vj8po9IuqXm0UXz7QKPuEUmPB4XyjGfaAr2PSuELMwkRMVH1EpIkX5bTZGRB3eCA=="
   "resolved" "https://registry.npmjs.org/cosmiconfig/-/cosmiconfig-7.1.0.tgz"
@@ -5051,6 +5056,14 @@
   "resolved" "https://registry.npmjs.org/vue-demi/-/vue-demi-0.14.1.tgz"
   "version" "0.14.1"
 
+"vue-email-editor@^2.0.0":
+  "integrity" "sha512-w4pF1CsnW6q7labkq720lYw3T/pef+cqs2e14bwjuSh0sH59ozRa9E3a3gxcpucJQjldfNvxnY7H5LKKyLdRKg=="
+  "resolved" "https://registry.npmjs.org/vue-email-editor/-/vue-email-editor-2.0.0.tgz"
+  "version" "2.0.0"
+  dependencies:
+    "core-js" "^3.8.3"
+    "vue" "^3.2.13"
+
 "vue-eslint-parser@^9.0.1":
   "integrity" "sha512-tPOex4n6jit4E7h68auOEbDMwE58XiP4dylfaVTCOVCouR45g+QFDBjgIdEU52EXJxKyjgh91dLfN2rxUcV0bQ=="
   "resolved" "https://registry.npmjs.org/vue-eslint-parser/-/vue-eslint-parser-9.2.1.tgz"
@@ -5100,7 +5113,7 @@
   dependencies:
     "shepherd.js" "^11.1.0"
 
-"vue@^2.6.12 || ^3.2.4", "vue@^2.6.14 || ^3.2.0", "vue@^2.7.0 || ^3.2.25", "vue@^3.0.0", "vue@^3.0.0-0 || ^2.6.0", "vue@^3.0.0-0 || ^2.7.0", "vue@^3.0.11", "vue@^3.2.0", "vue@^3.2.25", "vue@> 3.0.0", "vue@>=3", "vue@>=3.0.0", "vue@2 || 3", "vue@3.3.2":
+"vue@^2.6.12 || ^3.2.4", "vue@^2.6.14 || ^3.2.0", "vue@^2.7.0 || ^3.2.25", "vue@^3.0.0", "vue@^3.0.0-0 || ^2.6.0", "vue@^3.0.0-0 || ^2.7.0", "vue@^3.0.11", "vue@^3.2.0", "vue@^3.2.13", "vue@^3.2.25", "vue@> 3.0.0", "vue@>=3", "vue@>=3.0.0", "vue@2 || 3", "vue@3.3.2":
   "integrity" "sha512-98hJcAhyDwZoOo2flAQBSPVYG/o0HA9ivIy2ktHshjE+6/q8IMQ+kvDKQzOZTFPxvnNMcGM+zS2A00xeZMA7tA=="
   "resolved" "https://registry.npmjs.org/vue/-/vue-3.3.2.tgz"
   "version" "3.3.2"
