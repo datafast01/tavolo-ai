@@ -185,7 +185,11 @@
       </v-col>
       <v-divider :thickness="3" vertical></v-divider>
       <v-col cols="12" md="8" class="">
-        <Template01 ref="t01" :template="templates[0]" />
+        <Template01
+          ref="t01"
+          :template="templates[0]"
+          @refresh="getTemplates"
+        />
       </v-col>
     </v-row>
     <VBtnGroup

@@ -1,5 +1,8 @@
 <template>
   <div>
+    <VSnackbar v-model="show" :timeout="2000" :color="color">
+      {{ snkMsg }}
+    </VSnackbar>
     <div class="d-flex justify-center ml-10 my-8" @click="handleSocialMedia">
       <div class="top-logo" @click="handleChange('topLogo')">
         <img
@@ -232,6 +235,9 @@ export default {
       facebookURL: "",
       instaUrl: "",
       tiktokUrl: "",
+      show: false,
+      snkMsg: "",
+      color: "#9575CD",
     };
   },
   computed: {},
@@ -270,24 +276,35 @@ export default {
     },
     handleFileChange(event) {
       const selectedFile = event.target.files[0];
-      if (selectedFile) {
-        this.topLogoFile = selectedFile;
-        this.topLogoUrl = URL.createObjectURL(selectedFile);
-        console.log(selectedFile, "al;kdjfalkd");
 
-        let data = new FormData();
-        data.append("file", selectedFile);
-        data.append("templateId", "t01");
-        data.append("companyLogo", true);
-        axios
-          .post(`dashboard/add-email-template-data`, data)
+      const fileSizeInBytes = selectedFile.size;
+      const fileSizeInKB = fileSizeInBytes / 1024;
+      const fileSizeInMB = fileSizeInKB / 1024;
+      if (fileSizeInMB > 2) {
+        this.show = true;
+        this.snkMsg = "Please select file less than 2 MB";
+        return;
+      } else {
+        if (selectedFile) {
+          this.topLogoFile = selectedFile;
 
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+          console.log(selectedFile, "al;kdjfalkd");
+
+          let data = new FormData();
+          data.append("file", selectedFile);
+          data.append("templateId", "t01");
+          data.append("companyLogo", true);
+          axios
+            .post(`dashboard/add-email-template-data`, data)
+
+            .then((res) => {
+              console.log(res);
+              this.$emit("refresh");
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
       }
     },
 
@@ -297,25 +314,31 @@ export default {
       const fileSizeInBytes = selectedFile.size;
       const fileSizeInKB = fileSizeInBytes / 1024;
       const fileSizeInMB = fileSizeInKB / 1024;
-      console.log(fileSizeInMB);
-      if (selectedFile && fileSizeInMB < 2) {
-        this.mainImageFile = selectedFile;
-        this.mainImageUrl = URL.createObjectURL(selectedFile);
-        console.log(selectedFile, "al;kdjfalkd");
+      if (fileSizeInMB > 1) {
+        this.show = true;
+        this.snkMsg = "Please select file less than 1 MB";
+        return;
+      } else {
+        if (selectedFile) {
+          this.mainImageFile = selectedFile;
 
-        let data = new FormData();
-        data.append("file", selectedFile);
-        data.append("templateId", "t01");
-        data.append("productImage", true);
-        axios
-          .post(`dashboard/add-email-template-data`, data)
+          console.log(selectedFile, "al;kdjfalkd");
 
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+          let data = new FormData();
+          data.append("file", selectedFile);
+          data.append("templateId", "t01");
+          data.append("productImage", true);
+          axios
+            .post(`dashboard/add-email-template-data`, data)
+
+            .then((res) => {
+              console.log(res);
+              this.$emit("refresh");
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
       }
     },
     handleBottomLogo(event) {
