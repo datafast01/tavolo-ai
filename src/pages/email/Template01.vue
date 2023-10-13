@@ -9,9 +9,8 @@
       density="comfortable"
       class="d-flex justify-end"
       style="width: 100%"
-      @click="showModal = true"
     >
-      <VBtn>Generate Email From Tavolo AI</VBtn>
+      <VBtn @click="showModal = true">Generate Email From Tavolo AI</VBtn>
     </VBtnGroup>
     <div class="d-flex justify-center ml-10 my-8" @click="handleSocialMedia">
       <div class="top-logo" @click="handleChange('topLogo')">
