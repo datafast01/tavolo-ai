@@ -3,6 +3,16 @@
     <VSnackbar v-model="show" :timeout="2000" :color="color">
       {{ snkMsg }}
     </VSnackbar>
+    <VBtnGroup
+      color="primary"
+      divided
+      density="comfortable"
+      class="d-flex justify-end"
+      style="width: 100%"
+      @click="showModal = true"
+    >
+      <VBtn>Generate Email From Tavolo AI</VBtn>
+    </VBtnGroup>
     <div class="d-flex justify-center ml-10 my-8" @click="handleSocialMedia">
       <div class="top-logo" @click="handleChange('topLogo')">
         <img
@@ -202,6 +212,45 @@
         >
       </p>
     </div>
+
+    <VDialog v-model="showModal" max-width="600">
+      <!-- Dialog Activator -->
+
+      <!-- Dialog Content -->
+      <VCard title="Generate Email From Tavolo AI">
+        <DialogCloseBtn variant="text" size="small" @click="closeModal" />
+
+        <VCardText>
+          <VRow>
+            <VCol cols="12" sm="12">
+              <VTextField
+                dense
+                label="Give Email Prompt"
+                v-model="emailPrompt"
+                required
+              />
+            </VCol>
+            <VCol cols="12"> Subject Line: {{ generatedEmail.subject }} </VCol>
+            <VCol cols="12"> Body: {{ generatedEmail.body }} </VCol>
+          </VRow>
+        </VCardText>
+
+        <VCardActions>
+          <VSpacer />
+          <VBtn color="secondary" @click="closeModal"> Cancel </VBtn>
+          <VBtn color="primary" @click="generateEmail" :loading="aiLoading">
+            Generate Email
+          </VBtn>
+          <VBtn
+            color="success"
+            @click="sendToTemplate"
+            v-if="generatedEmail.body != ''"
+          >
+            Save
+          </VBtn>
+        </VCardActions>
+      </VCard>
+    </VDialog>
   </div>
 </template>
 <script>
@@ -215,8 +264,9 @@ export default {
   },
   data() {
     return {
+      aiLoading: false,
       topLogoFile: null,
-
+      showModal: false,
       mainImageFile: null,
 
       bottomImageUrl:
@@ -238,6 +288,8 @@ export default {
       show: false,
       snkMsg: "",
       color: "#9575CD",
+      emailPrompt: "",
+      generatedEmail: { subject: "", body: "" },
     };
   },
   computed: {},
@@ -350,6 +402,43 @@ export default {
     },
     handleChange(id) {
       document.getElementById(id).click();
+    },
+    sendToTemplate() {
+      this.subject = this.generatedEmail.subject;
+      this.message = this.generatedEmail.body;
+      this.closeModal();
+    },
+    generateEmail() {
+      if (this.emailPrompt.trim() == "") {
+        this.show = true;
+        this.snkMsg = "Please give the email prompt";
+        this.color = "error";
+      } else {
+        this.aiLoading = true;
+        const payload = {
+          customer: false,
+          text: `${this.emailPrompt} return object like this {"subject":"", "body":""} don't add anything else`,
+        };
+        try {
+          axios.post("ask-tavolo", payload).then((res) => {
+            console.log(res.data.data);
+            let json = res.data.data;
+            console.log(json);
+            const email = json.replace(/\n/g, "");
+            console.log(email);
+            this.generatedEmail = JSON.parse(email);
+            this.aiLoading = false;
+          });
+        } catch (error) {
+          console.error("Error uploading file:", error);
+        }
+      }
+    },
+    closeModal() {
+      this.showModal = false;
+      this.generatedEmail.subject = "";
+      this.generatedEmail.body = "";
+      this.emailPrompt = "";
     },
   },
 };
