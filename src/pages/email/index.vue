@@ -153,7 +153,7 @@
               <DialogCloseBtn
                 variant="text"
                 size="small"
-                @click="showModalGpt"
+                @click="showModalGpt = false"
               />
 
               <VCardText>
