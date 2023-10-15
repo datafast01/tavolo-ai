@@ -353,7 +353,7 @@ export default {
 // Compose dialog
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @use "@styles/variables/_vuetify.scss";
 @use "@core/scss/base/_mixins.scss";
 
