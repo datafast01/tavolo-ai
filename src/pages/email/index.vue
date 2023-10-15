@@ -1,218 +1,222 @@
 <template>
-  <!-- <VSnackbar v-model="show" :timeout="2000" :color="color">
-    {{ snkMsg }}
-  </VSnackbar>
-
-  <div class="d-flex flex-column">
-    <div class="autoDatePicker">
-      <AppDateTimePicker
-        v-model="scheduleDate"
-        label="Schedule Date"
-        clear-icon="mdi-close"
-        clearable
-        style="width: 100%"
-      />
-      <VRadioGroup v-model="selectedSchedule" :inline="true">
-        <VRadio label="Auto Sending" value="notSchedule" color="primary" />
-        <VRadio label="Scheduled" value="schedule" color="primary" />
-      </VRadioGroup>
-    </div>
-    <VCard class="email-compose-dialog" elevation="24">
-      <VCardItem class="py-3 px-5">
-        <div class="d-flex align-center">
-          <span class="font-weight-medium">Compose Mail</span>
-          <VSpacer />
-        </div>
-      </VCardItem>
-      <div class="px-4">
-        <div class="mt-4">
-          <VSelect
-            v-model="segment"
-            :items="segments"
-            density="compact"
-            item-title="name"
-            item-value="_id"
-            single-line
-          >
-            <template #prepend-inner>
-              <div class="text-disabled" style="width: max-content">
-                Select Segment:
-              </div>
-            </template>
-          </VSelect>
-        </div>
-
-        <VTextField v-model="subject" density="compact" class="my-4">
-          <template #prepend-inner>
-            <div class="text-sm text-disabled">Subject:</div>
-          </template>
-        </VTextField>
-
-        <VDivider />
-
-        <VTextarea v-model="message" placeholder="Message" />
-      </div>
-
-      <VDivider />
-
-      <div class="d-flex align-center px-5 py-4">
-        <VBtnGroup color="primary" divided density="comfortable">
-          <VBtn @click="sendEmail">Send</VBtn>
-          <VBtn icon @click="() => (isMenuOpen = !isMenuOpen)">
-            <VIcon
-              :icon="isMenuOpen ? 'mdi-menu-up' : 'mdi-menu-down'"
-              size="24"
-            />
-            <VMenu activator="parent">
-              <VList :items="['Schedule Mail']" />
-            </VMenu>
-          </VBtn>
-        </VBtnGroup>
-
-        <VSpacer />
-      </div>
-    </VCard>
-  </div> -->
-  <!-- <v-dialog width="500" v-model="showModal">
-    <v-card>
-      <div class="autoDatePicker">
-        <VRadioGroup v-model="selectedSchedule" :inline="true">
-          <VRadio label="Auto Sending" value="notSchedule" color="primary" />
-          <VRadio label="Scheduled" value="schedule" color="primary" />
-        </VRadioGroup>
-        <AppDateTimePicker
-          v-model="scheduleDate"
-          label="Schedule Date"
-          clear-icon="mdi-close"
-          clearable
-          style="width: 100%"
-          v-if="selectedSchedule == 'schedule'"
-        />
-      </div>
-      <VSelect
-        v-model="segment"
-        :items="segments"
-        density="compact"
-        item-title="name"
-        item-value="_id"
-        single-line
-      >
-      </VSelect>
-
-      <v-card-actions>
-        <v-spacer></v-spacer>
-
-        <v-btn text="Close Dialog" @click="showModal = false"></v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog> -->
-
-  <VDialog v-model="showModal" max-width="600">
-    <!-- Dialog Activator -->
-
-    <!-- Dialog Content -->
-    <VCard title="Select Campaign Type">
-      <DialogCloseBtn variant="text" size="small" @click="showModal = false" />
-
-      <VCardText>
-        <VRow>
-          <VCol cols="12">
-            <VSelect
-              v-model="segment"
-              :items="segments"
-              density="compact"
-              item-title="name"
-              item-value="_id"
-              single-line
-            >
-            </VSelect>
-          </VCol>
-          <VCol cols="12" sm="6">
-            <VRadioGroup v-model="selectedSchedule" :inline="true">
-              <VRadio
-                label="Auto Sending"
-                value="notSchedule"
-                color="primary"
-              />
-              <VRadio label="Scheduled" value="schedule" color="primary" />
-            </VRadioGroup>
-          </VCol>
-          <VCol cols="12" sm="6">
-            <!-- <AppDateTimePicker
-              v-model="scheduleDate"
-              label="Schedule Date"
-              clear-icon="mdi-close"
-              clearable
-              style="width: 100%"
-              v-if="selectedSchedule == 'schedule'"
-            /> -->
-            <VTextField
-              dense
-              type="date"
-              v-model="scheduleDate"
-              label="Schedule Date"
-              clear-icon="mdi-close"
-              v-if="selectedSchedule == 'schedule'"
-            />
-          </VCol>
-        </VRow>
-      </VCardText>
-
-      <VCardActions>
-        <VSpacer />
-        <VBtn color="secondary" @click="showModal = false"> Cancel </VBtn>
-        <VBtn color="primary" @click="sendCampaign"> Send To Campaign </VBtn>
-      </VCardActions>
-    </VCard>
-  </VDialog>
-  <div>
-    <!-- <Templates :templates="templates" /> -->
-    <v-row>
-      <v-col cols="12" md="3" @click="handleSocialMedia">
-        <div
-          v-for="template in templates"
-          :key="template"
-          class="mb-6 cursor-pointer"
-          :class="activeTemplate == template.key ? 'active-border' : ''"
-        >
-          <img
-            src="../../assets/images/email-templates/template01.png"
-            alt=""
-            style="height: 275px; width: 258px"
-            @click="selectTemplate(template)"
-          />
-        </div>
-      </v-col>
-      <v-divider :thickness="3" vertical></v-divider>
-      <v-col cols="12" md="8" class="">
-        <Template01
-          ref="t01"
-          :template="templates[0]"
-          @refresh="getTemplates"
-        />
-      </v-col>
-    </v-row>
-    <VBtnGroup
-      color="primary"
-      divided
-      density="comfortable"
-      class="d-flex justify-end"
-      style="width: 100%"
+  <VLayout class="email-app-layout">
+    <VSnackbar v-model="show" :timeout="2000" :color="color">
+      {{ snkMsg }}
+    </VSnackbar>
+    <VNavigationDrawer
+      absolute
+      touchless
+      location="start"
+      :temporary="$vuetify.display.mdAndDown"
     >
-      <VBtn @click="sendEmail">Send</VBtn>
-    </VBtnGroup>
-  </div>
+      <div class="d-flex flex-column h-100">
+        <!-- 👉 Compose -->
+        <div class="pa-5">
+          <VBtn block @click="showModalGpt = true"> Generate Email </VBtn>
+        </div>
+
+        <!-- 👉 Folders -->
+        <PerfectScrollbar :options="{ wheelPropagation: false }" class="h-100">
+          <ul class="email-filters-labels pt-3">
+            <div
+              v-for="folder in folders"
+              :key="folder.title"
+              class="d-flex align-center cursor-pointer pa-2 ml-2"
+              custom
+            >
+              <li
+                :class="
+                  selectedComponent == folder.key
+                    ? 'email-filter-active text-primary'
+                    : ''
+                "
+                class="d-flex align-center cursor-pointer"
+                @click="navigateComponent(folder)"
+              >
+                <VIcon :icon="folder.prependIcon" class="me-3" size="20" />
+                <span>{{ folder.title }}</span>
+
+                <VSpacer />
+              </li>
+            </div>
+          </ul>
+        </PerfectScrollbar>
+      </div>
+    </VNavigationDrawer>
+
+    <VMain>
+      <VCard
+        flat
+        class="email-content-list d-flex flex-column"
+        style="height: 530px"
+      >
+        <div v-if="selectedComponent == 'newCampaign'">
+          <div class="d-flex align-center">
+            <!-- 👉 Search -->
+            <VTextField v-model="subject" class="email-search px-4 flex-grow-1">
+              <template v-slot:prepend-inner> Subject: </template>
+              <template v-slot:append>
+                <VBtn block class="mb-3" @click="sendEmail"> Send Email </VBtn>
+              </template>
+            </VTextField>
+          </div>
+
+          <VDivider />
+
+          <!-- 👉 Action bar -->
+          <div class="py-2 px-5 d-flex align-center">
+            <!-- TODO: Make checkbox primary on indeterminate state -->
+
+            <VTextarea
+              v-model="message"
+              placeholder="Message"
+              label="Email Body"
+              class="email-search"
+              rows="10"
+            />
+          </div>
+          <VDivider />
+          <VTextarea
+            v-model="footer"
+            placeholder="Footer"
+            class="email-search"
+            rows="3"
+          />
+          <VDialog v-model="showModal" max-width="600">
+            <!-- Dialog Activator -->
+
+            <!-- Dialog Content -->
+            <VCard title="Select Campaign Type">
+              <DialogCloseBtn
+                variant="text"
+                size="small"
+                @click="showModal = false"
+              />
+
+              <VCardText>
+                <VRow>
+                  <VCol cols="12">
+                    <VSelect
+                      v-model="segment"
+                      :items="segments"
+                      density="compact"
+                      item-title="name"
+                      item-value="_id"
+                      single-line
+                    >
+                    </VSelect>
+                  </VCol>
+                  <VCol cols="12" sm="6">
+                    <VRadioGroup v-model="selectedSchedule" :inline="true">
+                      <VRadio
+                        label="Auto Sending"
+                        value="notSchedule"
+                        color="primary"
+                      />
+                      <VRadio
+                        label="Scheduled"
+                        value="schedule"
+                        color="primary"
+                      />
+                    </VRadioGroup>
+                  </VCol>
+                  <VCol cols="12" sm="6">
+                    <VTextField
+                      dense
+                      type="date"
+                      v-model="scheduleDate"
+                      label="Schedule Date"
+                      clear-icon="mdi-close"
+                      v-if="selectedSchedule == 'schedule'"
+                    />
+                  </VCol>
+                </VRow>
+              </VCardText>
+
+              <VCardActions>
+                <VSpacer />
+                <VBtn color="secondary" @click="showModal = false">
+                  Cancel
+                </VBtn>
+                <VBtn color="primary" @click="sendCampaign">
+                  Send To Campaign
+                </VBtn>
+              </VCardActions>
+            </VCard>
+          </VDialog>
+
+          <VDialog v-model="showModalGpt" max-width="600">
+            <!-- Dialog Activator -->
+
+            <!-- Dialog Content -->
+            <VCard title="Generate Email From Tavolo AI">
+              <DialogCloseBtn
+                variant="text"
+                size="small"
+                @click="showModalGpt"
+              />
+
+              <VCardText>
+                <VRow>
+                  <VCol cols="12" sm="12">
+                    <VTextField
+                      dense
+                      label="Give Email Prompt"
+                      v-model="emailPrompt"
+                      required
+                    />
+                  </VCol>
+                  <VCol cols="12">
+                    Subject Line: {{ generatedEmail.subject }}
+                  </VCol>
+                  <VCol cols="12"> Body: {{ generatedEmail.body }} </VCol>
+                </VRow>
+              </VCardText>
+
+              <VCardActions>
+                <VSpacer />
+                <VBtn color="secondary" @click="closeModal"> Cancel </VBtn>
+                <VBtn
+                  color="primary"
+                  @click="generateEmail"
+                  :loading="aiLoading"
+                >
+                  Generate Email
+                </VBtn>
+                <VBtn
+                  color="success"
+                  @click="sendToTemplate"
+                  v-if="generatedEmail.body != ''"
+                >
+                  Save
+                </VBtn>
+              </VCardActions>
+            </VCard>
+          </VDialog>
+        </div>
+        <Campaigns v-if="selectedComponent == 'sent'" style="overflow: auto" />
+        <ListTemplates
+          v-if="selectedComponent == 'templates'"
+          style="overflow: auto"
+        />
+        <!-- 👉 Emails list -->
+      </VCard>
+    </VMain>
+  </VLayout>
 </template>
 
 <script>
 import axios from "@axios";
-// import Templates from "./Templates.vue";
-import Template01 from "./Template01.vue";
-
+import { PerfectScrollbar } from "vue3-perfect-scrollbar";
+import Campaigns from "./Campaigns.vue";
+import ListTemplates from "./ListTemplates.vue";
 export default {
-  components: { Template01 },
+  components: { Campaigns, ListTemplates },
   data() {
     return {
+      isComposeDialogVisible: false,
+      showModalGpt: false,
+      selectedComponent: "newCampaign",
       showModal: false,
       segment: "650e0f5b6df52a436ca3f12e",
       scheduleDate: new Date(
@@ -220,18 +224,44 @@ export default {
       )
         .toISOString()
         .substr(0, 10),
-      selectedSchedule: "notSchedule",
-      segments: [],
       show: false,
       snkMsg: "",
       color: "#9575CD",
-      templates: [],
-      activeTemplate: "t01",
-      base64Image: null,
+      selectedSchedule: "notSchedule",
+      segments: [],
+      // Ref
+      footer: "Copyright (c) 2023 To Unsubscribe Click here",
+      folders: [
+        {
+          title: "New Campaigns",
+          prependIcon: "mdi-email-outline",
+          key: "newCampaign",
+        },
+        {
+          title: "Sent Campaigns",
+          prependIcon: "mdi-send-outline",
+          key: "sent",
+        },
+        {
+          title: "Templates",
+          prependIcon: "mdi-pencil-outline",
+          key: "templates",
+        },
+      ],
+      subject: "Apple Crisp Pre-Sale Is Here! 📣",
+      message:
+        "This Sunday, on Mother's Day, we're giving all moms a free glass of rosé or mimosa when they dine in. \nJoin us at any Urban Skillet location.Our tables are set and we can't wait to celebrate!\nWe can't wait to serve you soon.\nBest regards,\nUrban Skillet Team!",
+      aiLoading: false,
       loading: false,
+      emailPrompt: "",
+      generatedEmail: { subject: "", body: "" },
     };
   },
+
   methods: {
+    navigateComponent(component) {
+      this.selectedComponent = component.key;
+    },
     getEmailSegmnts() {
       axios
         .get(`dashboard/segmant`)
@@ -244,12 +274,10 @@ export default {
         });
     },
     sendCampaign() {
-      console.log(this.$refs.t01.message);
-
       let payload = {
         segmantId: this.segment,
-        subject: this.$refs.t01.subject,
-        text: this.$refs.t01.message,
+        subject: this.subject,
+        text: this.message,
         schedule: this.selectedSchedule == "schedule" ? "true" : "false",
         scheduleDate: this.scheduleDate,
       };
@@ -279,85 +307,148 @@ export default {
       this.showModal = true;
     },
 
-    getTemplates() {
-      this.loading = true;
-      axios
-        .get(`dashboard/list-email-templates`)
-        .then((res) => {
-          console.log(res.data, "=============>>>");
-          this.templates = res.data.data;
-          this.base64Image =
-            "data:image;base64," + this.templates[0].userFiles.companyLogo;
-          console.log(this.base64Image);
-          this.loading = false;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    generateEmail() {
+      if (this.emailPrompt.trim() == "") {
+        this.show = true;
+        this.snkMsg = "Please give the email prompt";
+        this.color = "error";
+      } else {
+        this.aiLoading = true;
+        const payload = {
+          customer: false,
+          text: `${this.emailPrompt} return object like this {"subject":"", "body":""} don't add anything else`,
+        };
+        try {
+          axios.post("ask-tavolo", payload).then((res) => {
+            console.log(res.data.data);
+            let json = res.data.data;
+            console.log(json);
+            const email = json.replace(/\n/g, "");
+            console.log(email);
+            this.generatedEmail = JSON.parse(email);
+            this.aiLoading = false;
+          });
+        } catch (error) {
+          console.error("Error uploading file:", error);
+        }
+      }
     },
-    selectTemplate(template) {
-      this.activeTemplate = template.key;
+    sendToTemplate() {
+      this.subject = this.generatedEmail.subject;
+      this.message = this.generatedEmail.body;
+      this.closeModal();
     },
-    templateIsSelected() {
-      let payload = {
-        templateId: this.activeTemplate,
-      };
-      axios
-        .post(`dashboard/select-email-template`, payload)
-        .then((res) => {
-          console.log(res.data.data, "=============>>>");
-        })
-        .catch((err) => {
-          console.log(err.response);
-        });
+    closeModal() {
+      this.showModalGpt = false;
+      this.generatedEmail.subject = "";
+      this.generatedEmail.body = "";
+      this.emailPrompt = "";
     },
   },
   mounted() {
-    this.getTemplates();
     this.getEmailSegmnts();
   },
 };
 
-//Methods
+// Compose dialog
 </script>
 
-<style lang="scss" scoped>
-.email-compose-dialog {
-  z-index: 910 !important;
+<style lang="scss">
+@use "@styles/variables/_vuetify.scss";
+@use "@core/scss/base/_mixins.scss";
 
-  .v-field--prepended {
-    padding-inline-start: 20px;
-  }
-
-  .v-card-item {
-    background-color: rgba(var(--v-theme-on-surface), var(--v-hover-opacity));
-  }
-
-  .v-textarea .v-field {
-    --v-field-padding-start: 20px;
-  }
-
+// ℹ️ Remove border. Using variant plain cause UI issue, caret isn't align in center
+.email-search {
   .v-field__outline {
     display: none;
   }
 }
 
-.active-border {
-  border: 6px solid rgb(var(--v-theme-primary));
-  padding-top: 6px;
-  padding-bottom: 6px;
+.email-app-layout {
+  border-radius: vuetify.$card-border-radius;
+
+  @include mixins.elevation(vuetify.$card-elevation);
+
+  $sel-email-app-layout: &;
+
+  @at-root {
+    .skin--bordered {
+      @include mixins.bordered-skin($sel-email-app-layout);
+    }
+  }
 }
-.top-logo {
-  height: 150px;
-  width: 150px;
-  border: 3px dotted rgb(var(--v-theme-primary));
+
+.email-content-list {
+  border-end-start-radius: 0;
+  border-start-start-radius: 0;
 }
-.center-logo {
-  height: 150px;
-  width: 450px;
-  border: 3px dotted rgb(var(--v-theme-primary));
+
+.email-list {
+  white-space: nowrap;
+
+  .email-item {
+    block-size: 64px;
+    transition: all 0.2s ease-in-out;
+    will-change: transform, box-shadow;
+
+    &.email-read {
+      background-color: rgba(var(--v-theme-on-surface), var(--v-hover-opacity));
+    }
+
+    & + .email-item {
+      border-block-start: 1px solid
+        rgba(var(--v-border-color), var(--v-border-opacity));
+    }
+  }
+
+  .email-item:hover {
+    transform: translateY(-2px);
+
+    @include mixins.elevation(3);
+
+    .email-actions {
+      display: block !important;
+    }
+
+    .email-meta {
+      display: none;
+    }
+
+    + .email-item {
+      border-color: transparent;
+    }
+  }
 }
-.cursor-pointer {
-  cursor: pointer;
+
+.email-compose-dialog {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-end: 0;
+  min-inline-size: 100%;
+
+  @media only screen and (min-width: 800px) {
+    min-inline-size: 712px;
+  }
+}
+.email-filters-labels {
+  > li {
+    position: relative;
+    margin-block-end: 4px;
+    padding-block: 4px;
+    padding-inline: 20px;
+  }
+
+  .email-filter-active,
+  .email-label-active {
+    &::after {
+      position: absolute;
+      background: currentcolor;
+      block-size: 100%;
+      content: "";
+      inline-size: 3px;
+      inset-block-start: 0;
+      inset-inline-start: 0;
+    }
+  }
 }
 </style>

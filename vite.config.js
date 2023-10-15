@@ -31,9 +31,9 @@ export default defineConfig({
       onRoutesGenerated: routes => [
         // Email filter
         {
-          path: '/apps/email/:filter',
+          path: '/email/:filter',
           name: 'apps-email-filter',
-          component: '/src/pages/apps/email/index.vue',
+          component: '/src/pages/email/index.vue',
           meta: {
             navActiveLink: 'apps-email',
             layoutWrapperClasses: 'layout-content-height-fixed',
@@ -44,7 +44,7 @@ export default defineConfig({
         {
           path: '/apps/email/label/:label',
           name: 'apps-email-label',
-          component: '/src/pages/apps/email/index.vue',
+          component: '/src/pages/email/index.vue',
           meta: {
             // contentClass: 'email-application',
             navActiveLink: 'apps-email',
