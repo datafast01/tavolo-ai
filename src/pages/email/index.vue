@@ -358,11 +358,6 @@ export default {
 @use "@core/scss/base/_mixins.scss";
 
 // ℹ️ Remove border. Using variant plain cause UI issue, caret isn't align in center
-.email-search {
-  .v-field__outline {
-    display: none;
-  }
-}
 
 .email-app-layout {
   border-radius: vuetify.$card-border-radius;
@@ -449,6 +444,14 @@ export default {
       inset-block-start: 0;
       inset-inline-start: 0;
     }
+  }
+}
+</style>
+
+<style lang="scss">
+.email-search {
+  .v-field__outline {
+    display: none;
   }
 }
 </style>
