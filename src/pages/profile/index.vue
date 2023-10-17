@@ -124,7 +124,7 @@ getUserProfile();
               <VCol cols="12" md="6">
                 <VTextField
                   v-model="userData.restaurantName"
-                  label="Resturant"
+                  label="Restaurant"
                 />
               </VCol>
 
@@ -134,12 +134,18 @@ getUserProfile();
               </VCol>
 
               <!-- 👉 Address -->
-              <!-- <VCol cols="12" md="6">
+              <VCol cols="12" md="6">
                 <VTextField
-                  v-model="accountDataLocal.address"
-                  label="Address"
+                  v-model="userData.faceBookUrl"
+                  label="Facebook URL"
                 />
-              </VCol> -->
+              </VCol>
+              <VCol cols="12" md="6">
+                <VTextField v-model="userData.instaUrl" label="Instagram URL" />
+              </VCol>
+              <VCol cols="12" md="6">
+                <VTextField v-model="userData.tikTokUrl" label="TikTok URL" />
+              </VCol>
 
               <!-- 👉 State -->
               <!-- <VCol cols="12" md="6">
