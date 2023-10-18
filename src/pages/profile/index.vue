@@ -68,9 +68,15 @@ const getUserProfile = () => {
 
 const updateProfile = () => {
   // console.log("submit form", ApiService);
-
+  const payload = {
+    email: userData.value.email,
+    firstName: userData.value.firstName,
+    lastName: userData.value.lastName,
+    phoneNo: userData.value.phoneNo,
+    restaurantName: userData.value.restaurantName,
+  };
   axios
-    .post(`editprofile`, userData.value)
+    .post(`editprofile`, payload)
     .then((response) => {
       console.log("user", response.data);
     })
