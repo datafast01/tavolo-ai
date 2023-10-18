@@ -48,9 +48,11 @@ import routes from '~pages'
     console.log(isLoggedIn)
   if (to.name !== "login" && isLoggedIn) 
   {
-   
+    
  next({ name: 'login' })
  
+  } else if(to.name !== "register" && isLoggedIn){
+next({ name: 'register' })
   }
  
   else next()
