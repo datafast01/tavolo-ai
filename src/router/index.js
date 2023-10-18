@@ -44,20 +44,17 @@ import routes from '~pages'
 //   return { name: 'login' }
 // } 
   router.beforeEach((to, from, next) => {
-    const isLoggedIn = !(localStorage.getItem('token'))  
-    console.log(isLoggedIn)
-  if (to.name !== "login" && isLoggedIn) 
-  {
-    
- next({ name: 'login' })
- 
-  } 
-//   else if(to.name !== "register" && isLoggedIn){
-// next({ name: 'register' })
-//   }
- 
-  else next()
-
+  //   const isLoggedIn = !(localStorage.getItem('token'))  
+  //   console.log(isLoggedIn)
+  // if (to.name !== "login"  && isLoggedIn) 
+  // { 
+  //   next({ name: 'login' })
+  // } 
+  // else if(to.name == "register"){
+  //   next({name: 'register'})
+  // }
+  // else next()
+next()
   
 //     // ℹ️ Commented code is legacy code
   
