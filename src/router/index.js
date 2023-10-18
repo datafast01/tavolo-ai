@@ -51,9 +51,10 @@ import routes from '~pages'
     
  next({ name: 'login' })
  
-  } else if(to.name !== "register" && isLoggedIn){
-next({ name: 'register' })
-  }
+  } 
+//   else if(to.name !== "register" && isLoggedIn){
+// next({ name: 'register' })
+//   }
  
   else next()
 
