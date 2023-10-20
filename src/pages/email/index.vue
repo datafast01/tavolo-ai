@@ -273,6 +273,30 @@ export default {
           console.log(err);
         });
     },
+    getDraftEmail() {
+      axios
+        .get(`email-draft`)
+        .then((res) => {
+          console.log(res.data.data, "=============>>>");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    saveDraftEmail() {
+      let payload = {
+        subject: this.subject,
+        body: this.message,
+      };
+      axios
+        .post(`save-email-draft`, payload)
+        .then((res) => {
+          console.log(res.data.data, "=============>>>");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     sendCampaign() {
       let payload = {
         segmantId: this.segment,
@@ -324,7 +348,7 @@ export default {
             let json = res.data.data;
             console.log(json);
             const email = json.replace(/\n/g, "");
-            console.log(email);
+            // console.log(email);
             this.generatedEmail = JSON.parse(email);
             this.aiLoading = false;
           });
@@ -337,6 +361,7 @@ export default {
       this.subject = this.generatedEmail.subject;
       this.message = this.generatedEmail.body;
       this.closeModal();
+      this.saveDraftEmail();
     },
     closeModal() {
       this.showModalGpt = false;
@@ -347,6 +372,7 @@ export default {
   },
   mounted() {
     this.getEmailSegmnts();
+    this.getDraftEmail();
   },
 };
 
