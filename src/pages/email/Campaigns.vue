@@ -18,7 +18,7 @@
         <!-- Seegments -->
         <template #item.segmantId="{ item }">
           <span class="text-sm">
-            {{ item.raw.segmantId }}
+            {{ item.raw.segmantId.name }}
           </span>
         </template>
 
