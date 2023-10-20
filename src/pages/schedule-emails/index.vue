@@ -18,7 +18,7 @@
         <!-- Seegments -->
         <template #item.segmantId="{ item }">
           <span class="text-sm">
-            {{ segmantName(item.raw.segmantId) }}
+            {{ item.raw.segmantId?.name }}
           </span>
         </template>
 
@@ -136,135 +136,128 @@
   </section>
 </template>
 
-<script setup>
+<script>
 import moment from "moment";
 import { VDataTableServer } from "vuetify/labs/VDataTable";
 
 import axios from "@axios";
 
-const totalUsers = ref(0);
-const customers = ref([]);
+export default {
+  components: { VDataTableServer },
+  data() {
+    return {
+      totalUsers: 0,
+      customers: [],
+      moment: moment,
+      show: false,
+      snkMsg: "",
+      color: "#9575CD",
+      options: {
+        page: 1,
+        itemsPerPage: 10,
+        sortBy: [],
+        groupBy: [],
+        search: undefined,
+      },
+      isLoading: false,
+      // Headers
+      headers: [
+        {
+          title: "Segment Name",
+          key: "segmantId",
+        },
+        {
+          title: "Subject",
+          key: "subject",
+        },
+        {
+          title: "Sent",
+          key: "sent",
+        },
+        {
+          title: "Schedule Date",
+          key: "scheduleDate",
+        },
+        {
+          title: "Status",
+          key: "status",
+        },
 
-let show = ref(false);
-let snkMsg = ref("");
-let color = ref("#9575CD");
-const options = ref({
-  page: 1,
-  itemsPerPage: 10,
-  sortBy: [],
-  groupBy: [],
-  search: undefined,
-});
-let isLoading = ref(false);
-// Headers
-const headers = [
-  {
-    title: "Segment Name",
-    key: "segmantId",
+        {
+          title: "ACTION",
+          key: "actions",
+          sortable: false,
+        },
+      ],
+    };
   },
-  {
-    title: "Subject",
-    key: "subject",
+  methods: {
+    fetchEmails() {
+      this.isLoading = true;
+      axios
+        .get(
+          `dashboard/list-schedule-email?pageSize=${this.options.itemsPerPage}&pageNo=${this.options.page}`
+        )
+        .then((response) => {
+          console.log("user", response.data);
+          this.customers = response.data.data;
+          this.totalUsers = response.data.count;
+          this.isLoading = false;
+        })
+        .catch((err) => {
+          console.log(err.response.status);
+        });
+    },
+
+    changeStatus(item) {
+      console.log(item);
+
+      axios
+        .get(
+          `dashboard/${
+            item.status == "active"
+              ? "pause-schedule-email"
+              : "resume-schedule-email"
+          }/${item._id}`
+        )
+        .then((response) => {
+          console.log("user", response.data);
+          this.show = true;
+          this.snkMsg = `${
+            item.status == "active"
+              ? "Campaign Inactivated!"
+              : "Campaing Activated!"
+          }`;
+          this.fetchEmails();
+        })
+        .catch((err) => {
+          console.log(err.response.status);
+        });
+    },
+
+    deleteCampaign(id) {
+      // console.log("submit form", ApiService);
+
+      axios
+        .get(`dashboard/delete-schedule-email/${id}`)
+        .then((response) => {
+          console.log("user", response.data);
+
+          this.show = true;
+          this.snkMsg = "Campaign deleted successfully!";
+          this.fetchEmails();
+        })
+        .catch((err) => {
+          console.log(err.response.status);
+        });
+    },
   },
-  {
-    title: "Sent",
-    key: "sent",
+  mounted() {
+    this.fetchEmails();
   },
-  {
-    title: "Schedule Date",
-    key: "scheduleDate",
-  },
-  {
-    title: "Status",
-    key: "status",
-  },
-
-  {
-    title: "ACTION",
-    key: "actions",
-    sortable: false,
-  },
-];
-
-const segments = [
-  { id: "650e0f5b6df52a436ca3f12e", name: "All Customers" },
-  { id: "650e0f896df52a436ca3f130", name: "Customers with AOV > 20" },
-
-  { id: "650e0fc86df52a436ca3f132", name: "Customers with AOV < 20" },
-
-  { id: "650e10236df52a436ca3f134", name: "Customers who haven't repeated" },
-  { id: "650e106d6df52a436ca3f136", name: "Customers who repeated this week" },
-];
-
-const segmantName = (segmantId) => {
-  const segmant = segments.find((seg) => seg.id == segmantId);
-
-  return segmant.name;
 };
+
 // 👉 Fetching users
-const fetchEmails = () => {
-  isLoading.value = true;
-  axios
-    .get(
-      `dashboard/list-schedule-email?pageSize=${options.value.itemsPerPage}&pageNo=${options.value.page}`
-    )
-    .then((response) => {
-      console.log("user", response.data);
-      customers.value = response.data.data;
-      totalUsers.value = response.data.count;
-      isLoading.value = false;
-    })
-    .catch((err) => {
-      console.log(err.response.status);
-    });
-};
-
-watchEffect(fetchEmails);
-
-const isAddNewUserDrawerVisible = ref(false);
-
-const changeStatus = (item) => {
-  console.log(item);
-
-  axios
-    .get(
-      `dashboard/${
-        item.status == "active"
-          ? "pause-schedule-email"
-          : "resume-schedule-email"
-      }/${item._id}`
-    )
-    .then((response) => {
-      console.log("user", response.data);
-      show.value = true;
-      snkMsg.value = `${
-        item.status == "active"
-          ? "Campaign Inactivated!"
-          : "Campaing Activated!"
-      }`;
-      fetchEmails();
-    })
-    .catch((err) => {
-      console.log(err.response.status);
-    });
-};
-
-const deleteCampaign = (id) => {
-  // console.log("submit form", ApiService);
-
-  axios
-    .get(`dashboard/delete-schedule-email/${id}`)
-    .then((response) => {
-      console.log("user", response.data);
-
-      show.value = true;
-      snkMsg.value = "Campaign deleted successfully!";
-      fetchEmails();
-    })
-    .catch((err) => {
-      console.log(err.response.status);
-    });
-};
 </script>
 
 <style lang="scss">

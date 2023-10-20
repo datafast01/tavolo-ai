@@ -18,7 +18,7 @@
         <!-- Seegments -->
         <template #item.segmantId="{ item }">
           <span class="text-sm">
-            {{ item.raw.segmantId.name }}
+            {{ item.raw.segmantId?.name }}
           </span>
         </template>
 
@@ -186,22 +186,6 @@ const headers = [
   },
 ];
 
-const segments = [
-  { id: "650e0f5b6df52a436ca3f12e", name: "All Customers" },
-  { id: "650e0f896df52a436ca3f130", name: "Customers with AOV > 20" },
-
-  { id: "650e0fc86df52a436ca3f132", name: "Customers with AOV < 20" },
-
-  { id: "650e10236df52a436ca3f134", name: "Customers who haven't repeated" },
-  { id: "650e106d6df52a436ca3f136", name: "Customers who repeated this week" },
-];
-
-// const segmantName = (segmantId) => {
-//   const segmant = segments.find((seg) => seg.id == segmantId);
-
-//   return segmant.name;
-// };
-// 👉 Fetching users
 const fetchEmails = () => {
   isLoading.value = true;
   axios
