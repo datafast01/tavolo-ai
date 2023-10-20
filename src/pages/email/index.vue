@@ -277,7 +277,12 @@ export default {
       axios
         .get(`email-draft`)
         .then((res) => {
-          console.log(res.data.data, "=============>>>");
+          console.log(res.data.draft, "alskjdfja;sldkjl");
+          let email = res.data.draft;
+          if (email.subject && email.text) {
+            this.subject = email.subject;
+            this.message = email.text;
+          }
         })
         .catch((err) => {
           console.log(err);
