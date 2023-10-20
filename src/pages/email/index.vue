@@ -286,7 +286,7 @@ export default {
     saveDraftEmail() {
       let payload = {
         subject: this.subject,
-        body: this.message,
+        text: this.message,
       };
       axios
         .post(`save-email-draft`, payload)
