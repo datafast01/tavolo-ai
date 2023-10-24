@@ -39,7 +39,7 @@
   <section v-else>
     <VRow class="match-height">
       <VCol cols="12" md="6">
-        <CrmTransactions />
+        <CrmTransactions :data="data" />
       </VCol>
       <VCol
         v-for="statistics in statisticsWithImages"
@@ -132,29 +132,13 @@ const statisticsWithImages = [
     icon: "mdi-currency-usd",
   },
 ];
-const headers = [
-  {
-    title: "Top Solid Menu Items",
-    key: "Top Solid Menu Items",
-  },
-  {
-    title: "EMAIL",
-    key: "email",
-  },
-  {
-    title: "ROLE",
-    key: "role",
-  },
-  {
-    title: "STATUS",
-    key: "status",
-  },
-];
+
 // refernce variables
 let dashboard = ref(null);
 let tableData = ref([]);
 let isDasboard = ref(false);
 const refInputEl = ref();
+let data = ref(null);
 
 // methods
 const getCsvData = () => {
@@ -163,6 +147,8 @@ const getCsvData = () => {
     .then((res) => {
       if (res.data.data != null) {
         console.log(res.data.data, "=============>>>");
+        data.value = res.data;
+        console.log(data.value, "asdasdf");
         dashboard.value = res.data.data;
         tableData.value = res.data.data.data;
         isDasboard.value = true;

@@ -62,7 +62,10 @@
 
             <VMenu activator="parent">
               <VList>
-                <VListItem @click="changeStatus(item.raw)">
+                <VListItem
+                  @click="changeStatus(item.raw)"
+                  v-if="item.raw.scheduled"
+                >
                   <template #prepend>
                     <VIcon icon="mdi-recycle" />
                   </template>
@@ -136,128 +139,119 @@
   </section>
 </template>
 
-<script>
+<script setup>
 import moment from "moment";
 import { VDataTableServer } from "vuetify/labs/VDataTable";
 
 import axios from "@axios";
 
-export default {
-  components: { VDataTableServer },
-  data() {
-    return {
-      totalUsers: 0,
-      customers: [],
-      moment: moment,
-      show: false,
-      snkMsg: "",
-      color: "#9575CD",
-      options: {
-        page: 1,
-        itemsPerPage: 10,
-        sortBy: [],
-        groupBy: [],
-        search: undefined,
-      },
-      isLoading: false,
-      // Headers
-      headers: [
-        {
-          title: "Segment Name",
-          key: "segmantId",
-        },
-        {
-          title: "Subject",
-          key: "subject",
-        },
-        {
-          title: "Sent",
-          key: "sent",
-        },
-        {
-          title: "Schedule Date",
-          key: "scheduleDate",
-        },
-        {
-          title: "Status",
-          key: "status",
-        },
+const totalUsers = ref(0);
+const customers = ref([]);
 
-        {
-          title: "ACTION",
-          key: "actions",
-          sortable: false,
-        },
-      ],
-    };
+let show = ref(false);
+let snkMsg = ref("");
+let color = ref("#9575CD");
+const options = ref({
+  page: 1,
+  itemsPerPage: 10,
+  sortBy: [],
+  groupBy: [],
+  search: undefined,
+});
+let isLoading = ref(false);
+// Headers
+const headers = [
+  {
+    title: "Segment Name",
+    key: "segmantId",
   },
-  methods: {
-    fetchEmails() {
-      this.isLoading = true;
-      axios
-        .get(
-          `dashboard/list-schedule-email?pageSize=${this.options.itemsPerPage}&pageNo=${this.options.page}`
-        )
-        .then((response) => {
-          console.log("user", response.data);
-          this.customers = response.data.data;
-          this.totalUsers = response.data.count;
-          this.isLoading = false;
-        })
-        .catch((err) => {
-          console.log(err.response.status);
-        });
-    },
-
-    changeStatus(item) {
-      console.log(item);
-
-      axios
-        .get(
-          `dashboard/${
-            item.status == "active"
-              ? "pause-schedule-email"
-              : "resume-schedule-email"
-          }/${item._id}`
-        )
-        .then((response) => {
-          console.log("user", response.data);
-          this.show = true;
-          this.snkMsg = `${
-            item.status == "active"
-              ? "Campaign Inactivated!"
-              : "Campaing Activated!"
-          }`;
-          this.fetchEmails();
-        })
-        .catch((err) => {
-          console.log(err.response.status);
-        });
-    },
-
-    deleteCampaign(id) {
-      // console.log("submit form", ApiService);
-
-      axios
-        .get(`dashboard/delete-schedule-email/${id}`)
-        .then((response) => {
-          console.log("user", response.data);
-
-          this.show = true;
-          this.snkMsg = "Campaign deleted successfully!";
-          this.fetchEmails();
-        })
-        .catch((err) => {
-          console.log(err.response.status);
-        });
-    },
+  {
+    title: "Subject",
+    key: "subject",
   },
-  mounted() {
-    this.fetchEmails();
+  {
+    title: "Sent",
+    key: "sent",
   },
+  {
+    title: "Schedule Date",
+    key: "scheduleDate",
+  },
+  {
+    title: "Status",
+    key: "status",
+  },
+
+  {
+    title: "ACTION",
+    key: "actions",
+    sortable: false,
+  },
+];
+
+const fetchEmails = () => {
+  isLoading.value = true;
+  axios
+    .get(
+      `dashboard/list-schedule-email?pageSize=${options.value.itemsPerPage}&pageNo=${options.value.page}`
+    )
+    .then((response) => {
+      console.log("user", response.data);
+      customers.value = response.data.data;
+      totalUsers.value = response.data.count;
+      isLoading.value = false;
+    })
+    .catch((err) => {
+      console.log(err.response.status);
+    });
 };
 
-// 👉 Fetching users
+watchEffect(fetchEmails);
+
+const isAddNewUserDrawerVisible = ref(false);
+
+const changeStatus = (item) => {
+  console.log(item);
+
+  axios
+    .get(
+      `dashboard/${
+        item.status == "active"
+          ? "pause-schedule-email"
+          : "resume-schedule-email"
+      }/${item._id}`
+    )
+    .then((response) => {
+      console.log("user", response.data);
+      show.value = true;
+      snkMsg.value = `${
+        item.status == "active"
+          ? "Campaign Inactivated!"
+          : "Campaing Activated!"
+      }`;
+      fetchEmails();
+    })
+    .catch((err) => {
+      console.log(err.response.status);
+    });
+};
+
+const deleteCampaign = (id) => {
+  // console.log("submit form", ApiService);
+
+  axios
+    .get(`dashboard/delete-schedule-email/${id}`)
+    .then((response) => {
+      console.log("user", response.data);
+
+      show.value = true;
+      snkMsg.value = "Campaign deleted successfully!";
+      fetchEmails();
+    })
+    .catch((err) => {
+      console.log(err.response.status);
+    });
+};
 </script>
 
 <style lang="scss">

@@ -62,7 +62,10 @@
 
             <VMenu activator="parent">
               <VList>
-                <VListItem @click="changeStatus(item.raw)">
+                <VListItem
+                  @click="changeStatus(item.raw)"
+                  v-if="item.raw.scheduled"
+                >
                   <template #prepend>
                     <VIcon icon="mdi-recycle" />
                   </template>
