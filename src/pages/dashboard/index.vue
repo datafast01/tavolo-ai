@@ -1,5 +1,5 @@
 <template>
-  <div class="misc-wrapper" v-if="!isDasboard">
+  <div class="misc-wrapper" v-if="!isDasboard && !loading">
     <ErrorHeader
       error-title="No CSV Data Found ⚠️"
       error-description="Please upload customer's data."
@@ -39,7 +39,7 @@
   <section v-else>
     <VRow class="match-height">
       <VCol cols="12" md="6">
-        <CrmTransactions :data="data" />
+        <CrmTransactions :data="transactionData" />
       </VCol>
       <VCol
         v-for="statistics in statisticsWithImages"
@@ -61,9 +61,12 @@
         <CrmActivityTimeline />
       </VCol>
     </VRow>
-    <VRow class="match-height">
+    <VRow class="">
       <VCol cols="12" sm="12" md="4">
         <CrmTotalSales />
+      </VCol>
+      <VCol cols="12" sm="12" md="8">
+        <CrmTransactions :data="emailStates" />
       </VCol>
     </VRow>
     <VRow>
@@ -110,7 +113,7 @@ import pages404 from "@images/pages/404.png";
 import miscMaskDark from "@images/pages/misc-mask-dark.png";
 import miscMaskLight from "@images/pages/misc-mask-light.png";
 import tree from "@images/pages/tree.png";
-
+import { onMounted } from "vue";
 const authThemeMask = useGenerateImageVariant(miscMaskLight, miscMaskDark);
 
 const statisticsWithImages = [
@@ -139,25 +142,79 @@ let tableData = ref([]);
 let isDasboard = ref(false);
 const refInputEl = ref();
 let data = ref(null);
+let totalCustomers = ref(null);
 
-// methods
-const getCsvData = () => {
-  axios
-    .get(`dashboard`)
-    .then((res) => {
+let loading = ref(false);
+
+onMounted(async () => {
+  try {
+    loading.value = true;
+    axios.get(`dashboard`).then((res) => {
       if (res.data.data != null) {
         console.log(res.data.data, "=============>>>");
         data.value = res.data;
+        totalCustomers.value = data.value.totalCustomers;
         console.log(data.value, "asdasdf");
         dashboard.value = res.data.data;
         tableData.value = res.data.data.data;
         isDasboard.value = true;
+        loading.value = false;
+        let transaction = {
+          label: "Transactions",
+          statistics: [
+            {
+              title: "Sales",
+              stats: "1.2k",
+              icon: "mdi-trending-up",
+              color: "primary",
+            },
+            {
+              title: "Customers",
+              stats: totalCustomers.value,
+              icon: "mdi-account-outline",
+              color: "success",
+            },
+            {
+              title: "Online Conversions",
+              stats: "23%",
+              icon: "mdi-cellphone-link",
+              color: "warning",
+            },
+          ],
+        };
+        transactionData.value = transaction;
+        let email = {
+          label: "Email Stats",
+          statistics: [
+            {
+              title: "Total Emails",
+              stats: data.value.totalEmails,
+              icon: "mdi-email",
+              color: "primary",
+            },
+            {
+              title: "Pending Emails",
+              stats: data.value.noOfEmailsPending,
+              icon: "mdi-email-alert",
+              color: "success",
+            },
+            {
+              title: "Open Rate",
+              stats: data.value.noOfEmailsOpened,
+              icon: "mdi-email-open",
+              color: "warning",
+            },
+          ],
+        };
+        emailStates.value = email;
       }
-    })
-    .catch((err) => {
-      console.log(err);
     });
-};
+  } catch (error) {
+    console.log(error);
+  }
+});
+let transactionData = ref({});
+let emailStates = ref({});
 const uploadDashboard = (file) => {
   const fileReader = new FileReader();
   const { files } = file.target;
@@ -178,8 +235,6 @@ const uploadDashboard = (file) => {
     })
     .catch((error) => {});
 };
-
-getCsvData();
 </script>
 
 <style lang="scss">

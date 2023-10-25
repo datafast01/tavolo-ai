@@ -1,31 +1,13 @@
-<script setup>
-const statistics = [
-  {
-    title: "Sales",
-    stats: "1.2k",
-    icon: "mdi-trending-up",
-    color: "primary",
-  },
-  {
-    title: "Customers",
-    stats: "894",
-    icon: "mdi-account-outline",
-    color: "success",
-  },
-  {
-    title: "Online Conversions",
-    stats: "23%",
-    icon: "mdi-cellphone-link",
-    color: "warning",
-  },
-];
-</script>
-
 <template>
-  <VCard title="Transactions">
+  <VCard :title="data.label">
     <VCardText>
       <VRow>
-        <VCol v-for="item in statistics" :key="item.title" cols="12" sm="4">
+        <VCol
+          v-for="item in data.statistics"
+          :key="item.title"
+          cols="12"
+          sm="4"
+        >
           <div class="d-flex align-center">
             <div class="me-3">
               <VAvatar
@@ -50,3 +32,14 @@ const statistics = [
     </VCardText>
   </VCard>
 </template>
+
+<script>
+export default {
+  props: {
+    data: {
+      type: Object,
+      default: {},
+    },
+  },
+};
+</script>

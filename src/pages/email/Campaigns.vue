@@ -71,6 +71,12 @@
                   </template>
                   <VListItemTitle>Change Status</VListItemTitle>
                 </VListItem>
+                <VListItem @click="openViewDetailsModal(item.raw)">
+                  <template #prepend>
+                    <VIcon icon="mdi-eye" />
+                  </template>
+                  <VListItemTitle>View Details</VListItemTitle>
+                </VListItem>
                 <VListItem @click="deleteCampaign(item.raw._id)">
                   <template #prepend>
                     <VIcon icon="mdi-delete-outline" />
@@ -134,7 +140,95 @@
       </VDataTableServer>
       <!-- SECTION -->
     </VCard>
+    <VDialog v-model="isDetails" max-width="800">
+      <!-- Dialog Activator -->
 
+      <!-- Dialog Content -->
+      <VCard title="Campaign Details">
+        <DialogCloseBtn
+          variant="text"
+          size="small"
+          @click="isDetails = false"
+        />
+
+        <VCardText>
+          <VRow>
+            <VCol cols="12" md="4">
+              <div class="d-flex flex-column">
+                <span class="font-weight-black"> Segment Name </span>
+                <span>{{ details.segmantId.name }}</span>
+              </div>
+            </VCol>
+            <VCol cols="12" md="4">
+              <div class="d-flex flex-column">
+                <span class="font-weight-black"> Schedule </span>
+
+                {{ details.scheduled ? "YES" : "NO" }}
+              </div>
+            </VCol>
+            <VCol cols="12" md="4">
+              <div class="d-flex flex-column">
+                <span class="font-weight-black"> Status </span>
+                <VChip
+                  :color="details.status == 'active' ? 'success' : 'error'"
+                  :class="`text-${
+                    details.status == 'active' ? 'success' : 'error'
+                  }`"
+                  size="small"
+                  class="font-weight-medium"
+                  style="width: fit-content"
+                >
+                  {{ details.status == "active" ? "Active" : "Inactive" }}
+                </VChip>
+              </div>
+            </VCol>
+          </VRow>
+          <VRow class="mt-3">
+            <span class="font-weight-black ml-3"> Email Opened By </span>
+            <VCol cols="12">
+              <!-- <VDataTableServer
+                :items="details.openedBy"
+                :headers="customerHeaders"
+                class="rounded-0"
+                :pagination="false"
+              >
+              </VDataTableServer> -->
+              <v-table>
+                <thead>
+                  <tr>
+                    <th class="text-left">First Name</th>
+                    <th class="text-left">Last Name</th>
+                    <th class="text-left">Email</th>
+                    <th class="text-left">Phone</th>
+                    <th class="text-left">AOV</th>
+                    <th class="text-left">Total Visits</th>
+                    <th class="text-left">Last Dining Behaviour</th>
+                    <th class="text-left">Repeated</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="item in details.openedBy" :key="item._id">
+                    <td>{{ item.firstname }}</td>
+                    <td>{{ item.lastname }}</td>
+                    <td>{{ item.email }}</td>
+                    <td>{{ item.phone }}</td>
+                    <td>{{ item.aov }}</td>
+                    <td>{{ item.totalVisits }}</td>
+                    <td>{{ item.lastDiningBehaviour }}</td>
+                    <td>{{ item.repeated }}</td>
+                  </tr>
+                </tbody>
+              </v-table>
+            </VCol>
+          </VRow>
+        </VCardText>
+
+        <VCardActions>
+          <VSpacer />
+          <VBtn color="secondary" @click="isDetails = false"> Close </VBtn>
+        </VCardActions>
+      </VCard>
+    </VDialog>
     <!-- 👉 Add New User -->
   </section>
 </template>
@@ -151,6 +245,8 @@ const customers = ref([]);
 let show = ref(false);
 let snkMsg = ref("");
 let color = ref("#9575CD");
+let isDetails = ref(false);
+let details = ref({});
 const options = ref({
   page: 1,
   itemsPerPage: 10,
@@ -205,7 +301,10 @@ const fetchEmails = () => {
       console.log(err.response.status);
     });
 };
-
+const openViewDetailsModal = (item) => {
+  isDetails.value = true;
+  details.value = item;
+};
 watchEffect(fetchEmails);
 
 const isAddNewUserDrawerVisible = ref(false);
