@@ -64,16 +64,17 @@
           <VDivider />
 
           <!-- 👉 Action bar -->
-          <div class="py-2 px-5 d-flex align-center">
+          <div class="py-2 px-5">
             <!-- TODO: Make checkbox primary on indeterminate state -->
 
-            <VTextarea
+            <!-- <VTextarea
               v-model="message"
               placeholder="Message"
               label="Email Body"
               class="email-search"
               rows="10"
-            />
+            /> -->
+            <quill-editor style="height: 200px" v-model:value="message" />
           </div>
           <VDivider />
           <VTextarea
@@ -82,6 +83,7 @@
             class="email-search"
             rows="3"
           />
+
           <VDialog v-model="showModal" max-width="600">
             <!-- Dialog Activator -->
 
@@ -207,11 +209,13 @@
 
 <script>
 import axios from "@axios";
+import { reactive } from "vue";
 import { PerfectScrollbar } from "vue3-perfect-scrollbar";
+import { quillEditor } from "vue3-quill";
 import Campaigns from "./Campaigns.vue";
 import ListTemplates from "./ListTemplates.vue";
 export default {
-  components: { Campaigns, ListTemplates },
+  components: { Campaigns, ListTemplates, quillEditor },
   data() {
     return {
       isComposeDialogVisible: false,
@@ -379,6 +383,51 @@ export default {
     this.getEmailSegmnts();
     this.getDraftEmail();
   },
+  setup() {
+    const state = reactive({
+      content: "<p>2333</p>",
+      _content: "",
+      editorOption: {
+        placeholder: "core",
+        modules: {
+          // toolbars: [
+          // custom toolbars options
+          // will override the default configuration
+          // ],
+          // other moudle options here
+          // otherMoudle: {}
+        },
+        // more options
+      },
+      disabled: false,
+    });
+
+    const onEditorBlur = (quill) => {
+      console.log("editor blur!", quill);
+    };
+    const onEditorFocus = (quill) => {
+      console.log("editor focus!", quill);
+    };
+    const onEditorReady = (quill) => {
+      console.log("editor ready!", quill);
+    };
+    const onEditorChange = ({ quill, html, text }) => {
+      console.log("editor change!", quill, html, text);
+      state._content = html;
+    };
+
+    setTimeout(() => {
+      state.disabled = true;
+    }, 2000);
+
+    return {
+      state,
+      onEditorBlur,
+      onEditorFocus,
+      onEditorReady,
+      onEditorChange,
+    };
+  },
 };
 
 // Compose dialog
@@ -389,7 +438,9 @@ export default {
 @use "@core/scss/base/_mixins.scss";
 
 // ℹ️ Remove border. Using variant plain cause UI issue, caret isn't align in center
-
+.editor {
+  background: rebeccapurple;
+}
 .email-app-layout {
   border-radius: vuetify.$card-border-radius;
 
