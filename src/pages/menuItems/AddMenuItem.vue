@@ -116,7 +116,7 @@ const handleDrawerModelValueUpdate = (val) => {
                   v-model="noOfTimesOrdered"
                   type="number"
                   :rules="[requiredValidator]"
-                  label="Number of times odrderd"
+                  label="Number of times ordered"
                 />
               </VCol>
 
