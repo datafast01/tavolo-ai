@@ -55,47 +55,21 @@
 
     <VRow class="match-height">
       <VCol cols="12" md="6">
-        <CrmSalesOverview />
+        <CrmSalesOverview
+          :dashboard="top3FoodItemsSold"
+          :totalSales="totalSales"
+        />
       </VCol>
       <VCol cols="12" md="6">
         <CrmActivityTimeline />
       </VCol>
     </VRow>
     <VRow class="">
-      <VCol cols="12" sm="12" md="4">
+      <!-- <VCol cols="12" sm="12" md="4">
         <CrmTotalSales />
-      </VCol>
-      <VCol cols="12" sm="12" md="8">
+      </VCol> -->
+      <VCol cols="12" sm="12" md="12">
         <CrmTransactions :data="emailStates" />
-      </VCol>
-    </VRow>
-    <VRow>
-      <VCol cols="12" md="12">
-        <VCard>
-          <v-table dense>
-            <template v-slot:default>
-              <thead>
-                <tr>
-                  <th class="text-left capitalize">Top Sold Menu Items</th>
-                  <th class="text-left capitalize">Number of times Ordered</th>
-                  <th class="text-left capitalize">
-                    Number of customers who ordered
-                  </th>
-                  <th class="text-left capitalize">% of Total revenue</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(item, index) in tableData" :key="index">
-                  <td>{{ index + 1 }}. {{ item["Top Solid Menu Items"] }}</td>
-                  <td>{{ item["Number Of Items Purchased"] }}</td>
-                  <td>{{ item["Number Of Customers Who Ordered"] }}</td>
-
-                  <td>{{ item["% Of Total Revenue"] }}%</td>
-                </tr>
-              </tbody>
-            </template>
-          </v-table>
-        </VCard>
       </VCol>
     </VRow>
   </section>
@@ -104,7 +78,6 @@
 <script setup>
 import CrmActivityTimeline from "@/views/dashboards/crm/CrmActivityTimeline.vue";
 import CrmSalesOverview from "@/views/dashboards/crm/CrmSalesOverview.vue";
-import CrmTotalSales from "@/views/dashboards/crm/CrmTotalSales.vue";
 import CrmTransactions from "@/views/dashboards/crm/CrmTransactions.vue";
 import axios from "@axios";
 import { useGenerateImageVariant } from "@core/composable/useGenerateImageVariant";
@@ -138,11 +111,13 @@ const statisticsWithImages = [
 
 // refernce variables
 let dashboard = ref(null);
+let totalSales = ref(0);
 let tableData = ref([]);
 let isDasboard = ref(false);
 const refInputEl = ref();
 let data = ref(null);
 let totalCustomers = ref(null);
+let top3FoodItemsSold = ref({});
 
 let loading = ref(false);
 
@@ -153,6 +128,8 @@ onMounted(async () => {
       if (res.data.data != null) {
         console.log(res.data.data, "=============>>>");
         data.value = res.data;
+        top3FoodItemsSold.value = data.value.top3FoodItemsSold;
+        totalSales.value = data.value.totalSales;
         totalCustomers.value = data.value.totalCustomers;
         console.log(data.value, "asdasdf");
         dashboard.value = res.data.data;

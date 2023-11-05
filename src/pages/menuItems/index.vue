@@ -4,55 +4,47 @@
       {{ snkMsg }}
     </VSnackbar>
     <VCard>
+      <VCardText class="d-flex flex-wrap gap-4">
+        <VSpacer />
+
+        <div class="app-user-search-filter d-flex align-center gap-6">
+          <!-- 👉 Search  -->
+          <VTextField
+            v-model="searchQuery"
+            placeholder="Search User"
+            density="compact"
+          />
+
+          <!-- 👉 Add user button -->
+          <VBtn @click="isAddNewUserDrawerVisible = true"> Add Menu Item </VBtn>
+        </div>
+      </VCardText>
+
       <!-- SECTION data table -->
       <VDataTableServer
         v-model:items-per-page="options.itemsPerPage"
         v-model:page="options.page"
-        :items="customers"
+        :items="menuItems"
         :items-length="totalUsers"
         :headers="headers"
         class="rounded-0"
         @update:options="options = $event"
         :loading="isLoading"
       >
-        <!-- Seegments -->
-        <template #item.segmantId="{ item }">
+        <!-- Email -->
+        <!-- <template #item.email="{ item }">
           <span class="text-sm">
-            {{ item.raw.segmantId?.name }}
+            {{ item.raw.email }}
           </span>
-        </template>
+        </template> -->
 
-        <template #item.sent="{ item }">
-          <VChip
-            :color="item.raw.sent ? 'primary' : 'error'"
-            :class="`text-${item.raw.sent ? 'primary' : 'error'}`"
-            size="small"
-            class="font-weight-medium"
-          >
-            {{ item.raw.sent ? "YES" : "NO" }}
-          </VChip>
-        </template>
-        <template #item.scheduleDate="{ item }">
-          <span class="text-sm">
-            {{
-              item.raw.scheduleDate === null
-                ? "Date Not Available"
-                : moment(item.raw.scheduleDate).format(
-                    "MMMM Do YYYY, h:mm:ss a"
-                  )
-            }}
-          </span>
-        </template>
         <!-- Status -->
-        <template #item.status="{ item }">
-          <VChip
-            :color="item.raw.status == 'active' ? 'success' : 'error'"
-            :class="`text-${item.raw.status == 'active' ? 'success' : 'error'}`"
-            size="small"
-            class="font-weight-medium"
-          >
-            {{ item.raw.status == "active" ? "Active" : "Inactive" }}
-          </VChip>
+        <template #item.available="{ item }">
+          <VIcon
+            icon="mdi-check-outline"
+            color="primary"
+            v-if="item.raw.available"
+          />
         </template>
 
         <!-- Actions -->
@@ -62,22 +54,14 @@
 
             <VMenu activator="parent">
               <VList>
-                <VListItem
-                  @click="changeStatus(item.raw)"
-                  v-if="item.raw.scheduled"
-                >
+                <VListItem link @click="editMenuItemData(item.raw)">
                   <template #prepend>
-                    <VIcon icon="mdi-recycle" />
+                    <VIcon icon="mdi-pencil-outline" />
                   </template>
-                  <VListItemTitle>Change Status</VListItemTitle>
+                  <VListItemTitle>Edit</VListItemTitle>
                 </VListItem>
-                <VListItem @click="openViewDetailsModal(item.raw)">
-                  <template #prepend>
-                    <VIcon icon="mdi-eye" />
-                  </template>
-                  <VListItemTitle>View Details</VListItemTitle>
-                </VListItem>
-                <VListItem @click="deleteCampaign(item.raw._id)">
+
+                <VListItem @click="deleteMenuItem(item.raw._id)">
                   <template #prepend>
                     <VIcon icon="mdi-delete-outline" />
                   </template>
@@ -140,113 +124,41 @@
       </VDataTableServer>
       <!-- SECTION -->
     </VCard>
-    <VDialog v-model="isDetails" max-width="800">
-      <!-- Dialog Activator -->
 
-      <!-- Dialog Content -->
-      <VCard title="Campaign Details">
-        <DialogCloseBtn
-          variant="text"
-          size="small"
-          @click="isDetails = false"
-        />
-
-        <VCardText>
-          <VRow>
-            <VCol cols="12" md="4">
-              <div class="d-flex flex-column">
-                <span class="font-weight-black"> Segment Name </span>
-                <span>{{ details.segmantId.name }}</span>
-              </div>
-            </VCol>
-            <VCol cols="12" md="4">
-              <div class="d-flex flex-column">
-                <span class="font-weight-black"> Schedule </span>
-
-                {{ details.scheduled ? "YES" : "NO" }}
-              </div>
-            </VCol>
-            <VCol cols="12" md="4">
-              <div class="d-flex flex-column">
-                <span class="font-weight-black"> Status </span>
-                <VChip
-                  :color="details.status == 'active' ? 'success' : 'error'"
-                  :class="`text-${
-                    details.status == 'active' ? 'success' : 'error'
-                  }`"
-                  size="small"
-                  class="font-weight-medium"
-                  style="width: fit-content"
-                >
-                  {{ details.status == "active" ? "Active" : "Inactive" }}
-                </VChip>
-              </div>
-            </VCol>
-          </VRow>
-          <VRow class="mt-3">
-            <span class="font-weight-black ml-3"> Email Opened By </span>
-            <VCol cols="12">
-              <!-- <VDataTableServer
-                :items="details.openedBy"
-                :headers="customerHeaders"
-                class="rounded-0"
-                :pagination="false"
-              >
-              </VDataTableServer> -->
-              <v-table>
-                <thead>
-                  <tr>
-                    <th class="text-left">First Name</th>
-                    <th class="text-left">Last Name</th>
-                    <th class="text-left">Email</th>
-                    <th class="text-left">Phone</th>
-                    <th class="text-left">AOV</th>
-                    <th class="text-left">Total Visits</th>
-                    <th class="text-left">Last Dining Behaviour</th>
-                    <th class="text-left">Repeated</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="item in details.openedBy" :key="item._id">
-                    <td>{{ item.firstname }}</td>
-                    <td>{{ item.lastname }}</td>
-                    <td>{{ item.email }}</td>
-                    <td>{{ item.phone }}</td>
-                    <td>{{ item.aov }}</td>
-                    <td>{{ item.totalVisits }}</td>
-                    <td>{{ item.lastDiningBehaviour }}</td>
-                    <td>{{ item.repeated }}</td>
-                  </tr>
-                </tbody>
-              </v-table>
-            </VCol>
-          </VRow>
-        </VCardText>
-
-        <VCardActions>
-          <VSpacer />
-          <VBtn color="secondary" @click="isDetails = false"> Close </VBtn>
-        </VCardActions>
-      </VCard>
-    </VDialog>
     <!-- 👉 Add New User -->
+    <AddMenuItem
+      v-model:isDrawerOpen="isAddNewUserDrawerVisible"
+      @user-data="addMenuItem"
+    />
+
+    <EditMenuItem
+      v-model:isDrawerOpen="isUserInfoEditDialogVisible"
+      :menuItemData="myMenuItem"
+      @user-data="updateMenuItem"
+    />
   </section>
 </template>
 
 <script setup>
-import moment from "moment";
 import { VDataTableServer } from "vuetify/labs/VDataTable";
-
+// import { paginationMeta } from '@/@fake-db/utils'
+// import AddNewUserDrawer from "@/views/apps/user/list/AddNewUserDrawer.vue";
+import { useUserListStore } from "@/views/apps/user/useUserListStore";
 import axios from "@axios";
+import AddMenuItem from "./AddMenuItem.vue";
+import EditMenuItem from "./EditMenuItem.vue";
 
+const userListStore = useUserListStore();
+const searchQuery = ref("");
+let isLoading = ref(false);
 const totalUsers = ref(0);
-const customers = ref([]);
-
+const menuItems = ref([]);
+const refInputEl = ref();
+let isUserInfoEditDialogVisible = ref(false);
+let myMenuItem = ref({});
 let show = ref(false);
 let snkMsg = ref("");
 let color = ref("#9575CD");
-let isDetails = ref(false);
-let details = ref({});
 const options = ref({
   page: 1,
   itemsPerPage: 10,
@@ -254,28 +166,33 @@ const options = ref({
   groupBy: [],
   search: undefined,
 });
-let isLoading = ref(false);
+
 // Headers
 const headers = [
   {
-    title: "Segment Name",
-    key: "segmantId",
+    title: "Menu Item",
+    key: "name",
   },
   {
-    title: "Subject",
-    key: "subject",
+    title: "NO. Of Customers Ordered",
+    key: "noOfCustomersOrdered",
   },
   {
-    title: "Sent",
-    key: "sent",
+    title: "NO. Of Times Ordered",
+    key: "noOfTimesOrdered",
   },
   {
-    title: "Schedule Date",
-    key: "scheduleDate",
+    title: "Percentage Of Total Revenue",
+    key: "percentageOfTotalRevenue",
   },
   {
-    title: "Status",
-    key: "status",
+    title: "Price",
+    key: "price",
+  },
+
+  {
+    title: "Availability",
+    key: "available",
   },
 
   {
@@ -285,70 +202,102 @@ const headers = [
   },
 ];
 
-const fetchEmails = () => {
+// 👉 Fetching users
+const fetchMenuItems = () => {
   isLoading.value = true;
   axios
     .get(
-      `dashboard/list-schedule-email?pageSize=${options.value.itemsPerPage}&pageNo=${options.value.page}`
+      `food-item/list?pageSize=${options.value.itemsPerPage}&page=${options.value.page}`
     )
     .then((response) => {
       console.log("user", response.data);
-      customers.value = response.data.data;
-      totalUsers.value = response.data.count;
+      menuItems.value = response.data.data;
       isLoading.value = false;
     })
     .catch((err) => {
       console.log(err.response.status);
     });
 };
-const openViewDetailsModal = (item) => {
-  isDetails.value = true;
-  details.value = item;
+
+const editMenuItemData = (data) => {
+  isUserInfoEditDialogVisible.value = true;
+  console.log(data);
+  myMenuItem.value = data;
 };
-watchEffect(fetchEmails);
+watchEffect(fetchMenuItems);
 
 const isAddNewUserDrawerVisible = ref(false);
 
-const changeStatus = (item) => {
-  console.log(item);
-
+const addMenuItem = (userData) => {
   axios
-    .get(
-      `dashboard/${
-        item.status == "active"
-          ? "pause-schedule-email"
-          : "resume-schedule-email"
-      }/${item._id}`
-    )
+    .post(`food-item/create`, userData)
     .then((response) => {
       console.log("user", response.data);
       show.value = true;
-      snkMsg.value = `${
-        item.status == "active"
-          ? "Campaign Inactivated!"
-          : "Campaing Activated!"
-      }`;
-      fetchEmails();
+      snkMsg.value = "Menu Item has been added successfully";
+      menuItems.value.push(userData);
+
+      fetchMenuItems();
     })
     .catch((err) => {
-      console.log(err.response.status);
+      console.log(err.response);
+      show.value = true;
+      if (err.response.status == 400) {
+        snkMsg.value = err.response.data.error;
+      } else {
+        snkMsg.value = "Something went wrong";
+      }
+      color.value = "error";
     });
 };
 
-const deleteCampaign = (id) => {
-  // console.log("submit form", ApiService);
-
+const updateMenuItem = (userData) => {
+  let payload = {
+    name: userData.name,
+    price: userData.price,
+    noOfCustomersOrdered: userData.noOfCustomersOrdered,
+    noOfTimesOrdered: userData.noOfTimesOrdered,
+    percentageOfTotalRevenue: userData.percentageOfTotalRevenue,
+    available: userData.available,
+  };
   axios
-    .get(`dashboard/delete-schedule-email/${id}`)
+    .post(`food-item/update/${userData._id}`, payload)
     .then((response) => {
       console.log("user", response.data);
-
       show.value = true;
-      snkMsg.value = "Campaign deleted successfully!";
-      fetchEmails();
+      snkMsg.value = "Menu Item has been updated successfully";
+      fetchMenuItems();
     })
     .catch((err) => {
-      console.log(err.response.status);
+      console.log(err.response);
+      show.value = true;
+      if (err.response.status == 400) {
+        snkMsg.value = err.response.data.error;
+      } else {
+        snkMsg.value = "Something went wrong";
+      }
+      color.value = "error";
+    });
+};
+const deleteMenuItem = (id) => {
+  console.log(id);
+  axios
+    .get(`food-item/delete/${id}`)
+    .then((response) => {
+      console.log("user", response.data);
+      show.value = true;
+      snkMsg.value = "Menu Item has been deleted successfully";
+      fetchMenuItems();
+    })
+    .catch((err) => {
+      console.log(err.response);
+      show.value = true;
+      if (err.response.status == 400) {
+        snkMsg.value = err.response.data.error;
+      } else {
+        snkMsg.value = "Something went wrong";
+      }
+      color.value = "error";
     });
 };
 </script>

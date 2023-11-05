@@ -70,24 +70,16 @@ const options = controlledComputed(theme, () => {
 
 const series = [3, 2, 3, 7];
 
-const salesOverviews = [
-  {
-    product: "Skillet Burger",
-    sales: "$3,128",
+const props = defineProps({
+  dashboard: {
+    type: Object,
+    default: {},
   },
-  {
-    product: "Urban Fries",
-    sales: "$2,743",
+  totalSales: {
+    type: String,
+    default: "0",
   },
-  {
-    product: "Buffalo Chicken Fries",
-    sales: "$2,181",
-  },
-  {
-    product: "Others",
-    sales: "$7,320",
-  },
-];
+});
 </script>
 
 <template>
@@ -123,13 +115,14 @@ const salesOverviews = [
 
             <div>
               <p class="mb-0">Number of Sales</p>
-              <h6 class="text-h6">$15,372</h6>
+              <h6 class="text-h6">${{ totalSales }}</h6>
             </div>
           </div>
 
           <VDivider class="my-3" />
+
           <VRow>
-            <VCol v-for="sale in salesOverviews" :key="sale.product" cols="6">
+            <VCol v-for="sale in dashboard" :key="sale" cols="6">
               <p class="mb-1">
                 <VIcon
                   icon="mdi-checkbox-blank-circle"
@@ -137,11 +130,9 @@ const salesOverviews = [
                   size="12"
                   class="me-2"
                 />
-                <span>{{ sale.product }}</span>
+                <span>{{ sale.name }}</span>
               </p>
-              <p class="text-base font-weight-medium mb-0">
-                {{ sale.sales }}
-              </p>
+              <p class="text-base font-weight-medium mb-0">${{ sale.sales }}</p>
             </VCol>
           </VRow>
         </VCol>
