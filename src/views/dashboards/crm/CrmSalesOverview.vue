@@ -80,6 +80,13 @@ const props = defineProps({
     default: "0",
   },
 });
+
+const formatCurrency = (number, currencyCode = "USD") => {
+  return number.toLocaleString("en-US", {
+    style: "currency",
+    currency: currencyCode,
+  });
+};
 </script>
 
 <template>
@@ -115,7 +122,7 @@ const props = defineProps({
 
             <div>
               <p class="mb-0">Number of Sales</p>
-              <h6 class="text-h6">${{ totalSales }}</h6>
+              <h6 class="text-h6">{{ formatCurrency(totalSales, "USD") }}</h6>
             </div>
           </div>
 
@@ -132,7 +139,9 @@ const props = defineProps({
                 />
                 <span>{{ sale.name }}</span>
               </p>
-              <p class="text-base font-weight-medium mb-0">${{ sale.sales }}</p>
+              <p class="text-base font-weight-medium mb-0">
+                {{ formatCurrency(sale.sales, "USD") }}
+              </p>
             </VCol>
           </VRow>
         </VCol>

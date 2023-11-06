@@ -32,11 +32,16 @@
         :loading="isLoading"
       >
         <!-- Email -->
-        <!-- <template #item.email="{ item }">
+        <template #item.price="{ item }">
           <span class="text-sm">
-            {{ item.raw.email }}
+            {{ formatCurrency(parseFloat(item.raw.price), "USD") }}
           </span>
-        </template> -->
+        </template>
+        <template #item.percentageOfTotalRevenue="{ item }">
+          <span class="text-sm">
+            {{ item.raw.percentageOfTotalRevenue }}%
+          </span>
+        </template>
 
         <!-- Status -->
         <template #item.available="{ item }">
@@ -299,6 +304,13 @@ const deleteMenuItem = (id) => {
       }
       color.value = "error";
     });
+};
+
+const formatCurrency = (number, currencyCode = "USD") => {
+  return number.toLocaleString("en-US", {
+    style: "currency",
+    currency: currencyCode,
+  });
 };
 </script>
 
