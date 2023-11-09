@@ -1,42 +1,5 @@
 <template>
-  <div class="misc-wrapper" v-if="!isDasboard && !loading">
-    <ErrorHeader
-      error-title="No CSV Data Found ⚠️"
-      error-description="Please upload customer's data."
-    />
-
-    <!-- 👉 Image -->
-    <div class="misc-avatar w-100 text-center">
-      <VImg
-        :src="pages404"
-        alt="Coming Soon"
-        :max-width="800"
-        class="mx-auto"
-        height="200px"
-      />
-      <VBtn color="primary" @click="refInputEl?.click()">
-        <VIcon icon="mdi-cloud-upload-outline" class="d-sm-none" />
-        <span class="d-none d-sm-block">Upload Customers</span>
-      </VBtn>
-      <input
-        ref="refInputEl"
-        type="file"
-        name="file"
-        accept=".csv"
-        hidden
-        @input="uploadDashboard"
-      />
-    </div>
-
-    <!-- 👉 Footer -->
-    <VImg :src="tree" class="misc-footer-tree d-none d-md-block" />
-
-    <!-- <VImg
-      :src="authThemeMask"
-      class="misc-footer-img d-none d-md-block flip-in-rtl"
-    /> -->
-  </div>
-  <section v-else>
+  <section>
     <VRow class="match-height">
       <VCol cols="12" md="6">
         <CrmTransactions :data="transactionData" />
@@ -82,10 +45,8 @@ import CrmTransactions from "@/views/dashboards/crm/CrmTransactions.vue";
 import axios from "@axios";
 import { useGenerateImageVariant } from "@core/composable/useGenerateImageVariant";
 import illustration2 from "@images/cards/illustration-2.png";
-import pages404 from "@images/pages/404.png";
 import miscMaskDark from "@images/pages/misc-mask-dark.png";
 import miscMaskLight from "@images/pages/misc-mask-light.png";
-import tree from "@images/pages/tree.png";
 import { onMounted } from "vue";
 const authThemeMask = useGenerateImageVariant(miscMaskLight, miscMaskDark);
 
@@ -125,66 +86,63 @@ onMounted(async () => {
   try {
     loading.value = true;
     axios.get(`dashboard`).then((res) => {
-      if (res.data.data != null) {
-        console.log(res.data.data, "=============>>>");
-        data.value = res.data;
-        top3FoodItemsSold.value = data.value.top3FoodItemsSold;
-        totalSales.value = data.value.totalSales;
-        totalCustomers.value = data.value.totalCustomers;
-        console.log(data.value, "asdasdf");
-        dashboard.value = res.data.data;
-        tableData.value = res.data.data.data;
-        isDasboard.value = true;
-        loading.value = false;
-        let transaction = {
-          label: "Transactions",
-          statistics: [
-            {
-              title: "Sales",
-              stats: "1.2k",
-              icon: "mdi-trending-up",
-              color: "primary",
-            },
-            {
-              title: "Customers",
-              stats: totalCustomers.value,
-              icon: "mdi-account-outline",
-              color: "success",
-            },
-            {
-              title: "Online Conversions",
-              stats: "23%",
-              icon: "mdi-cellphone-link",
-              color: "warning",
-            },
-          ],
-        };
-        transactionData.value = transaction;
-        let email = {
-          label: "Email Stats",
-          statistics: [
-            {
-              title: "Total Emails",
-              stats: data.value.totalEmails,
-              icon: "mdi-email",
-              color: "primary",
-            },
-            {
-              title: "Pending Emails",
-              stats: data.value.noOfEmailsPending,
-              icon: "mdi-email-alert",
-              color: "success",
-            },
-            {
-              title: "Open Rate",
-              stats: data.value.noOfEmailsOpened,
-              icon: "mdi-email-open",
-              color: "warning",
-            },
-          ],
-        };
-        emailStates.value = email;
-      }
+      data.value = res.data;
+      top3FoodItemsSold.value = data.value.top3FoodItemsSold;
+      totalSales.value = data.value.totalSales;
+      totalCustomers.value = data.value.totalCustomers;
+      console.log(data.value, "asdasdf");
+      dashboard.value = res.data.data;
+
+      isDasboard.value = true;
+      loading.value = false;
+      let transaction = {
+        label: "Transactions",
+        statistics: [
+          {
+            title: "Sales",
+            stats: "1.2k",
+            icon: "mdi-trending-up",
+            color: "primary",
+          },
+          {
+            title: "Customers",
+            stats: totalCustomers.value,
+            icon: "mdi-account-outline",
+            color: "success",
+          },
+          {
+            title: "Online Conversions",
+            stats: "23%",
+            icon: "mdi-cellphone-link",
+            color: "warning",
+          },
+        ],
+      };
+      transactionData.value = transaction;
+      let email = {
+        label: "Email Stats",
+        statistics: [
+          {
+            title: "Total Emails",
+            stats: data.value.totalEmails,
+            icon: "mdi-email",
+            color: "primary",
+          },
+          {
+            title: "Pending Emails",
+            stats: data.value.noOfEmailsPending,
+            icon: "mdi-email-alert",
+            color: "success",
+          },
+          {
+            title: "Open Rate",
+            stats: data.value.noOfEmailsOpened,
+            icon: "mdi-email-open",
+            color: "warning",
+          },
+        ],
+      };
+      emailStates.value = email;
     });
   } catch (error) {
     console.log(error);
