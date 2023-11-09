@@ -4,6 +4,21 @@ import { hexToRgb } from "@layouts/utils";
 import VueApexCharts from "vue3-apexcharts";
 import { useTheme } from "vuetify";
 
+const props = defineProps({
+  dashboard: {
+    type: Array,
+    default: [{ name: "", sales: 0 }],
+  },
+  totalSales: {
+    type: String,
+    default: "0",
+  },
+});
+
+console.log(props);
+const menuItems = props.dashboard.map((item) => item.name);
+const prices = props.dashboard.map((item) => item.sales);
+
 const vuetifyTheme = useTheme();
 const { theme } = useThemeConfig();
 
@@ -28,7 +43,7 @@ const options = controlledComputed(theme, () => {
     stroke: { width: 0 },
     legend: { show: false },
     dataLabels: { enabled: false },
-    labels: ["Apparel", "Electronics", "FMCG", "Other Sales"],
+    labels: menuItems,
     states: {
       hover: { filter: { type: "none" } },
       active: { filter: { type: "none" } },
@@ -53,7 +68,7 @@ const options = controlledComputed(theme, () => {
             },
             total: {
               show: true,
-              label: "Weekly Sales",
+              label: "Total Sales",
               fontSize: "12px",
               color: secondaryTextColor,
               formatter: (value) =>
@@ -68,18 +83,7 @@ const options = controlledComputed(theme, () => {
   };
 });
 
-const series = [3, 2, 3, 7];
-
-const props = defineProps({
-  dashboard: {
-    type: Object,
-    default: {},
-  },
-  totalSales: {
-    type: String,
-    default: "0",
-  },
-});
+const series = prices;
 
 const formatCurrency = (number, currencyCode = "USD") => {
   return number.toLocaleString("en-US", {

@@ -19,6 +19,7 @@
     <VRow class="match-height">
       <VCol cols="12" md="6">
         <CrmSalesOverview
+          v-if="!loading"
           :dashboard="top3FoodItemsSold"
           :totalSales="totalSales"
         />
@@ -78,7 +79,7 @@ let isDasboard = ref(false);
 const refInputEl = ref();
 let data = ref(null);
 let totalCustomers = ref(null);
-let top3FoodItemsSold = ref({});
+let top3FoodItemsSold = ref([]);
 
 let loading = ref(false);
 

@@ -2,7 +2,7 @@ export default [
  
    {
     title: 'Menu Items',
-    icon: { icon: 'mdi-message-text-outline' },
+    icon: { icon: 'mdi-food' },
      to: 'menuItems',
    
   },
