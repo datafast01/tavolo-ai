@@ -1,6 +1,7 @@
 <script setup>
 import axios from "@axios";
 import avatar1 from "@images/avatars/avatar-1.png";
+import AccountSettingsAccount from "./AccountSettingsConnections.vue";
 
 const accountData = {
   avatarImg: avatar1,
@@ -181,7 +182,9 @@ getUserProfile();
         </VCardText>
       </VCard>
     </VCol>
-
+    <VCol cols="12">
+      <AccountSettingsAccount />
+    </VCol>
     <VCol cols="12">
       <VCard title="Data Updates">
         <VCardText>

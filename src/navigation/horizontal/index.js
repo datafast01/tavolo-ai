@@ -7,6 +7,7 @@ import menuItems from './menuItems'
 import messages from './messages'
 import profile from './profile'
 import schedule from './schedule'
+import socialMedia from './socialMedia'
 // import templates from './templates'
 
-export default [...dashboard, ...askTavolo, ...email, ...messages, ...customers, ...schedule, ...menuItems,   ...profile]
+export default [...dashboard, ...askTavolo, ...email, ...messages, ...customers, ...schedule, ...menuItems, ...socialMedia,   ...profile]
