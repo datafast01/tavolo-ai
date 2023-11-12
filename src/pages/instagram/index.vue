@@ -94,6 +94,7 @@
 </template>
 
 <script>
+import axios from "@axios";
 export default {
   data() {
     return {
@@ -106,6 +107,14 @@ export default {
 
       // Now 'codeValue' contains the value of the 'code' parameter
       console.log("Code Value:", codeValue);
+      axios
+        .post(`instagram/token`, { code: codeValue })
+        .then((response) => {
+          console.log("user", response);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   },
   methods: {},
