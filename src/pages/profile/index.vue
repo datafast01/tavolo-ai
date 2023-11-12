@@ -61,6 +61,9 @@ const getUserProfile = () => {
     .then((response) => {
       console.log("user", response.data);
       userData.value = response.data;
+      if (userData.value.instagram.accessToken) {
+        localStorage.setItem("instagramToken", userData.value.accessToken);
+      }
     })
     .catch((err) => {
       console.log(err.response.status);

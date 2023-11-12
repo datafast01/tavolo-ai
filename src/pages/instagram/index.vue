@@ -111,7 +111,7 @@ export default {
         .post(`instagram/token`, { code: codeValue })
         .then((response) => {
           if (response.status == 200) {
-            this.$router.push("/instagram");
+            this.$router.push("/profile");
           }
         })
         .catch((err) => {
