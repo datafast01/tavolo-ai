@@ -62,7 +62,10 @@ const getUserProfile = () => {
       console.log("user", response.data);
       userData.value = response.data;
       if (userData.value.instagram.accessToken) {
-        localStorage.setItem("instagramToken", userData.value.accessToken);
+        localStorage.setItem(
+          "instagramToken",
+          userData.value.instagram.accessToken
+        );
       }
     })
     .catch((err) => {
