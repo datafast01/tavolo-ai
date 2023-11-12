@@ -110,7 +110,9 @@ export default {
       axios
         .post(`instagram/token`, { code: codeValue })
         .then((response) => {
-          console.log("user", response);
+          if (response.status == 200) {
+            this.$router.push("/instagram");
+          }
         })
         .catch((err) => {
           console.log(err);
