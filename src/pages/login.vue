@@ -5,7 +5,8 @@
     </VSnackbar>
     <!-- Title and Logo -->
     <div class="auth-logo d-flex align-start gap-x-3">
-      <VNodeRenderer :nodes="themeConfig.app.logo" />
+      <!-- <VNodeRenderer :nodes="logo" /> -->
+      <img :src="logo" alt="" width="130" />
 
       <h1 class="font-weight-medium leading-normal text-2xl text-uppercase">
         {{ themeConfig.app.title }}
@@ -112,6 +113,7 @@
 </template>
 <script setup>
 // import { useAppAbility } from '@/plugins/casl/useAppAbility'
+import logo from "@/assets/images/logos/Tavolo.png";
 import axios from "@axios";
 import { useGenerateImageVariant } from "@core/composable/useGenerateImageVariant";
 import authV2LoginIllustrationBorderedDark from "@images/pages/auth-v2-login-illustration-bordered-dark.png";
@@ -121,7 +123,6 @@ import authV2LoginIllustrationLight from "@images/pages/auth-v2-login-illustrati
 import authV2MaskDark from "@images/pages/auth-v2-mask-dark.png";
 import authV2MaskLight from "@images/pages/auth-v2-mask-light.png";
 import tree from "@images/pages/tree.png";
-import { VNodeRenderer } from "@layouts/components/VNodeRenderer";
 import { themeConfig } from "@themeConfig";
 import { emailValidator, requiredValidator } from "@validators";
 import { ref } from "vue";

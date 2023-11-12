@@ -1,161 +1,22 @@
-<script setup>
-import asana from '@images/icons/brands/asana.png'
-import behance from '@images/icons/brands/behance.png'
-import dribbble from '@images/icons/brands/dribbble.png'
-import facebook from '@images/icons/brands/facebook1.png'
-import github from '@images/icons/brands/github.png'
-import google from '@images/icons/brands/google.png'
-import intagram from '@images/icons/brands/instagram.png'
-import mailchimp from '@images/icons/brands/mailchimp.png'
-import slack from '@images/icons/brands/slack.png'
-import twitter from '@images/icons/brands/twitter.png'
-
-const connectedAccounts = ref([
-  {
-    logo: google,
-    name: 'Google',
-    subtitle: 'Calendar and contacts',
-    connected: true,
-  },
-  {
-    logo: slack,
-    name: 'Slack',
-    subtitle: 'Communication',
-    connected: false,
-  },
-  {
-    logo: github,
-    name: 'GitHub',
-    subtitle: 'Manage your Git repositories',
-    connected: true,
-  },
-  {
-    logo: mailchimp,
-    name: 'MailChimp',
-    subtitle: 'Email marketing service',
-    connected: true,
-  },
-  {
-    logo: asana,
-    name: 'Asana',
-    subtitle: 'Task management',
-    connected: false,
-  },
-])
-
-const socialAccounts = ref([
-  {
-    logo: facebook,
-    name: 'Facebook',
-    connected: false,
-  },
-  {
-    logo: twitter,
-    name: 'Twitter',
-    links: {
-      username: '@ThemeSelection',
-      link: 'https://twitter.com/Theme_Selection',
-    },
-    connected: true,
-  },
-  {
-    logo: intagram,
-    name: 'Instagram',
-    links: {
-      username: '@ThemeSelection',
-      link: 'https://www.instagram.com/themeselection/',
-    },
-    connected: true,
-  },
-  {
-    logo: dribbble,
-    name: 'Dribbble',
-    connected: false,
-  },
-  {
-    logo: behance,
-    name: 'Behance',
-    connected: false,
-  },
-])
-</script>
-
 <template>
   <VCard>
     <VRow>
       <!-- 👉 Connected Accounts -->
-      <VCol
-        cols="12"
-        md="6"
-      >
-        <VCard
-          flat
-          title="Connected Accounts"
-        >
-          <template #subtitle>
-            <span class="text-base">Display content from your connected accounts on your site</span>
-          </template>
-          <VCardText>
-            <VList class="card-list">
-              <VListItem
-                v-for="item in connectedAccounts"
-                :key="item.logo"
-              >
-                <template #prepend>
-                  <VAvatar
-                    start
-                    :image="item.logo"
-                    size="30"
-                  />
-                </template>
-                <VListItemTitle>
-                  <span class="font-weight-medium">{{ item.name }}</span>
-                </VListItemTitle>
-
-                <VListItemSubtitle>
-                  {{ item.subtitle }}
-                </VListItemSubtitle>
-
-                <template #append>
-                  <VListItemAction>
-                    <VSwitch
-                      v-model="item.connected"
-                      density="compact"
-                      class="me-1"
-                    />
-                  </VListItemAction>
-                </template>
-              </VListItem>
-            </VList>
-          </VCardText>
-        </VCard>
-      </VCol>
 
       <!-- 👉 Social Accounts -->
-      <VCol
-        cols="12"
-        md="6"
-      >
-        <VCard
-          flat
-          title="Social Accounts"
-        >
+      <VCol cols="12" md="6">
+        <VCard flat title="Social Accounts">
           <template #subtitle>
-            <span class="text-base">Display content from social accounts on your site</span>
+            <span class="text-base"
+              >Display content from social accounts on your site</span
+            >
           </template>
 
           <VCardText>
             <VList class="card-list">
-              <VListItem
-                v-for="item in socialAccounts"
-                :key="item.logo"
-              >
+              <VListItem v-for="item in socialAccounts" :key="item.logo">
                 <template #prepend>
-                  <VAvatar
-                    start
-                    :image="item.logo"
-                    size="36"
-                  />
+                  <VAvatar start :image="item.logo" size="36" />
                 </template>
 
                 <VListItemTitle>
@@ -166,16 +27,13 @@ const socialAccounts = ref([
                   v-if="item.links?.link"
                   tag="a"
                   :href="item.links?.link"
-                  style="opacity: 1;"
+                  style="opacity: 1"
                   class="text-primary"
                 >
                   {{ item.links?.username }}
                 </VListItemSubtitle>
 
-                <VListItemSubtitle
-                  v-else
-                  class="text-xs"
-                >
+                <VListItemSubtitle v-else class="text-xs">
                   Not Connected
                 </VListItemSubtitle>
 
@@ -187,10 +45,15 @@ const socialAccounts = ref([
                       size="small"
                       :color="item.connected ? 'error' : 'secondary'"
                       class="rounded"
+                      @click="connectTo(item)"
                     >
                       <VIcon
                         size="24"
-                        :icon="item.connected ? 'mdi-delete-outline' : 'mdi-link-variant' "
+                        :icon="
+                          item.connected
+                            ? 'mdi-delete-outline'
+                            : 'mdi-link-variant'
+                        "
                       />
                     </VBtn>
                   </VListItemAction>
@@ -203,6 +66,51 @@ const socialAccounts = ref([
     </VRow>
   </VCard>
 </template>
+
+<script>
+import facebook from "@images/icons/brands/facebook1.png";
+import intagram from "@images/icons/brands/instagram.png";
+import twitter from "@images/icons/brands/twitter.png";
+
+export default {
+  data() {
+    return {
+      socialAccounts: [
+        {
+          logo: facebook,
+          name: "Facebook",
+          connected: false,
+        },
+
+        {
+          logo: intagram,
+          name: "Instagram",
+          links: {
+            username: "@ThemeSelection",
+            link: "https://www.instagram.com/themeselection/",
+          },
+          connected: false,
+        },
+        {
+          logo: twitter,
+          name: "TikTok",
+          connected: false,
+        },
+      ],
+    };
+  },
+  methods: {
+    connectTo(item) {
+      console.log(item.name);
+      if (item.name == "Instagram") {
+        window.open(
+          "https://api.instagram.com/oauth/authorize?client_id=1010878180143016&redirect_uri=https://web.tavolo.ai/instagram/&scope=user_profile,user_media&response_type=code"
+        );
+      }
+    },
+  },
+};
+</script>
 
 <style lang="scss" scoped>
 .card-list {
