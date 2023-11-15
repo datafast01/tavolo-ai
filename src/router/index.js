@@ -29,6 +29,7 @@ import routes from '~pages'
       path: '/pages/account-settings',
       redirect: () => ({ name: 'pages-account-settings-tab', params: { tab: 'account' } }),
     },
+   
     ...setupLayouts(routes),
   ],
 })

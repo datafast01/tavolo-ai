@@ -68,6 +68,7 @@
 </template>
 
 <script>
+import axios from "@axios";
 import facebook from "@images/icons/brands/facebook1.png";
 import intagram from "@images/icons/brands/instagram.png";
 import twitter from "@images/icons/brands/twitter.png";
@@ -97,15 +98,37 @@ export default {
           connected: false,
         },
       ],
+      instagramToken: null,
     };
+  },
+  mounted() {
+    this.instagramToken = localStorage.getItem("instagramToken");
+    if (this.instagramToken != null) {
+      this.socialAccounts[1].connected = true;
+    }
   },
   methods: {
     connectTo(item) {
       console.log(item.name);
       if (item.name == "Instagram") {
-        window.open(
-          "https://api.instagram.com/oauth/authorize?client_id=1010878180143016&redirect_uri=https://web.tavolo.ai/instagram/&scope=user_profile,user_media&response_type=code"
-        );
+        if (this.instagramToken != null) {
+          axios
+            .get(`instagram/disconnect`)
+            .then((response) => {
+              console.log("user", response.status);
+              if (response.status == 200) {
+                localStorage.removeItem("instagramToken");
+                item.connected = false;
+              }
+            })
+            .catch((err) => {
+              console.log(err.response.status);
+            });
+        } else {
+          window.open(
+            "https://api.instagram.com/oauth/authorize?client_id=1010878180143016&redirect_uri=https://web.tavolo.ai/instagram/&scope=user_profile,user_media&response_type=code"
+          );
+        }
       }
     },
   },

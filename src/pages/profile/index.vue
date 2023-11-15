@@ -14,6 +14,7 @@ const isConfirmDialogOpen = ref(false);
 const accountDataLocal = ref(structuredClone(accountData));
 const isAccountDeactivated = ref(false);
 let userData = ref({});
+
 const validateAccountDeactivation = [
   (v) => !!v || "Please confirm account deactivation",
 ];
