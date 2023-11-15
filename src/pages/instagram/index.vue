@@ -10,17 +10,17 @@
           class="video"
           v-if="post.media_type == 'IMAGE'"
         />
-        <!-- <video
-
+        <video
           ref="videoPlayer"
           width="200"
           height="300"
           controls
           class="video"
+          v-if="post.media_type == 'VIDEO'"
         >
-          <source src="./tiktok.mp4" type="video/mp4" />
+          <source :src="post.media_url" type="video/mp4" />
           Your browser does not support the video tag.
-        </video> -->
+        </video>
         <span class="mb-2">@{{ post.username }}</span>
       </div>
 
