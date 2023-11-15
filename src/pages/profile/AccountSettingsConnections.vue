@@ -126,7 +126,7 @@ export default {
             });
         } else {
           window.open(
-            "https://api.instagram.com/oauth/authorize?client_id=1010878180143016&redirect_uri=https://web.tavolo.ai/instagram/&scope=user_profile,user_media&response_type=code"
+            "https://api.instagram.com/oauth/authorize?client_id=1010878180143016&redirect_uri=https://web.tavolo.ai/instagram/callback/&scope=user_profile,user_media&response_type=code"
           );
         }
       }
