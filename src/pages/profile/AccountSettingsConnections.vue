@@ -4,6 +4,7 @@
       <!-- 👉 Connected Accounts -->
 
       <!-- 👉 Social Accounts -->
+
       <VCol cols="12" md="6">
         <VCard flat title="Social Accounts">
           <template #subtitle>
@@ -24,13 +25,13 @@
                 </VListItemTitle>
 
                 <VListItemSubtitle
-                  v-if="item.links?.link"
+                  v-if="item.connected"
                   tag="a"
-                  :href="item.links?.link"
+                  :href="'https://www.instagram.com/' + instagram.username"
                   style="opacity: 1"
                   class="text-primary"
                 >
-                  {{ item.links?.username }}
+                  @{{ item?.links?.username }}
                 </VListItemSubtitle>
 
                 <VListItemSubtitle v-else class="text-xs">
@@ -74,6 +75,16 @@ import intagram from "@images/icons/brands/instagram.png";
 import twitter from "@images/icons/brands/twitter.png";
 
 export default {
+  props: {
+    instagram: {
+      type: Object,
+      default: {},
+    },
+    igAccessToken: {
+      type: String,
+      default: null,
+    },
+  },
   data() {
     return {
       socialAccounts: [
@@ -87,7 +98,7 @@ export default {
           logo: intagram,
           name: "Instagram",
           links: {
-            username: "@ThemeSelection",
+            username: "",
             link: "https://www.instagram.com/themeselection/",
           },
           connected: false,
@@ -101,25 +112,37 @@ export default {
       instagramToken: null,
     };
   },
-  mounted() {
-    this.instagramToken = localStorage.getItem("instagramToken");
-    if (this.instagramToken != null) {
-      this.socialAccounts[1].connected = true;
-    }
+  watch: {
+    instagram: {
+      handler(val) {
+        console.log(val, "========");
+        if (val.username) {
+          this.socialAccounts[1].links.username = val.username;
+          this.socialAccounts[1].links.link =
+            "https://www.instagram.com/" + val.username;
+        }
+      },
+    },
+    igAccessToken: {
+      handler(val) {
+        if (val) {
+          this.socialAccounts[1].connected = true;
+        }
+      },
+    },
   },
+
   methods: {
     connectTo(item) {
       console.log(item.name);
       if (item.name == "Instagram") {
-        if (this.instagramToken != null) {
+        if (item.connected) {
           axios
             .get(`instagram/disconnect`)
             .then((response) => {
               console.log("user", response.status);
-              if (response.status == 200) {
-                localStorage.removeItem("instagramToken");
-                item.connected = false;
-              }
+              item.connected = false;
+              this.$emit("refresh-data");
             })
             .catch((err) => {
               console.log(err.response.status);

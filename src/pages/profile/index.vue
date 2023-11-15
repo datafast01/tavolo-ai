@@ -55,6 +55,8 @@ const updateCustomer = (file) => {
     });
 };
 
+var instagram = ref({});
+var igAccessToken = ref(null);
 const getUserProfile = () => {
   // console.log("submit form", ApiService);
   axios
@@ -63,14 +65,14 @@ const getUserProfile = () => {
       console.log("user", response.data);
       userData.value = response.data;
       if (userData.value.instagram.accessToken) {
-        localStorage.setItem(
-          "instagramToken",
-          userData.value.instagram.accessToken
-        );
+        igAccessToken.value = userData.value.instagram.accessToken;
+      }
+      if (userData.value.instagram.posts.length > 0) {
+        instagram.value = userData.value.instagram.posts[0];
       }
     })
     .catch((err) => {
-      console.log(err.response.status);
+      console.log(err);
     });
 };
 
@@ -190,7 +192,11 @@ getUserProfile();
       </VCard>
     </VCol>
     <VCol cols="12">
-      <AccountSettingsAccount />
+      <AccountSettingsAccount
+        :instagram="instagram"
+        :igAccessToken="igAccessToken"
+        @refresh-data="getUserProfile"
+      />
     </VCol>
     <VCol cols="12">
       <VCard title="Data Updates">
