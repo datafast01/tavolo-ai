@@ -1,8 +1,17 @@
 <template>
-  <div>
-    <div>
+  <VRow>
+    <VCol cols="12" md="3" v-for="post in instaPosts" :key="post.id">
       <div class="d-flex flex-column">
-        <video
+        <img
+          :src="post.media_url"
+          alt=""
+          width="200"
+          height="300"
+          class="video"
+          v-if="post.media_type == 'IMAGE'"
+        />
+        <!-- <video
+
           ref="videoPlayer"
           width="200"
           height="300"
@@ -11,8 +20,8 @@
         >
           <source src="./tiktok.mp4" type="video/mp4" />
           Your browser does not support the video tag.
-        </video>
-        <span class="mb-2">@junnorthloop</span>
+        </video> -->
+        <span class="mb-2">@{{ post.username }}</span>
       </div>
 
       <div class="username mt-1">
@@ -89,19 +98,38 @@
           {{ isPlaying ? "Pause" : "Play" }}
         </button>
       </div> -->
-    </div>
-  </div>
+    </VCol>
+  </VRow>
 </template>
 
 <script>
+import axios from "@axios";
 export default {
   data() {
     return {
       isPlaying: false,
+      instaPosts: [],
     };
   },
 
-  methods: {},
+  mounted() {
+    this.getUserProfile();
+  },
+
+  methods: {
+    getUserProfile() {
+      // console.log("submit form", ApiService);
+      axios
+        .get(`getprofile`)
+        .then((response) => {
+          console.log("user", response.data);
+          this.instaPosts = response.data.instagram.posts;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
 };
 </script>
 
