@@ -339,6 +339,7 @@ declare module '@vue/runtime-core' {
     EnableOneTimePasswordDialog: typeof import('./src/components/dialogs/EnableOneTimePasswordDialog.vue')['default']
     ErrorHeader: typeof import('./src/components/ErrorHeader.vue')['default']
     I18n: typeof import('./src/@core/components/I18n.vue')['default']
+    Loader: typeof import('./src/components/Loader.vue')['default']
     MoreBtn: typeof import('./src/@core/components/MoreBtn.vue')['default']
     Notifications: typeof import('./src/@core/components/Notifications.vue')['default']
     PricingPlanDialog: typeof import('./src/components/dialogs/PricingPlanDialog.vue')['default']
