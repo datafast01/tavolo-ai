@@ -6,12 +6,12 @@ export default [
      children: [
       {
         title: 'Instagram',
-        icon: { icon: 'mdi-email' },
+        icon: { icon: 'mdi-instagram' },
        to: { name: 'instagram' },
       },
       {
         title: 'Tiktok',
-        icon: { icon: 'mdi-message-text-outline' },
+        icon: { icon: 'mdi-facebook' },
         to: { name: 'tiktok' },
       },
    ]
