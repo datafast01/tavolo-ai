@@ -3,6 +3,60 @@
     <VSnackbar v-model="show" :timeout="2000" :color="color">
       {{ snkMsg }}
     </VSnackbar>
+    <v-expansion-panels class="mb-3">
+      <v-expansion-panel>
+        <v-expansion-panel-title>Advance Filters</v-expansion-panel-title>
+        <v-expansion-panel-text>
+          <VRow class="mb-3">
+            <VCol cols="12" md="2" sm="4">
+              <VTextField
+                v-model="emailSubject"
+                label="Search Subject"
+                density="compact"
+              />
+            </VCol>
+            {{ scheduledDate }}
+            <VCol cols="12" md="2" sm="4">
+              <VTextField
+                v-model="scheduledDate"
+                type="date"
+                label="Schedule Date"
+                density="compact"
+              />
+            </VCol>
+
+            <VCol cols="12" md="2" sm="4">
+              <v-select
+                label="Schecudled"
+                :items="availableItems"
+                item-title="name"
+                item-value="value"
+                density="compact"
+                v-model="scheduled"
+              ></v-select>
+            </VCol>
+            <VCol cols="12" md="2" sm="4">
+              <v-select
+                label="Sent"
+                :items="availableItems"
+                item-title="name"
+                item-value="value"
+                density="compact"
+                v-model="sent"
+              ></v-select>
+            </VCol>
+          </VRow>
+          <div class="d-flex flex-row-reverse">
+            <div class="mx-2">
+              <VBtn @click="applyFilters()"> Apply Filters </VBtn>
+            </div>
+            <div>
+              <VBtn @click="reset" color="secondary"> Clear Filters </VBtn>
+            </div>
+          </div>
+        </v-expansion-panel-text>
+      </v-expansion-panel>
+    </v-expansion-panels>
     <VCard>
       <!-- SECTION data table -->
       <VDataTableServer
@@ -234,7 +288,6 @@
 </template>
 
 <script setup>
-import moment from "moment";
 import { VDataTableServer } from "vuetify/labs/VDataTable";
 
 import axios from "@axios";
@@ -285,11 +338,48 @@ const headers = [
   },
 ];
 
+// filters veriables
+const availableItems = ref([
+  { name: "YES", value: "true" },
+  { name: "NO", value: "false" },
+  { name: "ALL", value: "all" },
+]);
+
+let emailSubject = ref("" || null);
+let scheduledDate = ref("" || null);
+let scheduled = ref(null);
+let sent = ref(null);
+
+const reset = () => {
+  emailSubject.value = "";
+  scheduledDate.value = "";
+  scheduled.value = null;
+  sent.value = null;
+
+  fetchEmails();
+};
 const fetchEmails = () => {
   isLoading.value = true;
   axios
     .get(
       `dashboard/list-schedule-email?pageSize=${options.value.itemsPerPage}&pageNo=${options.value.page}`
+    )
+    .then((response) => {
+      console.log("user", response.data);
+      customers.value = response.data.data;
+      totalUsers.value = response.data.count;
+      isLoading.value = false;
+    })
+    .catch((err) => {
+      console.log(err.response.status);
+    });
+};
+
+const applyFilters = () => {
+  isLoading.value = true;
+  axios
+    .get(
+      `dashboard/list-schedule-email?pageSize=${options.value.itemsPerPage}&pageNo=${options.value.page}&subject=${emailSubject.value}&scheduled=${scheduled.value}&sent=${sent.value}&scheduledDate=${scheduledDate.value}`
     )
     .then((response) => {
       console.log("user", response.data);

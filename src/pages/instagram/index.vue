@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div class="text-center" v-if="loading">
+    <Loader />
+  </div>
+  <div v-else>
     <VRow v-if="instaPosts.length > 0">
       <VCol cols="12" md="3" v-for="post in instaPosts" :key="post.id">
         <div class="d-flex flex-column">
@@ -109,13 +112,6 @@
       </div>
     </div>
   </div>
-  <div class="text-center">
-    <v-overlay>
-      <div class="text-center">
-        <v-progress-circular indeterminate size="64"></v-progress-circular>
-      </div>
-    </v-overlay>
-  </div>
 </template>
 
 <script>
@@ -129,6 +125,7 @@ export default {
     return {
       isPlaying: false,
       instaPosts: [],
+      loading: false,
     };
   },
 
@@ -138,12 +135,14 @@ export default {
 
   methods: {
     getUserProfile() {
+      this.loading = true;
       // console.log("submit form", ApiService);
       axios
         .get(`getprofile`)
         .then((response) => {
           console.log("user", response.data);
           this.instaPosts = response.data.instagram.posts;
+          this.loading = false;
         })
         .catch((err) => {
           console.log(err);

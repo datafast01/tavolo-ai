@@ -1,5 +1,8 @@
 <template>
-  <section>
+  <div class="text-center" v-if="loading">
+    <Loader />
+  </div>
+  <section v-else>
     <VRow class="match-height">
       <VCol cols="12" md="6">
         <CrmTransactions :data="transactionData" />

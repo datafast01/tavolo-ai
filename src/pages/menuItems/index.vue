@@ -3,6 +3,87 @@
     <VSnackbar v-model="show" :timeout="2000" :color="color">
       {{ snkMsg }}
     </VSnackbar>
+
+    <v-expansion-panels class="mb-3">
+      <v-expansion-panel>
+        <v-expansion-panel-title>Advance Filters</v-expansion-panel-title>
+        <v-expansion-panel-text>
+          <VRow class="mb-3">
+            <!-- menu Item name  -->
+            <VCol cols="12" md="2" sm="4">
+              <VTextField
+                v-model="menuItem"
+                label="Search Menu Item"
+                density="compact"
+              />
+            </VCol>
+            <!-- available  -->
+            <VCol cols="12" md="2" sm="4">
+              <v-select
+                label="Available"
+                density="compact"
+                :items="availableItems"
+                v-model="available"
+                item-value="value"
+                item-title="name"
+              ></v-select>
+            </VCol>
+
+            <VCol cols="12" md="2" sm="4">
+              <v-select
+                label="Price Operator"
+                density="compact"
+                :items="rangeItems"
+                v-model="priceOperator"
+                item-value="value"
+                item-title="name"
+              ></v-select>
+            </VCol>
+
+            <VCol cols="12" md="2" sm="4">
+              <VTextField
+                v-model="price"
+                label="Price"
+                density="compact"
+                outline
+                type="number"
+              />
+            </VCol>
+            <VCol cols="12" md="2" sm="4">
+              <v-select
+                label="Orders Operator"
+                density="compact"
+                :items="rangeItems"
+                v-model="ordersOperator"
+                item-value="value"
+                item-title="name"
+              ></v-select>
+            </VCol>
+
+            <VCol cols="12" md="2" sm="4">
+              <VTextField
+                v-model="orders"
+                label="No Of Orders"
+                density="compact"
+                outline
+                type="number"
+              />
+            </VCol>
+          </VRow>
+          <div class="d-flex flex-row-reverse">
+            <div class="mx-2">
+              <VBtn @click="applyFilters()" prepend-icon="mdi-filter-outline">
+                Apply Filters
+              </VBtn>
+            </div>
+            <div>
+              <VBtn @click="reset" color="secondary"> Clear Filters </VBtn>
+            </div>
+          </div>
+        </v-expansion-panel-text>
+      </v-expansion-panel>
+    </v-expansion-panels>
+
     <VCard>
       <VCardText class="d-flex flex-wrap gap-4">
         <VSpacer />
@@ -171,7 +252,18 @@ const options = ref({
   groupBy: [],
   search: undefined,
 });
+const repeated = ref(null);
+const availableItems = ref([
+  { name: "YES", value: "true" },
+  { name: "NO", value: "false" },
+  { name: "ALL", value: "all" },
+]);
+const rangeItems = ref([
+  { name: "Greater than", value: "greater" },
+  { name: "Less than", value: "smaller" },
 
+  { name: "Equals To", value: "equals" },
+]);
 // Headers
 const headers = [
   {
@@ -207,12 +299,46 @@ const headers = [
   },
 ];
 
+// filter veriables
+let menuItem = ref("" || null);
+let available = ref("all" || null);
+let priceOperator = ref("" || null);
+let price = ref("" || null);
+let ordersOperator = ref("" || null);
+let orders = ref("" || null);
+
+const reset = () => {
+  menuItem.value = "";
+  price.value = "";
+  available.value = null;
+  ordersOperator.value = "";
+  priceOperator.value = null;
+  orders.value = null;
+
+  fetchMenuItems();
+};
+
 // 👉 Fetching users
 const fetchMenuItems = () => {
   isLoading.value = true;
   axios
     .get(
       `food-item/list?pageSize=${options.value.itemsPerPage}&page=${options.value.page}`
+    )
+    .then((response) => {
+      console.log("user", response.data);
+      menuItems.value = response.data.data;
+      isLoading.value = false;
+    })
+    .catch((err) => {
+      console.log(err.response.status);
+    });
+};
+const applyFilters = () => {
+  isLoading.value = true;
+  axios
+    .get(
+      `food-item/list?pageSize=${options.value.itemsPerPage}&page=${options.value.page}&name=${menuItem.value}&available=${available.value}&price=${price.value}&priceOperator=${priceOperator.value}&noOfTimesOrdered=${orders.value}&noOfTimesOrderedOperator=${ordersOperator.value}`
     )
     .then((response) => {
       console.log("user", response.data);

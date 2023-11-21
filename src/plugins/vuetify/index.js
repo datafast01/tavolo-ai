@@ -12,7 +12,9 @@ export default createVuetify({
   aliases: {
     IconBtn: VBtn,
   },
+ 
   defaults,
   icons,
   theme,
+  
 })

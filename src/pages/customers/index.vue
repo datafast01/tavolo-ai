@@ -3,6 +3,82 @@
     <VSnackbar v-model="show" :timeout="2000" :color="color">
       {{ snkMsg }}
     </VSnackbar>
+    <v-expansion-panels class="mb-3">
+      <v-expansion-panel>
+        <v-expansion-panel-title>Advance Filters</v-expansion-panel-title>
+        <v-expansion-panel-text>
+          <VRow class="mb-3">
+            <VCol cols="12" md="2" sm="4">
+              <VTextField
+                v-model="emailSearch"
+                label="Search Email"
+                density="compact"
+              />
+            </VCol>
+            <VCol cols="12" md="2" sm="4">
+              <v-select
+                label="AOV Operator"
+                density="compact"
+                :items="rangeItems"
+                v-model="aovOperator"
+                item-value="value"
+                item-title="name"
+              ></v-select>
+            </VCol>
+            <VCol cols="12" md="2" sm="4">
+              <VTextField
+                v-model="aov"
+                type="number"
+                label="AOV"
+                density="compact"
+              />
+            </VCol>
+            <VCol cols="12" md="2" sm="4">
+              <v-select
+                label="Visis Operator"
+                density="compact"
+                :items="rangeItems"
+                v-model="visitsOperator"
+                item-value="value"
+                item-title="name"
+              ></v-select>
+            </VCol>
+            <VCol cols="12" md="2" sm="4">
+              <VTextField
+                v-model="totalVisits"
+                label="Total Visits"
+                density="compact"
+                outline
+                type="number"
+              />
+            </VCol>
+            <VCol cols="12" md="2" sm="4">
+              <v-select
+                label="Repeated"
+                :items="availableItems"
+                item-title="name"
+                item-value="value"
+                density="compact"
+                v-model="repeated"
+              ></v-select>
+            </VCol>
+          </VRow>
+          <div class="d-flex flex-row-reverse">
+            <div class="mx-2">
+              <VBtn
+                @click="filterCustomers()"
+                prepend-icon="mdi-filter-outline"
+              >
+                Apply Filters
+              </VBtn>
+            </div>
+            <div>
+              <VBtn @click="reset" color="secondary"> Clear Filters </VBtn>
+            </div>
+          </div>
+        </v-expansion-panel-text>
+      </v-expansion-panel>
+    </v-expansion-panels>
     <VCard>
       <VCardText class="d-flex flex-wrap gap-4">
         <VBtn color="primary" @click="refInputEl?.click()">
@@ -19,21 +95,15 @@
         />
 
         <VSpacer />
-
-        <div class="app-user-search-filter d-flex align-center gap-6">
-          <!-- 👉 Search  -->
-          <VTextField
-            v-model="searchQuery"
-            placeholder="Search User"
-            density="compact"
-          />
-
+        <VSpacer />
+        <div class="">
           <!-- 👉 Add user button -->
           <VBtn @click="isAddNewUserDrawerVisible = true"> Add Customer </VBtn>
         </div>
       </VCardText>
 
       <!-- SECTION data table -->
+
       <VDataTableServer
         v-model:items-per-page="options.itemsPerPage"
         v-model:page="options.page"
@@ -135,6 +205,7 @@
           </div>
         </template>
       </VDataTableServer>
+
       <!-- SECTION -->
     </VCard>
 
@@ -154,11 +225,14 @@
 
 <script setup>
 import { VDataTableServer } from "vuetify/labs/VDataTable";
+
 // import { paginationMeta } from '@/@fake-db/utils'
 // import AddNewUserDrawer from "@/views/apps/user/list/AddNewUserDrawer.vue";
 import { useUserListStore } from "@/views/apps/user/useUserListStore";
 import axios from "@axios";
+// import { VSkeletonLoader } from "vuetify/labs/VSkeletonLoader";
 import AddNewCustomer from "./AddNewCustomer.vue";
+
 import EditCustomer from "./EditCustomer.vue";
 
 const userListStore = useUserListStore();
@@ -172,6 +246,35 @@ let myCustomer = ref({});
 let show = ref(false);
 let snkMsg = ref("");
 let color = ref("#9575CD");
+
+// filters veriables
+let emailSearch = ref("" || null);
+let totalVisits = ref("" || null);
+let repeated = ref("all");
+let aov = ref("" || null);
+let aovOperator = ref(null);
+let visitsOperator = ref(null);
+const rangeItems = ref([
+  { name: "Greater than", value: "greater" },
+  { name: "Less than", value: "smaller" },
+
+  { name: "Equals To", value: "equals" },
+]);
+const availableItems = ref([
+  { name: "YES", value: "true" },
+  { name: "NO", value: "false" },
+  { name: "ALL", value: "all" },
+]);
+const reset = () => {
+  emailSearch.value = "";
+  totalVisits.value = "";
+  repeated.value = null;
+  aov.value = "";
+  aovOperator.value = null;
+  visitsOperator.value = null;
+
+  fetchCustomers();
+};
 const options = ref({
   page: 1,
   itemsPerPage: 10,
@@ -255,6 +358,21 @@ const fetchCustomers = () => {
   axios
     .get(
       `list-customers?pageSize=${options.value.itemsPerPage}&pageNo=${options.value.page}`
+    )
+    .then((response) => {
+      console.log("user", response.data);
+      customers.value = response.data.data;
+      isLoading.value = false;
+    })
+    .catch((err) => {
+      console.log(err.response.status);
+    });
+};
+const filterCustomers = () => {
+  isLoading.value = true;
+  axios
+    .get(
+      `list-customers?pageSize=${options.value.itemsPerPage}&pageNo=${options.value.page}&email=${emailSearch.value}&repeated=${repeated.value}&aov=${aov.value}&aovOperator=${aovOperator.value}&totalVisits=${totalVisits.value}&totalVisitsOperator=${visitsOperator.value}`
     )
     .then((response) => {
       console.log("user", response.data);
