@@ -138,7 +138,6 @@
           </div>
         </template>
       </VDataTableServer>
-      <!-- SECTION -->
     </VCard>
     <VDialog v-model="isDetails" max-width="800">
       <!-- Dialog Activator -->
@@ -235,7 +234,7 @@
 
 <script setup>
 import moment from "moment";
-import { VDataTableServer } from "vuetify/labs/VDataTable";
+import { VDataTableServer } from "vuetify/lib/components/index.mjs";
 
 import axios from "@axios";
 

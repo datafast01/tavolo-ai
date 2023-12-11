@@ -63,12 +63,12 @@ const userProfileList = [
   //   title: "Help",
   //   to: { name: "pages-help-center" },
   // },
-  // {
-  //   type: "navItem",
-  //   icon: "mdi-currency-usd",
-  //   title: "Pricing",
-  //   to: { name: "pages-pricing" },
-  // },
+  {
+    type: "navItem",
+    icon: "mdi-currency-usd",
+    title: "Pricing",
+    to: { name: "pages-pricing" },
+  },
   // {
   //   type: "navItem",
   //   icon: "mdi-help-circle-outline",

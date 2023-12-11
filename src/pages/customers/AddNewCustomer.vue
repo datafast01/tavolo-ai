@@ -27,6 +27,7 @@ const lastVisitedDate = ref(
     .toISOString()
     .substr(0, 10)
 );
+console.log(lastVisitedDate.value);
 
 // 👉 drawer close
 const closeNavigationDrawer = () => {
@@ -153,12 +154,12 @@ const handleDrawerModelValueUpdate = (val) => {
                   label="Last Dining Behavior"
                 />
               </VCol>
-              <AppDateTimePicker
+              <VTextField
                 v-model="lastVisitedDate"
                 label="Last Visit Date"
                 clear-icon="mdi-close"
                 clearable
-                style="width: 100%"
+                type="date"
               />
               <!-- 👉 Status -->
               <VCol cols="12">

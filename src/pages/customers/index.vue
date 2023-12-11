@@ -117,7 +117,7 @@
         <!-- Email -->
         <!-- <template #item.email="{ item }">
           <span class="text-sm">
-            {{ item.raw.email }}
+            {{ item.email }}
           </span>
         </template> -->
 
@@ -126,7 +126,7 @@
           <VIcon
             icon="mdi-check-outline"
             color="primary"
-            v-if="item.raw.repeated"
+            v-if="item.repeated"
           />
         </template>
 
@@ -144,7 +144,7 @@
                   <VListItemTitle>Edit</VListItemTitle>
                 </VListItem>
 
-                <VListItem @click="deleteUser(item.raw._id)">
+                <VListItem @click="deleteUser(item._id)">
                   <template #prepend>
                     <VIcon icon="mdi-delete-outline" />
                   </template>
@@ -224,8 +224,7 @@
 </template>
 
 <script setup>
-import { VDataTableServer } from "vuetify/labs/VDataTable";
-
+import { VDataTableServer } from "vuetify/lib/components/index.mjs";
 // import { paginationMeta } from '@/@fake-db/utils'
 // import AddNewUserDrawer from "@/views/apps/user/list/AddNewUserDrawer.vue";
 import { useUserListStore } from "@/views/apps/user/useUserListStore";

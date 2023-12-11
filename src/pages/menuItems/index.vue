@@ -115,13 +115,11 @@
         <!-- Email -->
         <template #item.price="{ item }">
           <span class="text-sm">
-            {{ formatCurrency(parseFloat(item.raw.price), "USD") }}
+            {{ formatCurrency(parseFloat(item.price), "USD") }}
           </span>
         </template>
         <template #item.percentageOfTotalRevenue="{ item }">
-          <span class="text-sm">
-            {{ item.raw.percentageOfTotalRevenue }}%
-          </span>
+          <span class="text-sm"> {{ item.percentageOfTotalRevenue }}% </span>
         </template>
 
         <!-- Status -->
@@ -129,7 +127,7 @@
           <VIcon
             icon="mdi-check-outline"
             color="primary"
-            v-if="item.raw.available"
+            v-if="item.available"
           />
         </template>
 
@@ -226,7 +224,7 @@
 </template>
 
 <script setup>
-import { VDataTableServer } from "vuetify/labs/VDataTable";
+import { VDataTableServer } from "vuetify/lib/components/index.mjs";
 // import { paginationMeta } from '@/@fake-db/utils'
 // import AddNewUserDrawer from "@/views/apps/user/list/AddNewUserDrawer.vue";
 import { useUserListStore } from "@/views/apps/user/useUserListStore";

@@ -125,12 +125,11 @@ const handleDrawerModelValueUpdate = (val) => {
                   label="Last Dining Behavior"
                 />
               </VCol>
-              <AppDateTimePicker
+              <VTextField
                 v-model="customerData.lastVisitedDate"
                 label="Last Visit Date"
                 clear-icon="mdi-close"
                 clearable
-                style="width: 100%"
               />
               <!-- 👉 Status -->
               <VCol cols="12">

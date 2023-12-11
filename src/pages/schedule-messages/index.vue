@@ -81,40 +81,38 @@
         <!-- Seegments -->
         <template #item.segmantId="{ item }">
           <span class="text-sm">
-            {{ segmantName(item.raw.segmantId) }}
+            {{ segmantName(item.segmantId) }}
           </span>
         </template>
 
         <template #item.sent="{ item }">
           <VChip
-            :color="item.raw.sent ? 'primary' : 'error'"
-            :class="`text-${item.raw.sent ? 'primary' : 'error'}`"
+            :color="item.sent ? 'primary' : 'error'"
+            :class="`text-${item.sent ? 'primary' : 'error'}`"
             size="small"
             class="font-weight-medium"
           >
-            {{ item.raw.sent ? "YES" : "NO" }}
+            {{ item.sent ? "YES" : "NO" }}
           </VChip>
         </template>
         <template #item.scheduleDate="{ item }">
           <span class="text-sm">
             {{
-              item.raw.scheduleDate === null
+              item.scheduleDate === null
                 ? "Date Not Available"
-                : moment(item.raw.scheduleDate).format(
-                    "MMMM Do YYYY, h:mm:ss a"
-                  )
+                : moment(item.scheduleDate).format("MMMM Do YYYY, h:mm:ss a")
             }}
           </span>
         </template>
         <!-- Status -->
         <template #item.status="{ item }">
           <VChip
-            :color="item.raw.status == 'active' ? 'success' : 'error'"
-            :class="`text-${item.raw.status == 'active' ? 'success' : 'error'}`"
+            :color="item.status == 'active' ? 'success' : 'error'"
+            :class="`text-${item.status == 'active' ? 'success' : 'error'}`"
             size="small"
             class="font-weight-medium"
           >
-            {{ item.raw.status == "active" ? "Active" : "Inactive" }}
+            {{ item.status == "active" ? "Active" : "Inactive" }}
           </VChip>
         </template>
 
@@ -201,7 +199,7 @@
 
 <script setup>
 import moment from "moment";
-import { VDataTableServer } from "vuetify/labs/VDataTable";
+import { VDataTableServer } from "vuetify/lib/components/index.mjs";
 
 import axios from "@axios";
 
