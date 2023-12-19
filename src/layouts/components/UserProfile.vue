@@ -67,7 +67,7 @@ const userProfileList = [
     type: "navItem",
     icon: "mdi-currency-usd",
     title: "Pricing",
-    to: { name: "pages-pricing" },
+    to: { name: "pricing" },
   },
   // {
   //   type: "navItem",

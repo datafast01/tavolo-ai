@@ -113,6 +113,14 @@ const routes = [
     //  redirect: () => ({  name: 'login' }),
     meta: { requiresAuth: true },
   },
+  {
+    path: "/pricing",
+    name: "pricing",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../pages/pages/pricing.vue"),
+    //  redirect: () => ({  name: 'login' }),
+    meta: { requiresAuth: true },
+  },
   //  {
   //   path: '/auto-email',
   //   redirect: () => ({  name: 'email' }),

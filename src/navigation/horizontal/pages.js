@@ -15,7 +15,7 @@ export default [
       },
       { title: 'FAQ', icon: { icon: 'mdi-help-circle-outline' }, to: 'pages-faq' },
       { title: 'Help Center', icon: { icon: 'mdi-help-circle-outline' }, to: 'pages-help-center' },
-      { title: 'Pricing', icon: { icon: 'mdi-currency-usd' }, to: 'pages-pricing' },
+      { title: 'Pricing', icon: { icon: 'mdi-currency-usd' }, to: 'pricing' },
       {
         title: 'Misc',
         icon: { icon: 'mdi-file-outline' },
