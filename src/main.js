@@ -7,6 +7,7 @@ import layoutsPlugin from '@/plugins/layouts'
 import vuetify from '@/plugins/vuetify'
 import { loadFonts } from '@/plugins/webfontloader'
 import router from '@/router'
+import store from './store'
 
 // import { abilitiesPlugin } from '@casl/vue'
 import '@core/scss/template/index.scss'
@@ -30,6 +31,7 @@ app.use(createPinia())
 app.use(router)
 app.use(layoutsPlugin)
 app.use(i18n)
+app.use(store)
 
 
 

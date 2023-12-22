@@ -8,6 +8,7 @@
             md="4"
             :monthlyPkgs="monthlyPkgs"
             :yearlyPkgs="yearlyPkgs"
+            :currentPkg="currentPkg"
           />
         </VCol>
       </VRow>
@@ -189,7 +190,9 @@
 </template>
 
 <script>
+import store from "@/store/index.js";
 import axios from "@axios";
+
 import poseFs9 from "@images/pages/pose-fs-9.png";
 
 export default {
@@ -313,6 +316,11 @@ export default {
       packages: [],
     };
   },
+  computed: {
+    currentPkg() {
+      return store.getters.getCurrentPkg;
+    },
+  },
   methods: {
     getPackages() {
       // console.log("submit form", ApiService);
@@ -337,7 +345,9 @@ export default {
     },
   },
   mounted() {
+    console.log(store);
     this.getPackages();
+    store.dispatch("getPackageHistory");
   },
 };
 </script>

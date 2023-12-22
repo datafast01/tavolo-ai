@@ -92,7 +92,8 @@ export default defineConfig({
       '@validators': fileURLToPath(new URL('./src/@core/utils/validators', import.meta.url)),
       'apexcharts': fileURLToPath(new URL('node_modules/apexcharts-clevision', import.meta.url)),
       'quill': 'quill',
-      'vue3-quill': 'vue3-quill'
+      'vue3-quill': 'vue3-quill',
+      'vuex': 'vuex'
 
     },
   },

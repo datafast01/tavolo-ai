@@ -9,10 +9,10 @@ const router = useRouter();
 
 const logout = () => {
   // Remove "userData" from localStorage
-  localStorage.removeItem("userData");
+  localStorage.removeItem("token");
 
   // Remove "accessToken" from localStorage
-  localStorage.removeItem("accessToken");
+  localStorage.removeItem("userData");
   router.push("/login").then(() => {
     // Remove "userAbilities" from localStorage
     localStorage.removeItem("userAbilities");
@@ -123,7 +123,7 @@ const avatarBadgeProps = {
             </template>
 
             <VListItemTitle class="font-weight-medium">
-              {{ userData.firstName }} {{ userData.lastName }}
+              {{ userData?.firstName }} {{ userData?.lastName }}
             </VListItemTitle>
           </VListItem>
 

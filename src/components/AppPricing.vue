@@ -5,6 +5,7 @@
     <h4 class="text-h4 mb-2">
       {{ title ? title : "Pricing Plans" }}
     </h4>
+
     <p class="text-sm mb-1">
       All plans include 40+ advanced tools and features to boost your product.
     </p>
@@ -102,14 +103,11 @@
         <VCardActions>
           <VBtn
             block
-            :color="pricingPlans[index].current ? 'success' : 'primary'"
-            :variant="pricingPlans[index].isPopular ? 'elevated' : 'tonal'"
+            :color="plan._id === currentPkgId ? 'success' : 'primary'"
+            :variant="plan._id === currentPkgId ? 'elevated' : 'tonal'"
+            @click="checkout(plan)"
           >
-            {{
-              pricingPlans[index].yearlyPrice === 0
-                ? "Your Current Plan"
-                : "Upgrade"
-            }}
+            {{ plan._id === currentPkgId ? "Your Current Plan" : "Upgrade" }}
           </VBtn>
         </VCardActions>
       </VCard>
@@ -157,7 +155,7 @@
             <h1 class="text-5xl font-weight-medium text-primary">
               {{ plan.price }}
             </h1>
-            <sub class="text-sm font-weight-medium ms-1 mt-4">/month</sub>
+            <sub class="text-sm font-weight-medium ms-1 mt-4">/year</sub>
           </div>
         </VCardText>
 
@@ -183,15 +181,11 @@
         <VCardActions>
           <VBtn
             block
-            :color="pricingPlans[index].current ? 'success' : 'primary'"
-            :variant="pricingPlans[index].isPopular ? 'elevated' : 'tonal'"
+            :color="plan._id === currentPkgId ? 'success' : 'primary'"
+            :variant="plan._id != currentPkgId ? 'elevated' : 'tonal'"
             @click="checkout(plan)"
           >
-            {{
-              pricingPlans[index].yearlyPrice === 0
-                ? "Your Current Plan"
-                : "Upgrade"
-            }}
+            {{ plan._id === currentPkgId ? "Your Current Plan" : "Upgrade" }}
           </VBtn>
         </VCardActions>
       </VCard>
@@ -240,6 +234,10 @@ export default {
     yearlyPkgs: {
       type: Array,
       default: [],
+    },
+    currentPkg: {
+      type: Object,
+      default: {},
     },
   },
   data() {
@@ -296,6 +294,11 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    currentPkgId() {
+      return this.currentPkg?.packageId?._id;
+    },
   },
 
   methods: {
