@@ -2,17 +2,21 @@ import { breakpointsVuetify } from '@vueuse/core'
 import { VIcon } from 'vuetify/components/VIcon'
 
 // ❗ Logo SVG must be imported with ?raw suffix
+import darkLogo from '@/assets/images/logos/Tavolo.png'
 import logo from '@/assets/images/logos/tavolo_logo.png'
 import { defineThemeConfig } from '@core'
 import { RouteTransitions, Skins } from '@core/enums'
 import { AppContentLayoutNav, ContentWidth, FooterType, NavbarType } from '@layouts/enums'
+
+let theme = localStorage.getItem('-theme')
+
 
 export const { themeConfig, layoutConfig } = defineThemeConfig({
   app: {
     title: '',
 
     // ❗ if you have SVG logo and want it to adapt according to theme color, you have to apply color as `color: rgb(var(--v-global-theme-primary))`
-    logo: h('img', { src: logo, style: 'line-height:0; color: rgb(var(--v-global-theme-primary)); width:150px' }),
+    logo: h('img', { src: theme == 'dark' ? logo : darkLogo, style: 'line-height:0; color: rgb(var(--v-global-theme-primary)); width:150px' }),
     contentWidth: ContentWidth.Boxed,
     contentLayoutNav: AppContentLayoutNav.Vertical,
     overlayNavFromBreakpoint: breakpointsVuetify.md + 16,

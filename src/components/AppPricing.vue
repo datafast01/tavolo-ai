@@ -104,7 +104,7 @@
           <VBtn
             block
             :color="plan._id === currentPkgId ? 'success' : 'primary'"
-            :variant="plan._id === currentPkgId ? 'elevated' : 'tonal'"
+            :variant="plan._id !== currentPkgId ? 'elevated' : 'tonal'"
             @click="checkout(plan)"
           >
             {{ plan._id === currentPkgId ? "Your Current Plan" : "Upgrade" }}
@@ -183,7 +183,7 @@
             block
             :color="plan._id === currentPkgId ? 'success' : 'primary'"
             :variant="plan._id != currentPkgId ? 'elevated' : 'tonal'"
-            @click="checkout(plan)"
+            @click="checkout(plan, currentPkgId)"
           >
             {{ plan._id === currentPkgId ? "Your Current Plan" : "Upgrade" }}
           </VBtn>
@@ -303,19 +303,21 @@ export default {
 
   methods: {
     checkout(plan) {
+      console.log(plan._id, "=====", this.currentPkgId);
+      if (plan._id != this.currentPkgId) {
+        axios
+          .post(`create-checkout`, {
+            priceId: plan.stripePriceId,
+          })
+          .then((response) => {
+            console.log("user", response.data.data);
+            window.open(response.data.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
       console.log("submit form", plan.stripePriceId);
-
-      axios
-        .post(`create-checkout`, {
-          priceId: plan.stripePriceId,
-        })
-        .then((response) => {
-          console.log("user", response.data.data);
-          window.open(response.data.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
     },
   },
 };

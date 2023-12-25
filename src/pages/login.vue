@@ -114,6 +114,7 @@
 <script setup>
 // import { useAppAbility } from '@/plugins/casl/useAppAbility'
 import logo from "@/assets/images/logos/Tavolo.png";
+import store from "@/store/index.js";
 import axios from "@axios";
 import { useGenerateImageVariant } from "@core/composable/useGenerateImageVariant";
 import authV2LoginIllustrationBorderedDark from "@images/pages/auth-v2-login-illustration-bordered-dark.png";
@@ -174,7 +175,7 @@ const login = () => {
 
       localStorage.setItem("userData", JSON.stringify(userData));
       localStorage.setItem("token", userData.token);
-
+      store.dispatch("getPackageHistory");
       // localStorage.setItem('accessToken', JSON.stringify(accessToken))
       if (res.status == 200) {
         router.replace(route.query.to ? String(route.query.to) : "/");

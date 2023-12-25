@@ -4,11 +4,12 @@
       {{ snkMsg }}
     </VSnackbar>
     <div class="autoDatePicker">
-      <AppDateTimePicker
+      <VTextField
         v-model="scheduleDate"
         label="Schedule Date"
         clear-icon="mdi-close"
         clearable
+        type="date"
       />
       <VRadioGroup v-model="selectedSchedule" :inline="true">
         <VRadio label="Auto Sending" value="notSchedule" color="primary" />

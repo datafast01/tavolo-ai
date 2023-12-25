@@ -1,5 +1,7 @@
 // import { canNavigate } from '@layouts/plugins/casl'
 import { createRouter, createWebHistory } from "vue-router";
+import store from "@/store/index.js";
+
 // import routes from '~pages'
 
 const routes = [
@@ -121,6 +123,8 @@ const routes = [
     //  redirect: () => ({  name: 'login' }),
     meta: { requiresAuth: true },
   },
+  { path: '/:catchAll(.*)', component: () =>
+      import(/* webpackChunkName: "about" */ "../pages/pages/misc/not-found.vue"),meta: { requiresAuth: false } }
   //  {
   //   path: '/auto-email',
   //   redirect: () => ({  name: 'email' }),
