@@ -242,7 +242,7 @@ export default {
   },
   data() {
     return {
-      annualMonthlyPlanPriceToggler: true,
+      annualMonthlyPlanPriceToggler: false,
       pricingPlans: [
         {
           name: "Basic",

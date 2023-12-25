@@ -1,6 +1,5 @@
 // import { canNavigate } from '@layouts/plugins/casl'
 import { createRouter, createWebHistory } from "vue-router";
-import store from "@/store/index.js";
 
 // import routes from '~pages'
 
@@ -170,6 +169,17 @@ router.beforeEach((to, from, next) => {
   ) {
     console.log("login or register, has a user so send home");
     next({ name: "dashboard" });
+  }
+
+  if (to.query.session_id) {
+    // Construct the redirect URL without the 'session_id' parameter
+    const redirectUrl = '/dashboard'; // Update with your desired dashboard route
+
+    // Redirect to the new URL
+    next(redirectUrl);
+
+    // Alternatively, if you want to redirect using a full URL
+    // window.location.href = 'https://www.web.tavolo.ai/dashboard';
   }
 
   // Carry On...
