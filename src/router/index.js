@@ -173,7 +173,7 @@ router.beforeEach((to, from, next) => {
 
   if (to.query.session_id) {
     // Construct the redirect URL without the 'session_id' parameter
-    const redirectUrl = '/dashboard'; // Update with your desired dashboard route
+    const redirectUrl = '/pricing'; // Update with your desired dashboard route
 
     // Redirect to the new URL
     next(redirectUrl);
