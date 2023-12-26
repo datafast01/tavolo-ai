@@ -122,12 +122,15 @@
         </template> -->
 
         <!-- Status -->
-        <template #item.repeated="{ item }">
+        <!-- <template #item.repeated="{ item }">
           <VIcon
             icon="mdi-check-outline"
             color="primary"
-            v-if="item.repeated"
+            v-if="!item.repeated"
           />
+        </template> -->
+        <template #item.repeated="{ item }">
+          {{ item.repeated ? "YES" : "NO" }}
         </template>
 
         <!-- Actions -->
@@ -137,7 +140,7 @@
 
             <VMenu activator="parent">
               <VList>
-                <VListItem link @click="editCustomerData(item.raw)">
+                <VListItem link @click="editCustomerData(item)">
                   <template #prepend>
                     <VIcon icon="mdi-pencil-outline" />
                   </template>
@@ -181,7 +184,7 @@
                 density="comfortable"
                 color="default"
                 :disabled="options.page <= 1"
-                @click="options.page <= 1 ? (options.page = 1) : options.page--"
+                @click="options.page <= 1 ? (options.page = 1) : options.page"
               />
 
               <VBtn

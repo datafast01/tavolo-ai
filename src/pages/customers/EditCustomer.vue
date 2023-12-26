@@ -95,7 +95,6 @@ const handleDrawerModelValueUpdate = (val) => {
               <VCol cols="12">
                 <VTextField
                   v-model="customerData.phone"
-                  type="number"
                   :rules="[requiredValidator]"
                   label="Phone Number"
                 />
