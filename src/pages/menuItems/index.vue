@@ -224,6 +224,7 @@
 </template>
 
 <script setup>
+import store from "@/store/index.js";
 import { VDataTableServer } from "vuetify/lib/components/index.mjs";
 // import { paginationMeta } from '@/@fake-db/utils'
 // import AddNewUserDrawer from "@/views/apps/user/list/AddNewUserDrawer.vue";
@@ -326,6 +327,7 @@ const fetchMenuItems = () => {
     .then((response) => {
       console.log("user", response.data);
       menuItems.value = response.data.data;
+      store.dispatch("getPackageHistory");
       isLoading.value = false;
     })
     .catch((err) => {

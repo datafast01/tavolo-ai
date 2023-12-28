@@ -98,7 +98,7 @@
         <template #item.scheduleDate="{ item }">
           <span class="text-sm">
             {{
-              item.scheduleDate === null
+              item.scheduleDate == null
                 ? "Date Not Available"
                 : moment(item.scheduleDate).format("MMMM Do YYYY, h:mm:ss a")
             }}

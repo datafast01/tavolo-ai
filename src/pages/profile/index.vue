@@ -1,4 +1,5 @@
 <script setup>
+import store from "@/store/index.js";
 import axios from "@axios";
 import avatar1 from "@images/avatars/avatar-1.png";
 import AccountSettingsAccount from "./AccountSettingsConnections.vue";
@@ -64,6 +65,7 @@ const getUserProfile = () => {
     .then((response) => {
       console.log("user", response.data);
       userData.value = response.data;
+      store.dispatch("getPackageHistory");
       if (userData.value.instagram.accessToken) {
         igAccessToken.value = userData.value.instagram.accessToken;
       }

@@ -43,6 +43,7 @@
 </template>
 
 <script setup>
+import store from "@/store";
 import CrmActivityTimeline from "@/views/dashboards/crm/CrmActivityTimeline.vue";
 import CrmSalesOverview from "@/views/dashboards/crm/CrmSalesOverview.vue";
 import CrmTransactions from "@/views/dashboards/crm/CrmTransactions.vue";
@@ -96,7 +97,7 @@ onMounted(async () => {
       totalCustomers.value = data.value.totalCustomers;
       console.log(data.value, "asdasdf");
       dashboard.value = res.data.data;
-
+      store.dispatch("getPackageHistory");
       isDasboard.value = true;
       loading.value = false;
       let transaction = {

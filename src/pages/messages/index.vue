@@ -83,6 +83,7 @@
 </template>
 
 <script setup>
+import store from "@/store/index.js";
 import axios from "@axios";
 const emit = defineEmits(["close"]);
 
@@ -116,6 +117,7 @@ const getEmailSegmnts = () => {
     .then((res) => {
       console.log(res.data.data, "=============>>>");
       segments.value = res.data.data;
+      store.dispatch("getPackageHistory");
     })
     .catch((err) => {
       console.log(err);

@@ -89,9 +89,9 @@
         <template #item.scheduleDate="{ item }">
           <span class="text-sm">
             {{
-              item.scheduleDate === null
+              item.scheduleDate == null
                 ? "Date Not Available"
-                : moment(item.scheduleDate).format("MMMM Do YYYY, h:mm:ss a")
+                : item.scheduleDate
             }}
           </span>
         </template>
@@ -166,7 +166,9 @@
                 density="comfortable"
                 color="default"
                 :disabled="options.page <= 1"
-                @click="options.page <= 1 ? (options.page = 1) : options.page--"
+                @click="
+                  options.page <= 1 ? (options.page = 1) : options.page - 1
+                "
               />
 
               <VBtn

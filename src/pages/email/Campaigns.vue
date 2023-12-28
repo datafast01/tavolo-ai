@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <div>
     <VSnackbar v-model="show" :timeout="2000" :color="color">
       {{ snkMsg }}
     </VSnackbar>
@@ -18,40 +18,38 @@
         <!-- Seegments -->
         <template #item.segmantId="{ item }">
           <span class="text-sm">
-            {{ item.raw.segmantId?.name }}
+            {{ item.segmantId?.name }}
           </span>
         </template>
 
         <template #item.sent="{ item }">
           <VChip
-            :color="item.raw.sent ? 'primary' : 'error'"
-            :class="`text-${item.raw.sent ? 'primary' : 'error'}`"
+            :color="item.sent ? 'primary' : 'error'"
+            :class="`text-${item.sent ? 'primary' : 'error'}`"
             size="small"
             class="font-weight-medium"
           >
-            {{ item.raw.sent ? "YES" : "NO" }}
+            {{ item.sent ? "YES" : "NO" }}
           </VChip>
         </template>
         <template #item.scheduleDate="{ item }">
           <span class="text-sm">
             {{
-              item.raw.scheduleDate === null
+              item.scheduleDate === null
                 ? "Date Not Available"
-                : moment(item.raw.scheduleDate).format(
-                    "MMMM Do YYYY, h:mm:ss a"
-                  )
+                : moment(item.scheduleDate).format("MMMM Do YYYY, h:mm:ss a")
             }}
           </span>
         </template>
         <!-- Status -->
         <template #item.status="{ item }">
           <VChip
-            :color="item.raw.status == 'active' ? 'success' : 'error'"
-            :class="`text-${item.raw.status == 'active' ? 'success' : 'error'}`"
+            :color="item.status == 'active' ? 'success' : 'error'"
+            :class="`text-${item.status == 'active' ? 'success' : 'error'}`"
             size="small"
             class="font-weight-medium"
           >
-            {{ item.raw.status == "active" ? "Active" : "Inactive" }}
+            {{ item.status == "active" ? "Active" : "Inactive" }}
           </VChip>
         </template>
 
@@ -64,7 +62,7 @@
               <VList>
                 <VListItem
                   @click="changeStatus(item.raw)"
-                  v-if="item.raw.scheduled"
+                  v-if="item.scheduled"
                 >
                   <template #prepend>
                     <VIcon icon="mdi-recycle" />
@@ -77,7 +75,7 @@
                   </template>
                   <VListItemTitle>View Details</VListItemTitle>
                 </VListItem>
-                <VListItem @click="deleteCampaign(item.raw._id)">
+                <VListItem @click="deleteCampaign(item._id)">
                   <template #prepend>
                     <VIcon icon="mdi-delete-outline" />
                   </template>
@@ -228,8 +226,7 @@
         </VCardActions>
       </VCard>
     </VDialog>
-    <!-- 👉 Add New User -->
-  </section>
+  </div>
 </template>
 
 <script setup>
@@ -306,37 +303,7 @@ const openViewDetailsModal = (item) => {
 };
 watchEffect(fetchEmails);
 
-const isAddNewUserDrawerVisible = ref(false);
-
-const changeStatus = (item) => {
-  console.log(item);
-
-  axios
-    .get(
-      `dashboard/${
-        item.status == "active"
-          ? "pause-schedule-email"
-          : "resume-schedule-email"
-      }/${item._id}`
-    )
-    .then((response) => {
-      console.log("user", response.data);
-      show.value = true;
-      snkMsg.value = `${
-        item.status == "active"
-          ? "Campaign Inactivated!"
-          : "Campaing Activated!"
-      }`;
-      fetchEmails();
-    })
-    .catch((err) => {
-      console.log(err.response.status);
-    });
-};
-
 const deleteCampaign = (id) => {
-  // console.log("submit form", ApiService);
-
   axios
     .get(`dashboard/delete-schedule-email/${id}`)
     .then((response) => {

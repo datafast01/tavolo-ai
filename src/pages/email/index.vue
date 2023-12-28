@@ -208,6 +208,7 @@
 </template>
 
 <script>
+import store from "@/store/index.js";
 import axios from "@axios";
 import { reactive } from "vue";
 import { PerfectScrollbar } from "vue3-perfect-scrollbar";
@@ -272,6 +273,7 @@ export default {
         .then((res) => {
           console.log(res.data.data, "=============>>>");
           this.segments = res.data.data;
+          store.dispatch("getPackageHistory");
         })
         .catch((err) => {
           console.log(err);
