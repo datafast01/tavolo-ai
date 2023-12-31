@@ -185,8 +185,18 @@ getUserProfile();
               </VCol> -->
 
               <!-- 👉 Form Actions -->
-              <VCol cols="12" class="d-flex flex-wrap gap-4">
-                <VBtn @click="updateProfile">Save changes</VBtn>
+              <VCol cols="12" class="d-flex justify-space-between">
+                <div class="">
+                  <VBtn @click="updateProfile">Save changes</VBtn>
+                </div>
+                <div>
+                  <RouterLink
+                    class="text-primary ms-2 mb-1"
+                    :to="{ name: 'pages-authentication-login-v2' }"
+                  >
+                    Update Password?
+                  </RouterLink>
+                </div>
               </VCol>
             </VRow>
           </VForm>

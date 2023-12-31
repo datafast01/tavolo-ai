@@ -22,6 +22,22 @@ const routes = [
     //  redirect: () => ({  name: 'login' }),
     meta: { requiresAuth: false },
   },
+   {
+    path: "/forgot-password",
+    name: "forgot-password",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../pages/forgot-password.vue"),
+    //  redirect: () => ({  name: 'login' }),
+    meta: { requiresAuth: false },
+  },
+     {
+    path: "/reset-password",
+    name: "pages-authentication-login-v2",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../pages/pages/authentication/reset-password-v2.vue"),
+    //  redirect: () => ({  name: 'login' }),
+    meta: { requiresAuth: true },
+  },
   {
     path: "/",
     name: "dashboard",

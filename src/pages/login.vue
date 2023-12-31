@@ -82,12 +82,12 @@
                     class="d-flex align-center flex-wrap justify-space-between mt-1 mb-4"
                   >
                     <VCheckbox v-model="rememberMe" label="Remember me" />
-                    <!-- <RouterLink
+                    <RouterLink
                       class="text-primary ms-2 mb-1"
                       :to="{ name: 'forgot-password' }"
                     >
                       Forgot Password?
-                    </RouterLink> -->
+                    </RouterLink>
                   </div>
 
                   <VBtn block type="submit" :loading="loading"> Login </VBtn>
@@ -187,11 +187,9 @@ const login = () => {
       loading.value = false;
       console.error(err);
       show.value = true;
-      if (err.response.status == 404) {
-        snkMsg.value = err.response.data.message;
-      } else {
-        snkMsg.value = "Something went wrong";
-      }
+
+      snkMsg.value = err.response.data.message;
+
       color.value = "error";
     });
 };

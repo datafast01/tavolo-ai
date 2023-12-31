@@ -1,28 +1,25 @@
 <script setup>
-import { useGenerateImageVariant } from '@core/composable/useGenerateImageVariant'
-import authV1Tree2 from '@images/pages/auth-v1-tree-2.png'
-import authV1Tree from '@images/pages/auth-v1-tree.png'
-import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
-import { themeConfig } from '@themeConfig'
-import authV1MaskDark from '@images/pages/auth-v1-mask-dark.png'
-import authV1MaskLight from '@images/pages/auth-v1-mask-light.png'
+import { useGenerateImageVariant } from "@core/composable/useGenerateImageVariant";
+import authV1MaskDark from "@images/pages/auth-v1-mask-dark.png";
+import authV1MaskLight from "@images/pages/auth-v1-mask-light.png";
+import authV1Tree2 from "@images/pages/auth-v1-tree-2.png";
+import authV1Tree from "@images/pages/auth-v1-tree.png";
+import { VNodeRenderer } from "@layouts/components/VNodeRenderer";
+import { themeConfig } from "@themeConfig";
 
 const form = ref({
-  newPassword: '',
-  confirmPassword: '',
-})
+  newPassword: "",
+  confirmPassword: "",
+});
 
-const authThemeMask = useGenerateImageVariant(authV1MaskLight, authV1MaskDark)
-const isPasswordVisible = ref(false)
-const isConfirmPasswordVisible = ref(false)
+const authThemeMask = useGenerateImageVariant(authV1MaskLight, authV1MaskDark);
+const isPasswordVisible = ref(false);
+const isConfirmPasswordVisible = ref(false);
 </script>
 
 <template>
   <div class="auth-wrapper d-flex align-center justify-center pa-4">
-    <VCard
-      class="auth-card pa-4 pt-7"
-      max-width="448"
-    >
+    <VCard class="auth-card pa-4 pt-7" max-width="448">
       <VCardItem class="justify-center">
         <template #prepend>
           <div class="d-flex">
@@ -36,11 +33,10 @@ const isConfirmPasswordVisible = ref(false)
       </VCardItem>
 
       <VCardText class="pt-2">
-        <h5 class="text-h5 mb-1">
-          Reset Password 🔒
-        </h5>
+        <h5 class="text-h5 mb-1">Reset Password 🔒</h5>
         <p class="mb-0">
-          Enter your email and we'll send you instructions to reset your password
+          Enter your email and we'll send you instructions to reset your
+          password
         </p>
       </VCardText>
 
@@ -54,7 +50,9 @@ const isConfirmPasswordVisible = ref(false)
                 autofocus
                 label="New Password"
                 :type="isPasswordVisible ? 'text' : 'password'"
-                :append-inner-icon="isPasswordVisible ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
+                :append-inner-icon="
+                  isPasswordVisible ? 'mdi-eye-off-outline' : 'mdi-eye-outline'
+                "
                 @click:append-inner="isPasswordVisible = !isPasswordVisible"
               />
             </VCol>
@@ -65,23 +63,24 @@ const isConfirmPasswordVisible = ref(false)
                 v-model="form.confirmPassword"
                 label="Confirm Password"
                 :type="isConfirmPasswordVisible ? 'text' : 'password'"
-                :append-inner-icon="isConfirmPasswordVisible ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
-                @click:append-inner="isConfirmPasswordVisible = !isConfirmPasswordVisible"
+                :append-inner-icon="
+                  isConfirmPasswordVisible
+                    ? 'mdi-eye-off-outline'
+                    : 'mdi-eye-outline'
+                "
+                @click:append-inner="
+                  isConfirmPasswordVisible = !isConfirmPasswordVisible
+                "
               />
             </VCol>
 
             <!-- reset password -->
             <VCol cols="12">
-              <VBtn
-                block
-                type="submit"
-              >
-                Set New Password
-              </VBtn>
+              <VBtn block type="submit"> Set New Password </VBtn>
             </VCol>
 
             <!-- back to login -->
-            <VCol cols="12">
+            <!-- <VCol cols="12">
               <RouterLink
                 class="d-flex align-center justify-center"
                 :to="{ name: 'pages-authentication-login-v1' }"
@@ -92,7 +91,7 @@ const isConfirmPasswordVisible = ref(false)
                 />
                 <span>Back to login</span>
               </RouterLink>
-            </VCol>
+            </VCol> -->
           </VRow>
         </VForm>
       </VCardText>
@@ -111,10 +110,7 @@ const isConfirmPasswordVisible = ref(false)
     />
 
     <!-- bg img -->
-    <VImg
-      class="auth-footer-mask d-none d-md-block"
-      :src="authThemeMask"
-    />
+    <VImg class="auth-footer-mask d-none d-md-block" :src="authThemeMask" />
   </div>
 </template>
 

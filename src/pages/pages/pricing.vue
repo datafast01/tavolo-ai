@@ -15,7 +15,11 @@
     </VCardText>
 
     <!-- 👉 Free trial Banner -->
-    <VRow class="page-pricing-free-trial-banner-bg">
+    <!-- {{ currentPkg.packageId }} -->
+    <VRow
+      class="page-pricing-free-trial-banner-bg"
+      v-if="currentPkg?.packageId?.price < 1"
+    >
       <VCol
         cols="12"
         md="10"
@@ -30,6 +34,31 @@
           </p>
 
           <VBtn class="mt-4"> Start-14-day FREE trial </VBtn>
+        </div>
+
+        <div class="free-trial-illustrator">
+          <VImg :src="poseFs9" :width="250" />
+        </div>
+      </VCol>
+    </VRow>
+
+    <VRow class="page-pricing-free-trial-banner-bg" v-else>
+      <VCol
+        cols="12"
+        md="10"
+        class="d-flex align-center flex-md-row flex-column position-relative mx-auto"
+      >
+        <div class="text-center text-md-start py-10 px-10 px-sm-0">
+          <h3 class="text-h5 text-primary mb-2">
+            Still not convinced? Start with a 14-day FREE trial!
+          </h3>
+          <p class="text-sm">
+            You will get full access to all the features for 14 days.
+          </p>
+
+          <VBtn class="mt-4" @click="showConfirmation = true">
+            Cancel Subscription
+          </VBtn>
         </div>
 
         <div class="free-trial-illustrator">
@@ -187,18 +216,26 @@
       </VCardText>
     </div> -->
   </VCard>
+  <ConfirmDialog
+    v-model:isDialogVisible="showConfirmation"
+    confirmTitle="Cancel Subscription"
+    confirmMsg="Are you sure you want to cancel the subscription?"
+    @confirm="cancelSubscription"
+  />
 </template>
 
 <script>
 import store from "@/store/index.js";
 import axios from "@axios";
 
+import ConfirmDialog from "@/components/dialogs/ConfirmDialog.vue";
 import poseFs9 from "@images/pages/pose-fs-9.png";
 
 export default {
   data() {
     return {
       poseFs9: poseFs9,
+      showConfirmation: false,
       features: [
         {
           feature: "14-days free trial",
@@ -343,9 +380,19 @@ export default {
           console.log(err);
         });
     },
+    cancelSubscription() {
+      axios
+        .get(`cancel-subscription`)
+        .then((response) => {
+          console.log("user", response.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
   mounted() {
-    console.log(store);
+    // console.log(store);
     this.getPackages();
     store.dispatch("getPackageHistory");
   },
