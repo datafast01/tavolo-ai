@@ -138,6 +138,14 @@ const routes = [
     //  redirect: () => ({  name: 'login' }),
     meta: { requiresAuth: true },
   },
+   {
+    path: "/billing-history",
+    name: "billing-history",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/pages/account-settings/AccountSettingsBillingAndPlans.vue"),
+    //  redirect: () => ({  name: 'login' }),
+    meta: { requiresAuth: true },
+  },
   { path: '/:catchAll(.*)', component: () =>
       import(/* webpackChunkName: "about" */ "../pages/pages/misc/not-found.vue"),meta: { requiresAuth: false } }
   //  {

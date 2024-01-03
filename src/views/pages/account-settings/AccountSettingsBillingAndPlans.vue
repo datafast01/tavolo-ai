@@ -1,94 +1,24 @@
-<script setup>
-import BillingHistoryTable from './BillingHistoryTable.vue'
-
-// Images
-import mastercard from '@images/icons/payments/mastercard.png'
-import visa from '@images/icons/payments/visa.png'
-
-const selectedPaymentMethod = ref('credit-debit-atm-card')
-const isPricingPlanDialogVisible = ref(false)
-const isConfirmDialogVisible = ref(false)
-const isCardEditDialogVisible = ref(false)
-const isCardDetailSaveBilling = ref(false)
-
-const creditCards = [
-  {
-    name: 'Tom McBride',
-    number: '5531234567899856',
-    expiry: '12/23',
-    isPrimary: true,
-    type: 'visa',
-    cvv: '456',
-    image: visa,
-  },
-  {
-    name: 'Mildred Wagner',
-    number: '4851234567895896',
-    expiry: '10/27',
-    isPrimary: false,
-    type: 'mastercard',
-    cvv: '123',
-    image: mastercard,
-  },
-]
-
-const countryList = [
-  'United States',
-  'Canada',
-  'United Kingdom',
-  'Australia',
-  'New Zealand',
-  'India',
-  'Russia',
-  'China',
-  'Japan',
-]
-
-const currentCardDetails = ref()
-
-const openEditCardDialog = cardDetails => {
-  currentCardDetails.value = cardDetails
-  isCardEditDialogVisible.value = true
-}
-
-const cardNumber = ref(135632156548789)
-const cardName = ref('john Doe')
-const cardExpiryDate = ref('05/24')
-const cardCvv = ref(420)
-
-const resetPaymentForm = () => {
-  cardNumber.value = 135632156548789
-  cardName.value = 'john Doe'
-  cardExpiryDate.value = '05/24'
-  cardCvv.value = 420
-  selectedPaymentMethod.value = 'credit-debit-atm-card'
-}
-</script>
-
 <template>
   <VRow>
     <!-- 👉 Current Plan -->
     <VCol cols="12">
       <VCard title="Current Plan">
         <VCardText>
+          <!-- {{ currentPkg }} -->
           <VRow>
-            <VCol
-              cols="12"
-              md="6"
-            >
+            <VCol cols="12" md="6">
               <div>
                 <div class="mb-6">
                   <h3 class="text-base font-weight-medium mb-1">
-                    Your Current Plan is Basic
+                    Your Current Plan is {{ currentPkg?.packageId?.title }}
                   </h3>
-                  <p class="text-base">
-                    A simple start for everyone
-                  </p>
+                  <p class="text-base">A simple start for everyone</p>
                 </div>
 
                 <div class="mb-6">
                   <h3 class="text-base font-weight-medium mb-1">
-                    Active until Dec 09, 2021
+                    Active until
+                    {{ moment(currentPkg?.expiryDate).format("MMMM Do YYYY") }}
                   </h3>
                   <p class="text-base">
                     We will send you a notification upon Subscription expiration
@@ -97,11 +27,10 @@ const resetPaymentForm = () => {
 
                 <div>
                   <h3 class="text-base font-weight-medium mb-1">
-                    <span class="me-3">$199 Per Month</span>
-                    <VChip
-                      color="primary"
-                      density="comfortable"
+                    <span class="me-3"
+                      >${{ currentPkg?.packageId?.price }} Per Month</span
                     >
+                    <VChip color="primary" density="comfortable">
                       Popular
                     </VChip>
                   </h3>
@@ -112,30 +41,22 @@ const resetPaymentForm = () => {
               </div>
             </VCol>
 
-            <VCol
-              cols="12"
-              md="6"
-            >
-              <VAlert
-                variant="tonal"
-                type="warning"
-              >
+            <VCol cols="12" md="6">
+              <!-- <VAlert variant="tonal" type="warning">
                 <template #prepend>
-                  <VIcon
-                    icon="mdi-alert-outline"
-                    size="22"
-                    color="warning"
-                  />
+                  <VIcon icon="mdi-alert-outline" size="22" color="warning" />
                 </template>
                 <VAlertTitle class="mb-1">
                   We need your attention!
                 </VAlertTitle>
 
                 <span>Your plan requires update</span>
-              </VAlert>
+              </VAlert> -->
 
               <!-- progress -->
-              <div class="d-flex font-weight-medium text-sm text-high-emphasis mt-8 mb-2">
+              <!-- <div
+                class="d-flex font-weight-medium text-sm text-high-emphasis mt-8 mb-2"
+              >
                 <span>Days</span>
                 <VSpacer />
                 <span>24 of 30 Days</span>
@@ -148,22 +69,19 @@ const resetPaymentForm = () => {
               />
               <p class="text-xs mt-2">
                 6 days remaining until your plan requires update
-              </p>
+              </p> -->
             </VCol>
 
             <VCol cols="12">
               <div class="d-flex flex-wrap gap-y-4">
-                <VBtn
-                  class="me-3"
-                  @click="isPricingPlanDialogVisible = true"
-                >
+                <VBtn class="me-3" @click="isPricingPlanDialogVisible = true">
                   upgrade plan
                 </VBtn>
 
                 <VBtn
                   color="secondary"
                   variant="outlined"
-                  @click="isConfirmDialogVisible = true"
+                  @click="cancelSubscription"
                 >
                   Cancel Subscription
                 </VBtn>
@@ -182,7 +100,9 @@ const resetPaymentForm = () => {
           />
 
           <!-- 👉 plan and pricing dialog -->
-          <PricingPlanDialog v-model:is-dialog-visible="isPricingPlanDialogVisible" />
+          <PricingPlanDialog
+            v-model:is-dialog-visible="isPricingPlanDialogVisible"
+          />
         </VCardText>
       </VCard>
     </VCol>
@@ -193,109 +113,9 @@ const resetPaymentForm = () => {
         <VCardText>
           <VForm @submit.prevent="() => {}">
             <VRow>
-              <VCol
-                cols="12"
-                md="6"
-              >
-                <VRow>
-                  <!-- 👉 card type switch -->
-                  <VCol cols="12">
-                    <VRadioGroup
-                      v-model="selectedPaymentMethod"
-                      inline
-                    >
-                      <VRadio
-                        value="credit-debit-atm-card"
-                        label="Credit/Debit/ATM Card"
-                        color="primary"
-                      />
-                      <VRadio
-                        value="cod-cheque"
-                        label="COD/Cheque"
-                        color="primary"
-                      />
-                    </VRadioGroup>
-                  </VCol>
-
-                  <VCol cols="12">
-                    <VRow v-show="selectedPaymentMethod === 'credit-debit-atm-card'">
-                      <!-- 👉 Card Number -->
-                      <VCol cols="12">
-                        <VTextField
-                          v-model="cardNumber"
-                          label="Card Number"
-                          type="number"
-                        />
-                      </VCol>
-
-                      <!-- 👉 Name -->
-                      <VCol
-                        cols="12"
-                        md="6"
-                      >
-                        <VTextField
-                          v-model="cardName"
-                          label="Name"
-                        />
-                      </VCol>
-
-                      <!-- 👉 Expiry date -->
-                      <VCol
-                        cols="6"
-                        md="3"
-                      >
-                        <VTextField
-                          v-model="cardExpiryDate"
-                          label="Expiry Date"
-                        />
-                      </VCol>
-
-                      <!-- 👉 Cvv code -->
-                      <VCol
-                        cols="6"
-                        md="3"
-                      >
-                        <VTextField
-                          v-model="cardCvv"
-                          type="number"
-                          label="CVV Code"
-                        />
-                      </VCol>
-
-                      <!-- 👉 Future Billing switch -->
-                      <VCol cols="12">
-                        <VSwitch
-                          v-model="isCardDetailSaveBilling"
-                          density="compact"
-                          label="Save card for future billing?"
-                        />
-                      </VCol>
-                    </VRow>
-
-                    <p
-                      v-show="selectedPaymentMethod === 'cod-cheque'"
-                      class="text-base"
-                    >
-                      Cash on delivery is a mode of payment where you make the payment after the goods/services are received.
-                    </p>
-                    <p
-                      v-show="selectedPaymentMethod === 'cod-cheque'"
-                      class="text-base"
-                    >
-                      You can pay cash or make the payment via debit/credit card directly to the delivery person.
-                    </p>
-                  </VCol>
-                </VRow>
-              </VCol>
-
               <!-- 👉 Saved Cards -->
-              <VCol
-                cols="12"
-                md="6"
-              >
-                <h6 class="text-base font-weight-medium mb-6">
-                  My Cards
-                </h6>
+              <VCol cols="12" md="6">
+                <h6 class="text-base font-weight-medium mb-6">My Cards</h6>
 
                 <div class="d-flex flex-column gap-y-4">
                   <VCard
@@ -306,10 +126,7 @@ const resetPaymentForm = () => {
                   >
                     <VCardText class="d-flex flex-sm-row flex-column">
                       <div class="text-no-wrap">
-                        <VImg
-                          :src="card.image"
-                          width="46"
-                        />
+                        <VImg :src="card.image" width="46" />
                         <h4 class="text-base font-weight-medium my-3">
                           <span class="me-4">
                             {{ card.name }}
@@ -323,7 +140,12 @@ const resetPaymentForm = () => {
                             Primary
                           </VChip>
                         </h4>
-                        <span class="text-sm">**** **** **** {{ card.number.substring(card.number.length - 4) }}</span>
+                        <span class="text-sm"
+                          >**** **** ****
+                          {{
+                            card.number.substring(card.number.length - 4)
+                          }}</span
+                        >
                       </div>
 
                       <VSpacer />
@@ -336,14 +158,13 @@ const resetPaymentForm = () => {
                           >
                             Edit
                           </VBtn>
-                          <VBtn
-                            color="secondary"
-                            variant="outlined"
-                          >
+                          <VBtn color="secondary" variant="outlined">
                             Delete
                           </VBtn>
                         </div>
-                        <span class="mt-sm-auto mb-sm-0 my-5 order-sm-1 order-0">Card expires at {{ card.expiry }}</span>
+                        <span class="mt-sm-auto mb-sm-0 my-5 order-sm-1 order-0"
+                          >Card expires at {{ card.expiry }}</span
+                        >
                       </div>
                     </VCardText>
                   </VCard>
@@ -357,13 +178,8 @@ const resetPaymentForm = () => {
               </VCol>
 
               <!-- 👉 Payment method action button -->
-              <VCol
-                cols="12"
-                class="d-flex flex-wrap gap-4"
-              >
-                <VBtn type="submit">
-                  Save changes
-                </VBtn>
+              <VCol cols="12" class="d-flex flex-wrap gap-4">
+                <VBtn type="submit"> Save changes </VBtn>
                 <VBtn
                   color="secondary"
                   variant="outlined"
@@ -377,121 +193,128 @@ const resetPaymentForm = () => {
         </VCardText>
       </VCard>
     </VCol>
-
-    <!-- 👉 Billing Address -->
-    <VCol cols="12">
-      <VCard title="Billing Address">
-        <VCardText>
-          <VForm @submit.prevent="() => {}">
-            <VRow>
-              <!-- 👉 Company name -->
-              <VCol
-                cols="12"
-                md="6"
-              >
-                <VTextField label="Company Name" />
-              </VCol>
-
-              <!-- 👉 Billing Email -->
-              <VCol
-                cols="12"
-                md="6"
-              >
-                <VTextField label="Billing Email" />
-              </VCol>
-
-              <!-- 👉 Tax ID -->
-              <VCol
-                cols="12"
-                md="6"
-              >
-                <VTextField label="Tax ID" />
-              </VCol>
-
-              <!-- 👉 Vat Number -->
-              <VCol
-                cols="12"
-                md="6"
-              >
-                <VTextField label="VAT Number" />
-              </VCol>
-
-              <!-- 👉 Mobile -->
-              <VCol
-                cols="12"
-                md="6"
-              >
-                <VTextField
-                  dirty
-                  label="Phone Number"
-                  type="number"
-                  prefix="US (+1)"
-                />
-              </VCol>
-
-              <!-- 👉 Country -->
-              <VCol
-                cols="12"
-                md="6"
-              >
-                <VSelect
-                  label="Country"
-                  :items="countryList"
-                />
-              </VCol>
-
-              <!-- 👉 Billing Address -->
-              <VCol cols="12">
-                <VTextField label="Billing Address" />
-              </VCol>
-
-              <!-- 👉 State -->
-              <VCol
-                cols="12"
-                md="6"
-              >
-                <VTextField label="State" />
-              </VCol>
-
-              <!-- 👉 Zip Code -->
-              <VCol
-                cols="12"
-                md="6"
-              >
-                <VTextField
-                  label="Zip Code"
-                  type="number"
-                />
-              </VCol>
-
-              <!-- 👉 Actions Button -->
-              <VCol
-                cols="12"
-                class="d-flex flex-wrap gap-4"
-              >
-                <VBtn type="submit">
-                  Save changes
-                </VBtn>
-                <VBtn
-                  type="reset"
-                  color="secondary"
-                  variant="outlined"
-                >
-                  Reset
-                </VBtn>
-              </VCol>
-            </VRow>
-          </VForm>
-        </VCardText>
-      </VCard>
-    </VCol>
-
-    <!-- 👉 Billing History -->
-    <VCol cols="12">
-      <BillingHistoryTable />
-    </VCol>
   </VRow>
 </template>
+
+<script>
+// Images
+import store from "@/store/index.js";
+import axios from "@axios";
+import mastercard from "@images/icons/payments/mastercard.png";
+import visa from "@images/icons/payments/visa.png";
+import moment from "moment";
+
+export default {
+  data() {
+    return {
+      moment: moment,
+      selectedPaymentMethod: "credit-debit-atm-card",
+      isConfirmDialogVisible: false,
+      isPricingPlanDialogVisible: false,
+      isCardEditDialogVisible: false,
+      isCardDetailSaveBilling: false,
+
+      creditCards: [
+        {
+          name: "Tom McBride",
+          number: "5531234567899856",
+          expiry: "12/23",
+          isPrimary: true,
+          type: "visa",
+          cvv: "456",
+          image: visa,
+        },
+        {
+          name: "Mildred Wagner",
+          number: "4851234567895896",
+          expiry: "10/27",
+          isPrimary: false,
+          type: "mastercard",
+          cvv: "123",
+          image: mastercard,
+        },
+      ],
+
+      countryList: [
+        "United States",
+        "Canada",
+        "United Kingdom",
+        "Australia",
+        "New Zealand",
+        "India",
+        "Russia",
+        "China",
+        "Japan",
+      ],
+
+      currentCardDetails: "",
+      cardNumber: 135632156548789,
+      cardName: "john Doe",
+      cardExpiryDate: "05/24",
+      cardCvv: 420,
+    };
+  },
+  computed: {
+    currentPkg() {
+      return store.getters.getCurrentPkg;
+    },
+  },
+  methods: {
+    openEditCardDialog(cardDetails) {
+      this.currentCardDetails = cardDetails;
+      this.isCardEditDialogVisible = true;
+    },
+
+    resetPaymentForm() {
+      this.cardNumber = 135632156548789;
+      this.cardName = "john Doe";
+      this.cardExpiryDate = "05/24";
+      this.cardCvv = 420;
+      this.selectedPaymentMethod = "credit-debit-atm-card";
+    },
+    cancelSubscription() {
+      axios
+        .get(`cancel-subscription`)
+        .then((response) => {
+          console.log("user", response.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
+    calculateDateDifference(createdAt, expiryDate) {
+      // Parse the date strings into Date objects
+      const createdDate = new Date(createdAt);
+      const expiryDateObj = new Date(expiryDate);
+
+      // Calculate the time difference in milliseconds
+      const timeDifference = expiryDateObj - createdDate;
+
+      // Convert the time difference to days, hours, minutes, and seconds
+      const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor(
+        (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor(
+        (timeDifference % (1000 * 60 * 60)) / (1000 * 60)
+      );
+      const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+      // Return the difference as an object
+      return {
+        days: days,
+        hours: hours,
+        minutes: minutes,
+        seconds: seconds,
+      };
+    },
+  },
+  mounted() {
+    store.dispatch("getPackageHistory");
+  },
+};
+</script>
 
 <style lang="scss">
 .pricing-dialog {

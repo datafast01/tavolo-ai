@@ -69,6 +69,12 @@ const userProfileList = [
     title: "Pricing",
     to: { name: "pricing" },
   },
+  {
+    type: "navItem",
+    icon: "mdi-cash",
+    title: "Billing",
+    to: { name: "billing-history" },
+  },
   // {
   //   type: "navItem",
   //   icon: "mdi-help-circle-outline",

@@ -164,6 +164,26 @@ getUserProfile();
               <VCol cols="12" md="6">
                 <VTextField v-model="userData.tikTokUrl" label="TikTok URL" />
               </VCol>
+              <VCol cols="12" md="6">
+                <VTextField
+                  v-model="userData.googleReviewLink"
+                  label="Google Reviews Link"
+                />
+              </VCol>
+              <VCol cols="12" md="6">
+                <VTextField
+                  v-model="userData.dicountForNewCustomers"
+                  label="Discount To New Customers"
+                  type="number"
+                />
+              </VCol>
+              <VCol cols="12" md="6">
+                <VTextField
+                  v-model="userData.dicountForNotRepeatingCustomers"
+                  label="Discount To Customers Haven't Repeated Last 30 Days"
+                  type="number"
+                />
+              </VCol>
 
               <!-- 👉 State -->
               <!-- <VCol cols="12" md="6">
