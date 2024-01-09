@@ -15,10 +15,15 @@ const isConfirmDialogOpen = ref(false);
 const accountDataLocal = ref(structuredClone(accountData));
 const isAccountDeactivated = ref(false);
 let userData = ref({});
+let updateProfileLoading = ref(false);
 
 const validateAccountDeactivation = [
   (v) => !!v || "Please confirm account deactivation",
 ];
+
+let show = ref(false);
+let snkMsg = ref("");
+let color = ref("#9575CD");
 
 // update dashboard data
 const updateDashboard = (file) => {
@@ -79,6 +84,7 @@ const getUserProfile = () => {
 };
 
 const updateProfile = () => {
+  updateProfileLoading.value = true;
   // console.log("submit form", ApiService);
   const payload = {
     email: userData.value.email,
@@ -86,11 +92,21 @@ const updateProfile = () => {
     lastName: userData.value.lastName,
     phoneNo: userData.value.phoneNo,
     restaurantName: userData.value.restaurantName,
+    dicountForNewCustomers: userData.value.dicountForNewCustomers,
+    dicountForNotRepeatingCustomers:
+      userData.value.dicountForNotRepeatingCustomers,
+    googleReviewLink: userData.value.googleReviewLink,
+    instaUrl: userData.value.instaUrl,
+    tikTokUrl: userData.value.tikTokUrl,
+    faceBookUrl: userData.value.faceBookUrl,
   };
   axios
     .post(`editprofile`, payload)
     .then((response) => {
       console.log("user", response.data);
+      updateProfileLoading.value = false;
+      show.value = true;
+      snkMsg.value = "User profile has been updated successfully!";
     })
     .catch((err) => {
       console.log(err.response.status);
@@ -101,6 +117,9 @@ getUserProfile();
 
 <template>
   <VRow>
+    <VSnackbar v-model="show" :timeout="2000" :color="color">
+      {{ snkMsg }}
+    </VSnackbar>
     <VCol cols="12">
       <VCard>
         <VCardText class="d-flex">
@@ -171,18 +190,26 @@ getUserProfile();
                 />
               </VCol>
               <VCol cols="12" md="6">
-                <VTextField
+                <!-- <VTextField
                   v-model="userData.dicountForNewCustomers"
                   label="Discount To New Customers"
                   type="number"
-                />
+                /> -->
+                <v-slider
+                  v-model="userData.dicountForNewCustomers"
+                  thumb-label="always"
+                ></v-slider>
               </VCol>
               <VCol cols="12" md="6">
-                <VTextField
+                <!-- <VTextField
                   v-model="userData.dicountForNotRepeatingCustomers"
                   label="Discount To Customers Haven't Repeated Last 30 Days"
                   type="number"
-                />
+                /> -->
+                <v-slider
+                  v-model="userData.dicountForNotRepeatingCustomers"
+                  thumb-label="always"
+                ></v-slider>
               </VCol>
 
               <!-- 👉 State -->
