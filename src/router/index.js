@@ -211,7 +211,7 @@ router.beforeEach((to, from, next) => {
     localStorage.setItem('employee_id', to.query.employee_id)
     localStorage.setItem('client_id', to.query.client_id)
     localStorage.setItem('clover_code', to.query.code)
-// next('/profile');
+next('/profile');
   }
 
   // Carry On...
