@@ -117,19 +117,19 @@ const updateProfile = () => {
       console.log(err.response.status);
     });
 };
-// const connectToClover = () => {
-//   cloverLoading.value = true;
-//   axios
-//     .get(`clover/connect`)
-//     .then((response) => {
-//       console.log("user", response.data);
-//       cloverLoading.value = false;
-//       window.open(response.data.url);
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// };
+const disConnectToClover = () => {
+  cloverLoading.value = true;
+  axios
+    .get(`clover/disconnect`)
+    .then((response) => {
+      console.log("user", response.data);
+      cloverLoading.value = false;
+    })
+    .catch((err) => {
+      console.log(err);
+      cloverLoading.value = false;
+    });
+};
 // const connectToClover = () => {
 //   cloverLoading.value = true;
 
@@ -455,8 +455,14 @@ getUserProfile();
             <span>
               <img src="../../assets/images/logos/clover-logo.svg" alt="" />
             </span>
-            <VBtn @click="connectToClover" :loading="cloverLoading"
+            <VBtn
+              v-if="!userData.cloverToken"
+              @click="connectToClover"
+              :loading="cloverLoading"
               >Connect to clover</VBtn
+            >
+            <VBtn v-else @click="disConnectToClover" :loading="cloverLoading"
+              >Disconnect to clover</VBtn
             >
           </div>
         </VCardText>
