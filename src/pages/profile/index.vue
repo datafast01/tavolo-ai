@@ -205,13 +205,15 @@ onMounted(() => {
 
 const checkUrlParameters = () => {
   // Extract parameters from the URL
-  const urlParams = new URLSearchParams(window.location.search);
+
   const merchantID = localStorage.getItem("merchant_id");
   const cloverCode = localStorage.getItem("clover_code");
   console.log(cloverCode, merchantID);
   if (merchantID && cloverCode) {
     // Make the second API call
     sendCloverParams(merchantID, cloverCode);
+    localStorage.removeItem("merchant_id");
+    localStorage.removeItem("clover_code");
   }
 };
 
