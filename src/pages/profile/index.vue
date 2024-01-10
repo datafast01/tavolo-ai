@@ -143,22 +143,20 @@ const connectToClover = () => {
 
       // Check if the window is closed or not
       const checkWindowClosed = setInterval(() => {
-        if (redirectWindow.closed) {
-          clearInterval(checkWindowClosed);
+        clearInterval(checkWindowClosed);
 
-          // Extract parameters from the URL of the new tab
-          const newTabParams = new URLSearchParams(
-            redirectWindow.location.search
-          );
-          const merchantID = newTabParams.get("merchant_id");
-          const cloverCode = newTabParams.get("code");
+        // Extract parameters from the URL of the new tab
+        const newTabParams = new URLSearchParams(
+          redirectWindow.location.search
+        );
+        const merchantID = newTabParams.get("merchant_id");
+        const cloverCode = newTabParams.get("code");
 
-          if (merchantID && cloverCode) {
-            // Make the second API call
-            sendCloverParams(merchantID, cloverCode);
-          } else {
-            console.error("Merchant ID or Clover Code is null or undefined");
-          }
+        if (merchantID && cloverCode) {
+          // Make the second API call
+          sendCloverParams(merchantID, cloverCode);
+        } else {
+          console.error("Merchant ID or Clover Code is null or undefined");
         }
       }, 1000);
     })
