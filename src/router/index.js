@@ -205,6 +205,14 @@ router.beforeEach((to, from, next) => {
     // Alternatively, if you want to redirect using a full URL
     // window.location.href = 'https://www.web.tavolo.ai/dashboard';
   }
+  if(to.query.merchant_id && to.query.employee_id){
+    console.log(to.query.merchant_id, 'mercahn', to.query.employee_id)
+    localStorage.setItem('merchant_id', to.query.merchant_id)
+    localStorage.setItem('employee_id', to.query.employee_id)
+    localStorage.setItem('client_id', to.query.client_id)
+    localStorage.setItem('clover_code', to.query.code)
+next('/profile');
+  }
 
   // Carry On...
   else next();

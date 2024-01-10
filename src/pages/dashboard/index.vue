@@ -43,6 +43,7 @@
 </template>
 
 <script setup>
+import router from "@/router";
 import store from "@/store";
 import CrmActivityTimeline from "@/views/dashboards/crm/CrmActivityTimeline.vue";
 import CrmSalesOverview from "@/views/dashboards/crm/CrmSalesOverview.vue";
@@ -152,6 +153,8 @@ onMounted(async () => {
   } catch (error) {
     console.log(error);
   }
+  let cloverMerchantID = router;
+  console.log(cloverMerchantID, "router");
 });
 let transactionData = ref({});
 let emailStates = ref({});

@@ -25,6 +25,9 @@ let show = ref(false);
 let snkMsg = ref("");
 let color = ref("#9575CD");
 
+//loading veriables
+let cloverLoading = ref(false);
+
 // update dashboard data
 const updateDashboard = (file) => {
   const { files } = file.target;
@@ -112,6 +115,87 @@ const updateProfile = () => {
       console.log(err.response.status);
     });
 };
+// const connectToClover = () => {
+//   cloverLoading.value = true;
+//   axios
+//     .get(`clover/connect`)
+//     .then((response) => {
+//       console.log("user", response.data);
+//       cloverLoading.value = false;
+//       window.open(response.data.url);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };
+const connectToClover = () => {
+  cloverLoading.value = true;
+
+  axios
+    .get(`clover/connect`)
+    .then((response) => {
+      console.log("user", response.data);
+      cloverLoading.value = false;
+      const redirectUrl = response.data.url;
+
+      // Open a new window for the redirect URL
+      const redirectWindow = window.open(redirectUrl, "_blank");
+
+      // Check if the window is closed or not
+      const checkWindowClosed = setInterval(() => {
+        if (redirectWindow.closed) {
+          clearInterval(checkWindowClosed);
+
+          // Extract parameters from the URL
+          const urlParams = new URLSearchParams(window.location.search);
+          const merchantID = urlParams.get("merchant_id");
+          const cloverCode = urlParams.get("code");
+
+          // Make the second API call
+          sendCloverParams(merchantID, cloverCode);
+        }
+      }, 1000);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+const sendCloverParams = (merchantID, cloverCode) => {
+  axios
+    .get(`clover/token/${merchantID}/${cloverCode}`)
+    .then((response) => {
+      console.log("user", response.data);
+      cloverLoading.value = false;
+      window.open(response.data.url);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const merchantID = localStorage.getItem("merchant_id");
+const employeeID = localStorage.getItem("employee_id");
+
+const clientID = localStorage.getItem("client_id");
+const cloverCode = localStorage.getItem("clover_code");
+
+console.log(merchantID, "merchantID");
+// const sendCloverParams = () => {
+//   axios
+//     .get(`clover/token/${merchantID}/${cloverCode}`)
+//     .then((response) => {
+//       console.log("user", response.data);
+//       cloverLoading.value = false;
+//       window.open(response.data.url);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };
+// if (merchantID && clientID && cloverCode) {
+//   sendCloverParams();
+// }
+
 getUserProfile();
 </script>
 
@@ -313,7 +397,9 @@ getUserProfile();
             <span>
               <img src="../../assets/images/logos/clover-logo.svg" alt="" />
             </span>
-            <VBtn>SignIn to clover</VBtn>
+            <VBtn @click="connectToClover" :loading="cloverLoading"
+              >Connect to clover</VBtn
+            >
           </div>
         </VCardText>
       </VCard>

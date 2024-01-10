@@ -13,12 +13,12 @@
         </VCol>
       </VRow>
     </VCardText>
-
+    {{ currentPkg?.packageId?.price }}
     <!-- 👉 Free trial Banner -->
     <!-- {{ currentPkg.packageId }} -->
     <VRow
       class="page-pricing-free-trial-banner-bg"
-      v-if="currentPkg?.packageId?.price < 1"
+      v-if="currentPkg?.packageId?.price > 1"
     >
       <VCol
         cols="12"
