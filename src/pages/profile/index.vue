@@ -208,7 +208,7 @@ const checkUrlParameters = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const merchantID = urlParams.get("merchant_id");
   const cloverCode = urlParams.get("code");
-
+  console.log(cloverCode, merchantID);
   if (merchantID && cloverCode) {
     // Make the second API call
     sendCloverParams(merchantID, cloverCode);
