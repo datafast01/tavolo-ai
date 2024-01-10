@@ -148,8 +148,11 @@ const connectToClover = () => {
 
           // Extract parameters from the URL
           const urlParams = new URLSearchParams(window.location.search);
+
           const merchantID = urlParams.get("merchant_id");
           const cloverCode = urlParams.get("code");
+
+          console.log(merchantID, cloverCode);
 
           // Make the second API call
           sendCloverParams(merchantID, cloverCode);
@@ -166,7 +169,7 @@ const sendCloverParams = (merchantID, cloverCode) => {
     .then((response) => {
       console.log("user", response.data);
       cloverLoading.value = false;
-      window.open(response.data.url);
+      window.redirect(response.data.url);
     })
     .catch((err) => {
       console.log(err);
