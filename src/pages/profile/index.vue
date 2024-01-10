@@ -2,6 +2,8 @@
 import store from "@/store/index.js";
 import axios from "@axios";
 import avatar1 from "@images/avatars/avatar-1.png";
+import { onMounted } from "vue";
+
 import AccountSettingsAccount from "./AccountSettingsConnections.vue";
 
 const accountData = {
@@ -128,6 +130,56 @@ const updateProfile = () => {
 //       console.log(err);
 //     });
 // };
+// const connectToClover = () => {
+//   cloverLoading.value = true;
+
+//   axios
+//     .get(`clover/connect`)
+//     .then((response) => {
+//       console.log("user", response.data);
+//       cloverLoading.value = false;
+//       const redirectUrl = response.data.url;
+
+//       // Open a new window for the redirect URL
+//       const redirectWindow = window.open(redirectUrl, "_blank");
+
+//       // Check if the window is closed or not
+//       const checkWindowClosed = setInterval(() => {
+//         clearInterval(checkWindowClosed);
+
+//         // Extract parameters from the URL of the new tab
+//         const newTabParams = new URLSearchParams(
+//           redirectWindow.location.search
+//         );
+//         const merchantID = newTabParams.get("merchant_id");
+//         const cloverCode = newTabParams.get("code");
+
+//         if (merchantID && cloverCode) {
+//           // Make the second API call
+//           sendCloverParams(merchantID, cloverCode);
+//         } else {
+//           console.error("Merchant ID or Clover Code is null or undefined");
+//         }
+//       }, 1000);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };
+
+// const sendCloverParams = (merchantID, cloverCode) => {
+//   axios
+//     .get(`clover/token/${merchantID}/${cloverCode}`)
+//     .then((response) => {
+//       console.log("user", response.data);
+//       cloverLoading.value = false;
+//       window.redirect(response.data.url);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };
+
 const connectToClover = () => {
   cloverLoading.value = true;
 
@@ -138,31 +190,29 @@ const connectToClover = () => {
       cloverLoading.value = false;
       const redirectUrl = response.data.url;
 
-      // Open a new window for the redirect URL
-      const redirectWindow = window.open(redirectUrl, "_blank");
-
-      // Check if the window is closed or not
-      const checkWindowClosed = setInterval(() => {
-        clearInterval(checkWindowClosed);
-
-        // Extract parameters from the URL of the new tab
-        const newTabParams = new URLSearchParams(
-          redirectWindow.location.search
-        );
-        const merchantID = newTabParams.get("merchant_id");
-        const cloverCode = newTabParams.get("code");
-
-        if (merchantID && cloverCode) {
-          // Make the second API call
-          sendCloverParams(merchantID, cloverCode);
-        } else {
-          console.error("Merchant ID or Clover Code is null or undefined");
-        }
-      }, 1000);
+      // Redirect the current tab to the new URL
+      window.location.href = redirectUrl;
     })
     .catch((err) => {
       console.log(err);
     });
+};
+
+onMounted(() => {
+  // Check for URL parameters after the component is mounted
+  checkUrlParameters();
+});
+
+const checkUrlParameters = () => {
+  // Extract parameters from the URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const merchantID = urlParams.get("merchant_id");
+  const cloverCode = urlParams.get("code");
+
+  if (merchantID && cloverCode) {
+    // Make the second API call
+    sendCloverParams(merchantID, cloverCode);
+  }
 };
 
 const sendCloverParams = (merchantID, cloverCode) => {
@@ -171,10 +221,11 @@ const sendCloverParams = (merchantID, cloverCode) => {
     .then((response) => {
       console.log("user", response.data);
       cloverLoading.value = false;
-      window.redirect(response.data.url);
+      // Handle the response as needed
     })
     .catch((err) => {
       console.log(err);
+      // Handle errors as needed
     });
 };
 
