@@ -146,16 +146,19 @@ const connectToClover = () => {
         if (redirectWindow.closed) {
           clearInterval(checkWindowClosed);
 
-          // Extract parameters from the URL
-          const urlParams = new URLSearchParams(window.location.search);
+          // Extract parameters from the URL of the new tab
+          const newTabParams = new URLSearchParams(
+            redirectWindow.location.search
+          );
+          const merchantID = newTabParams.get("merchant_id");
+          const cloverCode = newTabParams.get("code");
 
-          const merchantID = urlParams.get("merchant_id");
-          const cloverCode = urlParams.get("code");
-
-          console.log(merchantID, cloverCode);
-
-          // Make the second API call
-          sendCloverParams(merchantID, cloverCode);
+          if (merchantID && cloverCode) {
+            // Make the second API call
+            sendCloverParams(merchantID, cloverCode);
+          } else {
+            console.error("Merchant ID or Clover Code is null or undefined");
+          }
         }
       }, 1000);
     })
@@ -163,6 +166,7 @@ const connectToClover = () => {
       console.log(err);
     });
 };
+
 const sendCloverParams = (merchantID, cloverCode) => {
   axios
     .get(`clover/token/${merchantID}/${cloverCode}`)
