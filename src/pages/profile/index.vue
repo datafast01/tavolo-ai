@@ -453,12 +453,12 @@ getUserProfile();
       <VCard title="Integrations">
         <v-card class="mb-3 ml-3" max-width="304">
           <v-card-text class="text-center">
-            <div>TAVOLO</div>
+            <div class="mb-2 text-h5">TAVOLO</div>
             <p>for</p>
             <img
               src="../../assets/images/logos/clover-logo.svg"
               alt=""
-              width="100"
+              width="120"
             />
             <br />
 
@@ -475,8 +475,7 @@ getUserProfile();
             <v-btn
               v-else
               @click="disConnectToClover"
-              variant="outlined"
-              color="success"
+              variant="tonal"
               :loading="cloverLoading"
               >Disconnect to clover</v-btn
             >
