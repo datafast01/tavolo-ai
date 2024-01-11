@@ -65,12 +65,12 @@
           </VRow>
           <div class="d-flex flex-row-reverse">
             <div class="mx-2">
-              <VBtn
+              <!-- <VBtn
                 @click="filterCustomers()"
                 prepend-icon="mdi-filter-outline"
               >
                 Apply Filters
-              </VBtn>
+              </VBtn> -->
             </div>
             <div>
               <VBtn @click="reset" color="secondary"> Clear Filters </VBtn>
@@ -128,9 +128,12 @@
         <template #item.phone="{ item }">
           {{ item.phoneNumbers.elements[0].phoneNumber }}
         </template>
+        <template #item.dobDay="{ item }">
+          {{ numberToMonth(item.metadata.dobMonth) }} {{ item.metadata.dobDay }}
+        </template>
 
-        <template #item.repeated="{ item }">
-          {{ item.repeated ? "YES" : "NO" }}
+        <template #item.marketingAllowed="{ item }">
+          {{ item.marketingAllowed ? "YES" : "NO" }}
         </template>
 
         <!-- Actions -->
@@ -307,22 +310,18 @@ const headers = [
     key: "phone",
   },
   {
-    title: "Customers AOV",
-    key: "aov",
+    title: "Business Name",
+    key: "phone",
+  },
+
+  {
+    title: "Marketing Allowed",
+    key: "marketingAllowed",
+    width: "100",
   },
   {
-    title: "Total Visits",
-    key: "totalVisits",
-    width: "40",
-  },
-  {
-    title: "Last Dining Behaviour",
-    key: "lastDiningBehaviour",
-  },
-  {
-    title: "Repeated Customer",
-    key: "repeated",
-    width: "1o0",
+    title: "Birthday",
+    key: "dobDay",
   },
 
   {
@@ -354,6 +353,29 @@ const uploadCustomerCsv = (file) => {
   //       accountDataLocal.value.avatarImg = fileReader.result;
   //   };
   // }
+};
+
+//changing month in char
+const numberToMonth = (number) => {
+  if (number >= 1 && number <= 12) {
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    return months[number - 1];
+  } else {
+    return "Date Not Available";
+  }
 };
 // 👉 Fetching users
 const fetchCustomers = () => {

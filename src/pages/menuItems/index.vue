@@ -114,13 +114,26 @@
       >
         <!-- Email -->
         <template #item.price="{ item }">
-          <span class="text-sm">
-            {{ formatCurrency(parseFloat(item.price), "USD") }}
+          <span class="text-sm" v-if="item.priceType == 'VARIABLE'">
+            Veriable
+            <!-- {{ formatCurrency(parseFloat(item.price), "USD") }} -->
+          </span>
+          <span v-else>
+            {{
+              item.unitName == ""
+                ? "$" + item.price / 100
+                : "$" + item.price / 100 + "/" + item.unitName
+            }}
           </span>
         </template>
         <template #item.percentageOfTotalRevenue="{ item }">
           <span class="text-sm"> {{ item.percentageOfTotalRevenue }}% </span>
         </template>
+        <template #item.cost="{ item }">
+          <span class="text-sm"> {{ item.cost == 0 ? "" : item.cost }}</span>
+        </template>
+
+        <!-- price -->
 
         <!-- Status -->
         <template #item.available="{ item }">
@@ -129,6 +142,9 @@
             color="primary"
             v-if="item.available"
           />
+        </template>
+        <template #item.modifiedTime="{ item }">
+          {{ moment(item.modifiedTime).format("ll") }}
         </template>
 
         <!-- Actions -->
@@ -233,6 +249,8 @@ import axios from "@axios";
 import AddMenuItem from "./AddMenuItem.vue";
 import EditMenuItem from "./EditMenuItem.vue";
 
+import moment from "moment";
+
 const userListStore = useUserListStore();
 const searchQuery = ref("");
 let isLoading = ref(false);
@@ -270,25 +288,33 @@ const headers = [
     key: "name",
   },
   {
-    title: "NO. Of Customers Ordered",
-    key: "noOfCustomersOrdered",
-  },
-  {
-    title: "NO. Of Times Ordered",
-    key: "noOfTimesOrdered",
-  },
-  {
-    title: "Percentage Of Total Revenue",
-    key: "percentageOfTotalRevenue",
+    title: "Item ID",
+    key: "id",
   },
   {
     title: "Price",
     key: "price",
   },
+  {
+    title: "Cost",
+    key: "cost",
+  },
 
   {
     title: "Availability",
     key: "available",
+  },
+  // {
+  //   title: "Tax",
+  //   key: "defaultTaxRates",
+  // },
+  {
+    title: "SKU",
+    key: "sku",
+  },
+  {
+    title: "Last edited",
+    key: "modifiedTime",
   },
 
   {
@@ -321,12 +347,10 @@ const reset = () => {
 const fetchMenuItems = () => {
   isLoading.value = true;
   axios
-    .get(
-      `food-item/list?pageSize=${options.value.itemsPerPage}&page=${options.value.page}`
-    )
+    .get(`clover/inventory`)
     .then((response) => {
       console.log("user", response.data);
-      menuItems.value = response.data.data;
+      menuItems.value = response.data.data.elements;
       store.dispatch("getPackageHistory");
       isLoading.value = false;
     })

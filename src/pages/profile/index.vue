@@ -450,9 +450,40 @@ getUserProfile();
     </VCol>
 
     <VCol cols="12">
-      <VCard title="Clover Integrations">
-        <VCardText>
-          <!-- 👉 Checkbox and Button  -->
+      <VCard title="Integrations">
+        <v-card class="mb-3 ml-3" max-width="304">
+          <v-card-text class="text-center">
+            <div>TAVOLO</div>
+            <p>for</p>
+            <img
+              src="../../assets/images/logos/clover-logo.svg"
+              alt=""
+              width="100"
+            />
+            <br />
+
+            <div class="text--primary">
+              Connect Clover POS with Tavolo<br />
+            </div>
+            <br />
+            <v-btn
+              v-if="!userData.cloverToken"
+              @click="connectToClover"
+              :loading="cloverLoading"
+              >Connect to clover</v-btn
+            >
+            <v-btn
+              v-else
+              @click="disConnectToClover"
+              variant="outlined"
+              color="success"
+              :loading="cloverLoading"
+              >Disconnect to clover</v-btn
+            >
+          </v-card-text>
+          <v-card-actions class="justify-center"> </v-card-actions>
+        </v-card>
+        <!-- <VCardText>
           <div class="d-flex justify-space-between">
             <span>
               <img src="../../assets/images/logos/clover-logo.svg" alt="" />
@@ -467,7 +498,7 @@ getUserProfile();
               >Disconnect to clover</VBtn
             >
           </div>
-        </VCardText>
+        </VCardText> -->
       </VCard>
     </VCol>
   </VRow>
