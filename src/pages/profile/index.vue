@@ -124,10 +124,12 @@ const disConnectToClover = () => {
     .then((response) => {
       console.log("user", response.data);
       cloverLoading.value = false;
+      userData.value.cloverToken = null;
     })
     .catch((err) => {
       console.log(err);
       cloverLoading.value = false;
+      userData.value.cloverToken = null;
     });
 };
 // const connectToClover = () => {

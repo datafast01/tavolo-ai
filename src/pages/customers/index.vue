@@ -290,12 +290,12 @@ const options = ref({
 const headers = [
   {
     title: "First Name",
-    key: "firstname",
+    key: "firstName",
     width: "130",
   },
   {
     title: "Last Name",
-    key: "lastname",
+    key: "lastName",
     width: "130",
   },
   {
@@ -359,12 +359,10 @@ const uploadCustomerCsv = (file) => {
 const fetchCustomers = () => {
   isLoading.value = true;
   axios
-    .get(
-      `list-customers?pageSize=${options.value.itemsPerPage}&pageNo=${options.value.page}`
-    )
+    .get(`clover/customers`)
     .then((response) => {
       console.log("user", response.data);
-      customers.value = response.data.data;
+      customers.value = response.data.data.elements;
       isLoading.value = false;
       store.dispatch("getPackageHistory");
     })
