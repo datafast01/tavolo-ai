@@ -35,9 +35,25 @@ handleSkinChanges();
       <div
         v-show="!['login', 'register', 'forgot-password'].includes($route.name)"
       >
+        <v-alert
+          color="warning"
+          icon="$warning"
+          variant="tonal"
+          text="Your POS is not connected please connect it"
+          max-width="430"
+          class="pos-alert mt-1"
+        ></v-alert>
         <Default />
         <ScrollToTop />
       </div>
     </VApp>
   </VLocaleProvider>
 </template>
+
+<style scoped>
+.pos-alert {
+  position: fixed;
+  left: 40%;
+  z-index: 999;
+}
+</style>
