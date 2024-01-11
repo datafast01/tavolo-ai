@@ -125,6 +125,8 @@ const disConnectToClover = () => {
       console.log("user", response.data);
       cloverLoading.value = false;
       userData.value.cloverToken = null;
+      show.value = true;
+      snkMsg.value = "Disconnected From Clover Successfully!";
     })
     .catch((err) => {
       console.log(err);
@@ -226,6 +228,8 @@ const sendCloverParams = (merchantID, cloverCode) => {
       console.log("user", response.data);
       cloverLoading.value = false;
       getUserProfile();
+      show.value = true;
+      snkMsg.value = "Connected With Clover Successfully!";
       // Handle the response as needed
     })
     .catch((err) => {
