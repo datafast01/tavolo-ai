@@ -122,13 +122,13 @@
         </template> -->
 
         <!-- Status -->
-        <!-- <template #item.repeated="{ item }">
-          <VIcon
-            icon="mdi-check-outline"
-            color="primary"
-            v-if="!item.repeated"
-          />
-        </template> -->
+        <template #item.email="{ item }">
+          {{ item.emailAddresses.elements[0].emailAddress }}
+        </template>
+        <template #item.phone="{ item }">
+          {{ item.phoneNumbers.elements[0].phoneNumber }}
+        </template>
+
         <template #item.repeated="{ item }">
           {{ item.repeated ? "YES" : "NO" }}
         </template>
