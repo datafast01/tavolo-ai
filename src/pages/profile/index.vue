@@ -225,6 +225,7 @@ const sendCloverParams = (merchantID, cloverCode) => {
     .then((response) => {
       console.log("user", response.data);
       cloverLoading.value = false;
+      getUserProfile();
       // Handle the response as needed
     })
     .catch((err) => {
