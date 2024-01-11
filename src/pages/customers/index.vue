@@ -368,6 +368,8 @@ const fetchCustomers = () => {
     })
     .catch((err) => {
       console.log(err.response.status);
+      snkMsg.value = "Connect to Clover";
+      isLoading.value = false;
     });
 };
 const filterCustomers = () => {
