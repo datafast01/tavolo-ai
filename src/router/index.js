@@ -146,6 +146,14 @@ const routes = [
     //  redirect: () => ({  name: 'login' }),
     meta: { requiresAuth: true },
   },
+  {
+    path: "/hire-a-pro",
+    name: "hire-a-pro",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../pages/videos/hireAPro/index.vue"),
+    //  redirect: () => ({  name: 'login' }),
+    meta: { requiresAuth: true },
+  },
   { path: '/:catchAll(.*)', component: () =>
       import(/* webpackChunkName: "about" */ "../pages/pages/misc/not-found.vue"),meta: { requiresAuth: false } }
   //  {
