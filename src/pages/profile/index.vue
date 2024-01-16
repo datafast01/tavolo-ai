@@ -127,6 +127,7 @@ const disConnectToClover = () => {
       userData.value.cloverToken = null;
       show.value = true;
       snkMsg.value = "Disconnected From Clover Successfully!";
+      window.reload();
     })
     .catch((err) => {
       console.log(err);

@@ -8,6 +8,7 @@ import messages from "./messages";
 import profile from "./profile";
 import schedule from "./schedule";
 import socialMedia from "./socialMedia";
+import videos from "./videos";
 
 // import templates from './templates'
 
@@ -19,6 +20,7 @@ export default [
   ...customers,
   ...schedule,
   ...menuItems,
+  ...videos,
   ...socialMedia,
   ...profile,
 ];
