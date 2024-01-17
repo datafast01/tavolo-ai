@@ -176,6 +176,8 @@ const login = () => {
       localStorage.setItem("userData", JSON.stringify(userData));
       localStorage.setItem("token", userData.token);
       store.dispatch("getPackageHistory");
+      store.dispatch("getProfile");
+
       // localStorage.setItem('accessToken', JSON.stringify(accessToken))
       if (res.status == 200) {
         router.replace(route.query.to ? String(route.query.to) : "/");

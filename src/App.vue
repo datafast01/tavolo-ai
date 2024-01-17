@@ -1,11 +1,11 @@
 <script setup>
-import axios from "@axios";
+import store from "@/store/index.js";
 import ScrollToTop from "@core/components/ScrollToTop.vue";
 import { useThemeConfig } from "@core/composable/useThemeConfig";
 import { hexToRgb } from "@layouts/utils";
+import { computed } from "vue";
 import { useTheme } from "vuetify";
 import Default from "./layouts/default.vue";
-
 const {
   syncInitialLoaderTheme,
   syncVuetifyThemeWithTheme: syncConfigThemeWithVuetifyTheme,
@@ -19,20 +19,10 @@ const { global } = useTheme();
 syncInitialLoaderTheme();
 syncConfigThemeWithVuetifyTheme();
 handleSkinChanges();
+const userProfile = computed(() => {
+  return store.getters.userProfile;
+});
 let userData = ref({});
-const getUserProfile = () => {
-  // console.log("submit form", ApiService);
-  axios
-    .get(`getprofile`)
-    .then((response) => {
-      console.log("user", response.data);
-      userData.value = response.data;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
-getUserProfile();
 </script>
 
 <template>
@@ -52,7 +42,7 @@ getUserProfile();
         v-show="!['login', 'register', 'forgot-password'].includes($route.name)"
       >
         <v-alert
-          v-if="!userData.cloverToken"
+          v-if="!userProfile.cloverToken"
           color="warning"
           icon="$warning"
           variant="tonal"

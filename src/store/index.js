@@ -2,12 +2,15 @@
 import Vuex from "vuex";
 
 // Modules
-import ProfileSettings from './paymentStore';
+import paymentStore from "./paymentStore";
+import profileStore from './profileStore';
+
 
 
 export default new Vuex.Store({
   modules: {
-   ProfileSettings
+   profileStore,
+   paymentStore
   },
   strict: process.env.DEV,
 });

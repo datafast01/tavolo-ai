@@ -84,25 +84,30 @@
                     class="chat-content text-sm py-3 px-4 elevation-1 bg-surface chat-left mt-5"
                   >
                     <div style="white-space: break-spaces" v-if="isCustomer">
-                      <div v-for="(items, index) in AiResponse" :key="index">
-                        <div class="d-flex flex-column mb-3">
-                          {{ index + 1 }}:
-                          <span>
-                            Customer Name: {{ items.firstname }}
-                            {{ items.lastname }}
-                          </span>
+                      <div v-if="AiResponse.length > 0">
+                        <div v-for="(items, index) in AiResponse" :key="index">
+                          <div class="d-flex flex-column mb-3">
+                            {{ index + 1 }}:
+                            <span>
+                              Customer Name: {{ items.firstname }}
+                              {{ items.lastname }}
+                            </span>
 
-                          <span> Email: {{ items.email }} </span>
-                          <span> Phone: {{ items.phone }} </span>
-                          <span>
-                            Repeated: {{ items.repeated ? "YES" : "NO" }}
-                          </span>
-                          <span>
-                            Last Visited Date: {{ items?.lastVisitedDate }}
-                          </span>
-                          <span> Total Visites: {{ items?.totalVisits }} </span>
+                            <span> Email: {{ items.email }} </span>
+                            <span> Phone: {{ items.phone }} </span>
+                            <span>
+                              Repeated: {{ items.repeated ? "YES" : "NO" }}
+                            </span>
+                            <span>
+                              Last Visited Date: {{ items?.lastVisitedDate }}
+                            </span>
+                            <span>
+                              Total Visites: {{ items?.totalVisits }}
+                            </span>
+                          </div>
                         </div>
                       </div>
+                      <span v-else> No Data Available </span>
                     </div>
                     <div style="white-space: break-spaces" v-else>
                       {{ AiResponse }}
