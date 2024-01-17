@@ -1,5 +1,8 @@
 <template>
   <div class="d-flex flex-column">
+    <VSnackbar v-model="show" :timeout="2000" :color="color">
+      {{ snkMsg }}
+    </VSnackbar>
     <VCheckbox
       label="Search From Tavolo Customers"
       v-model="isCustomer"
@@ -161,17 +164,21 @@
 </template>
 
 <script setup>
-import { useChatStore } from "@/views/apps/chat/useChatStore";
+import store from "@/store/index.js";
+
 import axios from "@axios";
 import { useResponsiveLeftSidebar } from "@core/composable/useResponsiveSidebar";
 import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 import { useDisplay } from "vuetify";
 const vuetifyDisplays = useDisplay();
-const store = useChatStore();
+
 const { isLeftSidebarOpen } = useResponsiveLeftSidebar(
   vuetifyDisplays.smAndDown
 );
-
+//snakebar
+let show = ref(false);
+let snkMsg = ref("");
+let color = ref("#9575CD");
 //ask tavolo
 let isCustomer = ref(false);
 let prompt = ref("");
@@ -216,6 +223,8 @@ const sendMessage = async () => {
   } catch (error) {
     console.error("Error uploading file:", error);
     loading.value = false;
+    show.value = true;
+    snkMsg.value = error.response.data.message;
   }
 
   // Reset message input
@@ -267,6 +276,15 @@ const handleChange = () => {
 const isActiveChatUserProfileSidebarOpen = ref(false);
 
 // file input
+
+//checking permissions
+const userHistory = computed(() => {
+  return store.getters.getCurrentPkg;
+});
+onMounted(() => {
+  // Check for URL parameters after the component is mounted
+  store.dispatch("getPackageHistory");
+});
 </script>
 
 <route lang="yaml">

@@ -13,10 +13,10 @@
         </VCol>
       </VRow>
     </VCardText>
-    {{ currentPkg?.packageId?.price }}
+    <!-- {{ currentPkg?.packageId?.price }} -->
     <!-- 👉 Free trial Banner -->
     <!-- {{ currentPkg.packageId }} -->
-    <VRow
+    <!-- <VRow
       class="page-pricing-free-trial-banner-bg"
       v-if="currentPkg?.packageId?.price > 1"
     >
@@ -65,13 +65,13 @@
           <VImg :src="poseFs9" :width="250" />
         </div>
       </VCol>
-    </VRow>
+    </VRow> -->
 
     <!-- 👉 Plans -->
-    <VCardText class="text-center mt-16">
+    <!-- <VCardText class="text-center mt-16">
       <h4 class="text-h5 mb-6">Pick a plan that works best for you</h4>
       <p>Stay cool, we have a 48-hour money back guarantee!</p>
-    </VCardText>
+    </VCardText> -->
 
     <!-- 👉 Features & Tables -->
     <VCardText class="mb-16 mt-2">

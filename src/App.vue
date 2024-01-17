@@ -22,7 +22,6 @@ handleSkinChanges();
 const userProfile = computed(() => {
   return store.getters.userProfile;
 });
-let userData = ref({});
 </script>
 
 <template>
