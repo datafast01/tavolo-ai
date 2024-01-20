@@ -17,6 +17,10 @@ export default {
     state.cloverClientId = data
    },
 
+   setUserProfile(state, data){
+    state.userProfile = data
+   }
+
   },
   actions: {
   getProfile({ commit, state }) {
@@ -24,7 +28,7 @@ export default {
         .get(`getProfile`)
         .then((response) => {
           console.log("asdlfasdf", response.data);
-          state.userProfile = response.data
+          commit('setUserProfile', response.data)
           console.log(state.userProfile,'current pkgggg')
         })
         .catch((err) => {

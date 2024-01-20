@@ -20,7 +20,12 @@ syncInitialLoaderTheme();
 syncConfigThemeWithVuetifyTheme();
 handleSkinChanges();
 const userProfile = computed(() => {
+  console.log(store.getters);
   return store.getters.userProfile;
+});
+onMounted(() => {
+  // Check for URL parameters after the component is mounted
+  store.dispatch("getProfile");
 });
 </script>
 
@@ -49,6 +54,7 @@ const userProfile = computed(() => {
           max-width="430"
           class="pos-alert mt-1"
         ></v-alert>
+
         <Default />
         <ScrollToTop />
       </div>

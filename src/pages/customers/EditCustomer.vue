@@ -13,7 +13,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["update:isDrawerOpen", "userData"]);
+const emit = defineEmits(["update:isDrawerOpen", "customerData"]);
 
 const isFormValid = ref(false);
 const refForm = ref();
@@ -26,7 +26,11 @@ const closeNavigationDrawer = () => {
 const onSubmit = () => {
   refForm.value?.validate().then(({ valid }) => {
     if (valid) {
-      emit("userData", props.customerData, emit("update:isDrawerOpen", false));
+      emit(
+        "customerData",
+        props.customerData,
+        emit("update:isDrawerOpen", false)
+      );
 
       nextTick(() => {
         refForm.value?.reset();
@@ -70,7 +74,7 @@ const handleDrawerModelValueUpdate = (val) => {
                   label="First Name"
                 />
               </VCol>
-
+              {{ customerData }}
               <!-- 👉 Username -->
               <VCol cols="12">
                 <VTextField

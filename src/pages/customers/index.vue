@@ -222,7 +222,7 @@
     />
 
     <EditCustomer
-      v-model:isDrawerOpen="isUserInfoEditDialogVisible"
+      v-model:isDialogVisible="isUserInfoEditDialogVisible"
       :customerData="myCustomer"
       @user-data="updateCustomer"
     />
@@ -239,7 +239,7 @@ import axios from "@axios";
 // import { VSkeletonLoader } from "vuetify/labs/VSkeletonLoader";
 import AddNewCustomer from "./AddNewCustomer.vue";
 
-import EditCustomer from "./EditCustomer.vue";
+import EditCustomer from "./EditCustomerCopy.vue";
 
 const userListStore = useUserListStore();
 const searchQuery = ref("");
@@ -392,21 +392,6 @@ const fetchCustomers = () => {
       console.log(err.response.status);
       snkMsg.value = "Connect to Clover";
       isLoading.value = false;
-    });
-};
-const filterCustomers = () => {
-  isLoading.value = true;
-  axios
-    .get(
-      `list-customers?pageSize=${options.value.itemsPerPage}&pageNo=${options.value.page}&email=${emailSearch.value}&repeated=${repeated.value}&aov=${aov.value}&aovOperator=${aovOperator.value}&totalVisits=${totalVisits.value}&totalVisitsOperator=${visitsOperator.value}`
-    )
-    .then((response) => {
-      console.log("user", response.data);
-      customers.value = response.data.data;
-      isLoading.value = false;
-    })
-    .catch((err) => {
-      console.log(err.response.status);
     });
 };
 

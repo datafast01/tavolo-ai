@@ -6,7 +6,6 @@
     "src/**/*",
     "src/**/*.vue",
     "themeConfig.js",
-    "auto-imports.d.js",
     "componenjs.d.js"
   ],
   "exclude": [

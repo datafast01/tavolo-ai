@@ -63,8 +63,8 @@ export default defineConfig({
     }),
     AutoImport({
       eslintrc: {
-        enabled: true,
-        filepath: './.eslintrc-auto-import.json',
+        enabled: false,
+        
       },
       imports: ['vue', 'vue-router', '@vueuse/core', '@vueuse/math', 'vue-i18n', 'pinia'],
       vueTemplate: true,

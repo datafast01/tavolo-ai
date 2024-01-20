@@ -131,6 +131,14 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
+    path: "/orders",
+    name: "orders",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../pages/orders/index.vue"),
+    //  redirect: () => ({  name: 'login' }),
+    meta: { requiresAuth: true },
+  },
+  {
     path: "/pricing",
     name: "pricing",
     component: () =>
