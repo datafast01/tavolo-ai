@@ -7,7 +7,23 @@ export default [
       {
         title: 'Emails Campaigns',
         icon: { icon: 'mdi-email' },
-       to: { name: 'schedule-emails' },
+       children: [
+        {
+          title: 'New Campaigns',
+        icon: { icon: 'mdi-comment-plus-outline' },
+        to: { name: 'new-campaigns' },
+        },
+        {
+          title: 'Campaign Portfolio',
+        icon: { icon: 'mdi-message-text-outline' },
+        to: { name: 'campaign-portfolio' },
+        },
+        {
+          title: 'Campaign Performance',
+        icon: { icon: 'mdi-message-text-outline' },
+        to: { name: 'campaign-performance' },
+        }
+       ]
       },
       {
         title: 'Messages Campaigns',

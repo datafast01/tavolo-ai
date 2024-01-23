@@ -83,7 +83,37 @@ const routes = [
     name: "schedule-emails",
     component: () =>
       import(
-        /* webpackChunkName: "about" */ "../pages/schedule-emails/index.vue"
+        /* webpackChunkName: "about" */ "../pages/emails/index.vue"
+      ),
+    //  redirect: () => ({  name: 'login' }),
+    meta: { requiresAuth: true },
+  },
+   {
+    path: "/new-campaigns",
+    name: "new-campaigns",
+    component: () =>
+      import(
+        /* webpackChunkName: "about" */ "../pages/emails/NewCampaigns.vue"
+      ),
+    //  redirect: () => ({  name: 'login' }),
+    meta: { requiresAuth: true },
+  },
+   {
+    path: "/campaign-portfolio",
+    name: "campaign-portfolio",
+    component: () =>
+      import(
+        /* webpackChunkName: "about" */ "../pages/emails/CampaignPortfolio.vue"
+      ),
+    //  redirect: () => ({  name: 'login' }),
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/campaign-performance",
+    name: "campaign-performance",
+    component: () =>
+      import(
+        /* webpackChunkName: "about" */ "../pages/emails/CampaignPerformance.vue"
       ),
     //  redirect: () => ({  name: 'login' }),
     meta: { requiresAuth: true },

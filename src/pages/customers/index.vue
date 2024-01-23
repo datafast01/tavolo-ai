@@ -381,7 +381,7 @@ const numberToMonth = (number) => {
 const fetchCustomers = () => {
   isLoading.value = true;
   axios
-    .get(`clover/customers`)
+    .get(`clover/customers?pageNo=1&pageSize=50`)
     .then((response) => {
       console.log("user", response.data);
       customers.value = response.data.data.elements;
