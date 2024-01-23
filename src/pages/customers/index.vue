@@ -123,17 +123,18 @@
 
         <!-- Status -->
         <template #item.email="{ item }">
-          {{ item.emailAddresses.elements[0].emailAddress }}
+          {{ item.email }}
         </template>
         <template #item.phone="{ item }">
-          {{ item.phoneNumbers.elements[0].phoneNumber }}
+          {{ item.phone }}
         </template>
         <template #item.dobDay="{ item }">
-          {{ numberToMonth(item.metadata.dobMonth) }} {{ item.metadata.dobDay }}
+          {{ numberToMonth(item?.metadata?.dobMonth) }}
+          {{ item?.metadata?.dobDay }}
         </template>
 
         <template #item.marketingAllowed="{ item }">
-          {{ item.marketingAllowed ? "YES" : "NO" }}
+          {{ item?.marketingAllowed ? "YES" : "NO" }}
         </template>
 
         <!-- Actions -->
@@ -293,12 +294,12 @@ const options = ref({
 const headers = [
   {
     title: "First Name",
-    key: "firstName",
+    key: "firstname",
     width: "130",
   },
   {
     title: "Last Name",
-    key: "lastName",
+    key: "lastname",
     width: "130",
   },
   {
@@ -381,10 +382,11 @@ const numberToMonth = (number) => {
 const fetchCustomers = () => {
   isLoading.value = true;
   axios
-    .get(`clover/customers?pageNo=1&pageSize=50`)
+    .get(`list-customers?pageNo=1&pageSize=50`)
     .then((response) => {
       console.log("user", response.data);
-      customers.value = response.data.data.elements;
+      customers.value = response.data.data;
+      console.log(customers.value);
       isLoading.value = false;
       store.dispatch("getPackageHistory");
     })
