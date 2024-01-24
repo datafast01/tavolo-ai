@@ -2,7 +2,7 @@
 // import '@/@fake-db/db'
 import '@/@iconify/icons-bundle'
 import App from '@/App.vue'
-import i18n from '@/plugins/i18n'
+
 import layoutsPlugin from '@/plugins/layouts'
 import vuetify from '@/plugins/vuetify'
 import { loadFonts } from '@/plugins/webfontloader'
@@ -11,6 +11,7 @@ import store from './store'
 
 // import { abilitiesPlugin } from '@casl/vue'
 import '@core/scss/template/index.scss'
+import '@styles/font_size.css'
 import '@styles/styles.scss'
 import { createPinia } from 'pinia'
 
@@ -30,7 +31,7 @@ app.use(vuetify)
 app.use(createPinia())
 app.use(router)
 app.use(layoutsPlugin)
-app.use(i18n)
+
 app.use(store)
 
 

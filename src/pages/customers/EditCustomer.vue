@@ -1,9 +1,8 @@
 <script setup>
 import { emailValidator, requiredValidator } from "@validators";
-import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 
 const props = defineProps({
-  isDrawerOpen: {
+  isDialogVisible: {
     type: Boolean,
     required: true,
   },
@@ -13,14 +12,14 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["update:isDrawerOpen", "customerData"]);
+const emit = defineEmits(["update:isDialogVisible", "customerData"]);
 
 const isFormValid = ref(false);
 const refForm = ref();
 
 // 👉 drawer close
 const closeNavigationDrawer = () => {
-  emit("update:isDrawerOpen", false);
+  emit("update:isDialogVisible", false);
 };
 
 const onSubmit = () => {
@@ -29,7 +28,7 @@ const onSubmit = () => {
       emit(
         "customerData",
         props.customerData,
-        emit("update:isDrawerOpen", false)
+        emit("update:isDialogVisible", false)
       );
 
       nextTick(() => {
@@ -40,130 +39,125 @@ const onSubmit = () => {
   });
 };
 
-const handleDrawerModelValueUpdate = (val) => {
-  emit("update:isDrawerOpen", val);
+const onFormReset = () => {
+  emit("update:isDialogVisible", false);
 };
 </script>
 
 <template>
-  <VNavigationDrawer
-    temporary
-    :width="400"
-    location="end"
-    class="scrollable-content"
-    :model-value="props.isDrawerOpen"
-    @update:model-value="handleDrawerModelValueUpdate"
+  <VDialog
+    :width="$vuetify.display.smAndDown ? 'auto' : 900"
+    :model-value="props.isDialogVisible"
+    @update:model-value="dialogVisibleUpdate"
   >
-    <!-- 👉 Title -->
-    <AppDrawerHeaderSection
-      title="Edit Customer"
-      @cancel="closeNavigationDrawer"
-    />
+    <VCard class="pa-sm-9 pa-5">
+      <!-- 👉 dialog close btn -->
+      <DialogCloseBtn variant="text" size="small" @click="onFormReset" />
 
-    <PerfectScrollbar :options="{ wheelPropagation: false }">
-      <VCard flat>
-        <VCardText>
-          <!-- 👉 Form -->
-          <VForm ref="refForm" v-model="isFormValid" @submit.prevent="onSubmit">
-            <VRow>
-              <!-- 👉 Full name -->
-              <VCol cols="12">
-                <VTextField
-                  v-model="customerData.firstname"
-                  :rules="[requiredValidator]"
-                  label="First Name"
-                />
-              </VCol>
-              {{ customerData }}
-              <!-- 👉 Username -->
-              <VCol cols="12">
-                <VTextField
-                  v-model="customerData.lastname"
-                  :rules="[requiredValidator]"
-                  label="Last Name"
-                />
-              </VCol>
+      <VCardItem class="text-center">
+        <VCardTitle class="text-h5 mb-6">
+          Edit Customer Information
+        </VCardTitle>
+        <VCardSubtitle>
+          Updating customer details will receive a privacy audit.
+        </VCardSubtitle>
+      </VCardItem>
 
-              <!-- 👉 Email -->
-              <VCol cols="12">
-                <VTextField
-                  v-model="customerData.email"
-                  :rules="[requiredValidator, emailValidator]"
-                  label="Email"
-                />
-              </VCol>
+      <VCardText>
+        <!-- 👉 Form -->
+        <VForm class="mt-6" ref="refForm" @submit.prevent="onSubmit">
+          <VRow>
+            <!-- 👉 Full Name -->
+            <VCol cols="12" md="6">
+              <VTextField
+                v-model="customerData.firstname"
+                :rules="[requiredValidator]"
+                label="First Name"
+              />
+            </VCol>
 
-              <!-- 👉 company -->
+            <VCol cols="12" md="6">
+              <VTextField
+                v-model="customerData.lastname"
+                :rules="[requiredValidator]"
+                label="Last Name"
+              />
+            </VCol>
 
-              <!-- 👉 Contact -->
-              <VCol cols="12">
-                <VTextField
-                  v-model="customerData.phone"
-                  :rules="[requiredValidator]"
-                  label="Phone Number"
-                />
-              </VCol>
+            <VCol cols="12" md="6">
+              <VTextField
+                v-model="customerData.email"
+                :rules="[requiredValidator, emailValidator]"
+                label="Email"
+              />
+            </VCol>
 
-              <VCol cols="12">
-                <VTextField
-                  v-model="customerData.aov"
-                  type="number"
-                  :rules="[requiredValidator]"
-                  label="Customer's AOV"
-                />
-              </VCol>
-              <VCol cols="12">
-                <VTextField
-                  v-model="customerData.totalVisits"
-                  type="number"
-                  :rules="[requiredValidator]"
-                  label="Total Visits"
-                />
-              </VCol>
+            <!-- 👉 company -->
 
-              <VCol cols="12">
-                <VTextField
-                  v-model="customerData.lastDiningBehaviour"
-                  :rules="[requiredValidator]"
-                  label="Last Dining Behavior"
-                />
-              </VCol>
+            <!-- 👉 Contact -->
+            <VCol cols="12" md="6">
+              <VTextField
+                v-model="customerData.phone"
+                :rules="[requiredValidator]"
+                label="Phone Number"
+              />
+            </VCol>
+
+            <VCol cols="12" md="6">
+              <VTextField
+                v-model="customerData.aov"
+                type="number"
+                label="Customer's AOV"
+              />
+            </VCol>
+            <VCol cols="12" md="6">
+              <VTextField
+                v-model="customerData.totalVisits"
+                type="number"
+                label="Total Visits"
+              />
+            </VCol>
+
+            <VCol cols="12" md="6">
+              <VTextField
+                v-model="customerData.lastDiningBehaviour"
+                label="Last Dining Behavior"
+              />
+            </VCol>
+            <VCol cols="12" md="6">
               <VTextField
                 v-model="customerData.lastVisitedDate"
                 label="Last Visit Date"
-                clear-icon="mdi-close"
                 clearable
+                type="date"
               />
-              <!-- 👉 Status -->
-              <VCol cols="12">
-                <VSelect
-                  v-model="customerData.repeated"
-                  label="Repeated Customer"
-                  :items="[
-                    { title: 'YES', value: true },
-                    { title: 'NO', value: false },
-                  ]"
-                />
-              </VCol>
+            </VCol>
 
-              <!-- 👉 Submit and Cancel -->
-              <VCol cols="12">
-                <VBtn type="submit" class="me-3"> Submit </VBtn>
-                <VBtn
-                  type="reset"
-                  variant="tonal"
-                  color="secondary"
-                  @click="closeNavigationDrawer"
-                >
-                  Cancel
-                </VBtn>
-              </VCol>
-            </VRow>
-          </VForm>
-        </VCardText>
-      </VCard>
-    </PerfectScrollbar>
-  </VNavigationDrawer>
+            <!-- 👉 Status -->
+            <VCol cols="12" md="6">
+              <VSelect
+                v-model="customerData.repeated"
+                label="Repeated Customer"
+                :items="[
+                  { title: 'YES', value: true },
+                  { title: 'NO', value: false },
+                ]"
+              />
+            </VCol>
+
+            <!-- 👉 Submit and Cancel -->
+            <VCol cols="12" class="d-flex flex-wrap justify-center gap-4">
+              <VBtn type="submit"> Submit </VBtn>
+
+              <VBtn color="secondary" variant="tonal" @click="onFormReset">
+                Cancel
+              </VBtn>
+            </VCol>
+          </VRow>
+        </VForm>
+      </VCardText>
+    </VCard>
+  </VDialog>
 </template>
 
 <style scoped>

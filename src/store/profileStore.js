@@ -27,9 +27,7 @@ export default {
       axios
         .get(`getProfile`)
         .then((response) => {
-          console.log("asdlfasdf", response.data);
           commit('setUserProfile', response.data)
-          console.log(state.userProfile,'current pkgggg')
         })
         .catch((err) => {
           console.log(err);

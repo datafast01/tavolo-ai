@@ -30,20 +30,7 @@
       </VCol>
     </VRow>
     <div class="mt-6">
-      <v-card>
-        <v-card-item>
-          <v-card-title>Select A Template</v-card-title>
-
-          <v-card-subtitle
-            >What kind of email template would you like to
-            send?</v-card-subtitle
-          >
-        </v-card-item>
-
-        <v-card-text>
-          <EmailTemplates />
-        </v-card-text>
-      </v-card>
+      <EmailTemplates />
     </div>
   </div>
 </template>

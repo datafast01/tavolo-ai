@@ -288,7 +288,6 @@ const fetchMenuItems = () => {
   axios
     .get(`clover/orders`)
     .then((response) => {
-      console.log("user", response.data);
       menuItems.value = response.data.data.elements;
       store.dispatch("getPackageHistory");
       isLoading.value = false;

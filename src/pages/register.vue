@@ -196,7 +196,7 @@ const register = () => {
       restaurantName: restaurantName.value,
     })
     .then((res) => {
-      console.log(res, "here is the response");
+      // console.log(res, "here is the response");
       show.value = true;
       snkMsg.value = "User registred successfully!";
       // const { accessToken, userData, userAbilities } = r.data
@@ -212,7 +212,7 @@ const register = () => {
       return null;
     })
     .catch((err) => {
-      console.log(err, "err here");
+      // console.log(err, "err here");
       console.error(err);
       show.value = true;
       if (err.response.status == 400) {

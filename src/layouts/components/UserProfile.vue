@@ -22,7 +22,7 @@ const logout = () => {
 };
 
 const userData = JSON.parse(localStorage.getItem("userData"));
-console.log(userData, "thi si suser data");
+// console.log(userData, "thi si suser data");
 const userProfileList = [
   {
     type: "navItem",

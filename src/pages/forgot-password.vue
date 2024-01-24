@@ -120,7 +120,7 @@ const forgotPassword = () => {
       email: email.value,
     })
     .then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       show.value = true;
       snkMsg.value = res.data.message + "Please check you email.";
       loading.value = false;

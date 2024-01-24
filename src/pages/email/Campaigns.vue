@@ -288,7 +288,6 @@ const fetchEmails = () => {
       `dashboard/list-schedule-email?pageSize=${options.value.itemsPerPage}&pageNo=${options.value.page}`
     )
     .then((response) => {
-      console.log("user", response.data);
       customers.value = response.data.data;
       totalUsers.value = response.data.count;
       isLoading.value = false;

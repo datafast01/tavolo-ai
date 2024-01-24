@@ -98,7 +98,7 @@
         <VSpacer />
         <div class="">
           <!-- 👉 Add user button -->
-          <VBtn @click="isAddNewUserDrawerVisible = true"> Add Customer </VBtn>
+          <VBtn @click="addCustomer"> Add Customer </VBtn>
         </div>
       </VCardText>
 
@@ -218,14 +218,14 @@
 
     <!-- 👉 Add New User -->
     <AddNewCustomer
-      v-model:isDrawerOpen="isAddNewUserDrawerVisible"
+      v-model:isCreateDialog="isAddNewUserDrawerVisible"
       @user-data="addNewUser"
     />
 
     <EditCustomer
       v-model:isDialogVisible="isUserInfoEditDialogVisible"
       :customerData="myCustomer"
-      @user-data="updateCustomer"
+      @customerData="updateCustomer"
     />
   </section>
 </template>
@@ -238,9 +238,9 @@ import { VDataTableServer } from "vuetify/lib/components/index.mjs";
 import { useUserListStore } from "@/views/apps/user/useUserListStore";
 import axios from "@axios";
 // import { VSkeletonLoader } from "vuetify/labs/VSkeletonLoader";
-import AddNewCustomer from "./AddNewCustomer.vue";
+import AddNewCustomer from "./AddCustomer.vue";
 
-import EditCustomer from "./EditCustomerCopy.vue";
+import EditCustomer from "./EditCustomer.vue";
 
 const userListStore = useUserListStore();
 const searchQuery = ref("");
@@ -336,14 +336,13 @@ const uploadCustomerCsv = (file) => {
   const fileReader = new FileReader();
   const { files } = file.target;
   const myCSV = files[0];
-  console.log(myCSV);
   let data = new FormData();
   data.append("file", myCSV);
   axios
     .post(`upload-customers`, data)
 
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       fetchCustomers();
     })
     .catch((error) => {});
@@ -382,11 +381,11 @@ const numberToMonth = (number) => {
 const fetchCustomers = () => {
   isLoading.value = true;
   axios
-    .get(`list-customers?pageNo=1&pageSize=50`)
+    .get(
+      `list-customers?pageNo=${options.value.page}&pageSize=${options.value.itemsPerPage}`
+    )
     .then((response) => {
-      console.log("user", response.data);
       customers.value = response.data.data;
-      console.log(customers.value);
       isLoading.value = false;
       store.dispatch("getPackageHistory");
     })
@@ -399,18 +398,20 @@ const fetchCustomers = () => {
 
 const editCustomerData = (data) => {
   isUserInfoEditDialogVisible.value = true;
-  console.log(data);
   myCustomer.value = data;
 };
 watchEffect(fetchCustomers);
 
 const isAddNewUserDrawerVisible = ref(false);
 
+const addCustomer = () => {
+  isAddNewUserDrawerVisible.value = true;
+};
+
 const addNewUser = (userData) => {
   axios
     .post(`add-customer`, userData)
     .then((response) => {
-      console.log("user", response.data);
       show.value = true;
       snkMsg.value = "Customer has been added successfully";
       customers.value.push(userData);
@@ -420,11 +421,9 @@ const addNewUser = (userData) => {
     .catch((err) => {
       console.log(err.response);
       show.value = true;
-      if (err.response.status == 400) {
-        snkMsg.value = err.response.data.error;
-      } else {
-        snkMsg.value = "Something went wrong";
-      }
+
+      snkMsg.value = err.response.data.message;
+
       color.value = "error";
     });
 };
@@ -442,13 +441,11 @@ const updateCustomer = (userData) => {
   axios
     .post(`edit-customers`, payload)
     .then((response) => {
-      console.log("user", response.data);
       show.value = true;
       snkMsg.value = "Customer has been updated successfully";
       fetchCustomers();
     })
     .catch((err) => {
-      console.log(err.response);
       show.value = true;
       if (err.response.status == 400) {
         snkMsg.value = err.response.data.error;
@@ -459,11 +456,9 @@ const updateCustomer = (userData) => {
     });
 };
 const deleteUser = (id) => {
-  console.log(id);
   axios
     .get(`delete-customers/${id}`)
     .then((response) => {
-      console.log("user", response.data);
       show.value = true;
       snkMsg.value = "Customer has been deleted successfully";
       fetchCustomers();

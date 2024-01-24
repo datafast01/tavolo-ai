@@ -223,7 +223,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   let auth = localStorage.getItem("token");
 
-  console.log("my user", auth);
+  
 
   // Not logged into a guarded route?
   if (to.meta.requiresAuth === true && auth == null) {

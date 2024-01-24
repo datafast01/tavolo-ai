@@ -303,21 +303,21 @@ export default {
 
   methods: {
     checkout(plan) {
-      console.log(plan._id, "=====", this.currentPkgId);
+      // console.log(plan._id, "=====", this.currentPkgId);
       if (plan._id != this.currentPkgId) {
         axios
           .post(`create-checkout`, {
             priceId: plan.stripePriceId,
           })
           .then((response) => {
-            console.log("user", response.data.data);
+            // console.log("user", response.data.data);
             window.open(response.data.data);
           })
-          .catch((err) => {
-            console.log(err);
+          .catch(() => {
+            // console.log(err);
           });
       }
-      console.log("submit form", plan.stripePriceId);
+      // console.log("submit form", plan.stripePriceId);
     },
   },
 };

@@ -96,7 +96,6 @@ onMounted(async () => {
       top3FoodItemsSold.value = data.value.top3FoodItemsSold;
       totalSales.value = data.value.totalSales;
       totalCustomers.value = data.value.totalCustomers;
-      console.log(data.value, "asdasdf");
       dashboard.value = res.data.data;
       store.dispatch("getPackageHistory");
       isDasboard.value = true;
@@ -154,7 +153,6 @@ onMounted(async () => {
     console.log(error);
   }
   let cloverMerchantID = router;
-  console.log(cloverMerchantID, "router");
 });
 let transactionData = ref({});
 let emailStates = ref({});
@@ -162,7 +160,6 @@ const uploadDashboard = (file) => {
   const fileReader = new FileReader();
   const { files } = file.target;
   const myCSV = files[0];
-  console.log(myCSV);
   let data = new FormData();
   data.append("file", myCSV);
   axios
@@ -170,7 +167,6 @@ const uploadDashboard = (file) => {
 
     .then((res) => {
       if (res.data.data != null) {
-        console.log(res.data.data, "=============>>>");
         dashboard.value = res.data.data;
         tableData.value = res.data.data.data;
         isDasboard.value = true;

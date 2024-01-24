@@ -20,7 +20,7 @@ syncInitialLoaderTheme();
 syncConfigThemeWithVuetifyTheme();
 handleSkinChanges();
 const userProfile = computed(() => {
-  console.log(store.getters);
+  // console.log(store.getters);
   return store.getters.userProfile;
 });
 onMounted(() => {

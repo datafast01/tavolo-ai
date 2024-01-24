@@ -166,7 +166,7 @@ const login = () => {
       password: password.value,
     })
     .then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       show.value = true;
       snkMsg.value = "Successfully logged in";
       const userData = res.data;

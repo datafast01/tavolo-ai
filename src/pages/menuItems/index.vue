@@ -349,7 +349,6 @@ const fetchMenuItems = () => {
   axios
     .get(`clover/inventory`)
     .then((response) => {
-      console.log("user", response.data);
       menuItems.value = response.data.data.elements;
       store.dispatch("getPackageHistory");
       isLoading.value = false;
@@ -365,7 +364,6 @@ const applyFilters = () => {
       `food-item/list?pageSize=${options.value.itemsPerPage}&page=${options.value.page}&name=${menuItem.value}&available=${available.value}&price=${price.value}&priceOperator=${priceOperator.value}&noOfTimesOrdered=${orders.value}&noOfTimesOrderedOperator=${ordersOperator.value}`
     )
     .then((response) => {
-      console.log("user", response.data);
       menuItems.value = response.data.data;
       isLoading.value = false;
     })
@@ -376,7 +374,6 @@ const applyFilters = () => {
 
 const editMenuItemData = (data) => {
   isUserInfoEditDialogVisible.value = true;
-  console.log(data);
   myMenuItem.value = data;
 };
 watchEffect(fetchMenuItems);
@@ -387,7 +384,6 @@ const addMenuItem = (userData) => {
   axios
     .post(`food-item/create`, userData)
     .then((response) => {
-      console.log("user", response.data);
       show.value = true;
       snkMsg.value = "Menu Item has been added successfully";
       menuItems.value.push(userData);
@@ -418,7 +414,6 @@ const updateMenuItem = (userData) => {
   axios
     .post(`food-item/update/${userData._id}`, payload)
     .then((response) => {
-      console.log("user", response.data);
       show.value = true;
       snkMsg.value = "Menu Item has been updated successfully";
       fetchMenuItems();
@@ -435,11 +430,9 @@ const updateMenuItem = (userData) => {
     });
 };
 const deleteMenuItem = (id) => {
-  console.log(id);
   axios
     .get(`food-item/delete/${id}`)
     .then((response) => {
-      console.log("user", response.data);
       show.value = true;
       snkMsg.value = "Menu Item has been deleted successfully";
       fetchMenuItems();
@@ -454,13 +447,6 @@ const deleteMenuItem = (id) => {
       }
       color.value = "error";
     });
-};
-
-const formatCurrency = (number, currencyCode = "USD") => {
-  return number.toLocaleString("en-US", {
-    style: "currency",
-    currency: currencyCode,
-  });
 };
 </script>
 

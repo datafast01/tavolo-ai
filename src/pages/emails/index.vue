@@ -364,7 +364,6 @@ const fetchEmails = () => {
       `dashboard/list-schedule-email?pageSize=${options.value.itemsPerPage}&pageNo=${options.value.page}`
     )
     .then((response) => {
-      console.log("user", response.data);
       customers.value = response.data.data;
       totalUsers.value = response.data.count;
       isLoading.value = false;
@@ -381,7 +380,6 @@ const applyFilters = () => {
       `dashboard/list-schedule-email?pageSize=${options.value.itemsPerPage}&pageNo=${options.value.page}&subject=${emailSubject.value}&scheduled=${scheduled.value}&sent=${sent.value}&scheduledDate=${scheduledDate.value}`
     )
     .then((response) => {
-      console.log("user", response.data);
       customers.value = response.data.data;
       totalUsers.value = response.data.count;
       isLoading.value = false;
@@ -399,8 +397,6 @@ watchEffect(fetchEmails);
 const isAddNewUserDrawerVisible = ref(false);
 
 const changeStatus = (item) => {
-  console.log(item);
-
   axios
     .get(
       `dashboard/${
@@ -410,7 +406,6 @@ const changeStatus = (item) => {
       }/${item._id}`
     )
     .then((response) => {
-      console.log("user", response.data);
       show.value = true;
       snkMsg.value = `${
         item.status == "active"
@@ -430,8 +425,6 @@ const deleteCampaign = (id) => {
   axios
     .get(`dashboard/delete-schedule-email/${id}`)
     .then((response) => {
-      console.log("user", response.data);
-
       show.value = true;
       snkMsg.value = "Campaign deleted successfully!";
       fetchEmails();

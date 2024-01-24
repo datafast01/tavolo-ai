@@ -373,8 +373,6 @@ export default {
               this.yearlyPkgs.push(obj);
             }
           });
-          console.log(this.monthlyPkgs);
-          console.log(this.yearlyPkgs);
         })
         .catch((err) => {
           console.log(err);

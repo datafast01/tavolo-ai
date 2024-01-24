@@ -23,7 +23,6 @@ export default {
         .then((response) => {
           // console.log("asdlfasdf", response.data.data);
           state.currentPkg = response.data.data
-          console.log(state.currentPkg,'current pkgggg')
         })
         .catch((err) => {
           console.log(err);

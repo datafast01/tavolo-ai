@@ -115,7 +115,6 @@ const getEmailSegmnts = () => {
   axios
     .get(`dashboard/segmant`)
     .then((res) => {
-      console.log(res.data.data, "=============>>>");
       segments.value = res.data.data;
       store.dispatch("getPackageHistory");
     })
@@ -136,7 +135,6 @@ const sendEmail = () => {
   axios
     .post(`dashboard/message`, payload)
     .then((res) => {
-      console.log(res.data.data, "=============>>>");
       show.value = true;
       snkMsg.value = "Message sent successfully";
     })

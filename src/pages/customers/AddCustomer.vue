@@ -1,45 +1,69 @@
 <script setup>
-import { requiredValidator } from "@validators";
+import { emailValidator, requiredValidator } from "@validators";
 
 const props = defineProps({
-  isDialogVisible: {
+  isCreateDialog: {
     type: Boolean,
     required: true,
   },
-  customerData: {
-    type: Object,
-    default: {},
-  },
 });
 
-const emit = defineEmits(["submit", "update:isDialogVisible"]);
+const emit = defineEmits(["update:isCreateDialog", "userData"]);
 
-const customerData = ref(structuredClone(toRaw(props.customerData)));
-const isUseAsBillingAddress = ref(false);
+const isFormValid = ref(false);
+const refForm = ref();
+const firstname = ref("");
+const lastname = ref("");
+const email = ref("");
+const aov = ref("");
+const repeated = ref(false);
+const phone = ref("");
+const lastDiningBehaviour = ref("");
 
-watch(props, () => {
-  customerData.value = structuredClone(toRaw(props.customerData));
-});
+const totalVisits = ref("");
+const lastVisitedDate = ref(
+  new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+    .toISOString()
+    .substr(0, 10)
+);
+// console.log(lastVisitedDate.value);
 
-const onFormSubmit = () => {
-  emit("update:isDialogVisible", false);
-  emit("submit", customerData.value);
+const onSubmit = () => {
+  refForm.value?.validate().then(({ valid }) => {
+    if (valid) {
+      emit(
+        "userData",
+        {
+          firstname: firstname.value,
+          lastname: lastname.value,
+          repeated: repeated.value,
+          email: email.value,
+          aov: aov.value,
+          phone: phone.value,
+          totalVisits: totalVisits.value,
+          lastDiningBehaviour: lastDiningBehaviour.value,
+          lastVisitedDate: lastVisitedDate.value,
+        },
+        emit("update:isCreateDialog", false)
+      );
+
+      nextTick(() => {
+        refForm.value?.reset();
+        refForm.value?.resetValidation();
+      });
+    }
+  });
 };
 
 const onFormReset = () => {
-  customerData.value = structuredClone(toRaw(props.customerData));
-  emit("update:isDialogVisible", false);
-};
-
-const dialogVisibleUpdate = (val) => {
-  emit("update:isDialogVisible", val);
+  emit("update:isCreateDialog", false);
 };
 </script>
 
 <template>
   <VDialog
     :width="$vuetify.display.smAndDown ? 'auto' : 900"
-    :model-value="props.isDialogVisible"
+    :model-value="props.isCreateDialog"
     @update:model-value="dialogVisibleUpdate"
   >
     <VCard class="pa-sm-9 pa-5">
@@ -48,21 +72,21 @@ const dialogVisibleUpdate = (val) => {
 
       <VCardItem class="text-center">
         <VCardTitle class="text-h5 mb-6">
-          Edit Customer Information
+          Create Customer Information
         </VCardTitle>
         <VCardSubtitle>
-          Updating customer details will receive a privacy audit.
+          Creating customer details will receive a privacy audit.
         </VCardSubtitle>
       </VCardItem>
 
       <VCardText>
         <!-- 👉 Form -->
-        <VForm class="mt-6" @submit.prevent="onFormSubmit">
+        <VForm class="mt-6" ref="refForm" @submit.prevent="onSubmit">
           <VRow>
             <!-- 👉 Full Name -->
             <VCol cols="12" md="6">
               <VTextField
-                v-model="customerData.firstName"
+                v-model="firstname"
                 :rules="[requiredValidator]"
                 label="First Name"
               />
@@ -70,7 +94,7 @@ const dialogVisibleUpdate = (val) => {
 
             <VCol cols="12" md="6">
               <VTextField
-                v-model="customerData.lastName"
+                v-model="lastname"
                 :rules="[requiredValidator]"
                 label="Last Name"
               />
@@ -78,7 +102,7 @@ const dialogVisibleUpdate = (val) => {
 
             <VCol cols="12" md="6">
               <VTextField
-                v-model="customerData.emailAddresses.elements[0].emailAddress"
+                v-model="email"
                 :rules="[requiredValidator, emailValidator]"
                 label="Email"
               />
@@ -89,39 +113,33 @@ const dialogVisibleUpdate = (val) => {
             <!-- 👉 Contact -->
             <VCol cols="12" md="6">
               <VTextField
-                v-model="customerData.emailAddresses.elements[0].emailAddress"
+                v-model="phone"
                 :rules="[requiredValidator]"
                 label="Phone Number"
               />
             </VCol>
 
             <VCol cols="12" md="6">
-              <VTextField
-                v-model="customerData.aov"
-                type="number"
-                :rules="[requiredValidator]"
-                label="Customer's AOV"
-              />
+              <VTextField v-model="aov" type="number" label="Customer's AOV" />
             </VCol>
             <VCol cols="12" md="6">
               <VTextField
-                v-model="customerData.totalVisits"
+                v-model="totalVisits"
                 type="number"
-                :rules="[requiredValidator]"
                 label="Total Visits"
               />
             </VCol>
 
             <VCol cols="12" md="6">
               <VTextField
-                v-model="customerData.lastDiningBehaviour"
-                :rules="[requiredValidator]"
+                v-model="lastDiningBehaviour"
                 label="Last Dining Behavior"
               />
             </VCol>
             <VCol cols="12" md="6">
               <VTextField
-                v-model="customerData.lastVisitedDate"
+                v-model="lastVisitedDate"
+                :rules="[requiredValidator]"
                 label="Last Visit Date"
                 clearable
                 type="date"
@@ -131,7 +149,7 @@ const dialogVisibleUpdate = (val) => {
             <!-- 👉 Status -->
             <VCol cols="12" md="6">
               <VSelect
-                v-model="customerData.repeated"
+                v-model="repeated"
                 label="Repeated Customer"
                 :items="[
                   { title: 'YES', value: true },
@@ -154,3 +172,9 @@ const dialogVisibleUpdate = (val) => {
     </VCard>
   </VDialog>
 </template>
+
+<style scoped>
+.app-picker-field {
+  width: 100% !important;
+}
+</style>

@@ -271,7 +271,6 @@ export default {
       axios
         .get(`dashboard/segmant`)
         .then((res) => {
-          console.log(res.data.data, "=============>>>");
           this.segments = res.data.data;
           store.dispatch("getPackageHistory");
         })
@@ -283,7 +282,6 @@ export default {
       axios
         .get(`email-draft`)
         .then((res) => {
-          console.log(res.data.draft, "alskjdfja;sldkjl");
           let email = res.data.draft;
           if (email.subject && email.text) {
             this.subject = email.subject;
@@ -301,9 +299,7 @@ export default {
       };
       axios
         .post(`save-email-draft`, payload)
-        .then((res) => {
-          console.log(res.data.data, "=============>>>");
-        })
+        .then((res) => {})
         .catch((err) => {
           console.log(err);
         });
