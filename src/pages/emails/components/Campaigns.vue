@@ -1,5 +1,9 @@
 <template>
-  <div>
+  <section>
+    <VSnackbar v-model="show" :timeout="2000" :color="color">
+      {{ snkMsg }}
+    </VSnackbar>
+
     <VCard style="border: none">
       <VCardText class="d-flex align-center justify-space-between">
         <div>Total Sent Campaigns: 43</div>
@@ -83,8 +87,10 @@
           </div>
         </template>
       </VDataTableServer>
+
+      <!-- SECTION -->
     </VCard>
-  </div>
+  </section>
 </template>
 
 <script setup>
@@ -148,19 +154,7 @@ const headers = [
     key: "campaignName",
   },
   {
-    title: "Date Sent",
-    key: "date",
-  },
-  {
-    title: "Delivered %",
-    key: "date",
-  },
-  {
-    title: "Opened %",
-    key: "date",
-  },
-  {
-    title: "Clicked %",
+    title: "Date",
     key: "date",
   },
   {
@@ -191,4 +185,4 @@ const headers = [
 // watchEffect(fetchCustomers);
 </script>
 
-<style></style>
+<style lang="scss"></style>

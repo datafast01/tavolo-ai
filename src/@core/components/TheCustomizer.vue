@@ -111,7 +111,7 @@ const headerValues = computed(() => {
           <h6 class="mt-3 text-base font-weight-regular">Theme</h6>
           <VRadioGroup v-model="theme" inline>
             <VRadio
-              v-for="themeOption in ['system', 'light', 'dark']"
+              v-for="themeOption in ['light', 'dark']"
               :key="themeOption"
               :label="themeOption"
               :value="themeOption"

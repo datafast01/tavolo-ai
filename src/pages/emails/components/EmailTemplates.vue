@@ -138,101 +138,101 @@
       <v-card-text>
         <v-window v-model="tab">
           <v-window-item value="one" class="ml-3">
-            <v-checkbox
-              label="All Customers"
-              value="all_customers"
-              v-model="recipients"
-            ></v-checkbox>
-            <v-checkbox
-              label="Customers who rated your business 4 stars or above"
-              value="top_rated"
-              v-model="recipients"
-            ></v-checkbox>
-            <v-checkbox
-              label="According to Date"
-              value="according_to_date"
-              v-model="recipients"
-              @change="checkType"
-            ></v-checkbox>
-            <div class="ml-8" v-if="recipients.includes('according_to_date')">
-              <p>Send to Customers who came:</p>
-              <div class="d-flex align-center mb-4">
-                <div class="" style="width: 130px">In the past</div>
-                <div class="ml-4">
-                  <v-select
-                    style="width: 150px"
+            <v-radio-group v-model="recipients">
+              <v-radio label="All Customers" value="all_customers"></v-radio>
+              <v-radio
+                label="Customers who rated your business 4 stars or above"
+                value="top_rated"
+              ></v-radio>
+              <v-radio
+                label="According to Date"
+                value="according_to_date"
+                @change="checkType"
+              ></v-radio>
+              <div class="ml-8" v-if="recipients.includes('according_to_date')">
+                <p>Send to Customers who came:</p>
+                <div class="d-flex align-center mb-4">
+                  <div class="" style="width: 130px">In the past</div>
+                  <div class="ml-4">
+                    <v-select
+                      style="width: 150px"
+                      density="compact"
+                      variant="outlined"
+                      :items="pastDates"
+                      item-title="label"
+                      item-value="key"
+                      v-model="pastDate"
+                    ></v-select>
+                  </div>
+                </div>
+                <div class="d-flex align-center mb-4" style="width: 300px">
+                  <label for="" class="mr-4">Choose Exact Date</label>
+                  <VTextField
+                    type="date"
                     density="compact"
                     variant="outlined"
-                    :items="pastDates"
-                    item-title="label"
-                    item-value="key"
-                    v-model="pastDate"
-                  ></v-select>
+                  />
                 </div>
               </div>
-              <div class="d-flex align-center mb-4" style="width: 300px">
-                <label for="" class="mr-4">Choose Exact Date</label>
-                <VTextField type="date" density="compact" variant="outlined" />
-              </div>
-            </div>
-            <v-checkbox class="mb-4" value="age_group" v-model="recipients">
-              <template v-slot:label>
-                <div style="width: 147px">Age Group</div>
-                <div v-if="recipients.includes('age_group')">
-                  <v-select
-                    style="width: 150px"
-                    variant="outlined"
-                    density="compact"
-                    :items="ageGroups"
-                    v-model="ageGroup"
-                    item-title="label"
-                    item-value="key"
-                  ></v-select>
-                </div>
-              </template>
-            </v-checkbox>
+              <v-radio class="mb-4" value="age_group">
+                <template v-slot:label>
+                  <div style="width: 147px">Age Group</div>
+                  <div v-if="recipients.includes('age_group')">
+                    <v-select
+                      style="width: 150px"
+                      variant="outlined"
+                      density="compact"
+                      :items="ageGroups"
+                      v-model="ageGroup"
+                      item-title="label"
+                      item-value="key"
+                    ></v-select>
+                  </div>
+                </template>
+              </v-radio>
 
-            <v-checkbox class="mb-4" value="gender" v-model="recipients">
-              <template v-slot:label>
-                <div style="width: 147px">Gender</div>
-                <div v-if="recipients.includes('gender')">
-                  <v-select
-                    style="width: 150px"
-                    variant="outlined"
-                    density="compact"
-                    :items="['Male', 'Female', 'Others']"
-                    v-model="gender"
-                  ></v-select>
-                </div>
-              </template>
-            </v-checkbox>
-            <v-checkbox value="location" v-model="recipients">
-              <template v-slot:label>
-                <div style="width: 147px">Location</div>
-                <div v-if="recipients.includes('location')">
-                  <v-select
-                    style="width: 150px"
-                    variant="outlined"
-                    density="compact"
-                    v-model="location"
-                    :items="[
-                      'California',
-                      'Colorado',
-                      'Florida',
-                      'Georgia',
-                      'Texas',
-                      'Wyoming',
-                    ]"
-                  ></v-select>
-                </div>
-              </template>
-            </v-checkbox>
+              <v-radio class="mb-4" value="gender">
+                <template v-slot:label>
+                  <div style="width: 147px">Gender</div>
+                  <div v-if="recipients.includes('gender')">
+                    <v-select
+                      style="width: 150px"
+                      variant="outlined"
+                      density="compact"
+                      :items="['Male', 'Female', 'Others']"
+                      v-model="gender"
+                    ></v-select>
+                  </div>
+                </template>
+              </v-radio>
+              <v-radio value="location">
+                <template v-slot:label>
+                  <div style="width: 147px">Location</div>
+                  <div v-if="recipients.includes('location')">
+                    <v-select
+                      style="width: 150px"
+                      variant="outlined"
+                      density="compact"
+                      v-model="location"
+                      :items="[
+                        'California',
+                        'Colorado',
+                        'Florida',
+                        'Georgia',
+                        'Texas',
+                        'Wyoming',
+                      ]"
+                    ></v-select>
+                  </div>
+                </template>
+              </v-radio>
+            </v-radio-group>
           </v-window-item>
 
           <v-window-item value="two" class="ml-3">
             <div class="d-flex align-center mb-4">
               <v-card
-                style="width: 180px; height: 50px; background-color: #3d3759"
+                style="width: 180px; height: 50px"
                 class="d-flex justify-center align-center cursor-pointer"
                 @click="selectFile"
                 v-ripple
@@ -242,12 +242,12 @@
               <div class="ml-4">Note: Lorem Ipsum Dilor</div>
             </div>
 
-            <v-checkbox value="top_rated" v-model="customeList">
+            <v-radio value="top_rated" v-model="customeList">
               <template v-slot:label>
                 <div>RecipientList24.ext</div>
                 <div class="ml-5 f-12">(Updated at 9:00 AM, 10/27/2024)</div>
               </template>
-            </v-checkbox>
+            </v-radio>
           </v-window-item>
         </v-window>
       </v-card-text>
@@ -386,7 +386,7 @@ export default {
         { key: "6_months", label: "6 Monsths" },
         { key: "9_months", label: "9 Monsths" },
       ],
-      recipients: [],
+      recipients: "",
       ageGroups: [
         { key: "18-24", label: "18-24" },
 

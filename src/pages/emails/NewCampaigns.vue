@@ -25,20 +25,35 @@
       </VCol>
       <VCol cols="12" md="4">
         <div class="float-right">
-          <VBtn size="large"> Send </VBtn>
+          <VBtn size="large" @click="templatedSelected"> Next </VBtn>
         </div>
       </VCol>
     </VRow>
-    <div class="mt-6">
+    <div class="mt-6" v-if="!isTemplate">
       <EmailTemplates />
+    </div>
+    <div class="mt-6" v-else>
+      <ComposeEmail />
     </div>
   </div>
 </template>
 
 <script>
+import ComposeEmail from "./components/ComposeEmail.vue";
 import EmailTemplates from "./components/EmailTemplates.vue";
+
 export default {
-  components: { EmailTemplates },
+  components: { EmailTemplates, ComposeEmail },
+  data() {
+    return {
+      isTemplate: false,
+    };
+  },
+  methods: {
+    templatedSelected() {
+      this.isTemplate = true;
+    },
+  },
 };
 </script>
 
