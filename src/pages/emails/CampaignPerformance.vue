@@ -13,20 +13,34 @@
       </v-col>
     </v-row>
     <VCard style="border: none">
+      <VCardTitle> Key Performance Indicators </VCardTitle>
       <VCardText class="d-flex align-center justify-space-between">
-        <v-carousel>
+        <v-carousel
+          hide-delimiters
+          height="400"
+          show-arrows
+          hide-delimiter-background
+        >
+          <template v-slot:prev="{ props }">
+            <v-icon @click="props.onClick">mdi-chevron-left</v-icon>
+          </template>
+          <template v-slot:next="{ props }">
+            <!-- <v-btn variant="elevated" color="info" @click="props.onClick"
+              >Next slide</v-btn
+            > -->
+            <v-icon @click="props.onClick">mdi-chevron-right</v-icon>
+          </template>
           <template v-for="(item, index) in slider">
             <v-carousel-item
               v-if="(index + 1) % columns === 1 || columns === 1"
               :key="index"
             >
-              <v-row class="" style="height: 70%">
+              <v-row class="">
                 <template v-for="(n, i) in columns">
                   <template v-if="+index + i < slider.length">
-                    <div :key="i">cam</div>
-                    <v-col :key="i">
+                    <v-col :key="i" style="width: 50%; height: 300px">
+                      <div class="mt-5">Campaign Name</div>
                       <BarChart
-                        :height="300"
                         :chart-data="data"
                         :chart-options="chartOptions"
                       />
@@ -226,7 +240,7 @@ const data = {
         topRight: 15,
         topLeft: 15,
       },
-      data: [127, 190, 191],
+      data: [27, 90, 19, 1],
     },
   ],
 };
