@@ -88,7 +88,6 @@
 </template>
 
 <script setup>
-import store from "@/store/index.js";
 import { VDataTableServer } from "vuetify/lib/components/index.mjs";
 // import { paginationMeta } from '@/@fake-db/utils'
 // import AddNewUserDrawer from "@/views/apps/user/list/AddNewUserDrawer.vue";
@@ -219,20 +218,7 @@ const sampleInfluncerData = [
 ];
 
 // 👉 Fetching users
-const fetchMenuItems = () => {
-  isLoading.value = true;
-  axios
-    .get(`clover/inventory`)
-    .then((response) => {
-      console.log("user", response.data);
-      menuItems.value = response.data.data.elements;
-      store.dispatch("getPackageHistory");
-      isLoading.value = false;
-    })
-    .catch((err) => {
-      console.log(err.response.status);
-    });
-};
+
 const applyFilters = () => {
   isLoading.value = true;
   axios
@@ -254,7 +240,7 @@ const editMenuItemData = (data) => {
   console.log(data);
   myMenuItem.value = data;
 };
-watchEffect(fetchMenuItems);
+// watchEffect(fetchMenuItems);
 
 const isAddNewUserDrawerVisible = ref(false);
 

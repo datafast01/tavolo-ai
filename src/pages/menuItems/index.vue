@@ -118,16 +118,10 @@
             Veriable
             <!-- {{ formatCurrency(parseFloat(item.price), "USD") }} -->
           </span>
-          <span v-else>
-            {{
-              item.unitName == ""
-                ? "$" + item.price / 100
-                : "$" + item.price / 100 + "/" + item.unitName
-            }}
-          </span>
+          <span v-else> ${{ item.price }} </span>
         </template>
         <template #item.percentageOfTotalRevenue="{ item }">
-          <span class="text-sm"> {{ item.percentageOfTotalRevenue }}% </span>
+          <span class="text-sm"> {{ item?.percentageOfTotalRevenue }}% </span>
         </template>
         <template #item.cost="{ item }">
           <span class="text-sm"> {{ item.cost == 0 ? "" : item.cost }}</span>
@@ -347,9 +341,9 @@ const reset = () => {
 const fetchMenuItems = () => {
   isLoading.value = true;
   axios
-    .get(`clover/inventory`)
+    .get(`food-item/list?pageNo=1&pageSize=50`)
     .then((response) => {
-      menuItems.value = response.data.data.elements;
+      menuItems.value = response.data.data;
       store.dispatch("getPackageHistory");
       isLoading.value = false;
     })

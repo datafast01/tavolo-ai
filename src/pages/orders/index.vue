@@ -294,6 +294,7 @@ const fetchMenuItems = () => {
     })
     .catch((err) => {
       console.log(err.response.status);
+      isLoading.value = false;
     });
 };
 

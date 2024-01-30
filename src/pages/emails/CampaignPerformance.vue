@@ -1,93 +1,120 @@
 <template>
   <div>
+    <v-row>
+      <v-col>Total Sent Campaigns: 43</v-col>
+      <v-col class="d-flex">
+        <v-text-field
+          style="width: 200px"
+          label="Search"
+          append-inner-icon="mdi-magnify"
+          variant="solo-filled"
+        ></v-text-field>
+        <VBtn class="ml-3" size="large"> Filter </VBtn>
+      </v-col>
+    </v-row>
     <VCard style="border: none">
       <VCardText class="d-flex align-center justify-space-between">
-        <div>Total Sent Campaigns: 43</div>
-        <div class="d-flex">
-          <v-text-field
-            style="width: 200px"
-            label="Search"
-            append-inner-icon="mdi-magnify"
-            variant="solo-filled"
-          ></v-text-field>
-          <VBtn class="ml-3" size="large"> Filter </VBtn>
-        </div>
+        <v-carousel>
+          <template v-for="(item, index) in slider">
+            <v-carousel-item
+              v-if="(index + 1) % columns === 1 || columns === 1"
+              :key="index"
+            >
+              <v-row class="" style="height: 70%">
+                <template v-for="(n, i) in columns">
+                  <template v-if="+index + i < slider.length">
+                    <div class="mt-5" :key="i">cam</div>
+                    <v-col :key="i">
+                      <BarChart
+                        :height="300"
+                        :chart-data="data"
+                        :chart-options="chartOptions"
+                      />
+                    </v-col>
+                  </template>
+                </template>
+              </v-row>
+            </v-carousel-item>
+          </template>
+        </v-carousel>
       </VCardText>
+    </VCard>
+    <!-- SECTION data table -->
 
-      <!-- SECTION data table -->
-
-      <VDataTableServer
-        v-model:items-per-page="options.itemsPerPage"
-        v-model:page="options.page"
-        :items="campaigns"
-        :items-length="totalUsers"
-        :headers="headers"
-        class="rounded-0"
-        @update:options="options = $event"
-        :loading="isLoading"
-      >
-        <!-- Email -->
-        <!-- <template #item.email="{ item }">
+    <VDataTableServer
+      v-model:items-per-page="options.itemsPerPage"
+      v-model:page="options.page"
+      :items="campaigns"
+      :items-length="totalUsers"
+      :headers="headers"
+      class="rounded-0"
+      @update:options="options = $event"
+      :loading="isLoading"
+    >
+      <!-- Email -->
+      <!-- <template #item.email="{ item }">
           <span class="text-sm">
             {{ item.email }}
           </span>
         </template> -->
 
-        <!-- Pagination -->
-        <template #bottom>
-          <VDivider />
+      <!-- Pagination -->
+      <template #bottom>
+        <VDivider />
 
-          <div class="d-flex justify-end gap-x-6 pa-2 flex-wrap">
-            <div class="d-flex align-center gap-x-2 text-sm">
-              Rows Per Page:
-              <VSelect
-                v-model="options.itemsPerPage"
-                class="per-page-select text-high-emphasis"
-                variant="plain"
-                density="compact"
-                :items="[10, 20, 25, 50, 100]"
-              />
-            </div>
-
-            <!-- <span class="d-flex align-center text-sm me-2 text-high-emphasis">{{ paginationMeta(options, totalUsers) }}</span> -->
-
-            <div class="d-flex gap-x-2 align-center me-2">
-              <VBtn
-                icon="mdi-chevron-left"
-                class="flip-in-rtl"
-                variant="text"
-                density="comfortable"
-                color="default"
-                :disabled="options.page <= 1"
-                @click="options.page <= 1 ? (options.page = 1) : options.page"
-              />
-
-              <VBtn
-                icon="mdi-chevron-right"
-                class="flip-in-rtl"
-                density="comfortable"
-                variant="text"
-                color="default"
-                :disabled="
-                  options.page >= Math.ceil(totalUsers / options.itemsPerPage)
-                "
-                @click="
-                  options.page >= Math.ceil(totalUsers / options.itemsPerPage)
-                    ? (options.page = Math.ceil(
-                        totalUsers / options.itemsPerPage
-                      ))
-                    : options.page++
-                "
-              />
-            </div>
+        <div class="d-flex justify-end gap-x-6 pa-2 flex-wrap">
+          <div class="d-flex align-center gap-x-2 text-sm">
+            Rows Per Page:
+            <VSelect
+              v-model="options.itemsPerPage"
+              class="per-page-select text-high-emphasis"
+              variant="plain"
+              density="compact"
+              :items="[10, 20, 25, 50, 100]"
+            />
           </div>
-        </template>
-      </VDataTableServer>
-    </VCard>
+
+          <!-- <span class="d-flex align-center text-sm me-2 text-high-emphasis">{{ paginationMeta(options, totalUsers) }}</span> -->
+
+          <div class="d-flex gap-x-2 align-center me-2">
+            <VBtn
+              icon="mdi-chevron-left"
+              class="flip-in-rtl"
+              variant="text"
+              density="comfortable"
+              color="default"
+              :disabled="options.page <= 1"
+              @click="options.page <= 1 ? (options.page = 1) : options.page"
+            />
+
+            <VBtn
+              icon="mdi-chevron-right"
+              class="flip-in-rtl"
+              density="comfortable"
+              variant="text"
+              color="default"
+              :disabled="
+                options.page >= Math.ceil(totalUsers / options.itemsPerPage)
+              "
+              @click="
+                options.page >= Math.ceil(totalUsers / options.itemsPerPage)
+                  ? (options.page = Math.ceil(
+                      totalUsers / options.itemsPerPage
+                    ))
+                  : options.page++
+              "
+            />
+          </div>
+        </div>
+      </template>
+    </VDataTableServer>
   </div>
 </template>
 
 <script setup>
+import BarChart from "@/@core/libs/chartjs/components/BarChart";
+import { getLatestBarChartConfig } from "@core/libs/chartjs/chartjsConfig";
+import { useTheme } from "vuetify";
 import { VDataTableServer } from "vuetify/lib/components/index.mjs";
 // import { paginationMeta } from '@/@fake-db/utils'
 // import AddNewUserDrawer from "@/views/apps/user/list/AddNewUserDrawer.vue";
@@ -96,6 +123,21 @@ import { VDataTableServer } from "vuetify/lib/components/index.mjs";
 
 let isLoading = ref(false);
 const totalUsers = ref(0);
+const slider = [
+  "red",
+  "green",
+  "orange",
+  "blue",
+  "pink",
+  "purple",
+  "indigo",
+  "cyan",
+  "deep-purple",
+  "light-green",
+  "deep-orange",
+  "blue-grey",
+];
+const columns = 4;
 const campaigns = [
   {
     campaignName: "Campaign 1",
@@ -168,6 +210,26 @@ const headers = [
     key: "segment",
   },
 ];
+const vuetifyTheme = useTheme();
+const chartOptions = computed(() =>
+  getLatestBarChartConfig(vuetifyTheme.current.value)
+);
+
+const data = {
+  labels: ["", "", ""],
+  datasets: [
+    {
+      maxBarThickness: 51,
+      backgroundColor: ["#9660FA", "#BE9BFF", "#BC98FE"],
+      borderColor: "transparent",
+      borderRadius: {
+        topRight: 15,
+        topLeft: 15,
+      },
+      data: [127, 190, 191],
+    },
+  ],
+};
 
 // 👉 Fetching users
 // const fetchCustomers = () => {
