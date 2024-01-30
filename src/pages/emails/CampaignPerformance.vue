@@ -23,7 +23,7 @@
               <v-row class="" style="height: 70%">
                 <template v-for="(n, i) in columns">
                   <template v-if="+index + i < slider.length">
-                    <div class="mt-5" :key="i">cam</div>
+                    <div :key="i">cam</div>
                     <v-col :key="i">
                       <BarChart
                         :height="300"

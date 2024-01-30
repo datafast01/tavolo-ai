@@ -94,6 +94,7 @@ export default defineConfig({
       'quill': 'quill',
       'vue3-quill': 'vue3-quill',
       'vuex': 'vuex',
+   
      
 
     },
