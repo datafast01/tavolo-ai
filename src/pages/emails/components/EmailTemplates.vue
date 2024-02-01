@@ -380,11 +380,11 @@ export default {
       ],
       pastDate: null,
       pastDates: [
-        { key: "1_months", label: "1 Monsth" },
+        { key: "1_months", label: "1 Month" },
 
-        { key: "3_months", label: "3 Monsths" },
-        { key: "6_months", label: "6 Monsths" },
-        { key: "9_months", label: "9 Monsths" },
+        { key: "3_months", label: "3 Months" },
+        { key: "6_months", label: "6 Months" },
+        { key: "9_months", label: "9 Months" },
       ],
       recipients: "",
       ageGroups: [
