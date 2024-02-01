@@ -1,20 +1,8 @@
 <template>
   <div>
     <VRow>
-      <VCol cols="12" md="4">
-        <v-select
-          label="Select Template"
-          :items="[
-            'California',
-            'Colorado',
-            'Florida',
-            'Georgia',
-            'Texas',
-            'Wyoming',
-          ]"
-          variant="solo-filled"
-          dense
-        ></v-select>
+      <VCol cols="12" md="1" v-if="isTemplate">
+        <VBtn size="large" @click="isTemplate = !isTemplate"> Back </VBtn>
       </VCol>
       <VCol cols="12" md="4">
         <v-text-field
@@ -23,9 +11,12 @@
           variant="solo-filled"
         ></v-text-field>
       </VCol>
+      <v-spacer></v-spacer>
       <VCol cols="12" md="4">
         <div class="float-right">
-          <VBtn size="large" @click="templatedSelected"> Next </VBtn>
+          <VBtn size="large" @click="templatedSelected">
+            {{ isTemplate ? "Send" : "Next" }}
+          </VBtn>
         </div>
       </VCol>
     </VRow>

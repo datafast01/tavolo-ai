@@ -15,6 +15,8 @@
         class="rounded-0"
         @update:options="options = $event"
         :loading="isLoading"
+        item-key="key"
+        @click:row="viewDetails"
       >
         <!-- Seegments -->
         <template #item.profilePhoto="{ item }">
@@ -93,6 +95,7 @@ import { VDataTableServer } from "vuetify/lib/components/index.mjs";
 // import AddNewUserDrawer from "@/views/apps/user/list/AddNewUserDrawer.vue";
 import { useUserListStore } from "@/views/apps/user/useUserListStore";
 import axios from "@axios";
+import { useRouter } from "vue-router";
 
 const userListStore = useUserListStore();
 const searchQuery = ref("");
@@ -127,30 +130,37 @@ const rangeItems = ref([
 // Headers
 const headers = [
   {
+    id: 0,
     title: "Profile Photo",
     key: "profilePhoto",
   },
   {
+    id: 1,
     title: "Full Name",
     key: "fullName",
   },
   {
+    id: 2,
     title: "Social Media Username",
     key: "userName",
   },
   {
+    id: 3,
     title: "Gender",
     key: "gender",
   },
   {
+    id: 4,
     title: "Audience",
     key: "audience",
   },
   {
+    id: 5,
     title: "Rating",
     key: "rating",
   },
   {
+    id: 6,
     title: "Charges",
     key: "charges",
   },
@@ -166,6 +176,7 @@ let orders = ref("" || null);
 
 const sampleInfluncerData = [
   {
+    id: 0,
     img: "",
     fullName: "Lorem Ipsum",
     userName: "Lorem Ipsum",
@@ -175,6 +186,7 @@ const sampleInfluncerData = [
     charges: "$45/Recording",
   },
   {
+    id: 1,
     img: "",
     fullName: "Lorem Ipsum",
     userName: "Lorem Ipsum",
@@ -184,6 +196,7 @@ const sampleInfluncerData = [
     charges: "$45/Recording",
   },
   {
+    id: 2,
     img: "",
     fullName: "Lorem Ipsum",
     userName: "Lorem Ipsum",
@@ -193,6 +206,7 @@ const sampleInfluncerData = [
     charges: "$45/Recording",
   },
   {
+    id: 3,
     img: "",
     fullName: "Lorem Ipsum",
     userName: "Lorem Ipsum",
@@ -202,6 +216,7 @@ const sampleInfluncerData = [
     charges: "$45/Recording",
   },
   {
+    id: 4,
     img: "",
     fullName: "Lorem Ipsum",
     userName: "Lorem Ipsum",
@@ -211,6 +226,7 @@ const sampleInfluncerData = [
     charges: "$45/Recording",
   },
   {
+    id: 5,
     userName: "Lorem Ipsum",
     rating: "4",
     charges: "$45/Recording",
@@ -316,12 +332,11 @@ const deleteMenuItem = (id) => {
       color.value = "error";
     });
 };
-
-const formatCurrency = (number, currencyCode = "USD") => {
-  return number.toLocaleString("en-US", {
-    style: "currency",
-    currency: currencyCode,
-  });
+const router = useRouter();
+const route = useRoute();
+const viewDetails = (item, row) => {
+  router.push({ path: `/influencer-details/${row.item.id}` });
+  console.log(row.item);
 };
 </script>
 

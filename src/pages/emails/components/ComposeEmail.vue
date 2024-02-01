@@ -111,4 +111,8 @@ export default {
 ::v-deep .config .ql-snow .ql-formats .ql-image svg .ql-stroke {
   stroke: white !important;
 }
+
+::v-deep .ql-snow .ql-editor::before {
+  color: white;
+}
 </style>
