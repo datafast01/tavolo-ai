@@ -83,9 +83,9 @@
             <InfluencerBio :details="details" />
           </v-window-item>
           <v-window-item value="2"> Projects component </v-window-item>
-          <v-window-item value="3"> Performance component </v-window-item>
-          <v-window-item value="4"> Pricing component </v-window-item>
-          <v-window-item value="5"> Testimonials component </v-window-item>
+          <v-window-item value="3"> <Performance /> </v-window-item>
+          <v-window-item value="4"> <InfuPricing /> </v-window-item>
+          <v-window-item value="5"> <Testemonials /> </v-window-item>
         </v-window>
       </VCardText>
     </VCard>
@@ -98,8 +98,11 @@ import verified from "@/assets/images/svg/verified.svg";
 
 import InfluencerBio from "./components/influencerBio.vue";
 
+import InfuPricing from "./components/infuPricing.vue";
+import Performance from "./components/performance.vue";
+import Testemonials from "./components/testemonials.vue";
 export default {
-  components: { InfluencerBio },
+  components: { InfluencerBio, Testemonials, InfuPricing, Performance },
   data() {
     return {
       verified: verified,
