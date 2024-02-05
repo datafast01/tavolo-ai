@@ -255,6 +255,8 @@
   </v-sheet>
 </template>
 <script>
+import axios from "@axios";
+
 export default {
   data() {
     return {
@@ -264,11 +266,14 @@ export default {
       templateModel: 0,
       isTemplateCard: false,
       customeList: [],
+      currentCategory: null,
+      currentTemplate: null,
       templateId: 0,
       categories: [
         {
           id: 0,
           name: "Seasonal",
+          key: "seasonal",
           description: "Stay engaged with your customers as the seasons change",
           icon: "mdi-wallet-giftcard",
           color: "background-color:#9155FD",
@@ -302,6 +307,7 @@ export default {
         {
           id: 1,
           name: "Promotional",
+          key: "promotional",
           description:
             "Promote your business by sending special discounts and promotions",
           icon: "mdi-bullhorn",
@@ -318,6 +324,7 @@ export default {
         {
           id: 2,
           name: "Interactive",
+          key: "interactive",
           description:
             "Engage with customers through surveys to enhance brand interaction",
           icon: "mdi-chart-bar",
@@ -352,6 +359,8 @@ export default {
         {
           id: 3,
           name: "New Menu Launch",
+          key: "new_menu_launch",
+
           description:
             "Let your customers know about all the new items launched",
           icon: "mdi-food",
@@ -386,7 +395,7 @@ export default {
         { key: "6_months", label: "6 Months" },
         { key: "9_months", label: "9 Months" },
       ],
-      recipients: "",
+      recipients: "all_customers",
       ageGroups: [
         { key: "18-24", label: "18-24" },
 
@@ -407,16 +416,32 @@ export default {
     selectCategory(category) {
       this.isCategoryCard = true;
       this.categoryId = category.id;
+      this.currentCategory = category;
       console.log(this.categoryId, category.id);
+      this.listTemplates(category.key);
     },
     selectTemplate(template) {
       this.isTemplateCard = true;
       this.templateId = template.templateId;
+      this.currentTemplate = template;
       console.log(this.templateId, template.templateId);
     },
     checkType() {
       console.log("alkdj");
     },
+    listTemplates(template) {
+      axios
+        .get(`dashboard/list-email-templates?category=${template}`)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((err) => {
+          console.log(err.response.status);
+        });
+    },
+  },
+  mounted() {
+    this.listTemplates("seasonal");
   },
 };
 </script>

@@ -11,20 +11,27 @@
           variant="solo-filled"
         ></v-text-field>
       </VCol>
+      <VCol cols="12" md="2">
+        <VBtn size="large" v-if="isTemplate" @click="showModalGpt">
+          Magic Button
+        </VBtn>
+      </VCol>
       <v-spacer></v-spacer>
       <VCol cols="12" md="4">
         <div class="float-right">
-          <VBtn size="large" @click="templatedSelected">
-            {{ isTemplate ? "Send" : "Next" }}
+          <VBtn size="large" @click="templatedSelected" v-if="!isTemplate">
+            Next
           </VBtn>
+          <VBtn size="large" @click="sendCampaign" v-else> Send </VBtn>
         </div>
       </VCol>
     </VRow>
+
     <div class="mt-6" v-if="!isTemplate">
-      <EmailTemplates />
+      <EmailTemplates ref="emailTemplate" />
     </div>
     <div class="mt-6" v-else>
-      <ComposeEmail />
+      <ComposeEmail :emailContent="selectedTemplate" ref="composeEmail" />
     </div>
   </div>
 </template>
@@ -38,11 +45,28 @@ export default {
   data() {
     return {
       isTemplate: false,
+      selectedCategory: null,
+      selectedTemplate: null,
+      emailContent: {},
     };
   },
   methods: {
     templatedSelected() {
-      this.isTemplate = true;
+      this.selectedCategory = this.$refs.emailTemplate.currentCategory;
+      this.selectedTemplate = this.$refs.emailTemplate.currentTemplate;
+      if (this.selectedCategory == null || this.selectedTemplate == null) {
+        alert("select tempalte and category");
+        return;
+      } else {
+        // this.emailContent = this.$refs.emailTemplate.emailContent;
+        this.isTemplate = true;
+      }
+    },
+    showModalGpt() {
+      this.$refs.composeEmail.showModalGpt = true;
+    },
+    sendCampaign() {
+      this.$refs.composeEmail.sendEmail();
     },
   },
 };
