@@ -660,6 +660,13 @@
     estree-walker "^2.0.2"
     picomatch "^2.3.1"
 
+"@tofandel/vue-unlayer@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/@tofandel/vue-unlayer/-/vue-unlayer-1.0.0.tgz"
+  integrity sha512-/vJ3RUduUtlcdZeCOI54jy8VUDF53Ysj3ZIPTVMmBmkIDOxJGTT9y94xCiKzRHR/BdObY+7Cym3Rokka/u7joA==
+  dependencies:
+    vue "^3.2.31"
+
 "@trysound/sax@0.2.0":
   version "0.2.0"
   resolved "https://registry.npmjs.org/@trysound/sax/-/sax-0.2.0.tgz"
@@ -5139,7 +5146,7 @@ vue-shepherd@3.0.0:
   dependencies:
     shepherd.js "^11.1.0"
 
-"vue@^2.6.12 || ^3.2.4", "vue@^2.6.14 || ^3.2.0", "vue@^2.7.0 || ^3.2.25", vue@^3.0.0, "vue@^3.0.0-0 || ^2.6.0", "vue@^3.0.0-0 || ^2.7.0", vue@^3.0.11, vue@^3.2.0, vue@^3.2.13, vue@^3.2.25, vue@^3.3.0, "vue@> 3.0.0", vue@>=3, vue@>=3.0.0, "vue@2 || 3", vue@3.3.2:
+"vue@^2.6.12 || ^3.2.4", "vue@^2.6.14 || ^3.2.0", "vue@^2.7.0 || ^3.2.25", vue@^3.0.0, "vue@^3.0.0-0 || ^2.6.0", "vue@^3.0.0-0 || ^2.7.0", vue@^3.0.11, vue@^3.2.0, vue@^3.2.13, vue@^3.2.25, vue@^3.2.31, vue@^3.3.0, "vue@> 3.0.0", vue@>=3, vue@>=3.0.0, "vue@2 || 3", vue@3.3.2:
   version "3.3.2"
   resolved "https://registry.npmjs.org/vue/-/vue-3.3.2.tgz"
   integrity sha512-98hJcAhyDwZoOo2flAQBSPVYG/o0HA9ivIy2ktHshjE+6/q8IMQ+kvDKQzOZTFPxvnNMcGM+zS2A00xeZMA7tA==

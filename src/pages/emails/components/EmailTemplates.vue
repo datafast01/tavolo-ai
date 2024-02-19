@@ -82,6 +82,11 @@
                     : ''
                 "
               >
+                <v-icon
+                  @click="editTemplate(template)"
+                  v-if="isTemplateCard && templateId == template.templateId"
+                  >mdi-pencil</v-icon
+                >
                 <img
                   src="../../../assets/images/cards/image_31.png"
                   cover
@@ -252,14 +257,18 @@
         </v-window>
       </v-card-text>
     </v-card>
+    <EditTemolate ref="editTemplate" :templateData="templateData" />
   </v-sheet>
 </template>
 <script>
 import axios from "@axios";
+import EditTemolate from "./EditTemolate.vue";
 
 export default {
+  components: { EditTemolate },
   data() {
     return {
+      templateData: {},
       tab: null,
       isCategoryCard: false,
       categoryId: 0,
@@ -438,6 +447,10 @@ export default {
         .catch((err) => {
           console.log(err.response.status);
         });
+    },
+    editTemplate(template) {
+      this.templateData = template;
+      this.$refs.editTemplate.dialog = true;
     },
   },
   mounted() {

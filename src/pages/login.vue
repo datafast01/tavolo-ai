@@ -110,6 +110,32 @@
       </VCol>
     </VRow>
   </div>
+  <v-dialog v-model="dialog" width="auto">
+    <v-card
+      width="500"
+      height="400"
+      class="d-flex align-center text-center justify-center"
+    >
+      <div>
+        <v-card-title> Welcome to Tavolo! </v-card-title>
+        <v-card-subtitle class="my-3">
+          Please sign up to your account and start the adventure
+        </v-card-subtitle>
+        <v-card-text>
+          <p class="my-3">Start your journey at Tavolo as an Influencer</p>
+          <VBtn class="my-3" @click="checkUser('business')">
+            LOG IN AS A BUSINESS
+          </VBtn>
+          <p class="my-3">OR</p>
+          <p class="my-3">Start your journey at Tavolo as a Business</p>
+
+          <VBtn class="my-3" @click="checkUser('influencer')">
+            LOG IN AS AN INFLUENCER
+          </VBtn>
+        </v-card-text>
+      </div>
+    </v-card>
+  </v-dialog>
 </template>
 <script setup>
 // import { useAppAbility } from '@/plugins/casl/useAppAbility'
@@ -157,7 +183,8 @@ const loading = ref(false);
 let show = ref(false);
 let snkMsg = ref("");
 let color = ref("#9575CD");
-
+let dialog = ref(false);
+let userType = ref(null);
 const login = () => {
   loading.value = true;
   axios
@@ -200,6 +227,10 @@ const onSubmit = () => {
   refVForm.value?.validate().then(({ valid: isValid }) => {
     if (isValid) login();
   });
+};
+const checkUser = (type) => {
+  userType.value = type;
+  dialog.value = false;
 };
 </script>
 <style lang="scss" scoped>

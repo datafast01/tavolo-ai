@@ -9,6 +9,7 @@
 
       <h1 class="font-weight-medium leading-normal text-2xl text-uppercase">
         {{ themeConfig.app.title }}
+        {{ userType }}
       </h1>
     </div>
 
@@ -79,11 +80,19 @@
                     type="text"
                   />
                 </VCol>
-                <VCol cols="12">
+                <VCol cols="12" v-if="userType == 'business'">
                   <VTextField
                     v-model="restaurantName"
                     :rules="[requiredValidator]"
                     label="Resturant Name"
+                    type="text"
+                  />
+                </VCol>
+                <VCol cols="12" v-if="userType == 'influencer'">
+                  <VTextField
+                    v-model="socialMediaUserName"
+                    :rules="[requiredValidator]"
+                    label="Social Media User Name"
                     type="text"
                   />
                 </VCol>
@@ -140,6 +149,32 @@
       </VCol>
     </VRow>
   </div>
+  <v-dialog v-model="dialog" width="auto">
+    <v-card
+      width="500"
+      height="400"
+      class="d-flex align-center text-center justify-center"
+    >
+      <div>
+        <v-card-title> Welcome to Tavolo! </v-card-title>
+        <v-card-subtitle class="my-3">
+          Please sign up to your account and start the adventure
+        </v-card-subtitle>
+        <v-card-text>
+          <p class="my-3">Start your journey at Tavolo as an Influencer</p>
+          <VBtn class="my-3" @click="checkUser('business')">
+            LOG IN AS A BUSINESS
+          </VBtn>
+          <p class="my-3">OR</p>
+          <p class="my-3">Start your journey at Tavolo as a Business</p>
+
+          <VBtn class="my-3" @click="checkUser('influencer')">
+            LOG IN AS AN INFLUENCER
+          </VBtn>
+        </v-card-text>
+      </div>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup>
@@ -184,6 +219,8 @@ const errors = ref({
   password: undefined,
 });
 
+var dialog = ref(true);
+
 const register = () => {
   axios
     .post("/signup", {
@@ -223,7 +260,11 @@ const register = () => {
       color.value = "error";
     });
 };
-
+let userType = ref(null);
+const checkUser = (type) => {
+  userType.value = type;
+  dialog.value = false;
+};
 const imageVariant = useGenerateImageVariant(
   authV2RegisterIllustrationLight,
   authV2RegisterIllustrationDark,
