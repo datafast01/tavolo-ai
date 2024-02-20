@@ -23,10 +23,10 @@ const userProfile = computed(() => {
   // console.log(store.getters);
   return store.getters.userProfile;
 });
-onMounted(() => {
-  // Check for URL parameters after the component is mounted
-  store.dispatch("getProfile");
-});
+// onMounted(() => {
+//   // Check for URL parameters after the component is mounted
+//   store.dispatch("getProfile");
+// });
 </script>
 
 <template>
