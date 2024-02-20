@@ -88,6 +88,21 @@
                   class="text-white"
                 />
 
+                <div class="edit-action">Edit</div>
+                <div class="menu-btn">
+                  <v-menu transition="scale-transition">
+                    <template v-slot:activator="{ props }">
+                      <div v-bind="props">Scale Transition</div>
+                    </template>
+
+                    <v-list>
+                      <v-list-item v-for="(item, i) in items" :key="i">
+                        <v-list-item-title>{{ item.title }}</v-list-item-title>
+                      </v-list-item>
+                    </v-list>
+                  </v-menu>
+                </div>
+
                 <div class="mt-8 ml-4 px-2 template-card">
                   <p class="text-h5">{{ template.subject }}</p>
                   <p class="">
@@ -407,6 +422,20 @@ export default {
       location: null,
     };
   },
+
+  setup() {
+    const items = ref([
+      { title: "Click Me" },
+      { title: "Click Me" },
+      { title: "Click Me" },
+      { title: "Click Me 2" },
+    ]);
+
+    return {
+      items,
+    };
+  },
+
   computed: {
     templates() {
       return this.categories[this.categoryId].templates;
@@ -454,5 +483,47 @@ export default {
 .template-card {
   position: relative;
   bottom: 85%;
+  z-index: 0;
+}
+
+.edit-action {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 12;
+  background: #312d4b;
+  padding: 7px 12px;
+  color: white;
+}
+.v-overlay--contained .v-overlay__scrim {
+  display: none !important;
+  background: none !important;
+  opacity: 0 !important;
+}
+
+.v-theme--dark {
+  --v-overlay-scrim-background: none !important;
+}
+
+.v-overlay__scrim,
+.v-navigation-drawer__scrim {
+  background: rgba(
+    var(--v-overlay-scrim-background),
+    var(--v-overlay-scrim-opacity)
+  ) !important;
+  opacity: none !important;
+}
+.edit-action {
+  display: none !important;
+}
+
+.menu-btn {
+  position: absolute;
+  top: 0;
+}
+
+.cursor-pointer:hover .edit-action {
+  display: block !important;
 }
 </style>

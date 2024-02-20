@@ -349,7 +349,6 @@ declare module '@vue/runtime-core' {
     ScrollToTop: typeof import('./src/@core/components/ScrollToTop.vue')['default']
     ShareProjectDialog: typeof import('./src/components/dialogs/ShareProjectDialog.vue')['default']
     Shortcuts: typeof import('./src/@core/components/Shortcuts.vue')['default']
-    Snackbar: typeof import('./src/@core/components/Snackbar.vue')['default']
     TheCustomizer: typeof import('./src/@core/components/TheCustomizer.vue')['default']
     ThemeSwitcher: typeof import('./src/@core/components/ThemeSwitcher.vue')['default']
     TimelineBasic: typeof import('./src/views/demos/components/timeline/TimelineBasic.vue')['default']
