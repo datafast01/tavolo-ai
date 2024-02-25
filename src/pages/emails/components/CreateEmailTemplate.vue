@@ -1,59 +1,11 @@
 <template>
   <div id="app">
-    <header class="sticky top-0 z-50 border-b bg-background">
-      <div
-        id="bar"
-        class="flex h-16 items-center justify-between px-5 lg:px-10"
-      >
-        <div class="flex items-center">
-          <UIButton to="/" variant="outline" size="icon" class="mr-4 h-8 w-8">
-            <Icon name="ph:arrow-left" class="h-4 w-4" />
-          </UIButton>
-          <h1 class="text-lg font-semibold">{{ template?.name }}</h1>
-        </div>
+    <div class="container">
+      <div id="bar">
+        <h1>Vue Email Editor (Demo)</h1>
 
-        <div class="flex items-center gap-2">
-          <UIDropdownMenu>
-            <UIDropdownMenuTrigger asChild>
-              <UIButton variant="outline"
-                >Actions <Icon name="solar:alt-arrow-down-line-duotone"
-              /></UIButton>
-            </UIDropdownMenuTrigger>
-            <UIDropdownMenuContent
-              class="w-[200px]"
-              align="end"
-              :sideOffset="10"
-            >
-              <UIDropdownMenuGroup class="space-y-1">
-                <UIDropdownMenuItem
-                  @click="saveDesign"
-                  title="Save design"
-                  icon="solar:diskette-line-duotone"
-                />
-                <UIDropdownMenuItem
-                  @click="exportHtml"
-                  title="Export HTML"
-                  icon="solar:cloud-download-line-duotone"
-                />
-                <UIDropdownMenuItem
-                  @click="preview"
-                  title="Preview design"
-                  icon="solar:telescope-line-duotone"
-                />
-                <UIDropdownMenuItem
-                  @click="open()"
-                  title="Import design"
-                  icon="solar:upload-minimalistic-bold-duotone"
-                />
-                <UIDropdownMenuItem
-                  @click="downloadDesign()"
-                  title="Download design"
-                  icon="solar:download-minimalistic-bold-duotone"
-                />
-              </UIDropdownMenuGroup>
-            </UIDropdownMenuContent>
-          </UIDropdownMenu>
-        </div>
+        <button v-on:click="saveDesign">Save Design</button>
+        <button v-on:click="exportHtml">Export HTML</button>
       </div>
 
       <div class="h-[calc(100dvh-65px)]">
@@ -65,128 +17,46 @@
             },
           }"
           :appearance="{
-            theme: 'drak',
+            theme: mode,
           }"
           style="height: 100%"
           ref="emailEditor"
           @load="editorLoaded"
         />
       </div>
-    </header>
+    </div>
   </div>
 </template>
 
-<script setup>
+<script>
 import { EmailEditor } from "vue-email-editor";
 
-const route = useRoute();
-const router = useRouter();
-const emailEditor = shallowRef(null);
-
-// const { mode } = useTheme();
-
-const template = ref(null);
-
-if (route.query.id) {
-  useFetch(`/api/templates/${route.query.id}`).then(({ data }) => {
-    template.value = data.value;
-  });
-}
-
-async function createNewTemplate() {
-  emailEditor?.value.editor.exportHtml(async (data) => {
-    const res = await useToast.promise(useCreateTemplate(data), {
-      error: "Failed to create template",
-      success: {
-        closeButton: true,
-        closeOnClick: true,
-        render: () => "Template created successfully",
-      },
-      pending: "Creating template...",
-    });
-
-    router.push({
-      path: "/editor",
-      query: {
-        id: res._id,
-      },
-    });
-
-    template.value = res;
-  });
-}
-
-async function updateTemplate() {
-  emailEditor?.value.editor.exportHtml(async (data) => {
-    const res = await useToast.promise(
-      useUpdateTemplate(route.query.id, data),
-      {
-        error: "Failed to update template",
-        success: {
-          closeButton: true,
-          closeOnClick: true,
-          render: () => "Template updated successfully",
-        },
-        pending: "Updating template...",
-      }
-    );
-    template.value = res;
-  });
-}
-async function editorLoaded() {
-  if (!template.value) return;
-  emailEditor?.value.editor.loadDesign(
-    JSON.parse(JSON.stringify(template?.value?.design))
-  );
-}
-function saveDesign() {
-  if (!template.value) {
-    createNewTemplate();
-  } else {
-    updateTemplate();
-  }
-}
-
-function exportHtml() {
-  emailEditor?.value.editor.exportHtml(async (data) => {
-    useExportTemplate(template.value?.name + ".html", data.html);
-  });
-}
-
-function downloadDesign() {
-  emailEditor?.value.editor.exportHtml(async (data) => {
-    useExportTemplate(
-      template.value?.name + ".json",
-      JSON.stringify(data.design)
-    );
-  });
-}
-
-function preview() {
-  emailEditor?.value.editor.exportHtml(async (data) => {
-    usePreviewTemplate(data.html);
-  });
-}
-
-const { open, onChange: importDesign } = useFileDialog({
-  accept: ".json",
-  multiple: false,
-  reset: true,
-});
-
-importDesign((files) => {
-  if (!files) return;
-  const file = files[0];
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    const design = JSON.parse(e.target.result);
-    emailEditor?.value.editor.loadDesign(design);
-  };
-  reader.readAsText(file);
-});
-
-// useSeoMeta({
-//   title: template.value?.name || "Editor",
-//   description: "Create and edit email templates",
-// });
+export default {
+  name: "app",
+  components: {
+    EmailEditor,
+  },
+  methods: {
+    // called when the editor is created
+    editorLoaded() {
+      console.log("editorLoaded");
+      // Pass the template JSON here
+      // this.$refs.emailEditor.editor.loadDesign({});
+    },
+    // called when the editor has finished loading
+    editorReady() {
+      console.log("editorReady");
+    },
+    saveDesign() {
+      this.$refs.emailEditor.editor.saveDesign((design) => {
+        console.log("saveDesign", design);
+      });
+    },
+    exportHtml() {
+      this.$refs.emailEditor.editor.exportHtml((data) => {
+        console.log("exportHtml", data);
+      });
+    },
+  },
+};
 </script>
