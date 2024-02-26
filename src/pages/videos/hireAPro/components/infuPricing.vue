@@ -40,7 +40,7 @@
                 >/Recording
               </div>
               <div>{{ pkg.description }}</div>
-              <VList class="card-list my-3">
+              <VList class="card-list my-3 transparent">
                 <VListItem v-for="benifits in pkg.benifits" :key="benifits">
                   <template #prepend>
                     <VIcon
@@ -55,6 +55,20 @@
                 </VListItem>
               </VList>
             </div>
+            <!-- <v-btn
+              :class="pkg.id != currentPkg ? 'selected-card' : 'pricing-card'"
+              class="d-none"
+              size="x-large"
+              >Continue</v-btn
+            > -->
+            <RouterLink :to="{ name: 'hiring-influencer' }">
+              <VBtn
+                :class="pkg.id != currentPkg ? 'selected-card' : 'pricing-card'"
+                class="large-1 d-none"
+              >
+                Continue
+              </VBtn>
+            </RouterLink>
           </v-card-text>
         </v-card>
       </VCol>
@@ -259,8 +273,20 @@ export default {
 .pricing-card {
   border: 1px solid #9155fd !important;
   border-radius: 12px;
+  display: block !important;
+}
+.d-none {
+  display: none;
 }
 .selected-card-text {
   color: #9155fd;
+}
+
+.large-1 {
+  width: 100% !important;
+  margin-top: 42px;
+}
+.transparent {
+  background-color: rgba(255, 0, 0, 0);
 }
 </style>

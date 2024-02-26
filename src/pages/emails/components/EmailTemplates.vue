@@ -82,22 +82,17 @@
                     : ''
                 "
               >
-                <v-icon
-                  @click="editTemplate(template)"
-                  v-if="isTemplateCard && templateId == template.templateId"
-                  >mdi-pencil</v-icon
-                >
-                <img
-                  src="../../../assets/images/cards/image_31.png"
-                  cover
-                  class="text-white"
-                />
-
-                <div class="edit-action">Edit</div>
                 <div class="menu-btn">
                   <v-menu transition="scale-transition">
                     <template v-slot:activator="{ props }">
-                      <div v-bind="props">Scale Transition</div>
+                      <v-icon
+                        class=""
+                        v-bind="props"
+                        v-if="
+                          isTemplateCard && templateId == template.templateId
+                        "
+                        >mdi-dots-vertical
+                      </v-icon>
                     </template>
 
                     <v-list>
@@ -107,6 +102,16 @@
                     </v-list>
                   </v-menu>
                 </div>
+
+                <!-- <v-icon> mdi-dots-vertical </v-icon> -->
+
+                <img
+                  src="../../../assets/images/cards/image_31.png"
+                  cover
+                  class="text-white"
+                />
+
+                <div class="edit-action">Edit</div>
 
                 <div class="mt-8 ml-4 px-2 template-card">
                   <p class="text-h5">{{ template.subject }}</p>
@@ -431,7 +436,7 @@ export default {
       location: null,
     };
   },
-
+  // dropdown menu actions //
   setup() {
     const items = ref([
       { title: "Click Me" },
@@ -533,7 +538,8 @@ export default {
 
 .menu-btn {
   position: absolute;
-  top: 0;
+  top: 7px;
+  right: 5px;
 }
 
 .cursor-pointer:hover .edit-action {

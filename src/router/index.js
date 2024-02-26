@@ -201,6 +201,14 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
+    path: "/hiring-influencer/:id",
+    name: "hiring-influencer",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../pages/videos/hireAPro/HiringInfluencer.vue"),
+    //  redirect: () => ({  name: 'login' }),
+    meta: { requiresAuth: true },
+  },
+  {
     path: "/create-template",
     name: "create-template",
     component: () =>
