@@ -5,6 +5,11 @@
   <section v-else>
     <VRow class="match-height">
       <VCol cols="12" md="6">
+        <CustomInput
+          :name="`display_name`"
+          type="number"
+          v-model="display_name"
+        />
         <CrmTransactions :data="transactionData" />
       </VCol>
       <VCol
