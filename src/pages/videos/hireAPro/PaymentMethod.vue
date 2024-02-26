@@ -12,16 +12,16 @@
               </v-badge>
             </VCol>
             <VCol cols="2">
-              <div class="vavatar">
+              <div class="vavatar vavatar-border">
                 <v-img :src="pay2" alt="John"></v-img>
               </div>
             </VCol>
             <VCol cols="2">
-              <div class="vavatar">
+              <div class="vavatar vavatar-border">
                 <v-img :src="pay3" alt="John"></v-img></div
             ></VCol>
             <VCol cols="2">
-              <div class="vavatar">
+              <div class="vavatar vavatar-border">
                 <v-img :src="pay4" alt="John"></v-img></div
             ></VCol>
           </VRow>
@@ -112,6 +112,9 @@ export default {
   border: 2px solid #9155fd;
   text-align: center;
   height: 40px;
+}
+.vavatar-border {
+  border: 2px solid #625d7a !important;
 }
 .h-totle {
   font-size: 32px;
