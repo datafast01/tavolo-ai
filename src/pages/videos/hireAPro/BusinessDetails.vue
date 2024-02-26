@@ -22,7 +22,6 @@
             v-model="favorites"
             :items="states"
             label="Social Account"
-            multiple
             persistent-hint
           ></v-select>
         </VCol>

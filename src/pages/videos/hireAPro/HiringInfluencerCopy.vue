@@ -30,9 +30,7 @@
           <v-select
             v-model="favorites"
             :items="states"
-            label="Select"
-            multiple
-            persistent-hint
+            label="Payment Plan"
           ></v-select>
         </VCol>
 

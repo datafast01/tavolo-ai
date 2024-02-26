@@ -54,7 +54,7 @@
         {{ props.backText }}
       </button>
       <button
-        class="btn btn--default-2"
+        class="btn btn--default-2 white--text"
         @click="incrementStep"
         v-if="props.step !== props.tabs.length"
         :disabled="!props.tabs[props.step - 1].isValid"
@@ -128,7 +128,7 @@ const props = defineProps({
   },
   nextText: {
     type: String,
-    default: "Next ",
+    default: "SAVE & CONTINUE ",
   },
   doneText: {
     type: String,
@@ -183,15 +183,6 @@ const multiStepperProgress = computed(() => {
 $primary-1: var(--primaryColor1);
 $primary-2: var(--primaryColor2);
 $transition: all 500ms ease;
-
-body {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: sans-serif;
-}
 
 .v-row {
   margin: 0px !important;
@@ -341,6 +332,7 @@ body {
   padding: 6px 16px;
   text-align: center;
   vertical-align: middle;
+  text-transform: uppercase;
   cursor: pointer;
   line-height: 1.5;
   transition: all 150ms;
@@ -357,9 +349,9 @@ body {
   }
 
   &--default-2 {
-    background-color: $primary-1;
+    background-color: #9155fd;
     border-color: $primary-1;
-    color: #fff;
+    // color: #fff;
     margin-left: auto;
   }
 }
@@ -404,8 +396,8 @@ body {
   height: 40px;
   width: 20%;
   font-size: 1rem;
-  color: #000407;
-  font-weight: bold;
+  color: #ffffff;
+  // font-weight: bold;
 }
 
 @media (max-width: 600px) {

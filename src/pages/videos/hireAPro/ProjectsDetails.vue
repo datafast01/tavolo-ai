@@ -20,7 +20,6 @@
             v-model="favorites"
             :items="states"
             label="Gender"
-            multiple
             persistent-hint
           ></v-select>
         </VCol>
@@ -29,8 +28,7 @@
           <v-select
             v-model="favorites"
             :items="states"
-            label="Age"
-            multiple
+            label="Age Group"
             persistent-hint
           ></v-select>
         </VCol>
