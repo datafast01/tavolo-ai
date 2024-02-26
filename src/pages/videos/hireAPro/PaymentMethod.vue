@@ -5,7 +5,7 @@
         <VCol cols="7">
           <VRow>
             <VCol cols="2">
-              <v-badge content="+" color="#9155FD">
+              <v-badge content="✓ " color="#9155FD">
                 <div class="vavatar">
                   <v-img :src="pay1" alt="John"></v-img>
                 </div>
@@ -50,11 +50,25 @@
         <VCol cols="3">
           <VTextField v-model="firstName" label="CCV" type="number" />
         </VCol>
-        <VCol cols="3" class="py-2">
-          <v-checkbox label="Checkbox"></v-checkbox>
+        <VCol cols="12" class="py-2">
+          <v-checkbox label="Save this card for future payments"></v-checkbox>
         </VCol>
+        <!-- <VCol cols="12" class="pt-3 pb-0 h-totle">
+          <div class="d-flex flex-row justify-space-between">
+            <p class="ma-0">Total Payment</p>
+            <p class="ma-0">$75.00</p>
+          </div>
+        </VCol> -->
       </VRow>
     </VForm>
+    <VRow class="ma-0">
+      <VCol cols="12" class="pt-3 pb-0 h-totle">
+        <div class="pb-5 px-4 d-flex flex-row justify-space-between">
+          <p class="ma-0">Total Payment</p>
+          <p class="ma-0">$75.00</p>
+        </div>
+      </VCol>
+    </VRow>
   </VCardText>
 </template>
 
@@ -98,5 +112,11 @@ export default {
   border: 2px solid #9155fd;
   text-align: center;
   height: 40px;
+}
+.h-totle {
+  font-size: 32px;
+  line-height: 46px;
+  font-weight: 500;
+  border-top: 2px solid #625d7a;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <VRow>
     <VCol cols="12">
-      <div class="vavatar mt-5">
+      <div class="vavatar mt-5 py-5">
         <v-img :src="done1" alt="John"></v-img>
       </div>
       <div class="d-flex align-center justify-center mt-5">
@@ -13,6 +13,9 @@
           Your request has been sent successfully. <br />
           We will let you know once the influencer responds with your request.
         </p>
+        <div class="my-5 py-5">
+          <VBtn @click="updateProfile">Save changes </VBtn>
+        </div>
       </div>
     </VCol>
   </VRow>

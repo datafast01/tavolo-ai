@@ -23,9 +23,9 @@
     <template #5>
       <PaymentMethod />
     </template>
-    <template #6>
-      <Donepage />
-    </template>
+    <!-- <template #6>
+      <PaymentMethod />
+    </template> -->
   </Vue3MultiStepper>
 </template>
 
@@ -33,7 +33,6 @@
 import { computed } from "vue";
 import BusinessDetails from "./BusinessDetails.vue";
 import DetailsInflue from "./DetailsInflue.vue";
-import Donepage from "./Donepage.vue";
 import HiringInfluencerCopy from "./HiringInfluencerCopy.vue";
 import PaymentMethod from "./PaymentMethod.vue";
 import ProjectsDetails from "./ProjectsDetails.vue";
@@ -46,7 +45,6 @@ export default {
     BusinessDetails,
     ProjectsDetails,
     PaymentMethod,
-    Donepage,
   },
   name: "App",
   data() {
@@ -79,11 +77,6 @@ export default {
           },
           {
             title: "Verification",
-            iconSuccess: null,
-            isValid: true,
-          },
-          {
-            title: "Verificacdtion",
             iconSuccess: null,
             isValid: true,
           },
@@ -125,8 +118,6 @@ export default {
         return this.step4Check();
       } else if (step === 5) {
         return this.step5Check();
-      } else if (step === 6) {
-        return this.step6Check();
       }
 
       return true; // Default to true if no validation is implemented
@@ -216,11 +207,6 @@ export default {
      * @returns {boolean} - `true` if the check succeeds, allowing the code to proceed to the next step; `false` if the check fails, indicating the need for alternative actions.
      */
     step5Check() {
-      return true;
-    },
-    /* @returns {boolean} - `true` if the check succeeds, allowing the code to proceed to the next step; `false` if the check fails, indicating the need for alternative actions.
-     */
-    step6Check() {
       return true;
     },
   },

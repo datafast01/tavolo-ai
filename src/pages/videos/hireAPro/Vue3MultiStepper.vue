@@ -1,38 +1,43 @@
 <template>
-  <div class="wrapper-steppy" :style="cssVars">
-    <div class="steppy">
-      <div class="steppy-progress">
-        <div
-          class="steppy-progress-bar"
-          :style="'width:' + multiStepperProgress"
-        ></div>
+  <div class="wrapper-steppy bg-card" :style="cssVars">
+    <div class="px-8 pt-8">
+      <div>
+        <p class="h-1">Influencer Collaboration Agreement Checkout</p>
       </div>
+      <div class="steppy">
+        <div class="steppy-progress">
+          <div
+            class="steppy-progress-bar"
+            :style="'width:' + multiStepperProgress"
+          ></div>
+        </div>
 
-      <div
-        class="steppy-item"
-        :class="{
-          current: props.step === index + 1,
-          success: props.step > index + 1,
-        }"
-        v-for="(item, index) in props.tabs"
-        :key="index"
-      >
-        <div class="steppy-item-counter">
-          <img
-            v-if="item.iconSuccess"
-            class="icon-success"
-            :src="item.iconSuccess"
-            alt="Check Mark"
-          />
-          <!-- <CheckMark
+        <div
+          class="steppy-item"
+          :class="{
+            current: props.step === index + 1,
+            success: props.step > index + 1,
+          }"
+          v-for="(item, index) in props.tabs"
+          :key="index"
+        >
+          <div class="steppy-item-counter">
+            <img
+              v-if="item.iconSuccess"
+              class="icon-success"
+              :src="item.iconSuccess"
+              alt="Check Mark"
+            />
+            <!-- <CheckMark
             v-else
             class="icon-success"
             :color="primaryColor1"
             alt="Check Mark"
           /> -->
-          <span class="number">{{ index + 1 }}</span>
+            <span class="number">{{ index + 1 }}</span>
+          </div>
+          <!-- <span class="steppy-item-title">{{ item.title }}</span> -->
         </div>
-        <!-- <span class="steppy-item-title">{{ item.title }}</span> -->
       </div>
     </div>
 
@@ -41,8 +46,10 @@
         <slot :name="index"></slot>
       </div>
     </div>
+  </div>
 
-    <div class="controls mt-5">
+  <div class="wrapper-steppy px-0 mt-6">
+    <div class="controls d-flex flex-row justify-space-between">
       <button class="btn" @click="decrementStep" v-if="props.step !== 1">
         {{ props.backText }}
       </button>
@@ -107,18 +114,13 @@ const props = defineProps({
         iconSuccess: null,
         isValid: true,
       },
-      {
-        title: "Verificfdation",
-        iconSuccess: null,
-        isValid: true,
-      },
     ]),
   },
   finalize: {
-    type: Function,
-    default: function () {
-      return {};
-    },
+    // type: Function,
+    // default: function () {
+    //   return {};
+    // },
   },
   backText: {
     type: String,
@@ -191,15 +193,32 @@ body {
   font-family: sans-serif;
 }
 
+.v-row {
+  margin: 0px !important;
+}
+::v-deep .v-form {
+  padding: 0px 32px 32px 32px !important;
+}
+.h-1 {
+  font-size: 30px;
+  line-height: 50px;
+}
 .tx-default-2 {
   color: $primary-1;
   font-weight: 600;
 }
 
-.wrapper-steppy {
-  padding: 1rem;
+.bg-card {
+  background-color: #312d4b;
+  border-radius: 7px;
 }
+// .wrapper-steppy {
+//   padding: 2rem;
+// }
 
+::v-deep .v-card-text {
+  padding: 0px !important;
+}
 .steppy {
   display: flex;
   align-items: center;
@@ -211,7 +230,7 @@ body {
 
   &-progress {
     position: absolute;
-    background-color: #c5c5c5;
+    background-color: #3d3759;
     height: 13px;
     z-index: -1;
     left: 0;
@@ -235,7 +254,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #c5c5c5;
+  color: #c5c5c500;
   transition: $transition;
 
   &-counter {
@@ -328,9 +347,9 @@ body {
   border-radius: 4px;
   width: fit-content;
   font-size: 0.75rem;
-  color: #333;
-  background-color: #f0f0f0;
-  border: 1px solid #f0f0f0;
+  /* color: #333; */
+  background-color: #28243d;
+  border: 1px solid #3d3759;
 
   &:disabled {
     opacity: 0.5;
@@ -377,13 +396,13 @@ body {
 }
 
 .btn--default-2 {
-  margin: auto;
+  // margin: auto;
   text-align: center;
   background: #9155fd;
   border-radius: 4px;
   border: none;
   height: 40px;
-  width: 40%;
+  width: 20%;
   font-size: 1rem;
   color: #000407;
   font-weight: bold;
