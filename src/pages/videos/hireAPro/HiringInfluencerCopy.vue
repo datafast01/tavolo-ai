@@ -8,43 +8,63 @@
         <VCol cols="12">
           <VTextField
             v-model="firstName"
+            :rules="nameRules"
             label="Contract Title"
-            Value="First"
           />
         </VCol>
 
         <VCol cols="6">
-          <VTextField v-model="lastNam" label="Date of Agreement" type="date" />
+          <VTextField
+            v-model="dateOfAgreement"
+            :rules="dateRules"
+            label="Date of Agreement"
+            type="date"
+          />
         </VCol>
         <VCol cols="6"> </VCol>
 
         <VCol cols="6">
-          <VTextField v-model="email" class="" label="Start Date" type="date" />
+          <VTextField
+            v-model="startDate"
+            :rules="dateRules"
+            label="Start Date"
+            type="date"
+          />
         </VCol>
 
         <VCol cols="6">
-          <VTextField v-model="restaurantName" label="End Date" type="date" />
+          <VTextField
+            v-model="endDate"
+            :rules="dateRules"
+            label="End Date"
+            type="date"
+          />
         </VCol>
 
         <VCol cols="12">
           <v-select
-            v-model="favorites"
-            :items="states"
+            v-model="paymentPlan"
+            :items="items"
+            :rules="paymentPlanRules"
+            append-icon
             label="Payment Plan"
-          ></v-select>
-        </VCol>
+          >
+            <template v-slot:item="{ item }">
+              <v-list-item
+                v-for="(item, i) in items"
+                :key="i"
+                :value="item"
+                color="primary"
+              >
+                <template v-slot:prepend>
+                  <v-icon :icon="item.icon"></v-icon>
+                </template>
 
-        <!-- <VCol cols="12" class="d-flex justify-space-between">
-          <div class=""></div>
-          <div>
-            <RouterLink
-              class="text-primary ms-2 mb-1"
-              :to="{ name: 'pages-authentication-login-v2' }"
-            >
-              <VBtn @click="updateProfile">Save changes </VBtn>
-            </RouterLink>
-          </div>
-        </VCol> -->
+                <v-list-item-title v-text="item.text"></v-list-item-title>
+              </v-list-item>
+            </template>
+          </v-select>
+        </VCol>
       </VRow>
     </VForm>
   </VCardText>
@@ -55,6 +75,7 @@ import pay3 from "@/assets/images/cards/pay11.png";
 import pay2 from "@/assets/images/cards/pay12.png";
 import pay4 from "@/assets/images/cards/pay13.png";
 import pay1 from "@/assets/images/cards/pay14.png";
+
 export default {
   data() {
     return {
@@ -63,7 +84,10 @@ export default {
       pay3: pay3,
       pay4: pay4,
       firstName: "loram",
-      favorites: [],
+      dateOfAgreement: null,
+      startDate: null,
+      endDate: null,
+      paymentPlan: null,
       states: [
         "Alabama",
         "Alaska",
@@ -78,8 +102,42 @@ export default {
         "Federated States of Micronesia",
         "Florida",
       ],
+      nameRules: [
+        (v) => !!v || "Contract Title is required",
+        (v) =>
+          (v && v.length <= 20) ||
+          "Contract Title must be less than 50 characters",
+      ],
+      dateRules: [(v) => !!v || "Date is required"],
+      paymentPlanRules: [(v) => !!v || "Payment Plan is required"],
+      items: [
+        { text: "Real-Time", icon: "mdi-clock" },
+        { text: "Audience", icon: "mdi-account" },
+        { text: "Conversions", icon: "mdi-flag" },
+      ],
     };
+  },
+
+  methods: {
+    getIconForState(state) {
+      // You can implement your logic here to return different icons based on the state
+      return [
+        {
+          title: "mdi-account",
+          iconSuccess: Alabama,
+          isValid: true,
+        },
+        {
+          title: "mdi-account",
+          iconSuccess: Alabama,
+          isValid: true,
+        },
+
+        // "mdi-account",
+      ]; // Replace "mdi-account" with the icon you want to use
+    },
   },
 };
 </script>
+
 <style></style>
