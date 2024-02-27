@@ -14,7 +14,7 @@
           We will let you know once the influencer responds with your request.
         </p>
         <div class="my-5 py-5">
-          <VBtn @click="updateProfile">Save changes </VBtn>
+          <VBtn @click="backToProfile">Back to profile </VBtn>
         </div>
       </div>
     </VCol>
@@ -29,6 +29,11 @@ export default {
       done1: done1,
       done2: done2,
     };
+  },
+  methods: {
+    backToProfile() {
+      this.$router.go(-1);
+    },
   },
 };
 </script>

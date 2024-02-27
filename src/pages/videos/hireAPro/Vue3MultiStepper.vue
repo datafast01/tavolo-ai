@@ -117,10 +117,10 @@ const props = defineProps({
     ]),
   },
   finalize: {
-    // type: Function,
-    // default: function () {
-    //   return {};
-    // },
+    type: Function,
+    default: function () {
+      return {};
+    },
   },
   backText: {
     type: String,

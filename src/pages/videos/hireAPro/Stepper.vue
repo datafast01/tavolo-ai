@@ -1,5 +1,7 @@
 <template>
+  <Donepage v-if="isCompleted" />
   <Vue3MultiStepper
+    v-else
     v-model:step="step"
     :tabs="tabs"
     primaryColor1="#9155FD"
@@ -37,8 +39,11 @@ import HiringInfluencerCopy from "./HiringInfluencerCopy.vue";
 import PaymentMethod from "./PaymentMethod.vue";
 import ProjectsDetails from "./ProjectsDetails.vue";
 import Vue3MultiStepper from "./Vue3MultiStepper.vue";
+
+import Donepage from "./Donepage.vue";
 export default {
   components: {
+    Donepage,
     Vue3MultiStepper,
     HiringInfluencerCopy,
     DetailsInflue,
@@ -51,6 +56,7 @@ export default {
     return {
       step: 1,
       loading: false,
+      isCompleted: false,
       // NB: Use computed properties just in case you feel like using translations (e.g this.$t)
       tabs: computed(() => {
         return [
@@ -98,10 +104,8 @@ export default {
   methods: {
     async handleFormSubmission() {
       this.loading = true;
-
-      // After 2 seconds, reload the page and start the flow again
       setTimeout(() => {
-        location.reload();
+        this.isCompleted = true;
       }, 2000);
     },
 
