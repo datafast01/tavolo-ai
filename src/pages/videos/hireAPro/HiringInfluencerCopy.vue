@@ -42,7 +42,16 @@
         </VCol>
 
         <VCol cols="12">
-          <v-select
+          <v-select label="User" :items="items" item-title="name">
+            <template v-slot:item="{ props, item }">
+              <v-list-item v-bind="props">
+                <template v-slot:prepend>
+                  <v-icon> {{ item.raw.icon }}</v-icon>
+                </template>
+              </v-list-item>
+            </template>
+          </v-select>
+          <!-- <v-select
             v-model="paymentPlan"
             :items="items"
             :rules="paymentPlanRules"
@@ -63,7 +72,7 @@
                 <v-list-item-title v-text="item.text"></v-list-item-title>
               </v-list-item>
             </template>
-          </v-select>
+          </v-select> -->
         </VCol>
       </VRow>
     </VForm>
@@ -111,9 +120,9 @@ export default {
       dateRules: [(v) => !!v || "Date is required"],
       paymentPlanRules: [(v) => !!v || "Payment Plan is required"],
       items: [
-        { text: "Real-Time", icon: "mdi-clock" },
-        { text: "Audience", icon: "mdi-account" },
-        { text: "Conversions", icon: "mdi-flag" },
+        { name: "Real-Time", icon: "mdi-clock" },
+        { name: "Audience", icon: "mdi-account" },
+        { name: "Conversions", icon: "mdi-flag" },
       ],
     };
   },
