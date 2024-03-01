@@ -53,12 +53,14 @@
           </v-select>
           <!-- <v-select
             v-model="paymentPlan"
-            :items="items"
+            :items="paymentPlans"
             :rules="paymentPlanRules"
             append-icon
             label="Payment Plan"
+            item-value="key"
+            item-title="text"
           >
-            <template v-slot:item="{ item }">
+             <template v-slot:item="{ item }">
               <v-list-item
                 v-for="(item, i) in items"
                 :key="i"
@@ -71,8 +73,8 @@
 
                 <v-list-item-title v-text="item.text"></v-list-item-title>
               </v-list-item>
-            </template>
-          </v-select> -->
+            </template> -->
+          <!-- </v-select> -->
         </VCol>
       </VRow>
     </VForm>
@@ -119,10 +121,11 @@ export default {
       ],
       dateRules: [(v) => !!v || "Date is required"],
       paymentPlanRules: [(v) => !!v || "Payment Plan is required"],
-      items: [
-        { name: "Real-Time", icon: "mdi-clock" },
-        { name: "Audience", icon: "mdi-account" },
-        { name: "Conversions", icon: "mdi-flag" },
+
+      paymentPlans: [
+        { text: "Basic - $40/Recording", key: "basic" },
+        { text: "Popular - $75/ 2 Recordings", key: "popular" },
+        { text: "Enterprise - $100 / 4 Recordings", key: "enterprise" },
       ],
     };
   },
