@@ -1,4 +1,5 @@
 <template>
+  <!-- <v-card variant="tonal"> -->
   <Donepage v-if="isCompleted" />
   <Vue3MultiStepper
     v-else
@@ -13,28 +14,29 @@
     <template #1>
       <HiringInfluencerCopy />
     </template>
-    <template #2>
+    <!-- <template #2>
       <DetailsInflue />
-    </template>
-    <template #3>
+    </template> -->
+    <template #2>
       <BusinessDetails />
     </template>
-    <template #4>
+    <template #3>
       <ProjectsDetails />
     </template>
-    <template #5>
+    <template #4>
       <PaymentMethod />
     </template>
     <!-- <template #6>
       <PaymentMethod />
     </template> -->
   </Vue3MultiStepper>
+  <!-- </v-card> -->
 </template>
 
 <script>
 import { computed } from "vue";
 import BusinessDetails from "./BusinessDetails.vue";
-import DetailsInflue from "./DetailsInflue.vue";
+// import DetailsInflue from "./DetailsInflue.vue";
 import HiringInfluencerCopy from "./HiringInfluencerCopy.vue";
 import PaymentMethod from "./PaymentMethod.vue";
 import ProjectsDetails from "./ProjectsDetails.vue";
@@ -46,7 +48,7 @@ export default {
     Donepage,
     Vue3MultiStepper,
     HiringInfluencerCopy,
-    DetailsInflue,
+    // DetailsInflue,
     BusinessDetails,
     ProjectsDetails,
     PaymentMethod,
@@ -81,11 +83,11 @@ export default {
             iconSuccess: null,
             isValid: true,
           },
-          {
-            title: "Verification",
-            iconSuccess: null,
-            isValid: true,
-          },
+          // {
+          //   title: "Verification",
+          //   iconSuccess: null,
+          //   isValid: true,
+          // },
         ];
       }),
       details: [
@@ -120,9 +122,10 @@ export default {
         return this.step3Check();
       } else if (step === 4) {
         return this.step4Check();
-      } else if (step === 5) {
-        return this.step5Check();
       }
+      // else if (step === 5) {
+      //   return this.step5Check();
+      // }
 
       return true; // Default to true if no validation is implemented
     },
@@ -210,9 +213,9 @@ export default {
      *
      * @returns {boolean} - `true` if the check succeeds, allowing the code to proceed to the next step; `false` if the check fails, indicating the need for alternative actions.
      */
-    step5Check() {
-      return true;
-    },
+    // step5Check() {
+    //   return true;
+    // },
   },
 };
 </script>

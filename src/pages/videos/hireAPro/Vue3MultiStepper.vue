@@ -1,56 +1,65 @@
 <template>
-  <div class="wrapper-steppy bg-card" :style="cssVars">
-    <div class="px-8 pt-8">
-      <div>
-        <p class="h-1">Influencer Collaboration Agreement Checkout</p>
-      </div>
-      <div class="steppy">
-        <div class="steppy-progress">
-          <div
-            class="steppy-progress-bar"
-            :style="'width:' + multiStepperProgress"
-          ></div>
+  <v-card variant="tonal">
+    <div class="wrapper-steppy bg-card" :style="cssVars">
+      <div class="px-8 pt-8">
+        <div>
+          <p class="h-1">Influencer Collaboration Agreement Checkout</p>
         </div>
+        <div class="steppy">
+          <div class="steppy-progress">
+            <div
+              class="steppy-progress-ba grey-lighten-1"
+              :style="'width:' + multiStepperProgress"
+            ></div>
+          </div>
 
-        <div
-          class="steppy-item"
-          :class="{
-            current: props.step === index + 1,
-            success: props.step > index + 1,
-          }"
-          v-for="(item, index) in props.tabs"
-          :key="index"
-        >
-          <div class="steppy-item-counter">
-            <img
-              v-if="item.iconSuccess"
-              class="icon-success"
-              :src="item.iconSuccess"
-              alt="Check Mark"
-            />
-            <!-- <CheckMark
+          <div
+            class="steppy-item"
+            :class="{
+              current: props.step === index + 1,
+              success: props.step > index + 1,
+            }"
+            v-for="(item, index) in props.tabs"
+            :key="index"
+          >
+            <div class="steppy-item-counter">
+              <img
+                v-if="item.iconSuccess"
+                class="icon-success"
+                :src="item.iconSuccess"
+                alt="Check Mark"
+              />
+              <!-- <CheckMark
             v-else
             class="icon-success"
             :color="primaryColor1"
             alt="Check Mark"
           /> -->
-            <span class="number">{{ index + 1 }}</span>
+              <span class="number">{{ index + 1 }}</span>
+            </div>
+            <!-- <span class="steppy-item-title">{{ item.title }}</span> -->
           </div>
-          <!-- <span class="steppy-item-title">{{ item.title }}</span> -->
+        </div>
+      </div>
+
+      <div
+        class="steppy-content"
+        v-for="index in props.tabs.length"
+        :key="index"
+      >
+        <div class="steppy-pane" v-if="props.step === index">
+          <slot :name="index"></slot>
         </div>
       </div>
     </div>
-
-    <div class="steppy-content" v-for="index in props.tabs.length" :key="index">
-      <div class="steppy-pane" v-if="props.step === index">
-        <slot :name="index"></slot>
-      </div>
-    </div>
-  </div>
-
+  </v-card>
   <div class="wrapper-steppy px-0 mt-6">
     <div class="controls d-flex flex-row justify-space-between">
-      <button class="btn" @click="decrementStep" v-if="props.step !== 1">
+      <button
+        class="btn btn--default-0 border white--tex"
+        @click="decrementStep"
+        v-if="props.step !== 1"
+      >
         {{ props.backText }}
       </button>
       <button
@@ -109,11 +118,11 @@ const props = defineProps({
         iconSuccess: null,
         isValid: true,
       },
-      {
-        title: "Verification",
-        iconSuccess: null,
-        isValid: true,
-      },
+      // {
+      //   title: "Verification",
+      //   iconSuccess: null,
+      //   isValid: true,
+      // },
     ]),
   },
   finalize: {
@@ -199,10 +208,10 @@ $transition: all 500ms ease;
   font-weight: 600;
 }
 
-.bg-card {
-  background-color: #312d4b;
-  border-radius: 7px;
-}
+// .bg-card {
+//   background-color: #312d4b;
+//   border-radius: 7px;
+// }
 // .wrapper-steppy {
 //   padding: 2rem;
 // }
@@ -340,7 +349,7 @@ $transition: all 500ms ease;
   width: fit-content;
   font-size: 0.75rem;
   /* color: #333; */
-  background-color: #28243d;
+  // background-color: #28243d;
   border: 1px solid #3d3759;
 
   &:disabled {
@@ -397,6 +406,19 @@ $transition: all 500ms ease;
   width: 20%;
   font-size: 1rem;
   color: #ffffff;
+  // font-weight: bold;
+}
+
+.btn--default-0 {
+  // margin: auto;
+  // text-align: center;
+  // background: #9155fd;
+  border-radius: 4px;
+  border: none;
+  height: 40px;
+  width: 10%;
+  font-size: 1rem;
+  // color: #ffffff;
   // font-weight: bold;
 }
 
