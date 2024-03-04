@@ -6,9 +6,9 @@
           <p class="h-1">Influencer Collaboration Agreement Checkout</p>
         </div>
         <div class="steppy">
-          <div class="steppy-progress">
+          <div class="steppy-progress bg-purple-darken-2">
             <div
-              class="steppy-progress-ba grey-lighten-1"
+              class="steppy-progress-bar"
               :style="'width:' + multiStepperProgress"
             ></div>
           </div>
@@ -230,7 +230,7 @@ $transition: all 500ms ease;
 
   &-progress {
     position: absolute;
-    background-color: #3d3759;
+    // background-color: #3d3759;
     height: 13px;
     z-index: -1;
     left: 0;
