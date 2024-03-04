@@ -34,7 +34,6 @@
 </template>
 
 <script>
-import { computed } from "vue";
 import BusinessDetails from "./BusinessDetails.vue";
 // import DetailsInflue from "./DetailsInflue.vue";
 import HiringInfluencerCopy from "./HiringInfluencerCopy.vue";
@@ -60,47 +59,6 @@ export default {
       loading: false,
       isCompleted: false,
       // NB: Use computed properties just in case you feel like using translations (e.g this.$t)
-      tabs: computed(() => {
-        return [
-          {
-            title: "Company",
-            iconSuccess: null,
-            isValid: true,
-          },
-          {
-            title: "Company Additional Info",
-            iconSuccess: null,
-            isValid: true,
-          },
-          {
-            title: "Employees",
-            iconSuccess: null,
-            isValid: true,
-          },
-
-          {
-            title: "Your Details",
-            iconSuccess: null,
-            isValid: true,
-          },
-          // {
-          //   title: "Verification",
-          //   iconSuccess: null,
-          //   isValid: true,
-          // },
-        ];
-      }),
-      details: [
-        {
-          nextText: "ABOUT",
-        },
-        {
-          nextText: "PROFESSION",
-        },
-        {
-          nextText: "EDUCATION",
-        },
-      ],
     };
   },
   methods: {
@@ -130,72 +88,18 @@ export default {
       return true; // Default to true if no validation is implemented
     },
 
-    /**
-     * The `step1Check()` function is responsible for performing a check or validation and returning a boolean value.
-     * If the returned value is `true`, it indicates that the check has passed successfully, allowing the code to proceed to the next step in the JavaScript execution flow.
-     *
-     * This function is commonly used in multi-step processes or conditional branching scenarios. It helps determine whether the conditions required for the next step to be executed have been met.
-     *
-     * The implementation details of the check performed in `step1Check()` may vary depending on the specific requirements of the software being developed. It could involve verifying certain data, validating user input, or checking the state of the application.
-     *
-     * Upon receiving a `true` result from `step1Check()`, the calling code can safely proceed to execute the subsequent steps or perform further actions. If `false` is returned, it indicates that the check failed, and appropriate actions can be taken to handle the failed condition.
-     *
-     * It is important to note that this function plays a crucial role in determining whether the code can progress to the next step based on the successful completion of a specific check or condition.
-     *
-     * @returns {boolean} - `true` if the check succeeds, allowing the code to proceed to the next step; `false` if the check fails, indicating the need for alternative actions.
-     */
     step1Check() {
       return true;
     },
-    /**
-     * The `step2Check()` function is responsible for performing a check or validation and returning a boolean value.
-     * If the returned value is `true`, it indicates that the check has passed successfully, allowing the code to proceed to the next step in the JavaScript execution flow.
-     *
-     * This function is commonly used in multi-step processes or conditional branching scenarios. It helps determine whether the conditions required for the next step to be executed have been met.
-     *
-     * The implementation details of the check performed in `step2Check()` may vary depending on the specific requirements of the software being developed. It could involve verifying certain data, validating user input, or checking the state of the application.
-     *
-     * Upon receiving a `true` result from `step2Check()`, the calling code can safely proceed to execute the subsequent steps or perform further actions. If `false` is returned, it indicates that the check failed, and appropriate actions can be taken to handle the failed condition.
-     *
-     * It is important to note that this function plays a crucial role in determining whether the code can progress to the next step based on the successful completion of a specific check or condition.
-     *
-     * @returns {boolean} - `true` if the check succeeds, allowing the code to proceed to the next step; `false` if the check fails, indicating the need for alternative actions.
-     */
+
     step2Check() {
       return true;
     },
-    /**
-     * The `step3Check()` function is responsible for performing a check or validation and returning a boolean value.
-     * If the returned value is `true`, it indicates that the check has passed successfully, allowing the code to proceed to the next step in the JavaScript execution flow.
-     *
-     * This function is commonly used in multi-step processes or conditional branching scenarios. It helps determine whether the conditions required for the next step to be executed have been met.
-     *
-     * The implementation details of the check performed in `step3Check()` may vary depending on the specific requirements of the software being developed. It could involve verifying certain data, validating user input, or checking the state of the application.
-     *
-     * Upon receiving a `true` result from `step3Check()`, the calling code can safely proceed to execute the subsequent steps or perform further actions. If `false` is returned, it indicates that the check failed, and appropriate actions can be taken to handle the failed condition.
-     *
-     * It is important to note that this function plays a crucial role in determining whether the code can progress to the next step based on the successful completion of a specific check or condition.
-     *
-     * @returns {boolean} - `true` if the check succeeds, allowing the code to proceed to the next step; `false` if the check fails, indicating the need for alternative actions.
-     */
+
     step3Check() {
       return true;
     },
 
-    /**
-     * The `step4Check()` function is responsible for performing a check or validation and returning a boolean value.
-     * If the returned value is `true`, it indicates that the check has passed successfully, allowing the code to proceed to the next step in the JavaScript execution flow.
-     *
-     * This function is commonly used in multi-step processes or conditional branching scenarios. It helps determine whether the conditions required for the next step to be executed have been met.
-     *
-     * The implementation details of the check performed in `step4Check()` may vary depending on the specific requirements of the software being developed. It could involve verifying certain data, validating user input, or checking the state of the application.
-     *
-     * Upon receiving a `true` result from `step4Check()`, the calling code can safely proceed to execute the subsequent steps or perform further actions. If `false` is returned, it indicates that the check failed, and appropriate actions can be taken to handle the failed condition.
-     *
-     * It is important to note that this function plays a crucial role in determining whether the code can progress to the next step based on the successful completion of a specific check or condition.
-     *
-     * @returns {boolean} - `true` if the check succeeds, allowing the code to proceed to the next step; `false` if the check fails, indicating the need for alternative actions.
-     */
     step4Check() {
       return true;
     },

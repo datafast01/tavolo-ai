@@ -7,8 +7,8 @@
         </VCol>
         <VCol cols="12">
           <VTextField
-            v-model="firstName"
-            :rules="nameRules"
+            v-model="contractTitle"
+            :rules="[requiredValidator]"
             label="Contract Title"
           />
         </VCol>
@@ -16,7 +16,7 @@
         <VCol cols="6">
           <VTextField
             v-model="dateOfAgreement"
-            :rules="dateRules"
+            :rules="[requiredValidator]"
             label="Date of Agreement"
             type="date"
           />
@@ -26,7 +26,7 @@
         <VCol cols="6">
           <VTextField
             v-model="startDate"
-            :rules="dateRules"
+            :rules="[requiredValidator]"
             label="Start Date"
             type="date"
           />
@@ -35,7 +35,7 @@
         <VCol cols="6">
           <VTextField
             v-model="endDate"
-            :rules="dateRules"
+            :rules="[requiredValidator]"
             label="End Date"
             type="date"
           />
@@ -54,7 +54,7 @@
           <!-- <v-select
             v-model="paymentPlan"
             :items="paymentPlans"
-            :rules="paymentPlanRules"
+            :rules="[requiredValidator]"
             append-icon
             label="Payment Plan"
             item-value="key"
@@ -86,41 +86,23 @@ import pay3 from "@/assets/images/cards/pay11.png";
 import pay2 from "@/assets/images/cards/pay12.png";
 import pay4 from "@/assets/images/cards/pay13.png";
 import pay1 from "@/assets/images/cards/pay14.png";
+import { emailValidator, requiredValidator } from "@validators";
 
 export default {
   data() {
     return {
+      emailValidator: emailValidator,
+      requiredValidator: requiredValidator,
+
       pay1: pay1,
       pay2: pay2,
       pay3: pay3,
       pay4: pay4,
-      firstName: "loram",
+      contractTitle: "",
       dateOfAgreement: null,
       startDate: null,
       endDate: null,
       paymentPlan: null,
-      states: [
-        "Alabama",
-        "Alaska",
-        "American Samoa",
-        "Arizona",
-        "Arkansas",
-        "California",
-        "Colorado",
-        "Connecticut",
-        "Delaware",
-        "District of Columbia",
-        "Federated States of Micronesia",
-        "Florida",
-      ],
-      nameRules: [
-        (v) => !!v || "Contract Title is required",
-        (v) =>
-          (v && v.length <= 20) ||
-          "Contract Title must be less than 50 characters",
-      ],
-      dateRules: [(v) => !!v || "Date is required"],
-      paymentPlanRules: [(v) => !!v || "Payment Plan is required"],
 
       paymentPlans: [
         { text: "Basic - $40/Recording", key: "basic" },
@@ -130,25 +112,7 @@ export default {
     };
   },
 
-  methods: {
-    getIconForState(state) {
-      // You can implement your logic here to return different icons based on the state
-      return [
-        {
-          title: "mdi-account",
-          iconSuccess: Alabama,
-          isValid: true,
-        },
-        {
-          title: "mdi-account",
-          iconSuccess: Alabama,
-          isValid: true,
-        },
-
-        // "mdi-account",
-      ]; // Replace "mdi-account" with the icon you want to use
-    },
-  },
+  methods: {},
 };
 </script>
 
