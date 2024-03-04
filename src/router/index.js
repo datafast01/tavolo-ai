@@ -216,6 +216,23 @@ const routes = [
     //  redirect: () => ({  name: 'login' }),
     meta: { requiresAuth: true },
   },
+{
+    path: "/contract-details/:id",
+    name: "contract-details",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../pages/videos/contracts/ContractDetails.vue"),
+    //  redirect: () => ({  name: 'login' }),
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/contracts",
+    name: "contracts",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../pages/videos/contracts/ListContracts.vue"),
+    //  redirect: () => ({  name: 'login' }),
+    meta: { requiresAuth: true },
+  },
+  
   { path: '/:catchAll(.*)', component: () =>
       import(/* webpackChunkName: "about" */ "../pages/pages/misc/not-found.vue"),meta: { requiresAuth: false } }
   //  {
