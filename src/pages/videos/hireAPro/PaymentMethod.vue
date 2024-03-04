@@ -4,12 +4,15 @@
       <VRow>
         <VCol cols="7">
           <VRow>
-            <VCol cols="2" v-for="payment in paymentMethods" :key="payment">
-              <v-badge content="✓" color="#9155FD">
-                <div class="vavatar">
-                  <v-img :src="payment.icon" alt="John"></v-img>
+            <VCol cols="2">
+              <!-- <v-badge content="✓ " color="#9155FD"> -->
+              <div class="vavatar relative">
+                <v-img :src="pay1" alt="John"></v-img>
+                <div class="p-2">
+                  <span color="#9155FD" class="tab-i">✓</span>
                 </div>
-              </v-badge>
+              </div>
+              <!-- </v-badge> -->
             </VCol>
           </VRow>
         </VCol>
@@ -115,6 +118,7 @@ export default {
   border: 2px solid #9155fd;
   text-align: center;
   height: 40px;
+  position: relative;
 }
 .vavatar-border {
   border: 2px solid #625d7a !important;
@@ -124,5 +128,15 @@ export default {
   line-height: 46px;
   font-weight: 500;
   border-top: 2px solid #625d7a;
+}
+
+.tab-i {
+  right: -11px;
+  border-radius: 15px;
+  background: #8a50f1;
+  position: absolute;
+  top: -12px;
+  padding: 0px 5px;
+  color: black;
 }
 </style>

@@ -42,7 +42,16 @@
         </VCol>
 
         <VCol cols="12">
-          <v-select
+          <v-select label="User" :items="items" item-title="name">
+            <template v-slot:item="{ props, item }">
+              <v-list-item v-bind="props">
+                <template v-slot:prepend>
+                  <v-icon> {{ item.raw.icon }}</v-icon>
+                </template>
+              </v-list-item>
+            </template>
+          </v-select>
+          <!-- <v-select
             v-model="paymentPlan"
             :items="paymentPlans"
             :rules="[requiredValidator]"
@@ -51,7 +60,21 @@
             item-value="key"
             item-title="text"
           >
-          </v-select>
+             <template v-slot:item="{ item }">
+              <v-list-item
+                v-for="(item, i) in items"
+                :key="i"
+                :value="item"
+                color="primary"
+              >
+                <template v-slot:prepend>
+                  <v-icon :icon="item.icon"></v-icon>
+                </template>
+
+                <v-list-item-title v-text="item.text"></v-list-item-title>
+              </v-list-item>
+            </template> -->
+          <!-- </v-select> -->
         </VCol>
       </VRow>
     </VForm>
