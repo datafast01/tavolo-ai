@@ -6,64 +6,77 @@
           <span class="text-subtitle-1">Influencer Details</span>
         </VCol>
         <VCol cols="12">
-          <VTextField v-model="firstName" label="Name" Value="First" />
+          <VTextField
+            v-model="influencerName"
+            label="Name"
+            Value="First"
+            :rules="[requiredValidator]"
+          />
         </VCol>
 
         <VCol cols="12">
-          <VTextField v-model="number" label="Contact Number" type="email" />
+          <VTextField
+            v-model="contactNumber"
+            label="Contact Number"
+            type="email"
+            :rules="[requiredValidator]"
+          />
         </VCol>
 
         <VCol cols="12">
-          <VTextField v-model="email" class="" label="Email" type="email" />
+          <VTextField
+            v-model="businessEmail"
+            class=""
+            label="Email"
+            type="email"
+            :rules="[requiredValidator, emailValidator]"
+          />
         </VCol>
 
         <VCol cols="12">
           <v-select
-            v-model="favorites"
-            :items="states"
+            v-model="socialAccount"
+            :items="socialMedia"
+            item-title="name"
+            item-value="key"
             label="Social Account"
             persistent-hint
+            :rules="[requiredValidator]"
           ></v-select>
         </VCol>
-
-        <!-- <VCol cols="12" class="d-flex justify-space-between">
-          <div class=""></div>
-          <div>
-            <RouterLink
-              class="text-primary ms-2 mb-1"
-              :to="{ name: 'pages-authentication-login-v2' }"
-            >
-              <VBtn @click="updateProfile">Save changes </VBtn>
-            </RouterLink>
-          </div>
-        </VCol> -->
       </VRow>
     </VForm>
   </VCardText>
 </template>
 
 <script>
+import { emailValidator, requiredValidator } from "@validators";
 export default {
   data() {
     return {
-      firstName: "loram",
-      number: "+1 (613) 353-3096",
-      email: "loremipsum@gmail.com",
-      social: "loram",
-      favorites: [],
-      states: [
-        "Alabama",
-        "Alaska",
-        "American Samoa",
-        "Arizona",
-        "Arkansas",
-        "California",
-        "Colorado",
-        "Connecticut",
-        "Delaware",
-        "District of Columbia",
-        "Federated States of Micronesia",
-        "Florida",
+      requiredValidator: requiredValidator,
+      emailValidator: emailValidator,
+      firstName: "",
+      contactNumber: "",
+      businessEmail: "",
+      socialAccount: null,
+
+      socialMedia: [
+        {
+          key: "instagram",
+          name: "Instagram",
+          icon: "mdi-instagram",
+        },
+        {
+          key: "facebook",
+          name: "Facebook",
+          icon: "mdi-facebook",
+        },
+        {
+          key: "tiktok",
+          name: "TikTok",
+          icon: "mdi-music-note",
+        },
       ],
     };
   },
