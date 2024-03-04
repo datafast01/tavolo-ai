@@ -14,6 +14,19 @@
               </div>
               <!-- </v-badge> -->
             </VCol>
+            <VCol cols="2">
+              <div class="vavatar vavatar-border">
+                <v-img :src="pay2" alt="John"></v-img>
+              </div>
+            </VCol>
+            <VCol cols="2">
+              <div class="vavatar vavatar-border">
+                <v-img :src="pay3" alt="John"></v-img></div
+            ></VCol>
+            <VCol cols="2">
+              <div class="vavatar vavatar-border">
+                <v-img :src="pay4" alt="John"></v-img></div
+            ></VCol>
           </VRow>
         </VCol>
       </VRow>
@@ -23,44 +36,25 @@
         </VCol>
         <VCol cols="12">
           <VTextField
-            v-model="cardHolderName"
+            v-model="firstName"
             label="Cardholder Name"
             Value="First"
-            :rules="[requiredValidator]"
           />
         </VCol>
 
         <VCol cols="6">
-          <VTextField
-            :rules="[requiredValidator]"
-            v-model="cardNumber"
-            label="Card Number"
-            type="data"
-          />
+          <VTextField v-model="firstName" label="Card Number" type="data" />
         </VCol>
 
         <VCol cols="3">
-          <VTextField
-            :rules="[requiredValidator]"
-            v-model="expiryDate"
-            label="Expiry Date"
-            type="date"
-          />
+          <VTextField v-model="firstName" label="Date" type="date" />
         </VCol>
 
         <VCol cols="3">
-          <VTextField
-            :rules="[requiredValidator]"
-            v-model="ccv"
-            label="CCV"
-            type="number"
-          />
+          <VTextField v-model="firstName" label="CCV" type="number" />
         </VCol>
         <VCol cols="12" class="py-2">
-          <v-checkbox
-            label="Save this card for future payments"
-            v-model="saveCard"
-          ></v-checkbox>
+          <v-checkbox label="Save this card for future payments"></v-checkbox>
         </VCol>
         <!-- <VCol cols="12" class="pt-3 pb-0 h-totle">
           <div class="d-flex flex-row justify-space-between">
@@ -86,26 +80,29 @@ import pay3 from "@/assets/images/cards/pay11.png";
 import pay2 from "@/assets/images/cards/pay12.png";
 import pay4 from "@/assets/images/cards/pay13.png";
 import pay1 from "@/assets/images/cards/pay14.png";
-import { requiredValidator } from "@validators";
-
 export default {
   data() {
     return {
-      requiredValidator: requiredValidator,
-
-      saveCard: false,
-      ccv: "",
-      expiryDate: "",
-      cardNumber: "",
-      cardHolderName: "",
-
-      paymentMethods: [
-        { key: "masterCard", icon: pay1 },
-        { key: "applePay", icon: pay2 },
-        { key: "visa", icon: pay3 },
-        { key: "paypal", icon: pay4 },
+      pay1: pay1,
+      pay2: pay2,
+      pay3: pay3,
+      pay4: pay4,
+      firstName: "loram",
+      favorites: [],
+      states: [
+        "Alabama",
+        "Alaska",
+        "American Samoa",
+        "Arizona",
+        "Arkansas",
+        "California",
+        "Colorado",
+        "Connecticut",
+        "Delaware",
+        "District of Columbia",
+        "Federated States of Micronesia",
+        "Florida",
       ],
-      selectedPaymentMethod: "visa",
     };
   },
 };
