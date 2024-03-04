@@ -7,6 +7,7 @@
             <h3>Contract Title Card title</h3>
           </div>
         </v-col>
+
         <v-col cols="6">
           <v-card class="">
             <v-card-item>
@@ -180,6 +181,31 @@
               />
               <VRadio label="Scheduled" value="schedule" color="primary" />
             </VRadioGroup>
+            <v-row no-gutters>
+              <v-col cols="12" sm="4">
+                <div class="me-3">
+                  <div rounded class="d-flex">
+                    <div class="bg-darken2 pa-3">
+                      <v-img
+                        :src="play1"
+                        height="20"
+                        width="20"
+                        alt="John"
+                      ></v-img>
+                    </div>
+                    <div>
+                      <span class="font-12">fdf</span>
+                      <h5>File Name</h5>
+                      <span class="font-12">fdf</span>
+                    </div>
+                  </div>
+                </div>
+              </v-col>
+
+              <v-col cols="12" sm="4">
+                <v-sheet class="ma-2 pa-2"> One of three columns </v-sheet>
+              </v-col>
+            </v-row>
           </v-card>
         </VCol>
 
@@ -190,9 +216,11 @@
 </template>
 
 <script>
+import play1 from "../../../assets/images/cards/folder.png";
 export default {
   data() {
     return {
+      play1: play1,
       selectedSchedule: "notSchedule",
       max: 90,
       slider: 40,
@@ -208,5 +236,14 @@ export default {
 
 .contact .v-field {
   display: inline !important;
+}
+
+.font-12 {
+  font-size: 12px;
+}
+.bg-darken2 {
+  background-color: #524d6b;
+  height: 52px;
+  width: 48px;
 }
 </style>
