@@ -4,29 +4,27 @@
       <VRow>
         <VCol cols="7">
           <VRow>
-            <VCol cols="2">
-              <!-- <v-badge content="✓ " color="#9155FD"> -->
-              <div class="vavatar relative">
-                <v-img :src="pay1" alt="John"></v-img>
+            <VCol v-for="(ig, index) in images" :key="index" cols="2">
+              <div class="vavatar relative border bg-purple-darken-2">
+                <v-img :src="ig" alt="John"></v-img>
                 <div class="p-2">
-                  <span color="#9155FD" class="tab-i">✓</span>
+                  <span class="tab-i">✓</span>
                 </div>
               </div>
-              <!-- </v-badge> -->
             </VCol>
-            <VCol cols="2">
-              <div class="vavatar vavatar-border">
+            <!-- <VCol cols="2">
+              <div class="vavatar vavatar-border border">
                 <v-img :src="pay2" alt="John"></v-img>
               </div>
             </VCol>
             <VCol cols="2">
-              <div class="vavatar vavatar-border">
+              <div class="vavatar vavatar-border border">
                 <v-img :src="pay3" alt="John"></v-img></div
             ></VCol>
             <VCol cols="2">
-              <div class="vavatar vavatar-border">
+              <div class="vavatar vavatar-border border">
                 <v-img :src="pay4" alt="John"></v-img></div
-            ></VCol>
+            ></VCol> -->
           </VRow>
         </VCol>
       </VRow>
@@ -103,6 +101,20 @@ export default {
         "Federated States of Micronesia",
         "Florida",
       ],
+      images: [
+        {
+          img: pay1,
+        },
+        {
+          img: pay2,
+        },
+        {
+          img: pay3,
+        },
+        {
+          img: pay4,
+        },
+      ],
     };
   },
 };
@@ -118,7 +130,7 @@ export default {
   position: relative;
 }
 .vavatar-border {
-  border: 2px solid #625d7a !important;
+  /* border: 2px solid #625d7a !important; */
 }
 .h-totle {
   font-size: 32px;
