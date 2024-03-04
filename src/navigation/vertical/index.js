@@ -1,6 +1,7 @@
 import dashboard from "./dashboard";
 // import others from './others'
 import askTavolo from "./askTavolo";
+import contracts from "./contracts";
 import customers from "./customers";
 import email from "./email";
 import menuItems from "./menuItems";
@@ -25,4 +26,5 @@ export default [
   ...videos,
   ...socialMedia,
   ...profile,
+  ...contracts
 ];
