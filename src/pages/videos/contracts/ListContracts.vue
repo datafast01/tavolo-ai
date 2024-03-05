@@ -27,10 +27,9 @@
         :items="sampleInfluncerData"
         :items-length="totalUsers"
         :headers="headers"
-        class="rounded-0"
+        class=""
         :loading="isLoading"
         item-key="key"
-        @click:row="viewDetails"
       >
         <!-- Seegments -->
         <!-- <template #item.profilePhoto="{ item }">
@@ -43,7 +42,7 @@
             size="small"
             class="font-weight-medium"
           >
-            {{ item.status ? "YES" : "NO" }}
+            {{ item.status ? "Completed" : "Pending" }}
           </VChip>
         </template>
 
@@ -52,7 +51,7 @@
             {{
               item.dateofAgreement == null
                 ? "Date Not Available"
-                : moment(item.dateofAgreement).format("MMMM Do YYYY, h:mm:ss a")
+                : moment(item.dateofAgreement).format("MMMM Do YYYY")
             }}
           </span>
         </template>
@@ -75,12 +74,9 @@
             <VMenu activator="parent">
               <VList>
                 <VListItem @click="changeStatus(item.raw)">
-                  <template #prepend>
-                    <!-- <VIcon icon="mdi-recycle" /> -->
-                  </template>
                   <VListItemTitle>chat</VListItemTitle>
                 </VListItem>
-                <VListItem @click="deleteCampaign(item.raw._id)">
+                <VListItem @click="viewDetails(item)">
                   <template #prepend>
                     <!-- <VIcon icon="mdi-delete-outline" /> -->
                   </template>
@@ -283,9 +279,8 @@ const sampleInfluncerData = [
 
 const router = useRouter();
 const route = useRoute();
-const viewDetails = (item, row) => {
-  router.push({ path: `/contract-details/${row.item.id}` });
-  console.log(row.item);
+const viewDetails = (item) => {
+  router.push({ path: `/contract-details/${item.id}` });
 };
 </script>
 
