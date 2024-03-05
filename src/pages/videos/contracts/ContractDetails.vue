@@ -1,18 +1,45 @@
 <template>
-  <v-container class="">
-    <v-row class="pa-">
+  <v-container class="contact pa-0">
+    <v-row class="pa-0 ma-0 pb-3">
       <v-col cols="6" class="pa-0">
-        <v-card width="200" class="pa-3">
-          <v-radio-group color="#3CB22B" v-model="ex7">
-            <div class="d-flex align-center justify-space-between">
-              <span class="mr-5">In Progress</span>
-              <v-radio class="flex-grow-0" color="red" value="1"></v-radio>
-            </div>
-          </v-radio-group>
-        </v-card>
+        <div class="d-flex align-center green-1 justify-space-between">
+          <v-card width="200" class="py-2 px-3">
+            <v-radio-group color="#3CB22B" v-model="ex7">
+              <div class="d-flex align-center green-1 justify-space-between">
+                <span class="mr-5">In Progress</span>
+                <v-radio class="flex-grow-0" color="red" value="1"></v-radio>
+              </div>
+            </v-radio-group>
+          </v-card>
+          <v-card width="200" class="py-2 px-3 mx-2">
+            <v-radio-group color="red" v-model="ex7">
+              <div class="d-flex align-center red-1 justify-space-between">
+                <span class="mr-5">In Progress</span>
+                <v-radio class="flex-grow-0" color="red" value="1"></v-radio>
+              </div>
+            </v-radio-group>
+          </v-card>
+          <v-card width="200" class="py-2 px-3">
+            <v-radio-group v-model="ex7">
+              <div class="d-flex align-center blue-1 justify-space-between">
+                <span class="mr-5">In Progress</span>
+                <v-radio class="flex-grow-0" value="1"></v-radio>
+              </div>
+            </v-radio-group>
+          </v-card>
+        </div>
       </v-col>
-      <v-col cols="6" class="pa-0">
+      <v-col cols="6" class="pa-0 d-flex align-center justify-end">
         <div class="float-right">
+          <v-btn color="#312D4B" size="large" class="mr-4">
+            <v-img
+              :src="chat"
+              class="flex-grow-0"
+              height="30"
+              width="30"
+              alt="John"
+            ></v-img
+          ></v-btn>
           <v-btn elevation="24" size="large">
             OPTIONS
             <v-icon>mdi-chevron-down</v-icon>
@@ -59,9 +86,18 @@
         <v-col cols="6">
           <v-card class="">
             <v-card-item>
-              <v-card-subtitle class="pb-0"> Status </v-card-subtitle>
-              <v-progress-linear v-model="slider" color="#3CB22B" hide-details>
-              </v-progress-linear>
+              <v-card-subtitle class="pb-2"> Status </v-card-subtitle>
+              <div class="d-flex align-center">
+                <v-progress-linear
+                  v-model="slider"
+                  color="#3CB22B"
+                  hide-details
+                  class="mr-3"
+                  style="height: 6px; left: 0%; transform: translateX(0%)"
+                >
+                </v-progress-linear>
+                <span class="green-1">45%</span>
+              </div>
             </v-card-item>
           </v-card>
         </v-col>
@@ -254,16 +290,18 @@
 <script>
 import download from "../../../assets/images/cards/download.png";
 import play1 from "../../../assets/images/cards/folder.png";
+import chat from "../../../assets/images/iconify-svg/chat.svg";
 export default {
   data() {
     return {
       ex7: null,
       ex8: null,
+      chat: chat,
       play1: play1,
       download: download,
       selectedSchedule: "notSchedule",
       max: 90,
-      slider: 40,
+      slider: 45,
     };
   },
 };
@@ -293,5 +331,21 @@ export default {
 }
 .l-h {
   line-height: 14px;
+}
+
+/* ::v-deep .v-progress-linear {
+  height: 4px;
+  left: 0 !important;
+  transform: translateX(0%) !important;
+} */
+
+.green-1 {
+  color: #3cb22b;
+}
+.red-1 {
+  color: #b22b2b;
+}
+.blue-1 {
+  color: #1d42b9;
 }
 </style>

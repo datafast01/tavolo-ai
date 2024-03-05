@@ -5,13 +5,8 @@
       @click="toggle"
     >
       <span>Sort By</span>
-      <v-img
-        :src="sort"
-        class="flex-grow-0"
-        height="20"
-        width="20"
-        alt="John"
-      ></v-img></div
+      <v-img :src="sort" class="flex-grow-0" height="20" width="20" alt="John">
+      </v-img></div
   ></v-card>
   <v-menu activator="#menu-activator">
     <v-list>
