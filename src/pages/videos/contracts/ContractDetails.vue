@@ -1,9 +1,43 @@
 <template>
-  <v-col cols="12" md="6" sm="6">
-    <v-radio-group v-model="ex7" column>
-      <v-radio color="red" value="1"></v-radio>
-    </v-radio-group>
-  </v-col>
+  <v-container class="">
+    <v-row class="pa-">
+      <v-col cols="6" class="pa-0">
+        <v-card width="200" class="pa-3">
+          <v-radio-group color="#3CB22B" v-model="ex7">
+            <div class="d-flex align-center justify-space-between">
+              <span class="mr-5">In Progress</span>
+              <v-radio class="flex-grow-0" color="red" value="1"></v-radio>
+            </div>
+          </v-radio-group>
+        </v-card>
+      </v-col>
+      <v-col cols="6" class="pa-0">
+        <div class="float-right">
+          <v-btn elevation="24" size="large">
+            OPTIONS
+            <v-icon>mdi-chevron-down</v-icon>
+            <VMenu activator="parent">
+              <VList>
+                <VListItem @click="changeStatus(item.raw)">
+                  <template #prepend>
+                    <!-- <VIcon icon="mdi-recycle" /> -->
+                  </template>
+                  <VListItemTitle>chat</VListItemTitle>
+                </VListItem>
+                <VListItem @click="deleteCampaign(item.raw._id)">
+                  <template #prepend>
+                    <!-- <VIcon icon="mdi-delete-outline" /> -->
+                  </template>
+                  <VListItemTitle>Details</VListItemTitle>
+                </VListItem>
+              </VList>
+            </VMenu>
+          </v-btn>
+        </div>
+      </v-col>
+    </v-row>
+  </v-container>
+
   <v-card>
     <v-container class="contact">
       <v-row class="pa-5">
