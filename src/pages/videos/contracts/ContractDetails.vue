@@ -1,4 +1,9 @@
 <template>
+  <v-col cols="12" md="6" sm="6">
+    <v-radio-group v-model="ex7" column>
+      <v-radio color="red" value="1"></v-radio>
+    </v-radio-group>
+  </v-col>
   <v-card>
     <v-container class="contact">
       <v-row class="pa-5">
@@ -75,11 +80,16 @@
             </v-card-item>
           </v-card>
         </v-col>
+
         <v-col cols="6">
           <v-card class="">
             <v-card-item>
               <v-card-subtitle> Card subtitle secondary text </v-card-subtitle>
-              <v-card-title> Card title </v-card-title>
+              <ul class="ul pt-3">
+                <li>Lorem ipsum dolor sit amet sed ante</li>
+                <li>Lorem ipsum dolor sit amet sed ante</li>
+                <li>Lorem ipsum dolor sit amet sed ante</li>
+              </ul>
             </v-card-item>
           </v-card>
         </v-col>
@@ -181,31 +191,47 @@
               />
               <VRadio label="Scheduled" value="schedule" color="primary" />
             </VRadioGroup>
-            <v-row no-gutters>
-              <v-col cols="12" sm="4">
-                <div class="me-3">
-                  <div rounded class="d-flex">
-                    <div class="bg-darken2 pa-3">
-                      <v-img
-                        :src="play1"
-                        height="20"
-                        width="20"
-                        alt="John"
-                      ></v-img>
+            <v-card-item>
+              <v-row no-gutters>
+                <v-col cols="12" v-for="n in 4">
+                  <div
+                    class="me-3 border-t py-2 d-flex align-center justify-space-between"
+                  >
+                    <div rounded class="d-flex align-center justifycenter">
+                      <div class="bg-darken2">
+                        <v-img
+                          :src="play1"
+                          height="20"
+                          width="20"
+                          alt="John"
+                        ></v-img>
+                      </div>
+                      <div>
+                        <span class="font-12">Yesterday</span>
+                        <h4 class="l-h">File Name</h4>
+                        <span class="font-12">{{ n }}.8 GB</span>
+                      </div>
                     </div>
                     <div>
-                      <span class="font-12">fdf</span>
-                      <h5>File Name</h5>
-                      <span class="font-12">fdf</span>
+                      <div class="d-flex align-center justify-center">
+                        <v-img
+                          :src="download"
+                          height="30"
+                          width="30"
+                          alt="John"
+                        ></v-img>
+                        <v-btn class="ml-2" elevation="24" size="large"
+                          >Ask for revision</v-btn
+                        >
+                      </div>
                     </div>
                   </div>
-                </div>
-              </v-col>
-
-              <v-col cols="12" sm="4">
-                <v-sheet class="ma-2 pa-2"> One of three columns </v-sheet>
-              </v-col>
-            </v-row>
+                </v-col>
+                <v-col cols="12" class="text-center">
+                  <v-btn color="grey-darken-2 " size="small"> View More </v-btn>
+                </v-col>
+              </v-row>
+            </v-card-item>
           </v-card>
         </VCol>
 
@@ -216,11 +242,15 @@
 </template>
 
 <script>
+import download from "../../../assets/images/cards/download.png";
 import play1 from "../../../assets/images/cards/folder.png";
 export default {
   data() {
     return {
+      ex7: null,
+      ex8: null,
       play1: play1,
+      download: download,
       selectedSchedule: "notSchedule",
       max: 90,
       slider: 40,
@@ -239,11 +269,19 @@ export default {
 }
 
 .font-12 {
-  font-size: 12px;
+  font-size: 10px;
 }
 .bg-darken2 {
   background-color: #524d6b;
   height: 52px;
   width: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  margin-right: 12px;
+}
+.l-h {
+  line-height: 14px;
 }
 </style>

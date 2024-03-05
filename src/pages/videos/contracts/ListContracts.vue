@@ -4,6 +4,21 @@
       {{ snkMsg }}
     </VSnackbar>
 
+    <v-row justify="end" class="pb-3">
+      <v-col cols="3" class="float-right">
+        <v-text-field
+          style="width: 200px"
+          label="Search"
+          append-inner-icon="mdi-magnify"
+          variant="solo-filled"
+          class="float-right"
+        ></v-text-field>
+      </v-col>
+      <v-col cols="3">
+        <Dropdown />
+      </v-col>
+    </v-row>
+
     <VCard>
       <!-- SECTION data table -->
       <VDataTableServer
@@ -13,40 +28,72 @@
         :items-length="totalUsers"
         :headers="headers"
         class="rounded-0"
-        @update:options="options = $event"
         :loading="isLoading"
         item-key="key"
         @click:row="viewDetails"
       >
         <!-- Seegments -->
-        <template #item.profilePhoto="{ item }">
+        <!-- <template #item.profilePhoto="{ item }">
           <div class="py-3">fullName</div>
+        </template> -->
+        <template #item.status="{ item }">
+          <VChip
+            :color="item.status ? 'primary' : 'error'"
+            :class="`text-${item.status ? 'primary' : 'error'}`"
+            size="small"
+            class="font-weight-medium"
+          >
+            {{ item.status ? "YES" : "NO" }}
+          </VChip>
         </template>
-        <template #item.charges="{ item }">
-          <button class="blue-darke px-2 py-1 rounded">
+
+        <template #item.dateofAgreement="{ item }">
+          <span class="text-sm">
+            {{
+              item.dateofAgreement == null
+                ? "Date Not Available"
+                : moment(item.dateofAgreement).format("MMMM Do YYYY, h:mm:ss a")
+            }}
+          </span>
+        </template>
+
+        <template #item.paymentPlan="{ item }">
+          <div class="d-flex flex-column">
+            <span class="text-sm">
+              {{ item.paymentPlan }}
+            </span>
+            <small>
+              {{ item.pricing }}
+            </small>
+          </div>
+        </template>
+
+        <template #item.details="{ item }"
+          ><v-btn elevation="24" size="small">
             DETAILS
+            <v-icon>mdi-chevron-down</v-icon>
             <VMenu activator="parent">
               <VList>
                 <VListItem @click="changeStatus(item.raw)">
                   <template #prepend>
-                    <VIcon icon="mdi-recycle" />
+                    <!-- <VIcon icon="mdi-recycle" /> -->
                   </template>
-                  <VListItemTitle>Change Status</VListItemTitle>
+                  <VListItemTitle>chat</VListItemTitle>
                 </VListItem>
                 <VListItem @click="deleteCampaign(item.raw._id)">
                   <template #prepend>
-                    <VIcon icon="mdi-delete-outline" />
+                    <!-- <VIcon icon="mdi-delete-outline" /> -->
                   </template>
-                  <VListItemTitle>Delete</VListItemTitle>
+                  <VListItemTitle>Details</VListItemTitle>
                 </VListItem>
               </VList>
             </VMenu>
-          </button>
+          </v-btn>
         </template>
 
         <!-- Pagination -->
         <template #bottom>
-          <VDivider />
+          <!-- <VDivider /> -->
 
           <div class="d-flex justify-end gap-x-6 pa-2 flex-wrap">
             <div class="d-flex align-center gap-x-2 text-sm">
@@ -98,11 +145,13 @@
 </template>
 
 <script setup>
+import moment from "moment";
 import { VDataTableServer } from "vuetify/lib/components/index.mjs";
 // import { paginationMeta } from '@/@fake-db/utils'
 // import AddNewUserDrawer from "@/views/apps/user/list/AddNewUserDrawer.vue";
 import { useUserListStore } from "@/views/apps/user/useUserListStore";
 import { useRouter } from "vue-router";
+import Dropdown from "./Dropdown.vue";
 
 const userListStore = useUserListStore();
 const searchQuery = ref("");
@@ -128,37 +177,37 @@ const headers = [
   {
     id: 0,
     title: "Influencer Name",
-    key: "profilePhoto",
+    key: "influencerName",
   },
   {
     id: 1,
     title: "Social Media Username",
-    key: "fullName",
+    key: "socialMediaUsername",
   },
   {
     id: 2,
     title: "Contract Title",
-    key: "userName",
+    key: "contractTitle",
   },
   {
     id: 3,
     title: "Date of Agreement",
-    key: "gender",
+    key: "dateofAgreement",
   },
   {
     id: 4,
     title: "Payment Plan",
-    key: "audience",
+    key: "paymentPlan",
   },
   {
     id: 5,
     title: "Status",
-    key: "rating",
+    key: "status",
   },
   {
     id: 6,
     title: "Details",
-    key: "charges",
+    key: "details",
   },
 ];
 
@@ -166,58 +215,69 @@ const sampleInfluncerData = [
   {
     id: 0,
     img: "",
-    fullName: "Lorem Ipsum",
-    userName: "Lorem Ipsum",
-    gender: "male",
-    audience: "200",
-    rating: "4",
-    charges: "$45/Recording",
+    influencerName: "Lorem Ipsum",
+    socialMediaUsername: "Lorem Ipsum",
+    contractTitle: "Lorem Ipsum",
+    dateofAgreement: "2023-09-28",
+    paymentPlan: "Popular",
+    status: true,
+    details: "",
+    pricing: "$45/Recording",
   },
   {
     id: 1,
     img: "",
-    fullName: "Lorem Ipsum",
-    userName: "Lorem Ipsum",
-    gender: "male",
-    audience: "200",
-    rating: "4",
-    charges: "$45/Recording",
+    influencerName: "Lorem Ipsum",
+    socialMediaUsername: "Lorem Ipsum",
+    contractTitle: "Lorem Ipsum",
+    dateofAgreement: "2023-09-28",
+    paymentPlan: "Popular",
+    status: false,
+    details: "",
+    pricing: "$45/Recording",
   },
   {
     id: 2,
     img: "",
-    fullName: "Lorem Ipsum",
-    userName: "Lorem Ipsum",
-    gender: "Female",
-    audience: "500k",
-    rating: "4",
-    charges: "$45/Recording",
+    influencerName: "Lorem Ipsum",
+    socialMediaUsername: "Lorem Ipsum",
+    contractTitle: "Lorem Ipsum",
+    dateofAgreement: "2023-09-28",
+    paymentPlan: "Popular",
+    status: "4",
+    details: "",
+    pricing: "$45/Recording",
   },
   {
     id: 3,
     img: "",
-    fullName: "Lorem Ipsum",
-    userName: "Lorem Ipsum",
-    gender: "male",
-    audience: "100k",
-    rating: "4",
-    charges: "$45/Recording",
+    influencerName: "Lorem Ipsum",
+    socialMediaUsername: "Lorem Ipsum",
+    contractTitle: "Lorem Ipsum",
+    dateofAgreement: "2023-09-28",
+    paymentPlan: "Popular",
+    status: "4",
+    details: "",
+    pricing: "$45/Recording",
   },
   {
     id: 4,
     img: "",
-    fullName: "Lorem Ipsum",
-    userName: "Lorem Ipsum",
-    gender: "Female",
-    audience: "100k",
-    rating: "4",
-    charges: "$45/Recording",
+    influencerName: "Lorem Ipsum",
+    socialMediaUsername: "Lorem Ipsum",
+    contractTitle: "Lorem Ipsum",
+    dateofAgreement: "2023-09-28",
+    paymentPlan: "Popular",
+    status: "4",
+    details: "",
+    pricing: "$45/Recording",
   },
   {
     id: 5,
-    userName: "Lorem Ipsum",
-    rating: "4",
-    charges: "$45/Recording",
+    contractTitle: "Lorem Ipsum",
+    status: "4",
+    details: "",
+    pricing: "$45/Recording",
   },
 ];
 
