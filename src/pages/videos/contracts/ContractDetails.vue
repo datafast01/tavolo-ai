@@ -9,15 +9,15 @@
       <v-row class="pa-5">
         <v-col cols="12">
           <div class="">
-            <h3>Contract Title Card title</h3>
+            <h2>Contract Title</h2>
           </div>
         </v-col>
 
         <v-col cols="6">
           <v-card class="">
             <v-card-item>
-              <v-card-subtitle> Card subtitle secondary text </v-card-subtitle>
-              <v-card-title>Title Card title </v-card-title>
+              <v-card-subtitle> Business Name </v-card-subtitle>
+              <v-card-title> Lorem Ipsum </v-card-title>
             </v-card-item>
           </v-card>
         </v-col>
@@ -53,8 +53,8 @@
         <v-col cols="6">
           <v-card class="">
             <v-card-item>
-              <v-card-subtitle> Card subtitle secondary text </v-card-subtitle>
-              <v-card-title>Title Card title </v-card-title>
+              <v-card-subtitle> Payment Plan </v-card-subtitle>
+              <v-card-title>Popular - $45/Recording</v-card-title>
             </v-card-item>
           </v-card>
         </v-col>
@@ -62,8 +62,24 @@
         <v-col cols="6">
           <v-card class="">
             <v-card-item>
-              <v-card-subtitle> Card subtitle secondary text </v-card-subtitle>
-              <v-card-title>Title Card title </v-card-title>
+              <v-card-subtitle> Date of Agreement </v-card-subtitle>
+              <v-card-title>DD/MM/YYYY</v-card-title>
+            </v-card-item>
+          </v-card>
+        </v-col>
+        <v-col cols="6">
+          <v-card class="">
+            <v-card-item>
+              <v-card-subtitle> Start to End Date</v-card-subtitle>
+              <v-card-title>DD/MM/YYYY</v-card-title>
+            </v-card-item>
+          </v-card>
+        </v-col>
+        <v-col cols="6">
+          <v-card class="">
+            <v-card-item>
+              <v-card-subtitle> End Date </v-card-subtitle>
+              <v-card-title>DD/MM/YYYY</v-card-title>
             </v-card-item>
           </v-card>
         </v-col>
@@ -71,11 +87,11 @@
         <v-col cols="6">
           <v-card class="">
             <v-card-item>
-              <v-card-subtitle> Card subtitle secondary text </v-card-subtitle>
+              <v-card-subtitle> Goals and Key Points </v-card-subtitle>
               <ul class="ul pt-3">
                 <li>Lorem ipsum dolor sit amet sed ante</li>
-                <li>Lorem ipsum dolor sit amet sed ante</li>
-                <li>Lorem ipsum dolor sit amet sed ante</li>
+                <li>consectetur adipiscing elit dolor sit</li>
+                <li>Praesent sed ante nec</li>
               </ul>
             </v-card-item>
           </v-card>
@@ -84,21 +100,19 @@
         <v-col cols="6">
           <v-card class="">
             <v-card-item>
-              <v-card-subtitle> Card subtitle secondary text </v-card-subtitle>
-              <ul class="ul pt-3">
-                <li>Lorem ipsum dolor sit amet sed ante</li>
-                <li>Lorem ipsum dolor sit amet sed ante</li>
-                <li>Lorem ipsum dolor sit amet sed ante</li>
-              </ul>
+              <v-card-subtitle> Description </v-card-subtitle>
+              <p class="pt-3 ma-0">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Praesent sed ante nec velit viverra vehicula. Mauris ultrices
+                viverra lorem, nec porttitor nisl maximus vitae.
+              </p>
             </v-card-item>
           </v-card>
         </v-col>
 
         <v-col cols="12">
           <VCard>
-            <v-card-subtitle class="pt-5">
-              Card subtitle secondary text
-            </v-card-subtitle>
+            <v-card-subtitle class="pt-5"> Activity Timeline </v-card-subtitle>
             <VCardText>
               <VTimeline
                 density="compact"
@@ -111,25 +125,15 @@
                     class="d-flex justify-space-between align-center flex-wrap"
                   >
                     <h4 class="app-timeline-title me-1 mb-2">
-                      Email Campaign Launched
+                      Project Awaiting Completion
                     </h4>
                     <small class="app-timeline-meta text-no-wrap"
-                      >Wednesday</small
+                      >Yesterday</small
                     >
                   </div>
                   <p class="mb-0 app-timeline-text">
-                    34 conversions in last 2 days
+                    Project is in progress and will be completed once you do it.
                   </p>
-                  <span class="d-flex align-center mt-2">
-                    <!-- <VIcon
-              color="error"
-              icon="mdi-file-pdf-box"
-              class="me-1"
-               /> -->
-                    <span class="font-weight-medium text-sm"
-                      >$853 in sales</span
-                    >
-                  </span>
                 </VTimelineItem>
 
                 <VTimelineItem dot-color="primary" size="x-small">
@@ -137,7 +141,7 @@
                     class="d-flex justify-space-between align-center flex-wrap"
                   >
                     <h4 class="app-timeline-title me-1 mb-2">
-                      Text Campaign Launched 😎
+                      Contract Approval 😎
                     </h4>
                     <small class="app-timeline-meta text-no-wrap"
                       >Wednesday</small
@@ -145,19 +149,8 @@
                   </div>
 
                   <p class="mb-1 app-timeline-text">
-                    51 conversions in last 2 days
+                    The contract has been approved by both parties.
                   </p>
-
-                  <div class="d-flex align-center mt-3">
-                    <!-- <VAvatar
-              size="24"
-              class="me-2"
-              :image="avatar2"
-            /> -->
-                    <div>
-                      <p class="font-weight-medium mb-0">$1,083 in sales</p>
-                    </div>
-                  </div>
                 </VTimelineItem>
 
                 <VTimelineItem dot-color="info" size="x-small">
@@ -165,14 +158,15 @@
                     class="d-flex justify-space-between align-center flex-wrap"
                   >
                     <h4 class="app-timeline-title me-1 mb-2">
-                      Organic Video Launched on 4 Platforms
+                      Contract Initiation
                     </h4>
                     <small class="app-timeline-meta text-no-wrap"
-                      >Wednesday</small
+                      >Yesterday</small
                     >
                   </div>
                   <p class="mb-0 app-timeline-text">
-                    382k impressions in last 7 days
+                    The contract has been accepted and initiated by the
+                    influencer.
                   </p>
                 </VTimelineItem>
               </VTimeline>
@@ -182,7 +176,7 @@
 
         <VCol cols="12">
           <v-card>
-            <v-card-subtitle class="pt-5"> Card subtitle </v-card-subtitle>
+            <v-card-subtitle class="pt-5"> Submissions </v-card-subtitle>
             <VRadioGroup class="pl-4" v-model="selectedSchedule" :inline="true">
               <VRadio
                 label="Auto Sending"
