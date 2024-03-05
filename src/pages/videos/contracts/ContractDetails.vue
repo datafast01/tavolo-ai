@@ -26,26 +26,8 @@
           <v-card class="">
             <v-card-item>
               <v-card-subtitle class="pb-0"> Status </v-card-subtitle>
-              <v-slider
-                v-model="slider"
-                :max="max"
-                :min="min"
-                class="align-center"
-                color="#3CB22B"
-                hide-details
-              >
-                <template v-slot:append>
-                  <v-text-field
-                    v-model="slider"
-                    class="border-0"
-                    density="compact"
-                    style="width: 70px"
-                    type="number"
-                    hide-details
-                    single-line
-                  ></v-text-field>
-                </template>
-              </v-slider>
+              <v-progress-linear v-model="slider" color="#3CB22B" hide-details>
+              </v-progress-linear>
             </v-card-item>
           </v-card>
         </v-col>
