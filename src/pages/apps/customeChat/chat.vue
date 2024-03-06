@@ -1,7 +1,7 @@
 <template>
   <div>
     <vue-advanced-chat
-      height="calc(50vh - 20px)"
+      height="calc(50vh - 10px)"
       :current-user-id="currentUserId"
       :rooms="JSON.stringify(rooms)"
       :rooms-loaded="true"
@@ -10,6 +10,17 @@
       :messages-loaded="messagesLoaded"
       @send-message="sendMessage($event.detail[0])"
       @fetch-messages="fetchMessages($event.detail[0])"
+      style="
+        background: #383452;
+        --chat-header-bg-color: #383452;
+        --chat-content-bg-color: #383452;
+        --chat-footer-bg-color: #383452;
+        --chat-message-bg-color: #3d3759;
+        --chat-bg-color-input: #3d3759;
+        --chat-color: #fff;
+        --chat-message-color: #ffffff;
+        --chat-header-color-name: #ffffff;
+      "
     />
   </div>
 </template>
@@ -26,7 +37,7 @@ export default {
       rooms: [
         {
           roomId: "1",
-          roomName: "Room 1",
+          roomName: "Name",
           avatar: "https://66.media.tumblr.com/avatar_c6a8eae4303e_512.pnj",
           users: [
             { _id: "1234", username: "John Doe" },
@@ -100,4 +111,15 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style>
+.vac-room-header {
+  background: #f8f9fa00;
+}
+::v-deep .vac-col-messages .vac-container-scroll {
+  background: #f8f9fa00 !important;
+}
+
+.v-toolbar {
+  color: blue;
+}
+</style>

@@ -17,7 +17,7 @@
           </v-card>
           <v-card
             width="200"
-            class="py-2 px-3 mx-2"
+            class="py-2 px-3 mr-2"
             v-if="currentStatus == 'inProgress'"
           >
             <v-radio-group color="red" v-model="ex7">
@@ -242,12 +242,8 @@
           <v-card>
             <v-card-subtitle class="pt-5"> Submissions </v-card-subtitle>
             <VRadioGroup class="pl-4" v-model="selectedSchedule" :inline="true">
-              <VRadio
-                label="Auto Sending"
-                value="notSchedule"
-                color="primary"
-              />
-              <VRadio label="Scheduled" value="schedule" color="primary" />
+              <VRadio label="Original" value="notSchedule" color="primary" />
+              <VRadio label="Revised" value="schedule" color="primary" />
             </VRadioGroup>
             <v-card-item>
               <v-row no-gutters>
@@ -379,11 +375,16 @@ export default {
       max: 90,
       slider: 45,
       currentStatus: "inProgress",
+      showModal: false,
     };
   },
   methods: {
     showChat() {
       this.$refs.chat_dialog.dialog = true;
+    },
+
+    sendRequest() {
+      this.showModal = true;
     },
   },
 };
