@@ -266,7 +266,11 @@
                           width="30"
                           alt="John"
                         ></v-img>
-                        <v-btn class="ml-2" elevation="24" size="large"
+                        <v-btn
+                          class="ml-2"
+                          @click="sendRequest"
+                          elevation="24"
+                          size="large"
                           >Ask for revision</v-btn
                         >
                       </div>
@@ -285,6 +289,63 @@
       </v-row>
     </v-container>
   </v-card>
+
+  <VDialog v-model="showModal" max-width="700">
+    <!-- Dialog Activator -->
+
+    <!-- Dialog Content -->
+    <VCard class="pa-3">
+      <DialogCloseBtn variant="text" size="small" @click="showModal = false" />
+      <VCardText class="text-center text-h5"
+        >Send Revision Request<br />
+        <span class="text-body-2">For File ‘Lorem Ipsum’</span>
+      </VCardText>
+      <VCardText>
+        <VRow>
+          <VCol cols="2"></VCol>
+          <VCol cols="8">
+            <VCard class="pa-3">
+              <div class="me-3 py-1 d-flex align-center justify-space-between">
+                <div rounded class="d-flex align-center justifycenter">
+                  <div class="bg-darken2">
+                    <v-img
+                      :src="play1"
+                      height="20"
+                      width="20"
+                      alt="John"
+                    ></v-img>
+                  </div>
+                  <div>
+                    <h4 class="text-subtitle-1 l-h">File Name</h4>
+                    <span class="font-12">2.8 GB</span>
+                  </div>
+                </div>
+                <div>
+                  <div class="text-body-2">Yesterday</div>
+                </div>
+              </div>
+            </VCard>
+            <v-textarea
+              v-model="text"
+              label="Comments"
+              row-height="25"
+              rows="5"
+              variant="outlined"
+              auto-grow
+              shaped
+              class="pt-8"
+            ></v-textarea>
+
+            <div class="text-center pt-6">
+              <VBtn color="primary mr-4 " @click="sendCampaign"> SEND </VBtn>
+              <VBtn color="secondary" @click="showModal = false"> Cancel </VBtn>
+            </div>
+          </VCol>
+          <VCol cols="2"></VCol>
+        </VRow>
+      </VCardText>
+    </VCard>
+  </VDialog>
 </template>
 
 <script>
@@ -302,7 +363,15 @@ export default {
       selectedSchedule: "notSchedule",
       max: 90,
       slider: 45,
+      showModal: false,
+      text: "Leave a comment describing what needs to be done in revision.",
     };
+  },
+
+  methods: {
+    sendRequest() {
+      this.showModal = true;
+    },
   },
 };
 </script>
