@@ -1,28 +1,21 @@
 <script setup>
-const { y } = useWindowScroll()
+const { y } = useWindowScroll();
 
 const scrollToTop = () => {
   window.scrollTo({
     top: 0,
-    behavior: 'smooth',
-  })
-}
+    behavior: "smooth",
+  });
+};
 </script>
 
 <template>
   <VScaleTransition
-    style="transform-origin: center;"
+    style="transform-origin: center"
     class="scroll-to-top d-print-none"
   >
-    <VBtn
-      v-show="y > 200"
-      icon
-      @click="scrollToTop"
-    >
-      <VIcon
-        size="22"
-        icon="mdi-arrow-up"
-      />
+    <VBtn v-show="y > 200" icon @click="scrollToTop">
+      <VIcon size="22" icon="mdi-arrow-up" />
     </VBtn>
   </VScaleTransition>
 </template>

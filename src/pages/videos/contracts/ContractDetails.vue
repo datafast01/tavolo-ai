@@ -3,15 +3,23 @@
     <v-row class="pa-0 ma-0 pb-3">
       <v-col cols="6" class="pa-0">
         <div class="d-flex align-center green-1 justify-space-between">
-          <v-card width="200" class="py-2 px-3">
-            <v-radio-group color="#3CB22B" v-model="ex7">
+          <v-card
+            width="200"
+            class="py-2 px-3"
+            v-if="currentStatus == 'completed'"
+          >
+            <v-radio-group color="#3CB22B" v-model="currentStatus">
               <div class="d-flex align-center green-1 justify-space-between">
-                <span class="mr-5">In Progress</span>
+                <span class="mr-5">Completed</span>
                 <v-radio class="flex-grow-0" color="red" value="1"></v-radio>
               </div>
             </v-radio-group>
           </v-card>
-          <v-card width="200" class="py-2 px-3 mx-2">
+          <v-card
+            width="200"
+            class="py-2 px-3 mx-2"
+            v-if="currentStatus == 'inProgress'"
+          >
             <v-radio-group color="red" v-model="ex7">
               <div class="d-flex align-center red-1 justify-space-between">
                 <span class="mr-5">In Progress</span>
@@ -19,10 +27,14 @@
               </div>
             </v-radio-group>
           </v-card>
-          <v-card width="200" class="py-2 px-3">
+          <v-card
+            width="200"
+            class="py-2 px-3"
+            v-if="currentStatus == 'pending'"
+          >
             <v-radio-group v-model="ex7">
               <div class="d-flex align-center blue-1 justify-space-between">
-                <span class="mr-5">In Progress</span>
+                <span class="mr-5">Pending</span>
                 <v-radio class="flex-grow-0" value="1"></v-radio>
               </div>
             </v-radio-group>
@@ -31,7 +43,7 @@
       </v-col>
       <v-col cols="6" class="pa-0 d-flex align-center justify-end">
         <div class="float-right">
-          <v-btn color="#312D4B" size="large" class="mr-4">
+          <v-btn color="#312D4B" size="large" class="mr-4" @click="showChat">
             <v-img
               :src="chat"
               class="flex-grow-0"
@@ -284,6 +296,7 @@
         <v-responsive width="100%"></v-responsive>
       </v-row>
     </v-container>
+    <CustomChat ref="chat_dialog" />
   </v-card>
 </template>
 
@@ -291,7 +304,9 @@
 import download from "../../../assets/images/cards/download.png";
 import play1 from "../../../assets/images/cards/folder.png";
 import chat from "../../../assets/images/iconify-svg/chat.svg";
+import CustomChat from "../../apps/customeChat/chatDialog.vue";
 export default {
+  components: { CustomChat },
   data() {
     return {
       ex7: null,
@@ -302,7 +317,13 @@ export default {
       selectedSchedule: "notSchedule",
       max: 90,
       slider: 45,
+      currentStatus: "inProgress",
     };
+  },
+  methods: {
+    showChat() {
+      this.$refs.chat_dialog.dialog = true;
+    },
   },
 };
 </script>
