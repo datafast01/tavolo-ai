@@ -247,7 +247,7 @@
             </VRadioGroup>
             <v-card-item>
               <v-row no-gutters>
-                <v-col cols="12" v-for="n in 4">
+                <!-- <v-col cols="12" v-for="n in 4">
                   <div
                     class="me-3 border-t py-2 d-flex align-center justify-space-between"
                   >
@@ -284,9 +284,11 @@
                       </div>
                     </div>
                   </div>
-                </v-col>
+                </v-col> -->
                 <v-col cols="12" class="text-center">
-                  <v-btn color="grey-darken-2 " size="small"> View More </v-btn>
+                  <!-- <v-btn color="grey-darken-2 " size="small"> View More </v-btn> -->
+
+                  <ContactItem />
                 </v-col>
               </v-row>
             </v-card-item>
@@ -362,8 +364,9 @@ import download from "../../../assets/images/cards/download.png";
 import play1 from "../../../assets/images/cards/folder.png";
 import chat from "../../../assets/images/iconify-svg/chat.svg";
 import CustomChat from "../../apps/customeChat/chatDialog.vue";
+import ContactItem from "./ContactItem.vue";
 export default {
-  components: { CustomChat },
+  components: { CustomChat, ContactItem },
   data() {
     return {
       ex7: null,
@@ -432,3 +435,4 @@ export default {
   color: #1d42b9;
 }
 </style>
+./ContactItem.vue

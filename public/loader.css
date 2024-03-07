@@ -5,8 +5,11 @@ body {
 html {
   overflow-x: hidden;
   overflow-y: scroll;
+  position: static !important;
 }
-
+html.v-overlay-scroll-blocked {
+  position: static !important;
+}
 #loading-bg {
   position: absolute;
   display: block;
