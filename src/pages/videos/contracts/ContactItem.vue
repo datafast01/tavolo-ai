@@ -19,7 +19,11 @@
         <div>
           <div class="d-flex align-center justify-center">
             <v-img :src="index.image" height="30" width="30" alt="John"></v-img>
-            <v-btn class="ml-2" @click="sendRequest" elevation="24" size="large"
+            <v-btn
+              class="ml-2"
+              @click="executeSendRequest"
+              elevation="24"
+              size="large"
               >Ask for revision</v-btn
             >
           </div>
@@ -44,6 +48,7 @@ import { reactive } from "vue";
 import download from "../../../assets/images/cards/download.png";
 import play1 from "../../../assets/images/cards/folder.png";
 export default {
+  props: ["sendRequest"],
   data() {
     return {
       data: reactive({
@@ -104,6 +109,9 @@ export default {
       } else {
         this.data.countsnum += 2;
       }
+    },
+    executeSendRequest() {
+      this.sendRequest(); // Call the sendRequest function passed from the parent
     },
   },
 };

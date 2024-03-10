@@ -61,13 +61,21 @@
                   <template #prepend>
                     <!-- <VIcon icon="mdi-recycle" /> -->
                   </template>
-                  <VListItemTitle>chat</VListItemTitle>
+                  <VListItemTitle class="text-uppercase">renew</VListItemTitle>
                 </VListItem>
                 <VListItem @click="deleteCampaign(item.raw._id)">
                   <template #prepend>
                     <!-- <VIcon icon="mdi-delete-outline" /> -->
                   </template>
-                  <VListItemTitle>Details</VListItemTitle>
+                  <VListItemTitle class="text-uppercase">pause</VListItemTitle>
+                </VListItem>
+                <VListItem @click="openEditCardDialog()">
+                  <template #prepend>
+                    <!-- <VIcon icon="mdi-delete-outline" /> -->
+                  </template>
+                  <VListItemTitle class="text-uppercase"
+                    >complete</VListItemTitle
+                  >
                 </VListItem>
               </VList>
             </VMenu>
@@ -180,7 +188,7 @@
             <VCardText>
               <VTimeline
                 density="compact"
-                align="start"
+                :align="start"
                 line-inset="8"
                 truncate-line="both"
               >
@@ -247,48 +255,8 @@
             </VRadioGroup>
             <v-card-item>
               <v-row no-gutters>
-                <!-- <v-col cols="12" v-for="n in 4">
-                  <div
-                    class="me-3 border-t py-2 d-flex align-center justify-space-between"
-                  >
-                    <div rounded class="d-flex align-center justifycenter">
-                      <div class="bg-darken2">
-                        <v-img
-                          :src="play1"
-                          height="20"
-                          width="20"
-                          alt="John"
-                        ></v-img>
-                      </div>
-                      <div>
-                        <span class="font-12">Yesterday</span>
-                        <h4 class="l-h">File Name</h4>
-                        <span class="font-12">{{ n }}.8 GB</span>
-                      </div>
-                    </div>
-                    <div>
-                      <div class="d-flex align-center justify-center">
-                        <v-img
-                          :src="download"
-                          height="30"
-                          width="30"
-                          alt="John"
-                        ></v-img>
-                        <v-btn
-                          class="ml-2"
-                          @click="sendRequest"
-                          elevation="24"
-                          size="large"
-                          >Ask for revision</v-btn
-                        >
-                      </div>
-                    </div>
-                  </div>
-                </v-col> -->
                 <v-col cols="12" class="text-center">
-                  <!-- <v-btn color="grey-darken-2 " size="small"> View More </v-btn> -->
-
-                  <ContactItem />
+                  <ContactItem :send-request="sendRequest" />
                 </v-col>
               </v-row>
             </v-card-item>
@@ -300,6 +268,8 @@
     </v-container>
     <CustomChat ref="chat_dialog" />
   </v-card>
+
+  <ReviewDialog v-model:isDialogVisible="isCardEditDialogVisible" />
 
   <VDialog v-model="showModal" max-width="700">
     <!-- Dialog Activator -->
@@ -365,8 +335,10 @@ import play1 from "../../../assets/images/cards/folder.png";
 import chat from "../../../assets/images/iconify-svg/chat.svg";
 import CustomChat from "../../apps/customeChat/chatDialog.vue";
 import ContactItem from "./ContactItem.vue";
+import ReviewDialog from "./ReviewDialog.vue";
 export default {
-  components: { CustomChat, ContactItem },
+  components: { CustomChat, ContactItem, ReviewDialog },
+
   data() {
     return {
       ex7: null,
@@ -379,6 +351,8 @@ export default {
       slider: 45,
       currentStatus: "inProgress",
       showModal: false,
+
+      isCardEditDialogVisible: false,
     };
   },
   methods: {
@@ -388,6 +362,10 @@ export default {
 
     sendRequest() {
       this.showModal = true;
+    },
+
+    openEditCardDialog() {
+      this.isCardEditDialogVisible = true;
     },
   },
 };
@@ -435,4 +413,3 @@ export default {
   color: #1d42b9;
 }
 </style>
-./ContactItem.vue

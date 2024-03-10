@@ -20,6 +20,11 @@
         --chat-color: #fff;
         --chat-message-color: #ffffff;
         --chat-header-color-name: #ffffff;
+        --chat-dropdown-bg-color: #3d3759;
+        --chat-message-bg-color-date: #3d3759;
+        --chat-message-bg-color-me: #3d3759;
+        --chat-dropdown-bg-color-hover: #312d4b;
+        --chat-bg-scroll-icon: #312d4b;
       "
     />
   </div>
