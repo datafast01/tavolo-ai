@@ -157,18 +157,11 @@ const onFormReset = () => {
         </VForm>
       </VCardText>
     </VCard>
-  </VDialo
-  \
-  
-  
-  
-  
-  
-  g>
+  </VDialog>
 </template>
 
-<st\yle scoped>
+<style scoped>
 .a\pp-picker-field {
   width: 100% !important;
 }
-</st>
+</style>
