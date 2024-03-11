@@ -161,7 +161,7 @@ const onFormReset = () => {
 </template>
 
 <style scoped>
-.a\pp-picker-field {
+.app-picker-field {
   width: 100% !important;
 }
 </style>
