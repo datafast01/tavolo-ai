@@ -147,7 +147,6 @@ import { VDataTableServer } from "vuetify/lib/components/index.mjs";
 // import AddNewUserDrawer from "@/views/apps/user/list/AddNewUserDrawer.vue";
 import { useUserListStore } from "@/views/apps/user/useUserListStore";
 import { useRouter } from "vue-router";
-import Dropdown from "./Dropdown.vue";
 
 const userListStore = useUserListStore();
 const searchQuery = ref("");
