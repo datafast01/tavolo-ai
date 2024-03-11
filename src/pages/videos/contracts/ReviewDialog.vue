@@ -26,9 +26,9 @@ watch(props, () => {
   cardDetails.value = structuredClone(toRaw(props.cardDetails));
 });
 
-const formSubmit = () => {
-  emit("submit", cardDetails.value);
-};
+// const formSubmit = () => {
+//   emit("submit", cardDetails.value);
+// };
 </script>
 <script>
 import done from "../../../assets/images/cards/done2.png";
@@ -139,42 +139,3 @@ export default {
     </VCard>
   </VDialog>
 </template>
-
-<!-- <template>
-  <VRow>
-   
-    <VCol cols="12" md="6">
-      <div class="d-flex flex-column gap-y-4">
-        <VCard>
-          <VBtn variant="outlined" @click="openEditCardDialog()"> Edit </VBtn>
-        </VCard>
-      </div>
-
-      
-      <CardAddEditDialog v-model:isDialogVisible="isCardEditDialogVisible" />
-    </VCol>
-  </VRow>
-</template>
-
-<script>
-// Images
-import moment from "moment";
-
-export default {
-  data() {
-    return {
-      moment: moment,
-
-      isCardEditDialogVisible: false,
-    };
-  },
-
-  methods: {
-    openEditCardDialog() {
-      this.isCardEditDialogVisible = true;
-    },
-  },
-};
-</script>
-
-<style lang="scss"></style> -->
