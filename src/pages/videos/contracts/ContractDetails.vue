@@ -64,15 +64,10 @@
                   <VListItemTitle class="text-uppercase">renew</VListItemTitle>
                 </VListItem>
                 <VListItem @click="deleteCampaign(item.raw._id)">
-                  <template #prepend>
-                    <!-- <VIcon icon="mdi-delete-outline" /> -->
-                  </template>
+                  <template #prepend> </template>
                   <VListItemTitle class="text-uppercase">pause</VListItemTitle>
                 </VListItem>
                 <VListItem @click="openEditCardDialog()">
-                  <template #prepend>
-                    <!-- <VIcon icon="mdi-delete-outline" /> -->
-                  </template>
                   <VListItemTitle class="text-uppercase"
                     >complete</VListItemTitle
                   >
