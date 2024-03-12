@@ -10,7 +10,7 @@
             v-model="businessName"
             label="Business Name"
             Value="First"
-            :rules="[requiredValidator]"
+            :rules="[requiredValidator, alphaValidator, isNameValid]"
           />
         </VCol>
 
@@ -18,7 +18,7 @@
           <VTextField
             v-model="businessNumber"
             label="Contact Number"
-            :rules="[requiredValidator]"
+            :rules="[requiredValidator, integerValidator]"
           />
         </VCol>
 
@@ -49,12 +49,21 @@
 </template>
 
 <script>
-import { emailValidator, requiredValidator } from "@validators";
+import {
+  alphaValidator,
+  emailValidator,
+  integerValidator,
+  lengthValidator,
+  requiredValidator,
+} from "@validators";
 export default {
   data() {
     return {
       emailValidator: emailValidator,
       requiredValidator: requiredValidator,
+      lengthValidator: lengthValidator,
+      alphaValidator: alphaValidator,
+      integerValidator: integerValidator,
       businessName: "",
       businessNumber: "",
       businessEmail: "",
@@ -78,6 +87,13 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    isNameValid() {
+      return (value) =>
+        lengthValidator(value, 1, 15) ||
+        "Contract title must be 15 characters or less";
+    },
   },
 };
 </script>

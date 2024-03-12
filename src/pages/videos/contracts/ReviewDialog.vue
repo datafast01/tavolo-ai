@@ -35,9 +35,9 @@ import done from "../../../assets/images/cards/done2.png";
 export default {
   data: () => ({
     done: done,
-    ratingw: 3.5,
-    ratingw1: 2.5,
-    ratingw2: 1.5,
+    ratingw: 0.5,
+    ratingw1: 0.5,
+    ratingw2: 0.5,
   }),
   computed: {
     computedTotalScore: function () {
@@ -77,15 +77,23 @@ export default {
 
       <VCardText>
         <VRow>
-          <VCol cols="2"></VCol>
-          <VCol cols="8">
+          <VCol cols="1"></VCol>
+          <VCol cols="10">
             <div>
               <div class="d-flex align-center justify-space-between">
                 <span>Influincer Communication Skils</span>
-                <div class="d-flex align-center justify-space-between">
-                  <v-rating v-model="ratingw" half-increments hover></v-rating>
-                  <pre>{{ ratingw }}</pre>
-                </div>
+                <VRow class="">
+                  <VCol class="pa-0">
+                    <v-rating
+                      v-model="ratingw"
+                      half-increments
+                      hover
+                    ></v-rating>
+                  </VCol>
+                  <VCol class="pa-0">
+                    <pre>{{ ratingw }}</pre>
+                  </VCol>
+                </VRow>
               </div>
               <div class="d-flex align-center justify-space-between">
                 <span>Video Editig Skils</span>
@@ -108,6 +116,7 @@ export default {
                 <div class="d-flex align-center justify-space-between">
                   <v-rating
                     v-model="computedTotalScore"
+                    readonly
                     half-increments
                     hover
                     disabled
@@ -133,7 +142,7 @@ export default {
               <VBtn color="secondary" @click="showModal = false"> Cancel </VBtn>
             </div>
           </VCol>
-          <VCol cols="2"></VCol>
+          <VCol cols="1"></VCol>
         </VRow>
       </VCardText>
     </VCard>

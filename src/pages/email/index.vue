@@ -128,6 +128,7 @@
                       type="date"
                       v-model="scheduleDate"
                       label="Schedule Date"
+                      :rules="[requiredValidator]"
                       clear-icon="mdi-close"
                       v-if="selectedSchedule == 'schedule'"
                     />
@@ -165,6 +166,7 @@
                       dense
                       label="Give Email Prompt"
                       v-model="emailPrompt"
+                      :rules="[requiredValidator, emailValidator]"
                       required
                     />
                   </VCol>
@@ -210,6 +212,7 @@
 <script>
 import store from "@/store/index.js";
 import axios from "@axios";
+import { emailValidator, requiredValidator } from "@validators";
 import { reactive } from "vue";
 import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 import { quillEditor } from "vue3-quill";
@@ -219,6 +222,8 @@ export default {
   components: { Campaigns, ListTemplates, quillEditor },
   data() {
     return {
+      emailValidator: emailValidator,
+      requiredValidator: requiredValidator,
       isComposeDialogVisible: false,
       showModalGpt: false,
       selectedComponent: "newCampaign",

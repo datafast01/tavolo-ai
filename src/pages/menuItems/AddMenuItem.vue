@@ -1,7 +1,18 @@
 <script setup>
-import { requiredValidator } from "@validators";
+import {
+  alphaValidator,
+  integerValidator,
+  lengthValidator,
+  requiredValidator,
+} from "@validators";
 import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 
+const isNameValid = (value) => {
+  return (
+    lengthValidator(value, 1, 15) ||
+    "Contract title must be between 1 and 15 characters"
+  );
+};
 const props = defineProps({
   isDrawerOpen: {
     type: Boolean,
@@ -86,7 +97,7 @@ const handleDrawerModelValueUpdate = (val) => {
               <VCol cols="12">
                 <VTextField
                   v-model="name"
-                  :rules="[requiredValidator]"
+                  :rules="[requiredValidator, alphaValidator, isNameValid]"
                   label="Menu Item"
                 />
               </VCol>
@@ -95,7 +106,7 @@ const handleDrawerModelValueUpdate = (val) => {
               <VCol cols="12">
                 <VTextField
                   v-model="price"
-                  :rules="[requiredValidator]"
+                  :rules="[requiredValidator, integerValidator]"
                   label="Price"
                   type="number"
                 />

@@ -2,9 +2,25 @@
 import store from "@/store/index.js";
 import axios from "@axios";
 import avatar1 from "@images/avatars/avatar-1.png";
+import {
+  alphaValidator,
+  emailValidator,
+  integerValidator,
+  lengthValidator,
+  requiredValidator,
+  urlValidator,
+} from "@validators";
 import { onMounted } from "vue";
 
 import AccountSettingsAccount from "./AccountSettingsConnections.vue";
+
+// Define the isNameValid function
+const isNameValid = (value) => {
+  return (
+    lengthValidator(value, 1, 15) ||
+    "Contract title must be between 1 and 15 characters"
+  );
+};
 
 const accountData = {
   avatarImg: avatar1,
@@ -290,18 +306,27 @@ getUserProfile();
             <VRow>
               <!-- 👉 First Name -->
               <VCol md="6" cols="12">
-                <VTextField v-model="userData.firstName" label="First Name" />
+                <VTextField
+                  v-model="userData.firstName"
+                  :rules="[requiredValidator, isNameValid, alphaValidator]"
+                  label="First Name"
+                />
               </VCol>
 
               <!-- 👉 Last Name -->
               <VCol md="6" cols="12">
-                <VTextField v-model="userData.lastName" label="Last Name" />
+                <VTextField
+                  v-model="userData.lastName"
+                  :rules="[requiredValidator, isNameValid, alphaValidator]"
+                  label="Last Name"
+                />
               </VCol>
 
               <!-- 👉 Email -->
               <VCol cols="12" md="6">
                 <VTextField
                   v-model="userData.email"
+                  :rules="[requiredValidator, emailValidator]"
                   label="E-mail"
                   type="email"
                 />
@@ -311,13 +336,18 @@ getUserProfile();
               <VCol cols="12" md="6">
                 <VTextField
                   v-model="userData.restaurantName"
+                  :rules="[requiredValidator]"
                   label="Restaurant"
                 />
               </VCol>
 
               <!-- 👉 Phone -->
               <VCol cols="12" md="6">
-                <VTextField v-model="userData.phoneNo" label="Phone Number" />
+                <VTextField
+                  v-model="userData.phoneNo"
+                  :rules="[requiredValidator, integerValidator]"
+                  label="Phone Number"
+                />
               </VCol>
 
               <!-- 👉 Address -->
@@ -325,17 +355,27 @@ getUserProfile();
                 <VTextField
                   v-model="userData.faceBookUrl"
                   label="Facebook URL"
+                  :rules="[requiredValidator, urlValidator]"
                 />
               </VCol>
               <VCol cols="12" md="6">
-                <VTextField v-model="userData.instaUrl" label="Instagram URL" />
+                <VTextField
+                  v-model="userData.instaUrl"
+                  :rules="[requiredValidator, urlValidator]"
+                  label="Instagram URL"
+                />
               </VCol>
               <VCol cols="12" md="6">
-                <VTextField v-model="userData.tikTokUrl" label="TikTok URL" />
+                <VTextField
+                  v-model="userData.tikTokUrl"
+                  :rules="[requiredValidator, urlValidator]"
+                  label="TikTok URL"
+                />
               </VCol>
               <VCol cols="12" md="6">
                 <VTextField
                   v-model="userData.googleReviewLink"
+                  :rules="[requiredValidator, urlValidator]"
                   label="Google Reviews Link"
                 />
               </VCol>

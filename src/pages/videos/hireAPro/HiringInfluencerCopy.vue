@@ -8,7 +8,7 @@
         <VCol cols="12">
           <VTextField
             v-model="contractTitle"
-            :rules="[requiredValidator]"
+            :rules="[requiredValidator, alphaValidator, isNameValid]"
             label="Contract Title"
           />
         </VCol>
@@ -86,14 +86,21 @@ import pay3 from "@/assets/images/cards/pay11.png";
 import pay2 from "@/assets/images/cards/pay12.png";
 import pay4 from "@/assets/images/cards/pay13.png";
 import pay1 from "@/assets/images/cards/pay14.png";
-import { emailValidator, requiredValidator } from "@validators";
+import {
+  alphaValidator,
+  emailValidator,
+  lengthValidator,
+  requiredValidator,
+} from "@validators";
 
 export default {
   data() {
     return {
+      alphaValidator: alphaValidator,
       emailValidator: emailValidator,
       requiredValidator: requiredValidator,
-
+      lengthValidator: lengthValidator,
+      name: "",
       pay1: pay1,
       pay2: pay2,
       pay3: pay3,
@@ -110,6 +117,13 @@ export default {
         { text: "Enterprise - $100 / 4 Recordings", key: "enterprise" },
       ],
     };
+  },
+  computed: {
+    isNameValid() {
+      return (value) =>
+        lengthValidator(value, 1, 15) ||
+        "Contract title must be 15 characters or less";
+    },
   },
 
   methods: {},

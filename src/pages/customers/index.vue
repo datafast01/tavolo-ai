@@ -239,7 +239,6 @@ import { useUserListStore } from "@/views/apps/user/useUserListStore";
 import axios from "@axios";
 // import { VSkeletonLoader } from "vuetify/labs/VSkeletonLoader";
 import AddNewCustomer from "./AddCustomer.vue";
-
 import EditCustomer from "./EditCustomer.vue";
 
 const userListStore = useUserListStore();

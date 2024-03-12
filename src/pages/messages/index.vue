@@ -8,6 +8,7 @@
         v-model="scheduleDate"
         label="Schedule Date"
         clear-icon="mdi-close"
+        :rules="[requiredValidator]"
         clearable
         type="date"
       />
@@ -57,7 +58,11 @@
 
         <VDivider />
 
-        <VTextarea v-model="sampleMessage" placeholder="Message" />
+        <VTextarea
+          v-model="sampleMessage"
+          :rules="[requiredValidator]"
+          placeholder="Message"
+        />
       </div>
 
       <VDivider />
@@ -85,6 +90,8 @@
 <script setup>
 import store from "@/store/index.js";
 import axios from "@axios";
+import { requiredValidator } from "@validators";
+
 const emit = defineEmits(["close"]);
 
 const segment = ref("650e0f5b6df52a436ca3f12e");

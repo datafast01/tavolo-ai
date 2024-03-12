@@ -1,6 +1,18 @@
 <script setup>
-import { emailValidator, requiredValidator } from "@validators";
+import {
+  alphaValidator,
+  emailValidator,
+  integerValidator,
+  lengthValidator,
+  requiredValidator,
+} from "@validators";
 
+const isNameValid = (value) => {
+  return (
+    lengthValidator(value, 1, 15) ||
+    "Contract title must be between 1 and 15 characters"
+  );
+};
 const props = defineProps({
   isDialogVisible: {
     type: Boolean,
@@ -71,7 +83,7 @@ const onFormReset = () => {
             <VCol cols="12" md="6">
               <VTextField
                 v-model="customerData.firstname"
-                :rules="[requiredValidator]"
+                :rules="[requiredValidator, alphaValidator, isNameValid]"
                 label="First Name"
               />
             </VCol>
@@ -79,7 +91,7 @@ const onFormReset = () => {
             <VCol cols="12" md="6">
               <VTextField
                 v-model="customerData.lastname"
-                :rules="[requiredValidator]"
+                :rules="[requiredValidator, alphaValidator, isNameValid]"
                 label="Last Name"
               />
             </VCol>
@@ -98,7 +110,7 @@ const onFormReset = () => {
             <VCol cols="12" md="6">
               <VTextField
                 v-model="customerData.phone"
-                :rules="[requiredValidator]"
+                :rules="[requiredValidator, integerValidator]"
                 label="Phone Number"
               />
             </VCol>
@@ -106,6 +118,7 @@ const onFormReset = () => {
             <VCol cols="12" md="6">
               <VTextField
                 v-model="customerData.aov"
+                :rules="[requiredValidator]"
                 type="number"
                 label="Customer's AOV"
               />
@@ -115,6 +128,7 @@ const onFormReset = () => {
                 v-model="customerData.totalVisits"
                 type="number"
                 label="Total Visits"
+                :rules="[requiredValidator]"
               />
             </VCol>
 
@@ -122,6 +136,7 @@ const onFormReset = () => {
               <VTextField
                 v-model="customerData.lastDiningBehaviour"
                 label="Last Dining Behavior"
+                :rules="[requiredValidator]"
               />
             </VCol>
             <VCol cols="12" md="6">
@@ -129,6 +144,7 @@ const onFormReset = () => {
                 v-model="customerData.lastVisitedDate"
                 label="Last Visit Date"
                 clearable
+                :rules="[requiredValidator]"
                 type="date"
               />
             </VCol>

@@ -15,7 +15,7 @@
         ></v-text-field>
       </v-col>
       <v-col cols="3">
-        <Dropdown />
+        <dropdown />
       </v-col>
     </v-row>
 
@@ -146,6 +146,7 @@ import { VDataTableServer } from "vuetify/lib/components/index.mjs";
 
 import { useUserListStore } from "@/views/apps/user/useUserListStore";
 import { useRouter } from "vue-router";
+import dropdown from "./dropdown.vue";
 
 const userListStore = useUserListStore();
 const searchQuery = ref("");

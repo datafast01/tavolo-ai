@@ -25,6 +25,7 @@
         --chat-message-bg-color-me: #3d3759;
         --chat-dropdown-bg-color-hover: #312d4b;
         --chat-bg-scroll-icon: #312d4b;
+        --chat-message-bg-color-selected: #3a345f;
       "
     />
   </div>
