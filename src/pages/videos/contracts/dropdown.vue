@@ -8,11 +8,24 @@
       <v-img :src="sort" class="flex-grow-0" height="20" width="20" alt="John">
       </v-img></div
   ></v-card>
+
   <v-menu activator="#menu-activator">
     <v-list>
-      <v-list-item v-for="(item, index) in items" :key="index" :value="index">
-        <v-list-item-title>{{ item.title }}</v-list-item-title>
-      </v-list-item>
+      <v-list lines="three" select-strategy="classic">
+        <v-list-item
+          v-for="(item, i) in items"
+          :key="i"
+          :value="item"
+          color="primary"
+          class="pt-0 pb-0"
+        >
+          <template v-slot:prepend>
+            <v-checkbox-btn :model-value="isActive"></v-checkbox-btn>
+          </template>
+
+          <v-list-item-title v-text="item.title"></v-list-item-title>
+        </v-list-item>
+      </v-list>
     </v-list>
   </v-menu>
 </template>
@@ -162,4 +175,5 @@ export default {
   opacity: 0;
   transform: translateY(-30px);
 }
-</style> -->./dropdown.vue
+</style> -->
+./dropdown.vue

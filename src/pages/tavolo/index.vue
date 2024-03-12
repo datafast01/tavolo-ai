@@ -10,7 +10,7 @@
       class="ml-3"
     ></VCheckbox>
 
-    <VLayout class="chat-app-layout bg-surface ml-3" style="height: 505px">
+    <VLayout class="chat-app-layout bg-surface ml-3" style="height: 398px">
       <VNavigationDrawer
         v-model="isActiveChatUserProfileSidebarOpen"
         width="374"

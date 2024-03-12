@@ -440,62 +440,15 @@ getUserProfile();
         </VCardText>
       </VCard>
     </VCol>
-    <VCol cols="12">
+    <VCol cols="6">
       <AccountSettingsAccount
         :instagram="instagram"
         :igAccessToken="igAccessToken"
         @refresh-data="getUserProfile"
       />
     </VCol>
-    <VCol cols="12">
-      <VCard title="Data Updates">
-        <VCardText>
-          <!-- 👉 Checkbox and Button  -->
-          <div class="d-flex justify-space-between">
-            <form class="d-flex flex-column justify-center gap-4">
-              <div class="d-flex flex-wrap gap-4">
-                <VBtn color="primary" @click="refInputEl?.click()">
-                  <VIcon icon="mdi-cloud-upload-outline" class="d-sm-none" />
-                  <span class="d-none d-sm-block">Update Dashboard's Data</span>
-                </VBtn>
 
-                <input
-                  ref="refInputEl"
-                  type="file"
-                  name="file"
-                  accept=".csv"
-                  hidden
-                  @input="updateDashboard"
-                />
-              </div>
-            </form>
-            <div>
-              <form class="d-flex flex-column justify-center gap-4">
-                <div class="d-flex flex-wrap gap-4">
-                  <VBtn color="primary" @click="refInputCus?.click()">
-                    <VIcon icon="mdi-cloud-upload-outline" class="d-sm-none" />
-                    <span class="d-none d-sm-block"
-                      >Update Customer's Data</span
-                    >
-                  </VBtn>
-
-                  <input
-                    ref="refInputCus"
-                    type="file"
-                    name="file"
-                    accept=".csv"
-                    hidden
-                    @input="updateCustomer"
-                  />
-                </div>
-              </form>
-            </div>
-          </div>
-        </VCardText>
-      </VCard>
-    </VCol>
-
-    <VCol cols="12">
+    <VCol cols="6">
       <VCard title="Integrations">
         <v-card class="mb-3 ml-3" max-width="304">
           <v-card-text class="text-center">

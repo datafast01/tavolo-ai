@@ -74,7 +74,7 @@
             <VMenu activator="parent">
               <VList>
                 <VListItem @click="changeStatus(item.raw)">
-                  <VListItemTitle>chat</VListItemTitle>
+                  <VListItemTitle>Chat</VListItemTitle>
                 </VListItem>
                 <VListItem @click="viewDetails(item)">
                   <template #prepend>

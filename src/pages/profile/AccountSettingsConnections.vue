@@ -5,8 +5,8 @@
 
       <!-- 👉 Social Accounts -->
 
-      <VCol cols="12" md="6">
-        <VCard flat title="Social Accounts">
+      <VCol cols="12">
+        <VCard flat class="pb-4" title="Social Accounts">
           <template #subtitle>
             <span class="text-base"
               >Display content from social accounts on your site</span
@@ -15,7 +15,11 @@
 
           <VCardText>
             <VList class="card-list">
-              <VListItem v-for="item in socialAccounts" :key="item.logo">
+              <VListItem
+                class="mb-4"
+                v-for="item in socialAccounts"
+                :key="item.logo"
+              >
                 <template #prepend>
                   <VAvatar start :image="item.logo" size="36" />
                 </template>
