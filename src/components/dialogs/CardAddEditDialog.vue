@@ -1,18 +1,6 @@
 <script setup>
-import {
-  alphaValidator,
-  expiredateValidator,
-  lengthValidator,
-  requiredValidator,
-} from "@validators";
-
-const isNameValid = (value) => {
-  return (
-    lengthValidator(value, 1, 15) ||
-    "Contract title must be between 1 and 15 characters"
-  );
-};
-
+import { masking } from "@core/utils/masking";
+import { vMaska } from "maska";
 const props = defineProps({
   cardDetails: {
     type: Object,
@@ -81,18 +69,14 @@ const formSubmit = () => {
               <VTextField
                 v-model="cardDetails.number"
                 label="Card Number"
-                type="number"
+                v-maska:[masking.cardNumber]
                 :rules="[requiredValidator]"
               />
             </VCol>
 
             <!-- 👉 Card Name -->
             <VCol cols="12" md="6">
-              <VTextField
-                v-model="cardDetails.name"
-                :rules="[requiredValidator, alphaValidator, isNameValid]"
-                label="Name"
-              />
+              <VTextField v-model="cardDetails.name" label="Name" />
             </VCol>
 
             <!-- 👉 Card Expiry -->
@@ -101,6 +85,7 @@ const formSubmit = () => {
                 v-model="cardDetails.expiry"
                 :rules="[requiredValidator, expiredateValidator]"
                 label="Expiry"
+                v-maska:[masking.cardDate]
               />
             </VCol>
 
@@ -108,9 +93,8 @@ const formSubmit = () => {
             <VCol cols="6" md="3">
               <VTextField
                 v-model="cardDetails.cvv"
-                :rules="[requiredValidator]"
-                type="number"
                 label="CVV"
+                v-maska:[masking.cvc]
               />
             </VCol>
 
