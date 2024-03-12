@@ -1,44 +1,43 @@
 <script setup>
+import { masking } from "@core/utils/masking";
+import { vMaska } from "maska";
 const props = defineProps({
   cardDetails: {
     type: Object,
     required: false,
     default: () => ({
-      number: '',
-      name: '',
-      expiry: '',
-      cvv: '',
+      number: "",
+      name: "",
+      expiry: "",
+      cvv: "",
       isPrimary: false,
-      type: '',
+      type: "",
     }),
   },
   isDialogVisible: {
     type: Boolean,
     required: true,
   },
-})
+});
 
-const emit = defineEmits([
-  'submit',
-  'update:isDialogVisible',
-])
+const emit = defineEmits(["submit", "update:isDialogVisible"]);
 
-const cardDetails = ref(structuredClone(toRaw(props.cardDetails)))
+const cardDetails = ref(structuredClone(toRaw(props.cardDetails)));
 
 watch(props, () => {
-  cardDetails.value = structuredClone(toRaw(props.cardDetails))
-})
+  cardDetails.value = structuredClone(toRaw(props.cardDetails));
+});
 
 const formSubmit = () => {
-  emit('submit', cardDetails.value)
-}
+  emit("submit", cardDetails.value);
+};
 </script>
 
 <template>
   <VDialog
     :width="$vuetify.display.smAndDown ? 'auto' : 600"
     :model-value="props.isDialogVisible"
-    @update:model-value="val => $emit('update:isDialogVisible', val)"
+    @update:model-value="(val) => $emit('update:isDialogVisible', val)"
   >
     <VCard class="pa-5 pa-sm-8">
       <!-- 👉 dialog close btn -->
@@ -51,10 +50,14 @@ const formSubmit = () => {
       <!-- 👉 Title -->
       <VCardItem class="text-center">
         <VCardTitle class="text-h5 mb-3">
-          {{ props.cardDetails.name ? 'Edit Card' : 'Add New Card' }}
+          {{ props.cardDetails.name ? "Edit Card" : "Add New Card" }}
         </VCardTitle>
         <VCardSubtitle>
-          {{ props.cardDetails.name ? 'Edit your saved card details' : 'Add your saved card details' }}
+          {{
+            props.cardDetails.name
+              ? "Edit your saved card details"
+              : "Add your saved card details"
+          }}
         </VCardSubtitle>
       </VCardItem>
 
@@ -71,37 +74,27 @@ const formSubmit = () => {
             </VCol>
 
             <!-- 👉 Card Name -->
-            <VCol
-              cols="12"
-              md="6"
-            >
-              <VTextField
-                v-model="cardDetails.name"
-                label="Name"
-              />
+            <VCol cols="12" md="6">
+              <VTextField v-model="cardDetails.name" label="Name" />
             </VCol>
 
             <!-- 👉 Card Expiry -->
-            <VCol
-              cols="6"
-              md="3"
-            >
+            <VCol cols="6" md="3">
               <VTextField
                 v-model="cardDetails.expiry"
                 label="Expiry"
+                v-maska:[masking.cardDate]
               />
             </VCol>
 
             <!-- 👉 Card CVV -->
-            <VCol
-              cols="6"
-              md="3"
-            >
-              <VTextField
+            <VCol cols="6" md="3">
+              <v-text-field
                 v-model="cardDetails.cvv"
-                type="number"
                 label="CVV"
-              />
+                v-maska:[masking.cvc]
+              >
+              </v-text-field>
             </VCol>
 
             <!-- 👉 Card Primary Set -->
@@ -113,16 +106,8 @@ const formSubmit = () => {
             </VCol>
 
             <!-- 👉 Card actions -->
-            <VCol
-              cols="12"
-              class="d-flex flex-wrap justify-center gap-4"
-            >
-              <VBtn
-                type="submit"
-                @click="formSubmit"
-              >
-                Submit
-              </VBtn>
+            <VCol cols="12" class="d-flex flex-wrap justify-center gap-4">
+              <VBtn type="submit" @click="formSubmit"> Submit </VBtn>
               <VBtn
                 color="secondary"
                 variant="tonal"
