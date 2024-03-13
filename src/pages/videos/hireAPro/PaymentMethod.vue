@@ -21,7 +21,7 @@
       </VRow>
       <VRow>
         <VCol cols="12">
-          <span class="text-subtitle-1">Payment Method </span>
+          <span class="text-subtitle-1">Payment Method</span>
         </VCol>
         <VCol cols="12">
           <VTextField
@@ -35,9 +35,9 @@
         <VCol cols="6">
           <VTextField
             :rules="[requiredValidator]"
-            v-model="cardNumber"
+            v-model="cardnum"
             label="Card Number"
-            type="data"
+            v-maska:[masking.cardNumber]
           />
         </VCol>
 
@@ -89,6 +89,7 @@ import pay2 from "@/assets/images/cards/pay12.png";
 
 import pay4 from "@/assets/images/cards/pay13.png";
 import pay1 from "@/assets/images/cards/pay14.png";
+import { masking } from "@core/utils/masking";
 import { requiredValidator } from "@validators";
 export default {
   data() {
@@ -98,8 +99,9 @@ export default {
       saveCard: false,
       ccv: "",
       expiryDate: "",
-      cardNumber: "",
+      cardnum: "",
       cardHolderName: "",
+      masking: masking,
 
       paymentMethods: [
         { key: "masterCard", icon: pay1 },
