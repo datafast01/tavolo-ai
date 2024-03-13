@@ -45,7 +45,7 @@
         >
           <div v-if="isCustomer">
             <span
-              class="chat-contact-header d-block text-primary text-xl font-weight-medium my-3"
+              class="chat-contact-header d-block text-primary text-xl font-weight-medium pl-4 my-3"
               >Example Prompts</span
             >
             <li

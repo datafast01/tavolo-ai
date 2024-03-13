@@ -1,4 +1,6 @@
 <script setup>
+import { requiredValidator } from "@validators";
+
 const props = defineProps({
   cardDetails: {
     type: Object,
@@ -80,49 +82,68 @@ export default {
           <VCol cols="1"></VCol>
           <VCol cols="10">
             <div>
-              <div class="d-flex align-center justify-space-between">
-                <span>Influincer Communication Skils</span>
+              <div class="d-flex align-center pb-3 justify-space-between">
+                <span class="w-50">Influincer Communication Skils</span>
                 <VRow class="">
-                  <VCol class="pa-0">
+                  <VCol class="pa-0 text-right">
                     <v-rating
                       v-model="ratingw"
                       half-increments
                       hover
                     ></v-rating>
                   </VCol>
-                  <VCol class="pa-0">
+                  <VCol cols="1" class="pa-0 align-self-center pb-1">
                     <pre>{{ ratingw }}</pre>
                   </VCol>
                 </VRow>
               </div>
-              <div class="d-flex align-center justify-space-between">
-                <span>Video Editig Skils</span>
-                <div class="d-flex align-center justify-space-between">
-                  <v-rating v-model="ratingw1" half-increments hover></v-rating>
-                  <pre>{{ ratingw1 }}</pre>
-                </div>
+              <div class="d-flex align-center pb-3 justify-space-between">
+                <span class="w-50">Video Editig Skils</span>
+                <VRow class="">
+                  <VCol class="pa-0 text-right">
+                    <v-rating
+                      v-model="ratingw1"
+                      half-increments
+                      hover
+                    ></v-rating>
+                  </VCol>
+                  <VCol cols="1" class="pa-0 align-self-center pb-1">
+                    <pre>{{ ratingw1 }}</pre>
+                  </VCol>
+                </VRow>
               </div>
-              <div class="d-flex align-center justify-space-between">
-                <span>Quality of Content Skils</span>
-                <div class="d-flex align-center justify-space-between">
-                  <v-rating v-model="ratingw2" half-increments hover></v-rating>
-                  <pre>{{ ratingw2 }}</pre>
-                </div>
+              <div class="d-flex align-center pb-3 justify-space-between">
+                <span class="w-50">Quality of Content Skils</span>
+                <VRow class="">
+                  <VCol class="pa-0 text-right">
+                    <v-rating
+                      v-model="ratingw2"
+                      half-increments
+                      hover
+                    ></v-rating>
+                  </VCol>
+                  <VCol cols="1" class="pa-0 align-self-center pb-1">
+                    <pre>{{ ratingw2 }}</pre>
+                  </VCol>
+                </VRow>
               </div>
-              <!-- <div><span>Quality of Content Skils</span></div> -->
 
-              <div class="d-flex align-center justify-space-between">
-                <span>Totle</span>
-                <div class="d-flex align-center justify-space-between">
-                  <v-rating
-                    v-model="computedTotalScore"
-                    readonly
-                    half-increments
-                    hover
-                    disabled
-                  ></v-rating>
-                  <pre>{{ computedTotalScore }}</pre>
-                </div>
+              <div class="d-flex align-center pb-3 justify-space-between">
+                <span class="w-50">Totle</span>
+                <VRow class="">
+                  <VCol class="pa-0 text-right">
+                    <v-rating
+                      v-model="computedTotalScore"
+                      readonly
+                      half-increments
+                      hover
+                      disabled
+                    ></v-rating>
+                  </VCol>
+                  <VCol cols="1" class="pa-0 align-self-center pb-1">
+                    <pre>{{ computedTotalScore }}</pre>
+                  </VCol>
+                </VRow>
               </div>
             </div>
             <v-textarea
@@ -132,6 +153,7 @@ export default {
               rows="5"
               variant="outlined"
               auto-grow
+              :rules="[requiredValidator]"
               shaped
               class="pt-8"
               value="Leave a review and share how was your experience."

@@ -21,7 +21,7 @@
       </VRow>
       <VRow>
         <VCol cols="12">
-          <span class="text-subtitle-1">Payment Method</span>
+          <span class="text-subtitle-1">Payment Method </span>
         </VCol>
         <VCol cols="12">
           <VTextField
@@ -90,7 +90,6 @@ import pay2 from "@/assets/images/cards/pay12.png";
 import pay4 from "@/assets/images/cards/pay13.png";
 import pay1 from "@/assets/images/cards/pay14.png";
 import { requiredValidator } from "@validators";
-
 export default {
   data() {
     return {

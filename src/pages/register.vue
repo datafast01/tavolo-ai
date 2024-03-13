@@ -80,7 +80,7 @@
                     type="text"
                   />
                 </VCol>
-                <VCol cols="12" v-if="userType == 'business'">
+                <VCol cols="12">
                   <VTextField
                     v-model="restaurantName"
                     :rules="[requiredValidator]"

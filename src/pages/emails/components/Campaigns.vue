@@ -5,7 +5,7 @@
     </VSnackbar>
 
     <VCard style="border: none">
-      <VCardText class="d-flex align-center justify-space-between">
+      <VCardText class="d-flex align-center input-cutom justify-space-between">
         <div>Total Sent Campaigns: 43</div>
         <div class="d-flex">
           <v-text-field
@@ -185,4 +185,9 @@ const headers = [
 // watchEffect(fetchCustomers);
 </script>
 
-<style lang="scss"></style>
+<style>
+.input-cutom .v-input--density-default .v-field--variant-solo-filled {
+  --v-input-control-height: 18px;
+  --v-field-padding-bottom: 0px;
+}
+</style>

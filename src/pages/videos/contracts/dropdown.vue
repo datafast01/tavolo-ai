@@ -18,9 +18,10 @@
           :value="item"
           color="primary"
           class="pt-0 pb-0"
+          min-height="30"
         >
           <template v-slot:prepend>
-            <v-checkbox-btn :model-value="isActive"></v-checkbox-btn>
+            <v-radio value="rounded-0"></v-radio>
           </template>
 
           <v-list-item-title v-text="item.title"></v-list-item-title>
@@ -37,10 +38,10 @@ export default {
     sort: sort,
     favorites: [],
     items: [
-      { title: "Click Me" },
-      { title: "Click Me" },
-      { title: "Click Me" },
-      { title: "Click Me 2" },
+      { title: "Date: Old to New" },
+      { title: "Date: New to Old" },
+      { title: "Alphabetically (A - Z)" },
+      { title: "Alphabetically (Z - A)" },
     ],
   }),
 };

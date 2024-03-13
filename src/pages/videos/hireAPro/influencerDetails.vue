@@ -25,11 +25,13 @@
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
 
-      <VCol>
-        <v-btn drak class="mr-3">
-          <v-icon size="x-large">mdi-message-outline</v-icon>
-        </v-btn>
-        <v-btn>Hire</v-btn>
+      <VCol class="align-self-center">
+        <div class="d-flex align-center justify-center">
+          <v-btn drak class="mr-3">
+            <v-icon size="x-large">mdi-message-outline</v-icon>
+          </v-btn>
+          <v-btn>Hire</v-btn>
+        </div>
       </VCol>
     </VRow>
     <VCard variant="tonal" class="mt-4">

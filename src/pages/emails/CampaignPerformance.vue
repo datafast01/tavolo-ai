@@ -1,8 +1,8 @@
 <template>
   <div>
     <v-row>
-      <v-col>Total Sent Campaigns: 43</v-col>
-      <v-col class="d-flex">
+      <v-col class="align-self-center">Total Sent Campaigns: 43</v-col>
+      <v-col class="d-flex input-cutom">
         <v-text-field
           style="width: 200px"
           label="Search"
@@ -12,7 +12,7 @@
         <VBtn class="ml-3" size="large"> Filter </VBtn>
       </v-col>
     </v-row>
-    <VCard style="border: none">
+    <VCard style="border: none" class="my-4">
       <VCardTitle> Key Performance Indicators </VCardTitle>
       <VCardText class="d-flex align-center justify-space-between">
         <v-carousel
@@ -267,4 +267,9 @@ const data = {
 // watchEffect(fetchCustomers);
 </script>
 
-<style></style>
+<style>
+.input-cutom .v-input--density-default .v-field--variant-solo-filled {
+  --v-input-control-height: 18px;
+  --v-field-padding-bottom: 0px;
+}
+</style>

@@ -53,7 +53,10 @@
         <div v-if="selectedComponent == 'newCampaign'">
           <div class="d-flex align-center">
             <!-- 👉 Search -->
-            <VTextField v-model="subject" class="email-search px-4 flex-grow-1">
+            <VTextField
+              v-model="subject"
+              class="email-search px-4 pt-3 flex-grow-1"
+            >
               <template v-slot:prepend-inner> Subject: </template>
               <template v-slot:append>
                 <VBtn block class="mb-3" @click="sendEmail"> Send Email </VBtn>
