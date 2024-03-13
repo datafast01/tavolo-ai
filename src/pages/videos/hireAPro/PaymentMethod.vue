@@ -33,6 +33,7 @@
         </VCol>
 
         <VCol cols="6">
+          {{ masking }}
           <VTextField
             :rules="[requiredValidator]"
             v-model="cardnum"
@@ -91,7 +92,9 @@ import pay4 from "@/assets/images/cards/pay13.png";
 import pay1 from "@/assets/images/cards/pay14.png";
 import { masking } from "@core/utils/masking";
 import { requiredValidator } from "@validators";
+import { vMaska } from "maska";
 export default {
+  directives: { maska: vMaska },
   data() {
     return {
       requiredValidator: requiredValidator,
