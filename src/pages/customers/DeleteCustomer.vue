@@ -53,22 +53,26 @@ const onFormReset = () => {
 
 <template>
   <VDialog
-    :width="$vuetify.display.smAndDown ? 'auto' : 900"
+    :width="$vuetify.display.smAndDown ? 'auto' : 400"
     :model-value="props.isDialogVisible"
     @update:model-value="dialogVisibleUpdate"
   >
-    <VCard class="pa-sm-9 pa-5">
-      <!-- 👉 dialog close btn -->
-      <!-- <DialogCloseBtn variant="text" size="small" @click="onFormReset" /> -->
+    <v-card
+      max-width="400"
+      prepend-icon="mdi-update"
+      text="Your application will relaunch automatically after the update is complete."
+      title="Update in progress"
+    >
+      <template v-slot:actions>
+        <VCol cols="12" class="d-flex flex-wrap justify-end gap-4">
+          <VBtn @click="onSubmit" type="submit"> Confirm </VBtn>
 
-      <VCol cols="12" class="d-flex flex-wrap justify-center gap-4">
-        <VBtn @click="onSubmit" type="submit"> Submit </VBtn>
-
-        <VBtn color="secondary" variant="tonal" @click="onFormReset">
-          Cancel
-        </VBtn>
-      </VCol>
-    </VCard>
+          <VBtn color="secondary" variant="tonal" @click="onFormReset">
+            Cancel
+          </VBtn>
+        </VCol>
+      </template>
+    </v-card>
   </VDialog>
 </template>
 

@@ -410,7 +410,7 @@ const editCustomerData = (data) => {
 
 const CustomData = (_id) => {
   isUserInfoEditDialogVisibles.value = true;
-  myCustomers.value = item._id;
+  myCustomers.value = _id;
 };
 
 watchEffect(fetchCustomers);
