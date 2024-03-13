@@ -7,7 +7,15 @@
             <VCol cols="2" v-for="payments in paymentMethods" :key="payments">
               <!-- <v-badge content="✓ " color="#9155FD"> -->
               <div
-                class="vavatar relative"
+                :class="{
+                  'selected-card':
+                    payments.id !== currentPkg &&
+                    selectedPaymentMethod === payments.key,
+                  'pricing-card':
+                    payments.id == currentPkg &&
+                    selectedPaymentMethod == payments.key,
+                }"
+                class="vavatar cursor-pointer relative"
                 @click="selectedPaymentMethod = payments.key"
               >
                 <v-img :src="payments.icon" alt="John"></v-img>
@@ -28,12 +36,11 @@
             v-model="cardHolderName"
             label="Cardholder Name"
             Value="First"
-            :rules="[requiredValidator]"
+            :rules="[requiredValidator, alphaValidator]"
           />
         </VCol>
 
         <VCol cols="6">
-          {{ masking }}
           <VTextField
             :rules="[requiredValidator]"
             v-model="cardnum"
@@ -91,13 +98,14 @@ import pay2 from "@/assets/images/cards/pay12.png";
 import pay4 from "@/assets/images/cards/pay13.png";
 import pay1 from "@/assets/images/cards/pay14.png";
 import { masking } from "@core/utils/masking";
-import { requiredValidator } from "@validators";
+import { alphaValidator, requiredValidator } from "@validators";
 import { vMaska } from "maska";
 export default {
   directives: { maska: vMaska },
   data() {
     return {
       requiredValidator: requiredValidator,
+      alphaValidator: alphaValidator,
       pay1: pay1,
       saveCard: false,
       ccv: "",
@@ -122,10 +130,14 @@ export default {
   border-radius: 7px;
   width: 80px;
   padding: 7px 6px;
-  border: 2px solid #9155fd;
+  border: 2px solid #625d7a;
   text-align: center;
   height: 40px;
   position: relative;
+}
+
+.pricing-card {
+  border: 2px solid #9155fd;
 }
 .vavatar-border {
   /* border: 2px solid #625d7a !important; */

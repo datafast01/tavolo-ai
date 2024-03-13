@@ -151,7 +151,7 @@
                   <VListItemTitle>Edit</VListItemTitle>
                 </VListItem>
 
-                <VListItem @click="deleteUser(item._id)">
+                <VListItem @click="CustomData(item._id)">
                   <template #prepend>
                     <VIcon icon="mdi-delete-outline" />
                   </template>
@@ -227,6 +227,11 @@
       :customerData="myCustomer"
       @customerData="updateCustomer"
     />
+    <DeleteCustomer
+      v-model:isDialogVisible="isUserInfoEditDialogVisibles"
+      :customerData="myCustomers"
+      @customerData="deleteUser"
+    />
   </section>
 </template>
 
@@ -239,6 +244,7 @@ import { useUserListStore } from "@/views/apps/user/useUserListStore";
 import axios from "@axios";
 // import { VSkeletonLoader } from "vuetify/labs/VSkeletonLoader";
 import AddNewCustomer from "./AddCustomer.vue";
+import DeleteCustomer from "./DeleteCustomer.vue";
 import EditCustomer from "./EditCustomer.vue";
 
 const userListStore = useUserListStore();
@@ -248,7 +254,9 @@ const totalUsers = ref(0);
 const customers = ref([]);
 const refInputEl = ref();
 let isUserInfoEditDialogVisible = ref(false);
+let isUserInfoEditDialogVisibles = ref(false);
 let myCustomer = ref({});
+let myCustomers = ref({});
 let show = ref(false);
 let snkMsg = ref("");
 let color = ref("#9575CD");
@@ -399,6 +407,12 @@ const editCustomerData = (data) => {
   isUserInfoEditDialogVisible.value = true;
   myCustomer.value = data;
 };
+
+const CustomData = (_id) => {
+  isUserInfoEditDialogVisibles.value = true;
+  myCustomers.value = item._id;
+};
+
 watchEffect(fetchCustomers);
 
 const isAddNewUserDrawerVisible = ref(false);
@@ -454,6 +468,7 @@ const updateCustomer = (userData) => {
       color.value = "error";
     });
 };
+
 const deleteUser = (id) => {
   axios
     .get(`delete-customers/${id}`)
