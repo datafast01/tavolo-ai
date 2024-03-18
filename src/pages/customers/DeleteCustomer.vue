@@ -31,13 +31,12 @@ const closeNavigationDrawer = () => {
 const onSubmit = () => {
   refForm.value?.validate().then(({ valid }) => {
     if (valid) {
-      // Call deleteUser method here
-      deleteUser(props.customerData._id);
+      emit(
+        "customerData",
+        props.customerData._id,
+        emit("update:isDialogVisible", false)
+      );
 
-      // Close the dialog
-      closeNavigationDrawer();
-
-      // Reset and clear the form
       nextTick(() => {
         refForm.value?.reset();
         refForm.value?.resetValidation();
@@ -53,7 +52,7 @@ const onFormReset = () => {
 
 <template>
   <VDialog
-    :width="$vuetify.display.smAndDown ? 'auto' : 400"
+    :width="$vuetify.display.smAndDown ? 'auto' : 900"
     :model-value="props.isDialogVisible"
     @update:model-value="dialogVisibleUpdate"
   >

@@ -229,7 +229,6 @@
     />
     <DeleteCustomer
       v-model:isDialogVisible="isUserInfoEditDialogVisibles"
-      :customerData="myCustomers"
       @customerData="deleteUser"
     />
   </section>
@@ -408,9 +407,8 @@ const editCustomerData = (data) => {
   myCustomer.value = data;
 };
 
-const CustomData = (_id) => {
+const CustomData = () => {
   isUserInfoEditDialogVisibles.value = true;
-  myCustomers.value = _id;
 };
 
 watchEffect(fetchCustomers);
