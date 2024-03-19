@@ -44,10 +44,11 @@ import {
 
 import NewSequenceDialog from "./NewSequenceDialog .vue";
 import ScheduleSequenceDialog from "./ScheduleSequenceDialog.vue";
+import NameSequenceDialog from "./NameSequenceDialog.vue";
 import rokit from "@/assets/images/cards/rokit.png";
 
 export default {
-  components: { NewSequenceDialog, ScheduleSequenceDialog },
+  components: { NewSequenceDialog, ScheduleSequenceDialog, NameSequenceDialog },
   data() {
     return {
       emailValidator: emailValidator,
@@ -61,6 +62,7 @@ export default {
       Customer: "Customer is new",
       isCardEditDialogVisible: false,
       isCardEditDialogVisibles: false,
+      isCardEditDialogVisiblese: false,
       marker: true,
       rokit: rokit,
 
@@ -89,6 +91,9 @@ export default {
     },
     openScheduleSequenceDialog() {
       this.isCardEditDialogVisibles = true;
+    },
+    openNameSequenceDialog() {
+      this.isCardEditDialogVisiblese = true;
     },
     toggleMarker() {
       this.marker = !this.marker;
@@ -122,14 +127,19 @@ export default {
           <VRow>
             <VCol cols="12">
               <div class="float-right">
-                
                 <v-btn
                   size="large"
                   class="d-flex align-center"
-                  @click="launchCDC"
+                  @click="openNameSequenceDialog()"
                 >
                   <span>LAUNCH </span>
-                  <img :src="rokit" alt="John" class="ml-2" width="20" height="20" />
+                  <img
+                    :src="rokit"
+                    alt="John"
+                    class="ml-2"
+                    width="20"
+                    height="20"
+                  />
                 </v-btn>
               </div>
             </VCol>
@@ -189,6 +199,7 @@ export default {
           </VRow>
         </VForm>
       </VCardText>
+      <NameSequenceDialog v-model:isDialogVisible="isCardEditDialogVisiblese" />
       <NewSequenceDialog v-model:isDialogVisible="isCardEditDialogVisible" />
       <ScheduleSequenceDialog
         v-model:isDialogVisible="isCardEditDialogVisibles"
