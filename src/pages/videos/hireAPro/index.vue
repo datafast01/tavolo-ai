@@ -26,6 +26,7 @@
               alt=""
               width="55"
               srcset=""
+              style="border-radius: 50%;"
             />
           </div>
         </template>

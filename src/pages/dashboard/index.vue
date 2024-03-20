@@ -159,6 +159,8 @@ onMounted(async () => {
   }
   let cloverMerchantID = router;
 });
+
+
 let transactionData = ref({});
 let emailStates = ref({});
 const uploadDashboard = (file) => {
@@ -179,6 +181,7 @@ const uploadDashboard = (file) => {
     })
     .catch((error) => {});
 };
+
 </script>
 
 <style lang="scss">

@@ -13,7 +13,36 @@ import {
 import { onMounted } from "vue";
 
 import AccountSettingsAccount from "./AccountSettingsConnections.vue";
+import { ref } from 'vue';
 
+const imageData = ref("");
+
+const previewImage = (event) => {
+  const input = event.target;
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      imageData.value = e.target.result;
+      // Store the image data in local storage
+      localStorage.setItem("imageData", e.target.result);
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+};
+
+const openFileInput = () => {
+  // Programmatically trigger the click event of the file input
+  const fileInput = document.querySelector('input[type="file"]');
+  fileInput.click();
+};
+
+// Retrieve the image data from local storage when the component is mounted
+onMounted(() => {
+  const storedImageData = localStorage.getItem("imageData");
+  if (storedImageData) {
+    imageData.value = storedImageData;
+  }
+});
 // Define the isNameValid function
 const isNameValid = (value) => {
   return (
@@ -281,6 +310,9 @@ console.log(merchantID, "merchantID");
 getUserProfile();
 </script>
 
+
+
+
 <template>
   <VRow>
     <VSnackbar v-model="show" :timeout="2000" :color="color">
@@ -290,12 +322,32 @@ getUserProfile();
       <VCard>
         <VCardText class="d-flex">
           <!-- 👉 Avatar -->
-          <VAvatar
-            rounded="sm"
-            size="120"
-            class="me-6"
-            :image="accountDataLocal.avatarImg"
-          />
+          <div>
+            <div class="relative">
+              <div v-if="imageData.length > 0">
+                <v-avatar
+                  :image="imageData"
+                  size="120"
+                  class="custom-avatar"
+                ></v-avatar>
+              </div>
+              <div class="edit-profile" @click="openFileInput">
+                <v-icon>mdi-pencil</v-icon>
+              </div>
+            </div>
+
+            <div class="file-upload-form">
+             
+              <input
+                ref="fileInput"
+                type="file"
+                @change="previewImage"
+                accept="image/*"
+                style="display: none;"
+                class="hidden"
+              />
+            </div>
+          </div>
 
           <!-- 👉 Upload Photo -->
         </VCardText>
@@ -511,3 +563,19 @@ getUserProfile();
     cancel-msg="Account Deactivation Cancelled!"
   />
 </template>
+<style>
+.edit-profile {
+  border: 2px solid #8d53f6;
+  padding: 7px;
+  border-radius: 37px;
+  position: absolute;
+  bottom: -3px;
+    right: -14px;
+  color: #8d53f6;
+  z-index: 20;
+  
+}
+.relative{
+  position: relative !important;
+}
+</style>
