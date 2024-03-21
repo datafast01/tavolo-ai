@@ -9,67 +9,114 @@
       <VCol>
         <v-card class="px-12 py-10">
           <div>
-            <div>
+            <!-- <div>
               <div class="text-h6 mb-5">Live Sequences</div>
-            </div>
+            </div> -->
             <VRow>
-              <VCol v-for="payments in paymentMethod" :key="payments">
-                <!-- <v-badge content="✓ " color="#9155FD"> -->
-                <div
-                  :class="{
-                    'selected-card':
-                      payments.id !== currentPkg &&
-                      selectedPaymentMethods === payments.key,
-                    'pricing-card':
-                      payments.id == currentPkg &&
-                      selectedPaymentMethods == payments.key,
-                  }"
-                  class=""
-                  @click="selectedPaymentMethods = payments.key"
+              <VCol cols="12">
+                <v-tabs
+                  v-model="tab"
+                  color="deep-purple-accent-4"
+                  align-tabs="space-between"
                 >
-                  <v-card class="pa-6 text-center">
-                    <p class="ma-0">{{ payments.icon }}</p>
-                  </v-card>
-
-                  <div
-                    class="p-2"
-                    v-if="selectedPaymentMethods == payments.key"
+                  <v-tab value="1"
+                    ><div class="text-h6 mb-5">Live Sequences</div></v-tab
                   >
-                    <!-- <span color="#9155FD" class="tab-i">✓</span> -->
-                  </div>
-                </div>
+                  <v-tab value="2"
+                    ><div class="text-h6 mb-5">Cancelled Sequences</div></v-tab
+                  >
+                </v-tabs>
+              </VCol>
+              <VCol>
+                <v-window v-model="tab">
+                  <v-window-item value="1">
+                    <VRow class="my-3">
+                      <VCol
+                        cols="4"
+                        v-for=" payments in data.paymentMethods.slice(0, data.countsnum)  "
+                        :key="payments.id"
+                      >
+                        <div
+                          :class="{
+                            'selected-card':
+                              payments.id !== currentPkg &&
+                              selectedPaymentMethods === payments.key,
+                            'pricing-card':
+                              payments.id == currentPkg &&
+                              selectedPaymentMethods == payments.key,
+                          }"
+                          class=""
+                          @click="selectedPaymentMethods = payments.key"
+                        >
+                          <v-card
+                            @click="openEditCardDialog()"
+                            class="pa-6 text-center"
+                          >
+                            <p class="ma-0">{{ payments.text }}</p>
+                          </v-card>
+                        </div>
+                      </VCol>
+                      <v-col cols="12" class="text-center">
+                        <v-btn
+                          v-if="data.countsnum < data.paymentMethods.length"
+                          @click="loadMore"
+                          color="grey-darken-2 "
+                          size="small"
+                          class="btn btn-sm btn-danger"
+                        >
+                          View More
+                        </v-btn>
+                      </v-col>
+                    </VRow>
+                  </v-window-item>
+                  <v-window-item value="2">
+                    <VRow class="my-3">
+                      <VCol
+                        cols="4"
+                        v-for=" payments in dataa.paymentMethod.slice(0, dataa.countsnums)  "
+                        :key="payments.id"
+                      >
+                        <div
+                          :class="{
+                            'selected-card':
+                              payments.id !== currentPkg &&
+                              selectedPaymentMethod === payments.key,
+                            'pricing-card':
+                              payments.id == currentPkg &&
+                              selectedPaymentMethod == payments.key,
+                          }"
+                          @click="selectedPaymentMethod = payments.key"
+                        >
+                          <v-card
+                            @click="openEditCardDialog()"
+                            class="pa-6 text-center"
+                          >
+                            <p class="ma-0">{{ payments.text }}</p>
+                          </v-card>
+                        </div>
+                      </VCol>
+                      <v-col cols="12" class="text-center">
+                        <v-btn
+                          v-if="dataa.countsnums < dataa.paymentMethod.length"
+                          @click="loadMores"
+                          color="grey-darken-2 "
+                          size="small"
+                          class="btn btn-sm btn-danger"
+                        >
+                          View More
+                        </v-btn>
+                      </v-col>
+                    </VRow>
+                  </v-window-item>
+                </v-window>
               </VCol>
             </VRow>
           </div>
           <div>
-            <div>
+            <!-- <div>
               <div class="text-h6 mb-5 mt-10">Cancelled Sequences</div>
-            </div>
-            <VRow>
-              <VCol v-for="payments in paymentMethods" :key="payments">
-                <!-- <v-badge content="✓ " color="#9155FD"> -->
-                <div
-                  :class="{
-                    'selected-card':
-                      payments.id !== currentPkg &&
-                      selectedPaymentMethod === payments.key,
-                    'pricing-card':
-                      payments.id == currentPkg &&
-                      selectedPaymentMethod == payments.key,
-                  }"
-                  class=""
-                  @click="selectedPaymentMethod = payments.key"
-                >
-                  <v-card class="pa-6 text-center">
-                    <p class="ma-0">{{ payments.icon }}</p>
-                  </v-card>
-
-                  <div class="p-2" v-if="selectedPaymentMethod == payments.key">
-                    <!-- <span color="#9155FD" class="tab-i">✓</span> -->
-                  </div>
-                </div>
-              </VCol>
-            </VRow>
+            </div> -->
+            <VRow> </VRow>
           </div>
         </v-card>
       </VCol>
@@ -86,24 +133,47 @@ export default {
 
   data() {
     return {
-      paymentMethods: [
-        { key: "masterCard", icon: "New Milkshake" },
-        { key: "applePay", icon: "25% Discount Code" },
-        { key: "visa", icon: "Burger Relaunch" },
-      ],
-      paymentMethod: [
-        { key: "masterCard", icon: "Every 30 Days" },
-        { key: "applePay", icon: "Google & Yelp Reviews" },
-        { key: "visa", icon: "Every 60 Days" },
-      ],
+      tab: null,
+      data: reactive({ paymentMethods: [
+        { id: 0, key: "newMilkshake", text: "New Milkshake" },
+        {  id: 1, key: "discountCode", text: "25% Discount Code" },
+        { id: 2, key: "burgerRelaunch", text: "Burger Relaunch" },
+        { id: 3,  key: "relaunch", text: "Relaunch" },
+        { id: 4, key: "burger", text: "Burger " },
+        { id: 5, key: "milkshake", text: "Milkshake Relaunch" },
+      ],countsnum: 3,
+      }),
+      dataa: reactive({ paymentMethod: [
+        {id: 0, key: "masterCard", text: "Every 30 Days" },
+        {id: 1, key: "applePay", text: "Google & Yelp Reviews" },
+        {id: 2, key: "visa", text: "Every 60 Days" },
+        {id: 3, key: "veryDays", text: "Very Days" },
+        {id: 4, key: "googleReviews", text: "Google  Reviews" },
+        {id: 5, key: "everyMonth", text: "Every Month" },
+      ],countsnums: 3,
+      }),
       selectedPaymentMethods: "visa",
-      selectedPaymentMethod: "visa",
+      selectedPaymentMethod: "relaunch",
       isCardEditDialogVisible: false,
     };
   },
   methods: {
     openEditCardDialog() {
       this.isCardEditDialogVisible = true;
+    },
+    loadMore() {
+      if (this.data.countsnum >= this.data.paymentMethods.length) {
+        return;
+      } else {
+        this.data.countsnum += 3;
+      }
+    },
+    loadMores() {
+      if (this.dataa.countsnums >= this.dataa.paymentMethod.length) {
+        return;
+      } else {
+        this.dataa.countsnums += 3;
+      }
     },
   },
 };
