@@ -1,22 +1,20 @@
 <template>
-  <VCard class="pt-6">
-    <VCardText class="pt-12 mb-16 pb-16">
-      <!-- 👉 App Pricing components -->
-      <VRow>
-        <VCol cols="12" sm="8" md="12" lg="10" class="mx-auto">
-          <AppPricing
-            md="4"
-            :monthlyPkgs="monthlyPkgs"
-            :yearlyPkgs="yearlyPkgs"
-            :currentPkg="currentPkg"
-          />
-        </VCol>
-      </VRow>
-    </VCardText>
-    <!-- {{ currentPkg?.packageId?.price }} -->
-    <!-- 👉 Free trial Banner -->
-    <!-- {{ currentPkg.packageId }} -->
-    <!-- <VRow
+  <div>
+
+
+    <VCard class="pt-6">
+      <VCardText class="pt-12 mb-16 pb-16">
+        <!-- 👉 App Pricing components -->
+        <VRow>
+          <VCol cols="12" sm="8" md="12" lg="10" class="mx-auto">
+            <AppPricing md="4" :monthlyPkgs="monthlyPkgs" :yearlyPkgs="yearlyPkgs" :currentPkg="currentPkg" />
+          </VCol>
+        </VRow>
+      </VCardText>
+      <!-- {{ currentPkg?.packageId?.price }} -->
+      <!-- 👉 Free trial Banner -->
+      <!-- {{ currentPkg.packageId }} -->
+      <!-- <VRow
       class="page-pricing-free-trial-banner-bg"
       v-if="currentPkg?.packageId?.price > 1"
     >
@@ -67,19 +65,19 @@
       </VCol>
     </VRow> -->
 
-    <!-- 👉 Plans -->
-    <!-- <VCardText class="text-center mt-16">
+      <!-- 👉 Plans -->
+      <!-- <VCardText class="text-center mt-16">
       <h4 class="text-h5 mb-6">Pick a plan that works best for you</h4>
       <p>Stay cool, we have a 48-hour money back guarantee!</p>
     </VCardText> -->
 
-    <!-- 👉 Features & Tables -->
-    <VCardText class="mb-16 mt-2">
-      <VRow>
-        <VCol cols="12" md="10" class="mx-auto">
-          <VTable class="text-no-wrap border rounded">
-            <!-- 👉 Table head -->
-            <!-- <thead>
+      <!-- 👉 Features & Tables -->
+      <VCardText class="mb-16 mt-2">
+        <VRow>
+          <VCol cols="12" md="10" class="mx-auto">
+            <VTable class="text-no-wrap border rounded">
+              <!-- 👉 Table head -->
+              <!-- <thead>
               <tr>
                 <th scope="col" class="py-4">
                   <h6 class="text-xs font-weight-medium mb-1">FEATURES</h6>
@@ -111,8 +109,8 @@
               </tr>
             </thead> -->
 
-            <!-- 👉 Table Body -->
-            <!-- <tbody>
+              <!-- 👉 Table Body -->
+              <!-- <tbody>
               <tr v-for="feature in features" :key="feature.feature">
                 <td>{{ feature.feature }}</td>
                 <td class="text-center">
@@ -176,8 +174,8 @@
               </tr>
             </tbody> -->
 
-            <!-- 👉 Table footer -->
-            <!-- <tfoot>
+              <!-- 👉 Table footer -->
+              <!-- <tfoot>
               <tr>
                 <td class="py-4">Data storage for 365 days</td>
 
@@ -192,13 +190,13 @@
                 </td>
               </tr>
             </tfoot> -->
-          </VTable>
-        </VCol>
-      </VRow>
-    </VCardText>
+            </VTable>
+          </VCol>
+        </VRow>
+      </VCardText>
 
-    <!-- 👉 FAQ -->
-    <!-- <div>
+      <!-- 👉 FAQ -->
+      <!-- <div>
       <VCardText class="bg-var-theme-background py-sm-16">
         <div class="text-center mt-4">
           <h5 class="text-h5 mb-2">FAQ's</h5>
@@ -215,23 +213,20 @@
         </VExpansionPanels>
       </VCardText>
     </div> -->
-  </VCard>
-  <ConfirmDialog
-    v-model:isDialogVisible="showConfirmation"
-    confirmTitle="Cancel Subscription"
-    confirmMsg="Are you sure you want to cancel the subscription?"
-    @confirm="cancelSubscription"
-  />
+    </VCard>
+    <confirmation-dialog ref="confirmationDialog"></confirmation-dialog>
+  </div>
 </template>
 
 <script>
 import store from "@/store/index.js";
 import axios from "@axios";
 
-import ConfirmDialog from "@/components/dialogs/ConfirmDialog.vue";
+
 import poseFs9 from "@images/pages/pose-fs-9.png";
 
 export default {
+
   data() {
     return {
       poseFs9: poseFs9,
@@ -388,6 +383,13 @@ export default {
           console.log(err);
         });
     },
+    confirmDelete() {
+      this.$refs.confirmationDialog.openDialog('Are you sure you want to delete this item?', this.cancelSubscription());
+    },
+    // deleteItem() {
+    //   // Your delete logic here
+    //   console.log('Item deleted');
+    // }
   },
   mounted() {
     // console.log(store);

@@ -1,135 +1,43 @@
-<script setup>
-const props = defineProps({
-  confirmationQuestion: {
-    type: String,
-    required: true,
-  },
-  isDialogVisible: {
-    type: Boolean,
-    required: true,
-  },
-  confirmTitle: {
-    type: String,
-    required: true,
-  },
-  confirmMsg: {
-    type: String,
-    required: true,
-  },
-  cancelTitle: {
-    type: String,
-    required: true,
-  },
-  cancelMsg: {
-    type: String,
-    required: true,
-  },
-});
+<!-- ConfirmationDialog.vue -->
+<template>
+  <v-dialog v-model="dialog" max-width="300">
+    <v-card>
+      <v-card-title class="headline">
+        Confirmation
+      </v-card-title>
+      <v-card-text>{{ message }}</v-card-text>
+      <v-card-actions>
+        <v-btn color="primary" @click="confirmAction">OK</v-btn>
+        <v-btn color="error" @click="cancelAction">Cancel</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+</template>
 
-const emit = defineEmits(["update:isDialogVisible", "confirm"]);
-
-const unsubscribed = ref(false);
-const cancelled = ref(false);
-
-const updateModelValue = (val) => {
-  emit("update:isDialogVisible", val);
-};
-
-const onConfirmation = () => {
-  emit("confirm", true);
-  updateModelValue(false);
-};
-
-const onCancel = () => {
-  updateModelValue(false);
+<script>
+export default {
+  data() {
+    return {
+      dialog: false,
+      message: '',
+      action: null
+    };
+  },
+  methods: {
+    openDialog(message, action) {
+      this.message = message;
+      this.action = action;
+      this.dialog = true;
+    },
+    confirmAction() {
+      if (typeof this.action === 'function') {
+        this.action();
+      }
+      this.dialog = false;
+    },
+    cancelAction() {
+      this.dialog = false;
+    }
+  }
 };
 </script>
-
-<template>
-  <!-- 👉 Confirm Dialog -->
-  <VDialog max-width="500">
-    <VCard class="text-center px-10 py-6">
-      <VCardText>
-        <VBtn
-          icon
-          variant="outlined"
-          color="warning"
-          class="my-4"
-          style="block-size: 88px; inline-size: 88px; pointer-events: none"
-        >
-          <span class="text-5xl">!</span>
-        </VBtn>
-
-        <h6 class="text-lg font-weight-medium">
-          {{ props.confirmationQuestion }}
-        </h6>
-      </VCardText>
-
-      <VCardText class="d-flex align-center justify-center gap-2">
-        <VBtn variant="elevated"> Confirm </VBtn>
-
-        <VBtn color="secondary" variant="tonal"> Cancel </VBtn>
-      </VCardText>
-    </VCard>
-  </VDialog>
-
-  <!-- Unsubscribed -->
-  <VDialog
-    :model-value="props.isDialogVisible"
-    @update:model-value="updateModelValue"
-    max-width="500"
-  >
-    <VCard>
-      <VCardText class="text-center px-10 py-6">
-        <VBtn
-          icon
-          variant="outlined"
-          color="warning"
-          class="my-4"
-          style="block-size: 88px; inline-size: 88px; pointer-events: none"
-        >
-          <span class="text-5xl">!</span>
-        </VBtn>
-
-        <h1 class="text-h4 mb-4">
-          {{ props.confirmTitle }}
-        </h1>
-
-        <p>{{ props.confirmMsg }}</p>
-
-        <VCardText class="d-flex align-center justify-center gap-2">
-          <VBtn variant="elevated" @click="onConfirmation"> Confirm </VBtn>
-
-          <VBtn color="secondary" variant="tonal" @click="onCancel">
-            Cancel
-          </VBtn>
-        </VCardText>
-      </VCardText>
-    </VCard>
-  </VDialog>
-
-  <!-- Cancelled -->
-  <VDialog v-model="cancelled" max-width="500">
-    <VCard>
-      <VCardText class="text-center px-10 py-6">
-        <VBtn
-          icon
-          variant="outlined"
-          color="error"
-          class="my-4"
-          style="block-size: 88px; inline-size: 88px; pointer-events: none"
-        >
-          <span class="text-5xl font-weight-light">X</span>
-        </VBtn>
-
-        <h1 class="text-h4 mb-4">
-          {{ props.cancelTitle }}
-        </h1>
-
-        <p>{{ props.cancelMsg }}</p>
-
-        <VBtn color="success" @click="cancelled = false"> Ok </VBtn>
-      </VCardText>
-    </VCard>
-  </VDialog>
-</template>
