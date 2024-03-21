@@ -9,67 +9,80 @@
       <VCol>
         <v-card class="px-12 py-10">
           <div>
-            <div>
+            <!-- <div>
               <div class="text-h6 mb-5">Live Sequences</div>
-            </div>
+            </div> -->
             <VRow>
-              <VCol v-for="payments in paymentMethod" :key="payments">
-                <!-- <v-badge content="✓ " color="#9155FD"> -->
-                <div
-                  :class="{
-                    'selected-card':
-                      payments.id !== currentPkg &&
-                      selectedPaymentMethods === payments.key,
-                    'pricing-card':
-                      payments.id == currentPkg &&
-                      selectedPaymentMethods == payments.key,
-                  }"
-                  class=""
-                  @click="selectedPaymentMethods = payments.key"
+              <VCol cols="12">
+                <v-tabs
+                  v-model="tab"
+                  color="deep-purple-accent-4"
+                  align-tabs="space-between"
                 >
-                  <v-card class="pa-6 text-center">
-                    <p class="ma-0">{{ payments.icon }}</p>
-                  </v-card>
-
-                  <div
-                    class="p-2"
-                    v-if="selectedPaymentMethods == payments.key"
+                  <v-tab value="1"
+                    ><div class="text-h6 mb-5">Live Sequences</div></v-tab
                   >
-                    <!-- <span color="#9155FD" class="tab-i">✓</span> -->
-                  </div>
-                </div>
+                  <v-tab value="2"
+                    ><div class="text-h6 mb-5">Cancelled Sequences</div></v-tab
+                  >
+                </v-tabs>
+              </VCol>
+              <VCol>
+                <v-window v-model="tab">
+                  <v-window-item value="1">
+                    <VRow class="mt-3">
+                      <VCol cols="4" v-for="payments in paymentMethod" :key="payments">
+                        <div
+                          :class="{
+                            'selected-card':
+                              payments.id !== currentPkg &&
+                              selectedPaymentMethods === payments.key,
+                            'pricing-card':
+                              payments.id == currentPkg &&
+                              selectedPaymentMethods == payments.key,
+                          }"
+                          class=""
+                          @click="selectedPaymentMethods = payments.key"
+                        >
+                          <v-card class="pa-6 text-center">
+                            <p class="ma-0">{{ payments.text }}</p>
+                          </v-card>
+                        </div>
+                      </VCol>
+                    </VRow>
+                  </v-window-item>
+                  <v-window-item value="2">
+                    <VRow class="mt-3">
+                      <VCol cols="4" v-for="payments in paymentMethods" :key="payments">
+                        <div
+                          :class="{
+                            'selected-card':
+                              payments.id !== currentPkg &&
+                              selectedPaymentMethod === payments.key,
+                            'pricing-card':
+                              payments.id == currentPkg &&
+                              selectedPaymentMethod == payments.key,
+                          }"
+                          @click="selectedPaymentMethod ( payments.key)"
+                        >
+                          <v-card class="pa-6 text-center">
+                            <p class="ma-0">{{ payments.text }}</p>
+                          </v-card>
+
+                          
+                        </div>
+                      </VCol>
+                    </VRow>
+                  </v-window-item>
+                </v-window>
               </VCol>
             </VRow>
           </div>
           <div>
-            <div>
+            <!-- <div>
               <div class="text-h6 mb-5 mt-10">Cancelled Sequences</div>
-            </div>
-            <VRow>
-              <VCol v-for="payments in paymentMethods" :key="payments">
-                <!-- <v-badge content="✓ " color="#9155FD"> -->
-                <div
-                  :class="{
-                    'selected-card':
-                      payments.id !== currentPkg &&
-                      selectedPaymentMethod === payments.key,
-                    'pricing-card':
-                      payments.id == currentPkg &&
-                      selectedPaymentMethod == payments.key,
-                  }"
-                  class=""
-                  @click="selectedPaymentMethod = payments.key"
-                >
-                  <v-card class="pa-6 text-center">
-                    <p class="ma-0">{{ payments.icon }}</p>
-                  </v-card>
-
-                  <div class="p-2" v-if="selectedPaymentMethod == payments.key">
-                    <!-- <span color="#9155FD" class="tab-i">✓</span> -->
-                  </div>
-                </div>
-              </VCol>
-            </VRow>
+            </div> -->
+            <VRow> </VRow>
           </div>
         </v-card>
       </VCol>
@@ -86,18 +99,25 @@ export default {
 
   data() {
     return {
+      tab: null,
       paymentMethods: [
-        { key: "masterCard", icon: "New Milkshake" },
-        { key: "applePay", icon: "25% Discount Code" },
-        { key: "visa", icon: "Burger Relaunch" },
+        { key: "newMilkshake", text: "New Milkshake" },
+        { key: "discountCode", text: "25% Discount Code" },
+        { key: "burgerRelaunch", text: "Burger Relaunch" },
+        { key: "relaunch", text: "Relaunch" },
+        { key: "burger", text: "Burger " },
+        { key: "milkshake", text: "Milkshake Relaunch" },
       ],
       paymentMethod: [
-        { key: "masterCard", icon: "Every 30 Days" },
-        { key: "applePay", icon: "Google & Yelp Reviews" },
-        { key: "visa", icon: "Every 60 Days" },
+        { key: "masterCard", text: "Every 30 Days" },
+        { key: "applePay", text: "Google & Yelp Reviews" },
+        { key: "visa", text: "Every 60 Days" },
+        { key: "veryDays", text: "Very Days" },
+        { key: "googleReviews", text: "Google  Reviews" },
+        { key: "everyMonth", text: "Every Month" },
       ],
       selectedPaymentMethods: "visa",
-      selectedPaymentMethod: "visa",
+      selectedPaymentMethod: "relaunch",
       isCardEditDialogVisible: false,
     };
   },
@@ -105,6 +125,15 @@ export default {
     openEditCardDialog() {
       this.isCardEditDialogVisible = true;
     },
+    selectedPaymentMethods(){
+      this.isCardEditDialogVisible = true;
+    },
+    selectedPaymentMethod(payments) {
+      // Set the selected payment method
+      this.selectedPaymentMethod =  payments.key;
+      // Open the modal
+      this.isCardEditDialogVisible = true;
+    }
   },
 };
 </script>

@@ -52,7 +52,7 @@ const onFormReset = () => {
 
 <template>
   <VDialog
-    :width="$vuetify.display.smAndDown ? 'auto' : 900"
+    :width="$vuetify.display.smAndDown ? 'auto' : 450"
     :model-value="props.isDialogVisible"
     @update:model-value="dialogVisibleUpdate"
   >
