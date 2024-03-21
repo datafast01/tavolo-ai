@@ -33,8 +33,11 @@
                     <VRow class="my-3">
                       <VCol
                         cols="4"
-                        v-for=" payments in data.paymentMethods.slice(0, data.countsnum)  "
-                        :key="payments.id"
+                        v-for="payments in data.paymentMethods.slice(
+                          0,
+                          data.countsnum
+                        )"
+                        :key="payments"
                       >
                         <div
                           :class="{
@@ -73,8 +76,11 @@
                     <VRow class="my-3">
                       <VCol
                         cols="4"
-                        v-for=" payments in dataa.paymentMethod.slice(0, dataa.countsnums)  "
-                        :key="payments.id"
+                        v-for="payments in dataa.paymentMethod.slice(
+                          0,
+                          dataa.countsnums
+                        )"
+                        :key="payments"
                       >
                         <div
                           :class="{
@@ -134,24 +140,28 @@ export default {
   data() {
     return {
       tab: null,
-      data: reactive({ paymentMethods: [
-        { id: 0, key: "newMilkshake", text: "New Milkshake" },
-        {  id: 1, key: "discountCode", text: "25% Discount Code" },
-        { id: 2, key: "burgerRelaunch", text: "Burger Relaunch" },
-        { id: 3,  key: "relaunch", text: "Relaunch" },
-        { id: 4, key: "burger", text: "Burger " },
-        { id: 5, key: "milkshake", text: "Milkshake Relaunch" },
-      ],countsnum: 3,
-      }),
-      dataa: reactive({ paymentMethod: [
-        {id: 0, key: "masterCard", text: "Every 30 Days" },
-        {id: 1, key: "applePay", text: "Google & Yelp Reviews" },
-        {id: 2, key: "visa", text: "Every 60 Days" },
-        {id: 3, key: "veryDays", text: "Very Days" },
-        {id: 4, key: "googleReviews", text: "Google  Reviews" },
-        {id: 5, key: "everyMonth", text: "Every Month" },
-      ],countsnums: 3,
-      }),
+      data: {
+        paymentMethods: [
+          { key: "newMilkshake", text: "New Milkshake" },
+          { key: "discountCode", text: "25% Discount Code" },
+          { key: "burgerRelaunch", text: "Burger Relaunch" },
+          { key: "relaunch", text: "Relaunch" },
+          { key: "burger", text: "Burger " },
+          { key: "milkshake", text: "Milkshake Relaunch" },
+        ],
+        countsnum: 3,
+      },
+      dataa: {
+        paymentMethod: [
+          { key: "masterCard", text: "Every 30 Days" },
+          { key: "applePay", text: "Google & Yelp Reviews" },
+          { key: "visa", text: "Every 60 Days" },
+          { key: "veryDays", text: "Very Days" },
+          { key: "googleReviews", text: "Google  Reviews" },
+          { key: "everyMonth", text: "Every Month" },
+        ],
+        countsnums: 3,
+      },
       selectedPaymentMethods: "visa",
       selectedPaymentMethod: "relaunch",
       isCardEditDialogVisible: false,
