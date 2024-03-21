@@ -30,8 +30,12 @@
               <VCol>
                 <v-window v-model="tab">
                   <v-window-item value="1">
-                    <VRow class="mt-3">
-                      <VCol cols="4" v-for="payments in paymentMethod" :key="payments">
+                    <VRow class="my-3">
+                      <VCol
+                        cols="4"
+                        v-for=" payments in data.paymentMethods.slice(0, data.countsnum)  "
+                        :key="payments.id"
+                      >
                         <div
                           :class="{
                             'selected-card':
@@ -44,16 +48,34 @@
                           class=""
                           @click="selectedPaymentMethods = payments.key"
                         >
-                          <v-card class="pa-6 text-center">
+                          <v-card
+                            @click="openEditCardDialog()"
+                            class="pa-6 text-center"
+                          >
                             <p class="ma-0">{{ payments.text }}</p>
                           </v-card>
                         </div>
                       </VCol>
+                      <v-col cols="12" class="text-center">
+                        <v-btn
+                          v-if="data.countsnum < data.paymentMethods.length"
+                          @click="loadMore"
+                          color="grey-darken-2 "
+                          size="small"
+                          class="btn btn-sm btn-danger"
+                        >
+                          View More
+                        </v-btn>
+                      </v-col>
                     </VRow>
                   </v-window-item>
                   <v-window-item value="2">
-                    <VRow class="mt-3">
-                      <VCol cols="4" v-for="payments in paymentMethods" :key="payments">
+                    <VRow class="my-3">
+                      <VCol
+                        cols="4"
+                        v-for=" payments in dataa.paymentMethod.slice(0, dataa.countsnums)  "
+                        :key="payments.id"
+                      >
                         <div
                           :class="{
                             'selected-card':
@@ -63,15 +85,27 @@
                               payments.id == currentPkg &&
                               selectedPaymentMethod == payments.key,
                           }"
-                          @click="selectedPaymentMethod ( payments.key)"
+                          @click="selectedPaymentMethod = payments.key"
                         >
-                          <v-card class="pa-6 text-center">
+                          <v-card
+                            @click="openEditCardDialog()"
+                            class="pa-6 text-center"
+                          >
                             <p class="ma-0">{{ payments.text }}</p>
                           </v-card>
-
-                          
                         </div>
                       </VCol>
+                      <v-col cols="12" class="text-center">
+                        <v-btn
+                          v-if="dataa.countsnums < dataa.paymentMethod.length"
+                          @click="loadMores"
+                          color="grey-darken-2 "
+                          size="small"
+                          class="btn btn-sm btn-danger"
+                        >
+                          View More
+                        </v-btn>
+                      </v-col>
                     </VRow>
                   </v-window-item>
                 </v-window>
@@ -100,22 +134,24 @@ export default {
   data() {
     return {
       tab: null,
-      paymentMethods: [
-        { key: "newMilkshake", text: "New Milkshake" },
-        { key: "discountCode", text: "25% Discount Code" },
-        { key: "burgerRelaunch", text: "Burger Relaunch" },
-        { key: "relaunch", text: "Relaunch" },
-        { key: "burger", text: "Burger " },
-        { key: "milkshake", text: "Milkshake Relaunch" },
-      ],
-      paymentMethod: [
-        { key: "masterCard", text: "Every 30 Days" },
-        { key: "applePay", text: "Google & Yelp Reviews" },
-        { key: "visa", text: "Every 60 Days" },
-        { key: "veryDays", text: "Very Days" },
-        { key: "googleReviews", text: "Google  Reviews" },
-        { key: "everyMonth", text: "Every Month" },
-      ],
+      data: reactive({ paymentMethods: [
+        { id: 0, key: "newMilkshake", text: "New Milkshake" },
+        {  id: 1, key: "discountCode", text: "25% Discount Code" },
+        { id: 2, key: "burgerRelaunch", text: "Burger Relaunch" },
+        { id: 3,  key: "relaunch", text: "Relaunch" },
+        { id: 4, key: "burger", text: "Burger " },
+        { id: 5, key: "milkshake", text: "Milkshake Relaunch" },
+      ],countsnum: 3,
+      }),
+      dataa: reactive({ paymentMethod: [
+        {id: 0, key: "masterCard", text: "Every 30 Days" },
+        {id: 1, key: "applePay", text: "Google & Yelp Reviews" },
+        {id: 2, key: "visa", text: "Every 60 Days" },
+        {id: 3, key: "veryDays", text: "Very Days" },
+        {id: 4, key: "googleReviews", text: "Google  Reviews" },
+        {id: 5, key: "everyMonth", text: "Every Month" },
+      ],countsnums: 3,
+      }),
       selectedPaymentMethods: "visa",
       selectedPaymentMethod: "relaunch",
       isCardEditDialogVisible: false,
@@ -125,15 +161,20 @@ export default {
     openEditCardDialog() {
       this.isCardEditDialogVisible = true;
     },
-    selectedPaymentMethods(){
-      this.isCardEditDialogVisible = true;
+    loadMore() {
+      if (this.data.countsnum >= this.data.paymentMethods.length) {
+        return;
+      } else {
+        this.data.countsnum += 3;
+      }
     },
-    selectedPaymentMethod(payments) {
-      // Set the selected payment method
-      this.selectedPaymentMethod =  payments.key;
-      // Open the modal
-      this.isCardEditDialogVisible = true;
-    }
+    loadMores() {
+      if (this.dataa.countsnums >= this.dataa.paymentMethod.length) {
+        return;
+      } else {
+        this.dataa.countsnums += 3;
+      }
+    },
   },
 };
 </script>
