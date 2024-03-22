@@ -38,6 +38,7 @@
                           data.countsnum
                         )"
                         :key="payments"
+                        @click="openEditCardDialog"
                       >
                         <div
                           :class="{
@@ -52,7 +53,7 @@
                           @click="selectedPaymentMethods = payments.key"
                         >
                           <v-card
-                            @click="openEditCardDialog()"
+                           
                             class="pa-6 text-center"
                           >
                             <p class="ma-0">{{ payments.text }}</p>
@@ -81,6 +82,7 @@
                           dataa.countsnums
                         )"
                         :key="payments"
+                        @click="openEditCardDialog"
                       >
                         <div
                           :class="{
@@ -94,7 +96,7 @@
                           @click="selectedPaymentMethod = payments.key"
                         >
                           <v-card
-                            @click="openEditCardDialog()"
+                            
                             class="pa-6 text-center"
                           >
                             <p class="ma-0">{{ payments.text }}</p>

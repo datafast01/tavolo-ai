@@ -1,6 +1,6 @@
 <script setup>
 import { requiredValidator } from "@validators";
-
+import UplodFileDialog from "./UplodFileDialog.vue";
 const props = defineProps({
   cardDetails: {
     type: Object,
@@ -53,7 +53,7 @@ export default {
       Duis: "Duis vehicula tempus massa",
       businessEmail: "",
       socialAccount: null,
-
+      isCardEditDialogVisible: false,
       socialMedia: [
         {
           key: "instagram",
@@ -73,7 +73,11 @@ export default {
       ],
     };
   },
-  
+  methods: {
+    openEditCardDialog() {
+      this.isCardEditDialogVisible = true;
+    },
+  },
   computed: {
     isNameValid() {
       return (value) =>
@@ -104,10 +108,14 @@ export default {
               <div class="d-flex justify-space-between align-center">
                 <div>
                   <span class="text-h6 pb-2">Add New </span>
-                  <p class="text-body-2">Mention If and Then Statements below.</p>
+                  <p class="text-body-2">
+                    Mention If and Then Statements below.
+                  </p>
                 </div>
                 <div class="float-right">
-                  <VBtn size="large"> Add New </VBtn>
+                  <VBtn @click="openEditCardDialog()" size="large">
+                    Add New ccs
+                  </VBtn>
                 </div>
               </div>
             </VCol>
@@ -132,4 +140,5 @@ export default {
       </VCardText>
     </VCard>
   </VDialog>
+  <UplodFileDialog v-model:isDialogVisible="isCardEditDialogVisible" />
 </template>
