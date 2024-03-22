@@ -158,7 +158,7 @@ export default {
                     </div>
                   </div>
                 </div>
-                <h3 class="logoSequence text-h2">LOGO</h3>
+                <h3 class="logoSequence text-h4">LOGO</h3>
               </div>
 
               <div class="my-5">
@@ -170,12 +170,12 @@ export default {
                     <div class="d-flex align-center justify-space-between pa-3">
                       <div>
                         <div class="">
-                          <span class="white  my-6"
+                          <span class="white  my-6" style="font-size: 12px;"
                             >Write us a review on Google and Yelp and get 25% Off on your next visit!</span
                           >
                           
                         </div>
-                        <div class="pt-0 seq-actoin">Heading</div>
+                        <div class="pt-0 seq-actoin">Body text</div>
                       </div>
                       <div>
                         <v-img
@@ -189,14 +189,14 @@ export default {
                     </div>
                   </div>
                 </div>
-                <span class="ml-2">
+                <!-- <span class="ml-2">
                   <img :src="like" alt="" class="" width="30" height="30" />
-                </span>
+                </span> -->
               </div>
-              <p class="text-body-2 mb-6">
+              <!-- <p class="text-body-2 mb-6">
                 Write us a review on Google and Yelp and get 25% <br />
                 Off on your next visit!
-              </p>
+              </p> -->
               <div class="d-flex align-center justify-center my-8">
                 <button
                   class="d-flex align-center justify-center sequence-btn mr-4"
