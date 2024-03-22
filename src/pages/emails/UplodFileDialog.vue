@@ -64,18 +64,18 @@ export default {
 
 <template>
   <VDialog
-    :width="$vuetify.display.smAndDown ? 'auto' : 860"
+    :width="$vuetify.display.smAndDown ? 'auto' : 800"
     :model-value="props.isDialogVisible"
     @update:model-value="(val) => $emit('update:isDialogVisible', val)"
   >
-    <VCard class="pa-5 pa-sm-8">
+    <VCard class="pa-0 pa-sm-0">
       <DialogCloseBtn
         variant="text"
         size="small"
         @click="$emit('update:isDialogVisible', false)"
       />
 
-      <VCardText>
+      <VCardText class="px-12">
         <VForm class="mt-6">
           <VRow>
             <VCol cols="12" class="text-center mt-4">
@@ -125,7 +125,7 @@ export default {
                 </div>
                 <div class="d-flex align-center justify-center">
                   <div
-                    class="mt-5 relative w-75"
+                    class="mt-7 relative w-75"
                     style="border: 1px solid; border-radius: 5px"
                   >
                     <div class="d-flex align-center justify-space-between pa-3">
@@ -161,7 +161,7 @@ export default {
                 <h3 class="logoSequence text-h4">LOGO</h3>
               </div>
 
-              <div class="my-5">
+              <div class="mt-3 mb-4">
                 <div class="d-flex align-center justify-center">
                   <div
                     class="mt-5 relative w-75"
