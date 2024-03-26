@@ -33,6 +33,7 @@
                     <VRow class="my-3">
                       <VCol
                         cols="4"
+                        class="cursor-pointer"
                         v-for="payments in data.paymentMethods.slice(
                           0,
                           data.countsnum
@@ -77,6 +78,7 @@
                     <VRow class="my-3">
                       <VCol
                         cols="4"
+                        class="cursor-pointer"
                         v-for="payments in dataa.paymentMethod.slice(
                           0,
                           dataa.countsnums
