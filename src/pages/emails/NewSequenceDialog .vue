@@ -114,7 +114,7 @@ export default {
                 </div>
                 <div class="float-right">
                   <VBtn @click="openEditCardDialog()" size="large">
-                    Add New ccs
+                    Add New 
                   </VBtn>
                 </div>
               </div>

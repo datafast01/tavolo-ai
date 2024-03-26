@@ -139,7 +139,7 @@
                   <RouterLink class="text-primary ms-2" :to="{ name: 'login' }">
                     Sign in instead
                   </RouterLink>
-                </VCol>
+                </VCol> 
 
                 <!-- auth providers -->
               </VRow>

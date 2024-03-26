@@ -61,7 +61,7 @@ export default defineComponent({
           toggleVerticalOverlayNavActive: toggleIsOverlayNavActive,
         })),
       ])
-
+  
 
       // 👉 Content area
       let mainChildren = slots.default?.()
