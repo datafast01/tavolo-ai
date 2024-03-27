@@ -1,6 +1,6 @@
 <script setup>
 import { requiredValidator } from "@validators";
-import InsertUploadDialog from "./InsertUploadDialog.vue";
+import UplodFileDialog from "./UplodFileDialog.vue";
 
 // const Fusce = "Fusce vulputate dolor quam";
 // const Duis = "Duis vehicula tempus massa";
@@ -169,10 +169,35 @@ export default {
                 Add
               </VBtn>
             </VCol>
+
+            <VCol cols="12">
+              <VTextField
+                label="Email"
+                Value="Email"
+                type="email"
+                :rules="[requiredValidator]"
+              />
+            </VCol>
+            <VCol cols="12">
+              <VTextField
+                label="If"
+                Value="If"
+                type="text"
+                :rules="[requiredValidator]"
+              />
+            </VCol>
+            <VCol cols="12">
+              <VTextField
+                label="Then"
+                Value="Then"
+                type="text"
+                :rules="[requiredValidator]"
+              />
+            </VCol>
           </VRow>
         </VForm>
       </VCardText>
     </VCard>
   </VDialog>
-  <InsertUploadDialog v-model:isDialogVisible="isCardEditDialogVisible" />
+  <!-- <UplodFileDialog v-model:isDialogVisible="isCardEditDialogVisible" /> -->
 </template>
