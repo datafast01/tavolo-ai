@@ -118,7 +118,7 @@ export default {
             <VCol cols="12" class="text-center mt-4">
               <div class="relative">
                 <img :src="nameSequence" alt="" class="w-100 h-100" />
-                <h3 class="logo-Sequence text-h2">LOGO</h3>
+                <h3 class="logo-Sequence text-h3">LOGO</h3>
               </div>
 
               <div class="my-5">
@@ -202,8 +202,8 @@ export default {
 }
 .logo-Sequence{
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50% ,-50%);
+  top: 4%;
+  left: 3%;
+  
 }
 </style>
