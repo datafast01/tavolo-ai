@@ -119,7 +119,7 @@
                     height="30"
                   />
                 </div>
-                <div class="pl-3  pr-5">Review us on Google</div> 
+                <div class="pl-2  pr-5">Review  on Google</div> 
 
                 <div style="position: absolute; top: 2px; right: 2px; font-size: 10px"><v-icon>mdi-close</v-icon></div>
               </div>
