@@ -56,9 +56,7 @@
               <v-hover v-slot="{ isHovering, props }">
                 <v-card
                   color="grey-lighten-1"
-                  class=" cursor-pointer"
-                  height="232"
-                  width="232"
+                  class="cursor-pointer"
                   @click="selectTemplate(template)"
                   v-bind="props"
                   :class="
@@ -68,7 +66,12 @@
                   "
                 >
                   <div class="menu-btn">
-                    <v-icon> mdi-dots-vertical </v-icon>
+                    
+                      <img
+                        src="../../assets/images/logos/favicon.png"
+                        height="30"
+                      />
+                    
                   </div>
 
                   <!-- <v-icon> mdi-dots-vertical </v-icon> -->
@@ -76,7 +79,7 @@
                   <img
                     src="../../assets/images/cards/image_31.png"
                     cover
-                    class="text-white w-100"
+                    class="text-white w-100 h-100"
                   />
 
                   <div class="mt-8 ml-4 px-2 template-card">
@@ -318,8 +321,8 @@ export default {
 }
 
 .template-card {
-  position: relative;
-  bottom: 85%;
+  position: absolute;
+  bottom: 0%;
   z-index: 0;
 }
 
@@ -360,7 +363,8 @@ export default {
 .menu-btn {
   position: absolute;
   top: 7px;
-  right: 5px;
+  left: 50%;
+  transform: translateX(-50%)
 }
 
 .cursor-pointer:hover .edit-action {

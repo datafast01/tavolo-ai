@@ -21,7 +21,7 @@
       ></v-stepper-item>
     </v-stepper-header>
     <v-stepper-window>
-      <div class="pa-5">
+      <div class="px-5">
         <v-stepper-window-item value="1">
           <NewSequence />
           <div class="mt-6 d-flex justify-space-between">
@@ -32,7 +32,7 @@
           </div>
         </v-stepper-window-item>
       </div>
-      <div class="pa-5">
+      <div class="px-5">
         <v-stepper-window-item value="2">
           <SelectTemplate />
           <div class="mt-6 d-flex justify-space-between">
@@ -43,14 +43,23 @@
           </div>
         </v-stepper-window-item>
       </div>
-      <v-stepper-window-item value="3">
-        <CreateEmail />
-        <PreviewTemplate ref="previewTemplate" />
-        <v-btn color="primary" @click="e1 = 0"> Continue </v-btn>
-        <v-btn color="primary" @click="previewEmail"> Preview </v-btn>
-
-        <v-btn text> Cancel </v-btn>
-      </v-stepper-window-item>
+      <div class="px-5">
+        <v-stepper-window-item value="3">
+          <CreateEmail />
+          <PreviewTemplate ref="previewTemplate" />
+          <div class="mt-6 d-flex justify-space-between">
+            <VCardActions class="pa-0">
+              <v-btn text> Cancel </v-btn>
+            </VCardActions>
+            <div class="d-flex">
+              <v-btn color="primary" class="mr-4" @click="previewEmail">
+                Preview
+              </v-btn>
+              <v-btn color="primary" @click="e1 = 0"> Continue </v-btn>
+            </div>
+          </div>
+        </v-stepper-window-item>
+      </div>
     </v-stepper-window>
   </v-stepper>
 </template>
