@@ -1,8 +1,8 @@
 <template>
-  <VCard class="">
+  <div class="">
 
 
-    <VCardText>
+    <div>
       <VForm>
         <VRow>
 
@@ -28,9 +28,9 @@
 
         </VRow>
       </VForm>
-    </VCardText>
+    </div>
 
-  </VCard>
+  </div>
 </template>
 
 <script>
