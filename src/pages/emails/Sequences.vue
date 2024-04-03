@@ -3,7 +3,7 @@
     <VRow>
       <VCol cols="12">
         <div class="float-right">
-          <VBtn size="large" @click="editSequenceDialog('create')"> NEW SEQUENCE </VBtn>
+          <VBtn size="large" @click="createSequence"> NEW SEQUENCE </VBtn>
         </div>
       </VCol>
       <VCol>
@@ -185,6 +185,9 @@ export default {
     };
   },
   methods: {
+    createSequence() {
+      this.$router.push('/sequences/create')
+    },
     editSequenceDialog(type) {
       // this.selectedSequence = sequence
       this.sequenceType = type
