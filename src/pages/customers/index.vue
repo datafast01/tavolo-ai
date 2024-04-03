@@ -9,58 +9,25 @@
         <v-expansion-panel-text>
           <VRow class="mb-3">
             <VCol cols="12" md="2" sm="4">
-              <VTextField
-                v-model="emailSearch"
-                label="Search Email"
-                density="compact"
-              />
+              <VTextField v-model="emailSearch" label="Search Email" density="compact" />
             </VCol>
             <VCol cols="12" md="2" sm="4">
-              <v-select
-                label="AOV Operator"
-                density="compact"
-                :items="rangeItems"
-                v-model="aovOperator"
-                item-value="value"
-                item-title="name"
-              ></v-select>
+              <v-select label="AOV Operator" density="compact" :items="rangeItems" v-model="aovOperator"
+                item-value="value" item-title="name"></v-select>
             </VCol>
             <VCol cols="12" md="2" sm="4">
-              <VTextField
-                v-model="aov"
-                type="number"
-                label="AOV"
-                density="compact"
-              />
+              <VTextField v-model="aov" type="number" label="AOV" density="compact" />
             </VCol>
             <VCol cols="12" md="2" sm="4">
-              <v-select
-                label="Visis Operator"
-                density="compact"
-                :items="rangeItems"
-                v-model="visitsOperator"
-                item-value="value"
-                item-title="name"
-              ></v-select>
+              <v-select label="Visis Operator" density="compact" :items="rangeItems" v-model="visitsOperator"
+                item-value="value" item-title="name"></v-select>
             </VCol>
             <VCol cols="12" md="2" sm="4">
-              <VTextField
-                v-model="totalVisits"
-                label="Total Visits"
-                density="compact"
-                outline
-                type="number"
-              />
+              <VTextField v-model="totalVisits" label="Total Visits" density="compact" outline type="number" />
             </VCol>
             <VCol cols="12" md="2" sm="4">
-              <v-select
-                label="Repeated"
-                :items="availableItems"
-                item-title="name"
-                item-value="value"
-                density="compact"
-                v-model="repeated"
-              ></v-select>
+              <v-select label="Repeated" :items="availableItems" item-title="name" item-value="value" density="compact"
+                v-model="repeated"></v-select>
             </VCol>
           </VRow>
           <div class="d-flex flex-row-reverse">
@@ -85,14 +52,7 @@
           <VIcon icon="mdi-cloud-upload-outline" class="d-sm-none" />
           <span class="d-none d-sm-block">Upload Customers</span>
         </VBtn>
-        <input
-          ref="refInputEl"
-          type="file"
-          name="file"
-          accept=".csv"
-          hidden
-          @input="uploadCustomerCsv"
-        />
+        <input ref="refInputEl" type="file" name="file" accept=".csv" hidden @input="uploadCustomerCsv" />
 
         <VSpacer />
         <VSpacer />
@@ -104,16 +64,9 @@
 
       <!-- SECTION data table -->
 
-      <VDataTableServer
-        v-model:items-per-page="options.itemsPerPage"
-        v-model:page="options.page"
-        :items="customers"
-        :items-length="totalUsers"
-        :headers="headers"
-        class="rounded-0"
-        @update:options="options = $event"
-        :loading="isLoading"
-      >
+      <VDataTableServer v-model:items-per-page="options.itemsPerPage" v-model:page="options.page" :items="customers"
+        :items-length="totalUsers" :headers="headers" class="rounded-0" @update:options="options = $event"
+        :loading="isLoading">
         <!-- Email -->
         <!-- <template #item.email="{ item }">
           <span class="text-sm">
@@ -169,45 +122,25 @@
           <div class="d-flex justify-end gap-x-6 pa-2 flex-wrap">
             <div class="d-flex align-center gap-x-2 text-sm">
               Rows Per Page:
-              <VSelect
-                v-model="options.itemsPerPage"
-                class="per-page-select text-high-emphasis"
-                variant="plain"
-                density="compact"
-                :items="[10, 20, 25, 50, 100]"
-              />
+              <VSelect v-model="options.itemsPerPage" class="per-page-select text-high-emphasis" variant="plain"
+                density="compact" :items="[10, 20, 25, 50, 100]" />
             </div>
 
             <!-- <span class="d-flex align-center text-sm me-2 text-high-emphasis">{{ paginationMeta(options, totalUsers) }}</span> -->
 
             <div class="d-flex gap-x-2 align-center me-2">
-              <VBtn
-                icon="mdi-chevron-left"
-                class="flip-in-rtl"
-                variant="text"
-                density="comfortable"
-                color="default"
-                :disabled="options.page <= 1"
-                @click="options.page <= 1 ? (options.page = 1) : options.page"
-              />
+              <VBtn icon="mdi-chevron-left" class="flip-in-rtl" variant="text" density="comfortable" color="default"
+                :disabled="options.page <= 1" @click="options.page <= 1 ? (options.page = 1) : options.page" />
 
-              <VBtn
-                icon="mdi-chevron-right"
-                class="flip-in-rtl"
-                density="comfortable"
-                variant="text"
-                color="default"
-                :disabled="
-                  options.page >= Math.ceil(totalUsers / options.itemsPerPage)
-                "
-                @click="
-                  options.page >= Math.ceil(totalUsers / options.itemsPerPage)
-                    ? (options.page = Math.ceil(
-                        totalUsers / options.itemsPerPage
-                      ))
-                    : options.page++
-                "
-              />
+              <VBtn icon="mdi-chevron-right" class="flip-in-rtl" density="comfortable" variant="text" color="default"
+                :disabled="options.page >= Math.ceil(totalUsers / options.itemsPerPage)
+      " @click="
+      options.page >= Math.ceil(totalUsers / options.itemsPerPage)
+        ? (options.page = Math.ceil(
+          totalUsers / options.itemsPerPage
+        ))
+        : options.page++
+      " />
             </div>
           </div>
         </template>
@@ -217,20 +150,14 @@
     </VCard>
 
     <!-- 👉 Add New User -->
-    <AddNewCustomer
-      v-model:isCreateDialog="isAddNewUserDrawerVisible"
-      @user-data="addNewUser"
-    />
+    <AddNewCustomer v-model:isCreateDialog="isAddNewUserDrawerVisible" @user-data="addNewUser" />
 
-    <EditCustomer
-      v-model:isDialogVisible="isUserInfoEditDialogVisible"
-      :customerData="myCustomer"
-      @customerData="updateCustomer"
-    />
-    <DeleteCustomer
+    <EditCustomer v-model:isDialogVisible="isUserInfoEditDialogVisible" :customerData="myCustomer"
+      @customerData="updateCustomer" />
+    <!-- <DeleteCustomer
       v-model:isDialogVisible="isUserInfoEditDialogVisibles"
       @customerData="deleteUser"
-    />
+    /> -->
   </section>
 </template>
 
@@ -243,7 +170,7 @@ import { useUserListStore } from "@/views/apps/user/useUserListStore";
 import axios from "@axios";
 // import { VSkeletonLoader } from "vuetify/labs/VSkeletonLoader";
 import AddNewCustomer from "./AddCustomer.vue";
-import DeleteCustomer from "./DeleteCustomer.vue";
+// import DeleteCustomer from "./DeleteCustomer.vue";
 import EditCustomer from "./EditCustomer.vue";
 
 const userListStore = useUserListStore();
@@ -351,7 +278,7 @@ const uploadCustomerCsv = (file) => {
       // console.log(res);
       fetchCustomers();
     })
-    .catch((error) => {});
+    .catch((error) => { });
   // if (files && files.length) {
   //   fileReader.readAsDataURL(files[0]);
   //   fileReader.onload = () => {
