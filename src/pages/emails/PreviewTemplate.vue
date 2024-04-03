@@ -11,7 +11,7 @@
             <VCol cols="12" class="text-center mt-4">
               <div class="relative">
                 <img :src="nameSequence" alt="" class="w-100 h-100" />
-                <h3 class="logo-Sequence text-h2">LOGO</h3>
+                <h3 class="logo-Sequence text-h4">LOGO</h3>
               </div>
 
               <div class="my-5">
@@ -27,13 +27,13 @@
               <div class="d-flex align-center justify-center my-8">
                 <button class="d-flex align-center justify-center sequence-btn mr-4">
                   <div class="pa-2 sequence-social-btn d-flex align-center justify-center">
-                    <img :src="google" alt="" class="" width="30" height="30" />
+                    <img src="../../assets/images/logos/favicon.png" alt="" class="" width="30" height="30" />
                   </div>
                   <div class="px-3">Review us on Google</div>
                 </button>
                 <button class="d-flex align-center justify-center sequence-btn">
                   <div class="pa-2 sequence-social-btn d-flex align-center justify-center">
-                    <img :src="review" alt="" class="" width="30" height="30" />
+                    <img src="../../assets/images/logos/favicon.png" alt="" class="" width="30" height="30" />
                   </div>
                   <div class="px-3">Review us on Yelp</div>
                 </button>
@@ -148,8 +148,8 @@ export default {
 
 .logo-Sequence {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 15px;
+  left: 15px;
+  
 }
 </style>

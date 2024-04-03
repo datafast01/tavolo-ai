@@ -53,30 +53,29 @@
               cols="12"
               md="3"
             >
-              <v-hover v-slot="{ isHovering, props }">
-                <v-card
-                  color="grey-lighten-1"
-                  class="cursor-pointer"
-                  @click="selectTemplate(template)"
-                  v-bind="props"
-                  :class="
-                    isTemplateCard && templateId == template.templateId
-                      ? ' selected-category '
-                      : ''
-                  "
-                >
-                  <div class="menu-btn">
-                    
-                      <img
-                        src="../../assets/images/logos/favicon.png"
-                        height="30"
-                      />
-                    
-                  </div>
-
-                  <!-- <v-icon> mdi-dots-vertical </v-icon> -->
-
+              <!-- <v-hover v-slot="{ isHovering, props }">   v-bind="props"-->
+              <div
+                style="position: relative; overflow: hidden"
+                @click="selectTemplate(template)"
+                :class="
+                  isTemplateCard && templateId == template.templateId
+                    ? ' selected-category '
+                    : ''
+                "
+              >
+                <div class="menu-btn">
                   <img
+                  
+                    src="../../assets/images/logos/favicon.png"
+                    height="30"
+                  />
+                </div>
+
+                <!-- <v-icon> mdi-dots-vertical </v-icon> -->
+
+                <div style="position: relative ; border: 2px solid transparent; border-radius: 12px; overflow: hidden;" >
+                  <img
+                  style="transform: scale(1.1);"
                     src="../../assets/images/cards/image_31.png"
                     cover
                     class="text-white w-100 h-100"
@@ -88,14 +87,15 @@
                       {{ template.body }}
                     </p>
                   </div>
-                  <v-overlay
+                </div>
+                <!-- <v-overlay
                     :model-value="isHovering"
                     contained
                     class="align-center justify-center"
                   >
-                  </v-overlay>
-                </v-card>
-              </v-hover>
+                  </v-overlay> -->
+              </div>
+              <!-- </v-hover> -->
             </VCol>
           </VRow>
         </v-card-text>
@@ -364,7 +364,7 @@ export default {
   position: absolute;
   top: 7px;
   left: 50%;
-  transform: translateX(-50%)
+  transform: translateX(-50%);
 }
 
 .cursor-pointer:hover .edit-action {
