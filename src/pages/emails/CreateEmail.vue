@@ -4,6 +4,7 @@
       <VForm class="">
         <VRow>
           <VCol cols="12" class="text-center">
+            
             <div class="relative">
               <div class="py-3" style="border: 1px dashed; border-radius: 6px">
                 <div
@@ -101,11 +102,13 @@
                 <div class="px-3">Review us on Google dsda</div>
               </div> -->
               <div
-                class="d-flex align-center justify-center sequence-btn"
+              style="position: relative;"
+                class="d-flex align-center justify-center sequence-btn mr-3"
                 v-for="button in buttons"
                 :key="button"
               >
                 <div
+                
                   class="pa-2 sequence-social-btn d-flex align-center justify-center"
                 >
                   <img
@@ -116,7 +119,9 @@
                     height="30"
                   />
                 </div>
-                <div class="px-3">Review us on Google</div>
+                <div class="pl-3  pr-5">Review us on Google</div> 
+
+                <div style="position: absolute; top: 2px; right: 2px; font-size: 10px"><v-icon>mdi-close</v-icon></div>
               </div>
             </div>
             <div class="d-flex align-center justify-center my-8">
