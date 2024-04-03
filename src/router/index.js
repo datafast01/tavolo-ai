@@ -240,6 +240,14 @@ const routes = [
     //  redirect: () => ({  name: 'login' }),
     meta: { requiresAuth: true },
   },
+  {
+    path: "/sequences/create",
+    name: "create-sequences",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../pages/emails/CreateSequence.vue"),
+    //  redirect: () => ({  name: 'login' }),
+    meta: { requiresAuth: true },
+  },
 
   {
     path: '/:catchAll(.*)', component: () =>

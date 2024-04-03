@@ -1,84 +1,59 @@
 <template>
-  <v-card variant="tonal">
-    <div class="wrapper-steppy bg-card" :style="cssVars">
-      <div class="px-8 pt-8">
-        <div>
-          <p class="h-1">Influencer Collaboration Agreement Checkout</p>
-        </div>
-        <div class="steppy">
-          <div class="steppy-progress bg-purple-darken-2">
-            <div
-              class="steppy-progress-bar"
-              :style="'width:' + multiStepperProgress"
-            ></div>
-          </div>
+  <div>
 
-          <div
-            class="steppy-item"
-            :class="{
-              current: props.step === index + 1,
-              success: props.step > index + 1,
-            }"
-            v-for="(item, index) in props.tabs"
-            :key="index"
-          >
-            <div class="steppy-item-counter">
-              <img
-                v-if="item.iconSuccess"
-                class="icon-success"
-                :src="item.iconSuccess"
-                alt="Check Mark"
-              />
-              <!-- <CheckMark
+
+    <v-card variant="tonal">
+      <div class="wrapper-steppy bg-card" :style="cssVars">
+        <div class="px-8 pt-8">
+          <div>
+            <p class="h-1">Influencer Collaboration Agreement Checkout</p>
+          </div>
+          <div class="steppy">
+            <div class="steppy-progress bg-purple-darken-2">
+              <div class="steppy-progress-bar" :style="'width:' + multiStepperProgress"></div>
+            </div>
+
+            <div class="steppy-item" :class="{
+        current: props.step === index + 1,
+        success: props.step > index + 1,
+      }" v-for="(item, index) in props.tabs" :key="index">
+              <div class="steppy-item-counter">
+                <img v-if="item.iconSuccess" class="icon-success" :src="item.iconSuccess" alt="Check Mark" />
+                <!-- <CheckMark
             v-else
             class="icon-success"
             :color="primaryColor1"
             alt="Check Mark"
           /> -->
-              <span class="number">{{ index + 1 }}</span>
+                <span class="number">{{ index + 1 }}</span>
+              </div>
+              <!-- <span class="steppy-item-title">{{ item.title }}</span> -->
             </div>
-            <!-- <span class="steppy-item-title">{{ item.title }}</span> -->
+          </div>
+        </div>
+
+        <div class="steppy-content" v-for="index in props.tabs.length" :key="index">
+          <div class="steppy-pane" v-if="props.step === index">
+            <slot :name="index"></slot>
           </div>
         </div>
       </div>
-
-      <div
-        class="steppy-content"
-        v-for="index in props.tabs.length"
-        :key="index"
-      >
-        <div class="steppy-pane" v-if="props.step === index">
-          <slot :name="index"></slot>
-        </div>
+    </v-card>
+    <div class="wrapper-steppy px-0 mt-6">
+      <div class="controls d-flex flex-row justify-space-between">
+        <button class="btn btn--default-0 border white--tex" @click="decrementStep" v-if="props.step !== 1">
+          {{ props.backText }}
+        </button>
+        <button class="btn btn--default-2 white--text" @click="incrementStep" v-if="props.step !== props.tabs.length"
+          :disabled="!props.tabs[props.step - 1].isValid">
+          {{ props.nextText }}
+        </button>
+        <button class="btn btn--default-2" @click="finalize" v-else
+          :disabled="!props.tabs[props.step - 1].isValid || loading">
+          <span v-if="loading" class="loader"></span>
+          <span v-else>{{ props.doneText }}</span>
+        </button>
       </div>
-    </div>
-  </v-card>
-  <div class="wrapper-steppy px-0 mt-6">
-    <div class="controls d-flex flex-row justify-space-between">
-      <button
-        class="btn btn--default-0 border white--tex"
-        @click="decrementStep"
-        v-if="props.step !== 1"
-      >
-        {{ props.backText }}
-      </button>
-      <button
-        class="btn btn--default-2 white--text"
-        @click="incrementStep"
-        v-if="props.step !== props.tabs.length"
-        :disabled="!props.tabs[props.step - 1].isValid"
-      >
-        {{ props.nextText }}
-      </button>
-      <button
-        class="btn btn--default-2"
-        @click="finalize"
-        v-else
-        :disabled="!props.tabs[props.step - 1].isValid || loading"
-      >
-        <span v-if="loading" class="loader"></span>
-        <span v-else>{{ props.doneText }}</span>
-      </button>
     </div>
   </div>
 </template>
@@ -196,13 +171,16 @@ $transition: all 500ms ease;
 .v-row {
   margin: 0px !important;
 }
+
 ::v-deep .v-form {
   padding: 0px 32px 32px 32px !important;
 }
+
 .h-1 {
   font-size: 30px;
   line-height: 50px;
 }
+
 .tx-default-2 {
   color: $primary-1;
   font-weight: 600;
@@ -219,6 +197,7 @@ $transition: all 500ms ease;
 ::v-deep .v-card-text {
   padding: 0px !important;
 }
+
 .steppy {
   display: flex;
   align-items: center;
@@ -426,6 +405,7 @@ $transition: all 500ms ease;
   .steppy-item-title {
     display: none;
   }
+
   .steppy-pane {
     margin: 10px 0 10px 0;
   }
@@ -435,6 +415,7 @@ $transition: all 500ms ease;
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }

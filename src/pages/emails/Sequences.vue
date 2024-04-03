@@ -3,7 +3,7 @@
     <VRow>
       <VCol cols="12">
         <div class="float-right">
-          <VBtn size="large" @click="openEditCardDialog()"> NEW SEQUENCE </VBtn>
+          <VBtn size="large" @click="editSequenceDialog('create')"> NEW SEQUENCE </VBtn>
         </div>
       </VCol>
       <VCol>
@@ -14,105 +14,63 @@
             </div> -->
             <VRow>
               <VCol cols="12">
-                <v-tabs
-                  v-model="tab"
-                  color="deep-purple-accent-4"
-                  align-tabs="space-between"
-                >
-                  <v-tab value="1"
-                    ><div class="text-h6 mb-5">Live Sequences</div></v-tab
-                  >
-                  <v-tab value="2"
-                    ><div class="text-h6 mb-5">Cancelled Sequences</div></v-tab
-                  >
+                <v-tabs v-model="tab" color="deep-purple-accent-4" align-tabs="space-between">
+                  <v-tab value="1">
+                    <div class="text-h6 mb-5">Live Sequences</div>
+                  </v-tab>
+                  <v-tab value="2">
+                    <div class="text-h6 mb-5">Cancelled Sequences</div>
+                  </v-tab>
                 </v-tabs>
               </VCol>
               <VCol>
                 <v-window v-model="tab">
                   <v-window-item value="1">
-                    <VRow class="my-3">
-                      <VCol
-                        cols="4"
-                        class="cursor-pointer"
-                        v-for="payments in data.paymentMethods.slice(
-                          0,
-                          data.countsnum
-                        )"
-                        :key="payments"
-                        @click="openEditCardDialog"
-                      >
-                        <div
-                          :class="{
-                            'selected-card':
-                              payments.id !== currentPkg &&
-                              selectedPaymentMethods === payments.key,
-                            'pricing-card':
-                              payments.id == currentPkg &&
-                              selectedPaymentMethods == payments.key,
-                          }"
-                          class=""
-                          @click="selectedPaymentMethods = payments.key"
-                        >
-                          <v-card
-                           
-                            class="pa-6 text-center"
-                          >
-                            <p class="ma-0">{{ payments.text }}</p>
+                    <VRow class="my-3" v-if="liveSequences.length > 0">
+                      <VCol cols="4" class="cursor-pointer" v-for="sequence in liveSequences" :key="sequence"
+                        @click="editSequenceDialog(sequence)">
+                        <div>
+                          <v-card class="pa-6 text-center">
+                            <p class="ma-0">{{ sequence.name }}</p>
                           </v-card>
                         </div>
                       </VCol>
-                      <v-col cols="12" class="text-center">
-                        <v-btn
-                          v-if="data.countsnum < data.paymentMethods.length"
-                          @click="loadMore"
-                          color="grey-darken-2 "
-                          size="small"
-                          class="btn btn-sm btn-danger"
-                        >
+                      <!-- <v-col cols="12" class="text-center">
+                        <v-btn v-if="data.countsnum < data.paymentMethods.length" @click="loadMore"
+                          color="grey-darken-2 " size="small" class="btn btn-sm btn-danger">
                           View More
                         </v-btn>
-                      </v-col>
+                      </v-col> -->
+
+                    </VRow>
+                    <VRow v-else>
+                      <VCol>
+                        No Sequences available
+                      </VCol>
                     </VRow>
                   </v-window-item>
                   <v-window-item value="2">
                     <VRow class="my-3">
-                      <VCol
-                        cols="4"
-                        class="cursor-pointer"
-                        v-for="payments in dataa.paymentMethod.slice(
-                          0,
-                          dataa.countsnums
-                        )"
-                        :key="payments"
-                        @click="openEditCardDialog"
-                      >
-                        <div
-                          :class="{
-                            'selected-card':
-                              payments.id !== currentPkg &&
-                              selectedPaymentMethod === payments.key,
-                            'pricing-card':
-                              payments.id == currentPkg &&
-                              selectedPaymentMethod == payments.key,
-                          }"
-                          @click="selectedPaymentMethod = payments.key"
-                        >
-                          <v-card
-                            
-                            class="pa-6 text-center"
-                          >
+                      <VCol cols="4" class="cursor-pointer" v-for="payments in dataa.paymentMethod.slice(
+            0,
+            dataa.countsnums
+          )" :key="payments" @click="editSequenceDialog">
+                        <div :class="{
+            'selected-card':
+              payments.id !== currentPkg &&
+              selectedPaymentMethod === payments.key,
+            'pricing-card':
+              payments.id == currentPkg &&
+              selectedPaymentMethod == payments.key,
+          }" @click="selectedPaymentMethod = payments.key">
+                          <v-card class="pa-6 text-center">
                             <p class="ma-0">{{ payments.text }}</p>
                           </v-card>
                         </div>
                       </VCol>
                       <v-col cols="12" class="text-center">
-                        <v-btn
-                          v-if="dataa.countsnums < dataa.paymentMethod.length"
-                          @click="loadMores"
-                          color="grey-darken-2 "
-                          size="small"
-                          class="btn btn-sm btn-danger"
-                        >
+                        <v-btn v-if="dataa.countsnums < dataa.paymentMethod.length" @click="loadMores"
+                          color="grey-darken-2 " size="small" class="btn btn-sm btn-danger">
                           View More
                         </v-btn>
                       </v-col>
@@ -131,19 +89,73 @@
         </v-card>
       </VCol>
     </VRow>
-    <SequenceDialog v-model:isDialogVisible="isCardEditDialogVisible" />
+
   </div>
 </template>
 
 <script>
-import SequenceDialog from "./SequenceDialog.vue";
+
 
 export default {
-  components: { SequenceDialog },
+
 
   data() {
     return {
       tab: null,
+      selectedSequence: {},
+      liveSequences: [],
+      canceledSequences: [
+        {
+          id: 1,
+          name: 'Every 30 Days',
+          title: 'this is title for milkshake',
+          date: '12/09/2002',
+          time: '2:30pm',
+          ifStatement: 'newCustomer',
+          thenStatement: 'sendWelcomeEmail'
+
+        },
+        {
+          id: 2,
+          name: '25% Discount Code',
+          title: 'this is title for milkshake',
+          date: '12/09/2002',
+          time: '2:30pm',
+          ifStatement: 'newCustomer',
+          thenStatement: 'sendWelcomeEmail'
+
+        },
+        {
+          id: 3,
+          name: 'Google & Yelp Reviews',
+          title: 'this is title for milkshake',
+          date: '12/09/2002',
+          time: '2:30pm',
+          ifStatement: 'newCustomer',
+          thenStatement: 'sendWelcomeEmail'
+
+        },
+        {
+          id: 4,
+          name: 'New Milkshake 2',
+          title: 'this is title for milkshake',
+          date: '12/09/2002',
+          time: '2:30pm',
+          ifStatement: 'newCustomer',
+          thenStatement: 'sendWelcomeEmail'
+
+        },
+        {
+          id: 5,
+          name: 'New Milkshake 3',
+          title: 'this is title for milkshake',
+          date: '12/09/2002',
+          time: '2:30pm',
+          ifStatement: 'newCustomer',
+          thenStatement: 'sendWelcomeEmail'
+
+        },
+      ],
       data: {
         paymentMethods: [
           { key: "newMilkshake", text: "New Milkshake" },
@@ -169,11 +181,14 @@ export default {
       selectedPaymentMethods: "visa",
       selectedPaymentMethod: "relaunch",
       isCardEditDialogVisible: false,
+      sequenceType: '',
     };
   },
   methods: {
-    openEditCardDialog() {
-      this.isCardEditDialogVisible = true;
+    editSequenceDialog(type) {
+      // this.selectedSequence = sequence
+      this.sequenceType = type
+      this.$refs.sequnceDialog.dialog = true
     },
     loadMore() {
       if (this.data.countsnum >= this.data.paymentMethods.length) {
