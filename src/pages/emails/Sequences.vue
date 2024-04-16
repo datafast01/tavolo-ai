@@ -26,8 +26,8 @@
               <VCol>
                 <v-window v-model="tab">
                   <v-window-item value="1">
-                    <VRow class="my-3" v-if="liveSequences.length > 0">
-                      <VCol cols="4" class="cursor-pointer" v-for="sequence in liveSequences" :key="sequence"
+                    <VRow class="my-3" v-if="sequences.length > 0">
+                      <VCol cols="4" class="cursor-pointer" v-for="sequence in sequences" :key="sequence"
                         @click="editSequenceDialog(sequence)">
                         <div>
                           <v-card class="pa-6 text-center">
@@ -52,17 +52,17 @@
                   <v-window-item value="2">
                     <VRow class="my-3">
                       <VCol cols="4" class="cursor-pointer" v-for="payments in dataa.paymentMethod.slice(
-            0,
-            dataa.countsnums
-          )" :key="payments" @click="editSequenceDialog">
+                        0,
+                        dataa.countsnums
+                      )" :key="payments" @click="editSequenceDialog">
                         <div :class="{
-            'selected-card':
-              payments.id !== currentPkg &&
-              selectedPaymentMethod === payments.key,
-            'pricing-card':
-              payments.id == currentPkg &&
-              selectedPaymentMethod == payments.key,
-          }" @click="selectedPaymentMethod = payments.key">
+                          'selected-card':
+                            payments.id !== currentPkg &&
+                            selectedPaymentMethod === payments.key,
+                          'pricing-card':
+                            payments.id == currentPkg &&
+                            selectedPaymentMethod == payments.key,
+                        }" @click="selectedPaymentMethod = payments.key">
                           <v-card class="pa-6 text-center">
                             <p class="ma-0">{{ payments.text }}</p>
                           </v-card>
@@ -94,6 +94,8 @@
 </template>
 
 <script>
+import axios from '@axios'
+import store from "@/store/index.js";
 
 
 export default {
@@ -103,86 +105,19 @@ export default {
     return {
       tab: null,
       selectedSequence: {},
-      liveSequences: [],
-      canceledSequences: [
-        {
-          id: 1,
-          name: 'Every 30 Days',
-          title: 'this is title for milkshake',
-          date: '12/09/2002',
-          time: '2:30pm',
-          ifStatement: 'newCustomer',
-          thenStatement: 'sendWelcomeEmail'
 
-        },
-        {
-          id: 2,
-          name: '25% Discount Code',
-          title: 'this is title for milkshake',
-          date: '12/09/2002',
-          time: '2:30pm',
-          ifStatement: 'newCustomer',
-          thenStatement: 'sendWelcomeEmail'
+      canceledSequences: [],
 
-        },
-        {
-          id: 3,
-          name: 'Google & Yelp Reviews',
-          title: 'this is title for milkshake',
-          date: '12/09/2002',
-          time: '2:30pm',
-          ifStatement: 'newCustomer',
-          thenStatement: 'sendWelcomeEmail'
 
-        },
-        {
-          id: 4,
-          name: 'New Milkshake 2',
-          title: 'this is title for milkshake',
-          date: '12/09/2002',
-          time: '2:30pm',
-          ifStatement: 'newCustomer',
-          thenStatement: 'sendWelcomeEmail'
-
-        },
-        {
-          id: 5,
-          name: 'New Milkshake 3',
-          title: 'this is title for milkshake',
-          date: '12/09/2002',
-          time: '2:30pm',
-          ifStatement: 'newCustomer',
-          thenStatement: 'sendWelcomeEmail'
-
-        },
-      ],
-      data: {
-        paymentMethods: [
-          { key: "newMilkshake", text: "New Milkshake" },
-          { key: "discountCode", text: "25% Discount Code" },
-          { key: "burgerRelaunch", text: "Burger Relaunch" },
-          { key: "relaunch", text: "Relaunch" },
-          { key: "burger", text: "Burger " },
-          { key: "milkshake", text: "Milkshake Relaunch" },
-        ],
-        countsnum: 3,
-      },
-      dataa: {
-        paymentMethod: [
-          { key: "masterCard", text: "Every 30 Days" },
-          { key: "applePay", text: "Google & Yelp Reviews" },
-          { key: "visa", text: "Every 60 Days" },
-          { key: "veryDays", text: "Very Days" },
-          { key: "googleReviews", text: "Google  Reviews" },
-          { key: "everyMonth", text: "Every Month" },
-        ],
-        countsnums: 3,
-      },
-      selectedPaymentMethods: "visa",
       selectedPaymentMethod: "relaunch",
       isCardEditDialogVisible: false,
       sequenceType: '',
     };
+  },
+  computed: {
+    sequences() {
+      return store.getters.getSequences
+    }
   },
   methods: {
     createSequence() {
@@ -207,7 +142,11 @@ export default {
         this.dataa.countsnums += 3;
       }
     },
+
   },
+  mounted() {
+    store.dispatch("listSequences");
+  }
 };
 </script>
 

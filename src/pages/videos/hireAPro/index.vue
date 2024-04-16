@@ -6,28 +6,22 @@
 
     <VCard>
       <!-- SECTION data table -->
-      <VDataTableServer
-        v-model:items-per-page="options.itemsPerPage"
-        v-model:page="options.page"
-        :items="sampleInfluncerData"
-        :items-length="totalUsers"
-        :headers="headers"
-        class="rounded-0"
-        @update:options="options = $event"
-        :loading="isLoading"
-        item-key="key"
-        @click:row="viewDetails"
-      >
+      <VDataTableServer v-model:items-per-page="options.itemsPerPage" v-model:page="options.page"
+        :items="influencersList" :items-length="totalUsers" :headers="headers" class="rounded-0"
+        @update:options="options = $event" :loading="isLoading" item-key="key" @click:row="viewDetails">
         <!-- Seegments -->
-        <template #item.profilePhoto="{ item }">
+        <template #item.avatar="{ item }">
+
           <div class="py-3">
-            <img
-              src="@/assets/images/avatars/avatar-1.png"
-              alt=""
-              width="55"
-              srcset=""
-              style="border-radius: 50%;"
-            />
+            <img :src="'http://16.171.214.197:8081/' + item.avatar" alt="" width="55" height="50" srcset=""
+              style="border-radius: 50%;" v-if="item.avatar" />
+            <img :src="avatar" alt="" width="55" height="50" srcset="" style="border-radius: 50%;" v-else />
+          </div>
+        </template>
+        <template #item.firstName="{ item }">
+
+          <div class="py-3">
+            {{ item.firstName }} {{ item.lastName }}
           </div>
         </template>
 
@@ -42,45 +36,25 @@
           <div class="d-flex justify-end gap-x-6 pa-2 flex-wrap">
             <div class="d-flex align-center gap-x-2 text-sm">
               Rows Per Page:
-              <VSelect
-                v-model="options.itemsPerPage"
-                class="per-page-select text-high-emphasis"
-                variant="plain"
-                density="compact"
-                :items="[10, 20, 25, 50, 100]"
-              />
+              <VSelect v-model="options.itemsPerPage" class="per-page-select text-high-emphasis" variant="plain"
+                density="compact" :items="[10, 20, 25, 50, 100]" />
             </div>
 
             <!-- <span class="d-flex align-center text-sm me-2 text-high-emphasis">{{ paginationMeta(options, totalUsers) }}</span> -->
 
             <div class="d-flex gap-x-2 align-center me-2">
-              <VBtn
-                icon="mdi-chevron-left"
-                class="flip-in-rtl"
-                variant="text"
-                density="comfortable"
-                color="default"
-                :disabled="options.page <= 1"
-                @click="options.page <= 1 ? (options.page = 1) : options.page--"
-              />
+              <VBtn icon="mdi-chevron-left" class="flip-in-rtl" variant="text" density="comfortable" color="default"
+                :disabled="options.page <= 1" @click="options.page <= 1 ? (options.page = 1) : options.page--" />
 
-              <VBtn
-                icon="mdi-chevron-right"
-                class="flip-in-rtl"
-                density="comfortable"
-                variant="text"
-                color="default"
-                :disabled="
-                  options.page >= Math.ceil(totalUsers / options.itemsPerPage)
-                "
-                @click="
-                  options.page >= Math.ceil(totalUsers / options.itemsPerPage)
-                    ? (options.page = Math.ceil(
+              <VBtn icon="mdi-chevron-right" class="flip-in-rtl" density="comfortable" variant="text" color="default"
+                :disabled="options.page >= Math.ceil(totalUsers / options.itemsPerPage)
+                  " @click="
+                    options.page >= Math.ceil(totalUsers / options.itemsPerPage)
+                      ? (options.page = Math.ceil(
                         totalUsers / options.itemsPerPage
                       ))
-                    : options.page++
-                "
-              />
+                      : options.page++
+                    " />
             </div>
           </div>
         </template>
@@ -91,6 +65,8 @@
 </template>
 
 <script setup>
+import avatar from "@/assets/images/avatars/avatar-1.png";
+
 import { VDataTableServer } from "vuetify/lib/components/index.mjs";
 // import { paginationMeta } from '@/@fake-db/utils'
 // import AddNewUserDrawer from "@/views/apps/user/list/AddNewUserDrawer.vue";
@@ -133,12 +109,12 @@ const headers = [
   {
     id: 0,
     title: "Profile Photo",
-    key: "profilePhoto",
+    key: "avatar",
   },
   {
     id: 1,
     title: "Full Name",
-    key: "fullName",
+    key: "firstName",
   },
   {
     id: 2,
@@ -167,90 +143,30 @@ const headers = [
   },
 ];
 
-// filter veriables
-let menuItem = ref("" || null);
-let available = ref("all" || null);
-let priceOperator = ref("" || null);
-let price = ref("" || null);
-let ordersOperator = ref("" || null);
-let orders = ref("" || null);
 
-const sampleInfluncerData = [
-  {
-    id: 0,
-    img: "",
-    fullName: "Lorem Ipsum",
-    userName: "Lorem Ipsum",
-    gender: "male",
-    audience: "200",
-    rating: "4",
-    charges: "$45/Recording",
-  },
-  {
-    id: 1,
-    img: "",
-    fullName: "Lorem Ipsum",
-    userName: "Lorem Ipsum",
-    gender: "male",
-    audience: "200",
-    rating: "4",
-    charges: "$45/Recording",
-  },
-  {
-    id: 2,
-    img: "",
-    fullName: "Lorem Ipsum",
-    userName: "Lorem Ipsum",
-    gender: "Female",
-    audience: "500k",
-    rating: "4",
-    charges: "$45/Recording",
-  },
-  {
-    id: 3,
-    img: "",
-    fullName: "Lorem Ipsum",
-    userName: "Lorem Ipsum",
-    gender: "male",
-    audience: "100k",
-    rating: "4",
-    charges: "$45/Recording",
-  },
-  {
-    id: 4,
-    img: "",
-    fullName: "Lorem Ipsum",
-    userName: "Lorem Ipsum",
-    gender: "Female",
-    audience: "100k",
-    rating: "4",
-    charges: "$45/Recording",
-  },
-  {
-    id: 5,
-    userName: "Lorem Ipsum",
-    rating: "4",
-    charges: "$45/Recording",
-  },
-];
+
+
+let influencersList = ref([])
 
 // 👉 Fetching users
 
-const applyFilters = () => {
+const getInfluencers = () => {
   isLoading.value = true;
   axios
     .get(
-      `food-item/list?pageSize=${options.value.itemsPerPage}&page=${options.value.page}&name=${menuItem.value}&available=${available.value}&price=${price.value}&priceOperator=${priceOperator.value}&noOfTimesOrdered=${orders.value}&noOfTimesOrderedOperator=${ordersOperator.value}`
+      `influencer/list?pageNo=1&pageSize=10`
     )
     .then((response) => {
       console.log("user", response.data);
-      menuItems.value = response.data.data;
+      influencersList.value = response.data.data;
       isLoading.value = false;
     })
     .catch((err) => {
       console.log(err.response.status);
     });
 };
+
+getInfluencers()
 
 const editMenuItemData = (data) => {
   isUserInfoEditDialogVisible.value = true;
@@ -336,8 +252,11 @@ const deleteMenuItem = (id) => {
 const router = useRouter();
 const route = useRoute();
 const viewDetails = (item, row) => {
-  router.push({ path: `/influencer-details/${row.item.id}` });
-  console.log(row.item);
+
+  router.push({
+    path: `/influencer-details/${row.item._id}`
+  });
+
 };
 </script>
 

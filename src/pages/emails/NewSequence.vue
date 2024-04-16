@@ -36,6 +36,7 @@
 <script>
 
 import rokit from "@/assets/images/cards/rokit.png";
+import store from "@/store/index.js";
 
 export default {
   props: {
@@ -74,6 +75,9 @@ export default {
         }
       ]
     }
+  },
+  mounted() {
+    store.dispatch('listSegments')
   }
 }
 </script>

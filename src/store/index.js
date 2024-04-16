@@ -5,14 +5,16 @@ import Vuex from "vuex";
 import paymentStore from "./paymentStore";
 import profileStore from './profileStore';
 import themeStore from "./themeStore";
+import sequenceStore from "./sequenceStore";
 
 
 
 export default new Vuex.Store({
   modules: {
-   profileStore,
-   paymentStore,
-   themeStore
+    profileStore,
+    paymentStore,
+    themeStore,
+    sequenceStore
   },
   strict: process.env.DEV,
 });
