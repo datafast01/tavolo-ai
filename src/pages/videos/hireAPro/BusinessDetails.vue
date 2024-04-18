@@ -1,51 +1,40 @@
 <template>
-  <VCardText>
-    <VForm class="mt-6">
-      <VRow>
-        <VCol cols="12">
-          <span class="text-subtitle-1">Your Business Details </span>
-        </VCol>
-        <VCol cols="12">
-          <VTextField
-            v-model="businessName"
-            label="Business Name"
-            Value="First"
-            :rules="[requiredValidator, alphaValidator, isNameValid]"
-          />
-        </VCol>
+  <div>
+    <VCardText>
+      <VForm class="mt-6" ref="businessDetails">
+        <VRow>
+          <VCol cols="12">
+            <span class="text-subtitle-1">Your Business Details </span>
+          </VCol>
+          <VCol cols="12">
+            <VTextField v-model="businessDetails.businessName" label="Business Name" Value="First"
+              :rules="[requiredValidator, alphaValidator]" />
+          </VCol>
 
-        <VCol cols="12">
-          <VTextField
-            v-model="businessNumber"
-            label="Contact Number"
-            :rules="[requiredValidator, integerValidator]"
-          />
-        </VCol>
+          <VCol cols="12">
+            <VTextField v-model="businessDetails.businessNumber" label="Contact Number"
+              :rules="[requiredValidator, integerValidator]" />
+          </VCol>
 
-        <VCol cols="12">
-          <VTextField
-            v-model="businessEmail"
-            class=""
-            label="Email"
-            type="email"
-            :rules="[requiredValidator, emailValidator]"
-          />
-        </VCol>
+          <VCol cols="12">
+            <VTextField v-model="businessDetails.businessEmail" class="" label="Email" type="email"
+              :rules="[requiredValidator, emailValidator]" />
+          </VCol>
 
-        <VCol cols="12">
-          <v-select
-            v-model="socialAccount"
-            :items="socialMedia"
-            label="Social Account"
-            item-value="key"
-            item-title="name"
-            persistent-hint
-            :rules="[requiredValidator]"
-          ></v-select>
-        </VCol>
-      </VRow>
-    </VForm>
-  </VCardText>
+          <VCol cols="12">
+            <v-select v-model="businessDetails.socialAccount" :items="socialMedia" label="Social Account"
+              item-value="key" item-title="name" persistent-hint :rules="[requiredValidator]"></v-select>
+          </VCol>
+        </VRow>
+      </VForm>
+    </VCardText>
+    <div class="mt-6 d-flex justify-space-between">
+      <VCardActions class="pa-0">
+        <v-btn text @click="previousState"> Go Back </v-btn>
+      </VCardActions>
+      <v-btn color="primary" @click="completeBusinessDetails"> SAVE & CONTINUE </v-btn>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -57,6 +46,11 @@ import {
   requiredValidator,
 } from "@validators";
 export default {
+  props: {
+    businessDetails: {
+      type: Object
+    }
+  },
   data() {
     return {
       emailValidator: emailValidator,
@@ -64,10 +58,7 @@ export default {
       lengthValidator: lengthValidator,
       alphaValidator: alphaValidator,
       integerValidator: integerValidator,
-      businessName: "",
-      businessNumber: "",
-      businessEmail: "",
-      socialAccount: null,
+
 
       socialMedia: [
         {
@@ -88,13 +79,19 @@ export default {
       ],
     };
   },
-  computed: {
-    isNameValid() {
-      return (value) =>
-        lengthValidator(value, 1, 15) ||
-        "Contract title must be 15 characters or less";
+  methods: {
+    async completeBusinessDetails() {
+      const { valid } = await this.$refs.businessDetails.validate()
+
+      if (valid) {
+        this.$emit('nextStep')
+
+      }
     },
-  },
+    previousState() {
+      this.$emit('previousState')
+    }
+  }
 };
 </script>
 <style></style>

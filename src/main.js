@@ -14,6 +14,8 @@ import '@core/scss/template/index.scss'
 import '@styles/font_size.css'
 import '@styles/styles.scss'
 import { createPinia } from 'pinia'
+import Toast from "vue-toastification"
+import "vue-toastification/dist/index.css"
 
 import { createApp } from 'vue'
 
@@ -27,6 +29,10 @@ const app = createApp(App)
 
 
 // Use plugins
+const options = {
+    draggable: false
+}
+app.use(Toast, options);
 app.use(vuetify)
 app.use(createPinia())
 app.use(router)
