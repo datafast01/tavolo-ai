@@ -14,20 +14,13 @@
     </div>
 
     <VRow no-gutters class="auth-wrapper">
-      <VCol
-        lg="8"
-        class="d-none d-lg-flex align-center justify-center position-relative"
-      >
+      <VCol lg="8" class="d-none d-lg-flex align-center justify-center position-relative">
         <VImg max-width="768px" :src="authThemeImg" class="auth-illustration" />
         <VImg :width="276" :src="tree" class="auth-footer-start-tree" />
         <VImg class="auth-footer-mask" :src="authThemeMask" />
       </VCol>
 
-      <VCol
-        cols="12"
-        lg="4"
-        class="auth-card-v2 d-flex align-center justify-center"
-      >
+      <VCol cols="12" lg="4" class="auth-card-v2 d-flex align-center justify-center">
         <VCard flat :max-width="500" class="mt-12 mt-sm-0 pa-4">
           <VCardText>
             <h5 class="text-h5 mb-1">Welcome to Tavolo! 👋🏻</h5>
@@ -41,39 +34,22 @@
               <VRow>
                 <!-- email -->
                 <VCol cols="12">
-                  <VTextField
-                    v-model="email"
-                    label="Email"
-                    type="email"
-                    :rules="[requiredValidator, emailValidator]"
-                    :error-messages="errors.email"
-                  />
+                  <VTextField v-model="email" label="Email" type="email" :rules="[requiredValidator, emailValidator]"
+                    :error-messages="errors.email" />
                 </VCol>
 
                 <!-- password -->
                 <VCol cols="12">
-                  <VTextField
-                    v-model="password"
-                    label="Password"
-                    :rules="[requiredValidator]"
-                    :type="isPasswordVisible ? 'text' : 'password'"
-                    :error-messages="errors.password"
-                    :append-inner-icon="
-                      isPasswordVisible
-                        ? 'mdi-eye-off-outline'
-                        : 'mdi-eye-outline'
-                    "
-                    @click:append-inner="isPasswordVisible = !isPasswordVisible"
-                  />
+                  <VTextField v-model="password" label="Password" :rules="[requiredValidator]"
+                    :type="isPasswordVisible ? 'text' : 'password'" :error-messages="errors.password"
+                    :append-inner-icon="isPasswordVisible
+                      ? 'mdi-eye-off-outline'
+                      : 'mdi-eye-outline'
+                      " @click:append-inner="isPasswordVisible = !isPasswordVisible" />
 
-                  <div
-                    class="d-flex align-center flex-wrap justify-space-between mt-1 mb-4"
-                  >
+                  <div class="d-flex align-center flex-wrap justify-space-between mt-1 mb-4">
                     <VCheckbox v-model="rememberMe" label="Remember me" />
-                    <RouterLink
-                      class="text-primary ms-2 mb-1"
-                      :to="{ name: 'forgot-password' }"
-                    >
+                    <RouterLink class="text-primary ms-2 mb-1" :to="{ name: 'forgot-password' }">
                       Forgot Password?
                     </RouterLink>
                   </div>
@@ -84,10 +60,7 @@
                 <!-- create account -->
                 <VCol cols="12" class="text-center">
                   <span>New on our platform?</span>
-                  <RouterLink
-                    class="text-primary ms-2"
-                    :to="{ name: 'register' }"
-                  >
+                  <RouterLink class="text-primary ms-2" :to="{ name: 'register' }">
                     Create an account
                   </RouterLink>
                 </VCol>
@@ -99,11 +72,7 @@
     </VRow>
   </div>
   <v-dialog v-model="dialog" width="auto">
-    <v-card
-      width="500"
-      height="400"
-      class="d-flex align-center text-center justify-center"
-    >
+    <v-card width="500" height="400" class="d-flex align-center text-center justify-center">
       <div>
         <v-card-title> Welcome to Tavolo! </v-card-title>
         <v-card-subtitle class="my-3">
@@ -179,6 +148,7 @@ const login = () => {
     .post("/login", {
       email: email.value,
       password: password.value,
+      role: 'restaurant_owner'
     })
     .then((res) => {
       // console.log(res.data);
@@ -223,6 +193,7 @@ const checkUser = (type) => {
 </script>
 <style lang="scss" scoped>
 @use "@core/scss/template/pages/page-auth.scss";
+
 .v-img__img,
 .v-img__picture,
 .v-img__gradient,

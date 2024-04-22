@@ -9,16 +9,13 @@
 
         <v-divider></v-divider>
 
-        <v-stepper-item title="Influencer Details" :complete="e1 > 1" value="2">
-        </v-stepper-item>
 
-        <v-divider></v-divider>
 
-        <v-stepper-item title="Your Business Details " :complete="e1 > 2" value="3"></v-stepper-item>
+        <v-stepper-item title="Your Business Details " :complete="e1 > 1" value="2"></v-stepper-item>
         <v-divider></v-divider>
-        <v-stepper-item title="Project Details " :complete="e1 > 3" value="4"></v-stepper-item>
+        <v-stepper-item title="Project Details " :complete="e1 > 2" value="3"></v-stepper-item>
         <v-divider></v-divider>
-        <v-stepper-item title="Payment Details " :complete="e1 > 4" value="5"></v-stepper-item>
+        <v-stepper-item title="Payment Details " :complete="e1 > 3" value="4"></v-stepper-item>
 
       </v-stepper-header>
       <v-stepper-window>
@@ -28,22 +25,16 @@
 
           </v-stepper-window-item>
         </div>
+
         <div class="px-5">
           <v-stepper-window-item value="2">
-            <InfluencerDetails @nextStep="completeStep" @previousState="previousStep"
-              :influencerDetails='influencerDetails' />
-
-          </v-stepper-window-item>
-        </div>
-        <div class="px-5">
-          <v-stepper-window-item value="3">
             <BusinessDetails @nextStep="completeStep" @previousState="previousStep"
               :businessDetails="businessDetails" />
 
           </v-stepper-window-item>
         </div>
         <div class="px-5">
-          <v-stepper-window-item value="4">
+          <v-stepper-window-item value="3">
             <ProjectsDetails @nextStep="completeStep" @previousState="previousStep" :projectDetails="projectDetails"
               :targetAudience='targetAudience' />
 
@@ -51,7 +42,7 @@
           </v-stepper-window-item>
         </div>
         <div class="px-5">
-          <v-stepper-window-item value="5">
+          <v-stepper-window-item value="4">
             <PaymentDetails @submitDetails="submitDetails" @previousState="previousStep"
               :paymentDetails="paymentDetails" />
             <div class="mt-6 d-flex justify-space-between">
@@ -78,7 +69,7 @@ import BusinessDetails from "./BusinessDetails.vue";
 import ContractDetails from "./ContractDetails.vue";
 import PaymentDetails from "./PaymentDetails.vue";
 import ProjectsDetails from "./ProjectsDetails.vue";
-import InfluencerDetails from "./DetailsInflue.vue";
+
 
 import Donepage from "./Donepage.vue";
 import axios from "@axios";
@@ -93,7 +84,7 @@ export default {
     BusinessDetails,
     ProjectsDetails,
     PaymentDetails,
-    InfluencerDetails
+
   },
   name: "App",
   data() {
@@ -110,12 +101,7 @@ export default {
         startDate: '',
         endDate: ''
       },
-      influencerDetails: {
-        name: "",
-        contactNumber: "",
-        email: "",
-        socialAccount: null,
-      },
+
       businessDetails: {
         businessName: "",
         businessNumber: "",
@@ -168,7 +154,7 @@ export default {
         paymentMethod: this.paymentDetails,
         projectDetails: this.projectDetails,
         targetAudience: this.targetAudience,
-        influencerDetails: this.influencerDetails
+
       }
       console.log(payload)
       this.loading = true,
