@@ -45,7 +45,7 @@
               </span>
               <span> @socialmediausername </span>
             </div>
-          </div>s
+          </div>
           <div class="d-flex flex-column">
             <div>
               <span style="color: #9155fd"> 2.7k </span>
