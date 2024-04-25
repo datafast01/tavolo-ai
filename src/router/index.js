@@ -192,14 +192,14 @@ const routes = [
     //  redirect: () => ({  name: 'login' }),
     meta: { requiresAuth: true },
   },
-  // {
-  //   path: "/influencer-details/:id",
-  //   name: "influencer-details",
-  //   component: () =>
-  //     import(/* webpackChunkName: "about" */ "../pages/videos/hireAPro/InfluencerDetails.vue"),
-  //   //  redirect: () => ({  name: 'login' }),
-  //   meta: { requiresAuth: true },
-  // },
+  {
+    path: "/influencer-details/:id",
+    name: "influencer-details",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../pages/videos/hireAPro/InfluencerDetails.vue"),
+    //  redirect: () => ({  name: 'login' }),
+    meta: { requiresAuth: true },
+  },
   {
     path: "/hiring-influencer/:id",
     name: "hiring-influencer",
