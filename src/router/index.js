@@ -196,7 +196,7 @@ const routes = [
     path: "/influencer-details/:id",
     name: "influencer-details",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../pages/videos/hireAPro/InfluencerDetails.vue"),
+      import(/* webpackChunkName: "about" */ "../pages/videos/hireAPro/influencerDetails.vue"),
     //  redirect: () => ({  name: 'login' }),
     meta: { requiresAuth: true },
   },
