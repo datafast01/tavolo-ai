@@ -34,7 +34,7 @@
       <VCardText>
         <div class="d-flex justify-space-between align-center">
           <div class="d-flex align-center">
-            <v-avatar :image="'http://16.171.214.197:8081/' + details.avatar" size="180" class="custom-avatar"
+            <v-avatar :image="'https://test.tavolo.ai/' + details.avatar" size="180" class="custom-avatar"
               v-if="details.avatar"></v-avatar>
             <v-avatar :image="avatar" size="180" class="custom-avatar" v-else></v-avatar>
             <div class="d-flex flex-column">
