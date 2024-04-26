@@ -4,14 +4,8 @@
       {{ snkMsg }}
     </VSnackbar>
     <div class="autoDatePicker">
-      <VTextField
-        v-model="scheduleDate"
-        label="Schedule Date"
-        clear-icon="mdi-close"
-        :rules="[requiredValidator]"
-        clearable
-        type="date"
-      />
+      <VTextField v-model="scheduleDate" label="Schedule Date" clear-icon="mdi-close" :rules="[requiredValidator]"
+        clearable type="date" />
       <VRadioGroup v-model="selectedSchedule" :inline="true">
         <VRadio label="Auto Sending" value="notSchedule" color="primary" />
         <VRadio label="Scheduled" value="schedule" color="primary" />
@@ -26,14 +20,7 @@
       </VCardItem>
       <div class="px-4">
         <div class="mt-4">
-          <VSelect
-            v-model="segment"
-            :items="segments"
-            density="compact"
-            item-title="name"
-            item-value="_id"
-            single-line
-          >
+          <VSelect v-model="segment" :items="segments" density="compact" item-title="name" item-value="_id" single-line>
             <template #prepend-inner>
               <div class="text-disabled" style="width: max-content">
                 Select Segment:
@@ -42,13 +29,7 @@
           </VSelect>
         </div>
 
-        <VSelect
-          v-model="sampleMessage"
-          :items="sampleMessages"
-          density="compact"
-          single-line
-          class="my-4"
-        >
+        <VSelect v-model="sampleMessage" :items="sampleMessages" density="compact" single-line class="my-4">
           <template #prepend-inner>
             <div class="text-disabled" style="width: max-content">
               Select Sample Message:
@@ -58,11 +39,7 @@
 
         <VDivider />
 
-        <VTextarea
-          v-model="sampleMessage"
-          :rules="[requiredValidator]"
-          placeholder="Message"
-        />
+        <VTextarea v-model="sampleMessage" :rules="[requiredValidator]" placeholder="Message" />
       </div>
 
       <VDivider />
@@ -71,10 +48,7 @@
         <VBtnGroup color="primary" divided density="comfortable">
           <VBtn @click="sendEmail">Send</VBtn>
           <VBtn icon @click="() => (isMenuOpen = !isMenuOpen)">
-            <VIcon
-              :icon="isMenuOpen ? 'mdi-menu-up' : 'mdi-menu-down'"
-              size="24"
-            />
+            <VIcon :icon="isMenuOpen ? 'mdi-menu-up' : 'mdi-menu-down'" size="24" />
             <VMenu activator="parent">
               <VList :items="['Schedule Mail']" />
             </VMenu>
@@ -94,7 +68,7 @@ import { requiredValidator } from "@validators";
 
 const emit = defineEmits(["close"]);
 
-const segment = ref("650e0f5b6df52a436ca3f12e");
+const segment = ref(null);
 let show = ref(false);
 let snkMsg = ref("");
 let color = ref("#9575CD");

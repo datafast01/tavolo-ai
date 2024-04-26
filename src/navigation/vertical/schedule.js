@@ -18,11 +18,11 @@ export default [
             icon: { icon: 'mdi-message-text-outline' },
             to: { name: 'email-sequences' },
           },
-          {
-            title: 'Campaign Portfolio',
-            icon: { icon: 'mdi-message-text-outline' },
-            to: { name: 'campaign-portfolio' },
-          },
+          // {
+          //   title: 'Campaign Portfolio',
+          //   icon: { icon: 'mdi-message-text-outline' },
+          //   to: { name: 'campaign-portfolio' },
+          // },
           {
             title: 'Campaign Performance',
             icon: { icon: 'mdi-message-text-outline' },
