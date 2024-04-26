@@ -1,10 +1,10 @@
 export default [
- 
+
    {
-    title: 'Auto Messages Sending',
-    icon: { icon: 'mdi-message-text-outline' },
-     to: 'messages',
-   
-  },
-  
+      title: 'Text Messages',
+      icon: { icon: 'mdi-message-text-outline' },
+      to: 'messages',
+
+   },
+
 ]

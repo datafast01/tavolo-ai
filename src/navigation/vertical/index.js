@@ -3,9 +3,9 @@ import dashboard from "./dashboard";
 import askTavolo from "./askTavolo";
 import contracts from "./contracts";
 import customers from "./customers";
-import email from "./email";
-import menuItems from "./menuItems";
-import messages from "./messages";
+// import email from "./email";
+// import menuItems from "./menuItems";
+// import messages from "./messages";
 import orders from "./orders";
 import profile from "./profile";
 import schedule from "./schedule";
@@ -17,11 +17,11 @@ import videos from "./videos";
 export default [
   ...dashboard,
   ...askTavolo,
-  ...email,
-  ...messages,
+
+
   ...customers,
   ...schedule,
-  ...menuItems,
+
   ...orders,
   ...videos,
   ...socialMedia,

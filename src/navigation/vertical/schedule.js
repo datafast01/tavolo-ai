@@ -35,6 +35,12 @@ export default [
         icon: { icon: 'mdi-message-text-outline' },
         to: { name: 'schedule-messages' },
       },
+      {
+        title: 'Text Messages',
+        icon: { icon: 'mdi-message-text-outline' },
+        to: 'messages',
+
+      },
     ]
 
   },
