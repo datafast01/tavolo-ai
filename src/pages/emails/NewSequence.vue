@@ -10,21 +10,22 @@
             <span class="text-subtitle-1">{{ sequenceDetails }} </span>
           </VCol>
           <VCol cols="12">
-            <VTextField v-model="title" label="Title" :rules="[requiredValidator, alphaValidator, isNameValid]" />
+            <VTextField v-model="title" label="Title" :rules="[requiredValidator]" />
           </VCol>
 
           <VCol cols="12">
-            <VTextField v-model="schedule" type="datetime-local" label="Schedule" value="Schedule Date & Time" />
+            <VTextField v-model="schedule" :rules="[requiredValidator]" type="datetime-local" label="Schedule"
+              value="Schedule Date & Time" />
+          </VCol>
+          <VCol cols="12">
+            <v-select v-model="thenStatement" :items="segments" label="If" item-value="_id" item-title="name"
+              persistent-hint :rules="[requiredValidator]"></v-select>
+          </VCol>
+          <VCol cols="12">
+            <v-select v-model="ifStatement" :items="thenStatements" label="Then" item-value="value" item-title="title"
+              persistent-hint :rules="[requiredValidator]"></v-select>
           </VCol>
 
-          <VCol cols="12">
-            <v-select v-model="ifStatement" :items="ifStatements" label="If" item-value="value" item-title="title"
-              persistent-hint :rules="[requiredValidator]"></v-select>
-          </VCol>
-          <VCol cols="12">
-            <v-select v-model="thenStatement" :items="thenStatements" label="Then" item-value="value" item-title="title"
-              persistent-hint :rules="[requiredValidator]"></v-select>
-          </VCol>
 
         </VRow>
       </VForm>
@@ -37,6 +38,10 @@
 
 import rokit from "@/assets/images/cards/rokit.png";
 import store from "@/store/index.js";
+import {
+
+  requiredValidator
+} from "@validators";
 
 export default {
   props: {
@@ -48,34 +53,31 @@ export default {
 
   data() {
     return {
+
+      requiredValidator: requiredValidator,
+
       dialog: false,
       rokit: rokit,
       ifStatement: null,
       thenStatement: null,
       schedule: '',
       title: '',
-      ifStatements: [
-        {
-          title: 'Customer is new',
-          value: 'newCustomer'
-        },
-        {
-          title: 'Customer is old',
-          value: 'oldCustomer'
-        }
-      ],
+
       thenStatements: [
         {
-          title: 'Send promo code email',
-          value: 'promoEmail'
+          title: 'Send email',
+          value: 'sendEmail'
         },
-        {
-          title: 'Send welcome email',
-          value: 'welcomeEmail'
-        }
+
       ]
     }
   },
+  computed: {
+    segments() {
+      return store.getters.getSegments
+    }
+  },
+
   mounted() {
     store.dispatch('listSegments')
   }

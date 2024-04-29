@@ -6,17 +6,9 @@
           <VCol cols="12" class="text-center">
             <div class="relative">
               <div class="py-3" style="border: 1px dashed; border-radius: 6px">
-                <div
-                  class="me-3 py-1 flex-column d-flex align-center justify-space-between"
-                >
+                <div class="me-3 py-1 flex-column d-flex align-center justify-space-between">
                   <div>
-                    <v-img
-                      :src="uploadFile"
-                      class="flex-grow-0"
-                      height="90"
-                      width="90"
-                      alt="John"
-                    ></v-img>
+                    <v-img :src="uploadFile" class="flex-grow-0" height="90" width="90" alt="John"></v-img>
                   </div>
                   <div class="text-center">
                     <p class="mb-0 text-uppercase">Drag and drop files here</p>
@@ -33,21 +25,12 @@
                       </div>
 
                       <div class="file-upload-form">
-                        <input
-                          ref="fileInput"
-                          type="file"
-                          @change="previewImage"
-                          accept="image/*"
-                          style="display: none"
-                          class="hidden"
-                        />
+                        <input ref="fileInput" type="file" @change="previewImage" accept="image/*" style="display: none"
+                          class="hidden" />
                       </div>
                     </div>
                     <v-btn color="primary" @click="openFileInput">
-                      <v-icon
-                        icon="mdi-cloud-upload-outline"
-                        class="d-sm-none"
-                      />
+                      <v-icon icon="mdi-cloud-upload-outline" class="d-sm-none" />
                       <span class="d-none d-sm-block">BROWSE</span>
                     </v-btn>
                   </div>
@@ -56,23 +39,13 @@
               <div class="d-flex align-center justify-center mt-5">
                 <v-text-field label="Subject" variant="outlined">
                   <template v-slot:append-inner>
-                    <v-img
-                      :src="emojiregular"
-                      class="flex-grow-0"
-                      height="20"
-                      width="20"
-                      alt="John"
-                    ></v-img>
+                    <v-img :src="emojiregular" class="flex-grow-0" height="20" width="20" alt="John"></v-img>
                   </template>
                 </v-text-field>
               </div>
               <h3 class="logoSequence text-h4 pa-4">
                 <div v-if="imageData.length > 0">
-                  <v-avatar
-                    :image="imageData"
-                    style="height: 40px; width: 60px"
-                    class="rounded-0"
-                  ></v-avatar>
+                  <v-avatar :image="imageData" style="height: 40px; width: 60px" class="rounded-0"></v-avatar>
                 </div>
               </h3>
             </div>
@@ -97,13 +70,7 @@
                                 </div> -->
                 <v-text-field label="Body" variant="outlined">
                   <template v-slot:append-inner>
-                    <v-img
-                      :src="emojiregular"
-                      class="flex-grow-0"
-                      height="20"
-                      width="20"
-                      alt="John"
-                    ></v-img>
+                    <v-img :src="emojiregular" class="flex-grow-0" height="20" width="20" alt="John"></v-img>
                   </template>
                 </v-text-field>
               </div>
@@ -118,42 +85,25 @@
               >
                 <div class="px-3">Review us on Google dsda</div>
               </div> -->
-              <div
-                style="position: relative"
-                class="d-flex align-center justify-center mt-3 sequence-btn mr-3"
-                v-for="button in buttons"
-                :key="button"
-              >
-                <div
-                  class="pa-2 sequence-social-btn d-flex align-center justify-center"
-                >
-                  <img
-                    src="../../assets/images/logos/favicon.png"
-                    alt=""
-                    class=""
-                    width="30"
-                    height="30"
-                  />
+              <div style="position: relative" class="d-flex align-center justify-center mt-3 sequence-btn mr-3"
+                v-for="button in buttons" :key="button">
+                <div class="pa-2 sequence-social-btn d-flex align-center justify-center">
+                  <img src="../../assets/images/logos/favicon.png" alt="" class="" width="30" height="30" />
                 </div>
                 <div class="pl-4 pr-6">Review fdf dfd on Google</div>
 
-                <div
-                  style="
+                <div style="
                     position: absolute;
                     top: 3px;
                     right: 3px;
                     font-size:9px;
-                  "
-                >
+                  ">
                   <v-icon>mdi-close</v-icon>
                 </div>
               </div>
             </div>
             <div class="d-flex align-center justify-center my-8">
-              <VBtn
-                class="d-flex align-center justify-center mr-4"
-                @click="addAButtonDialog = true"
-              >
+              <VBtn class="d-flex align-center justify-center mr-4" @click="addAButtonDialog = true">
                 Add A Button
               </VBtn>
             </div>
@@ -164,9 +114,7 @@
     <VRow class="border-t-1">
       <VCol cols="12" class="text-center">
         <div class="d-flex align-center justify-center">
-          <a href=""
-            ><img :src="facebook" alt="" class="mr-2" width="20" height="20"
-          /></a>
+          <a href=""><img :src="facebook" alt="" class="mr-2" width="20" height="20" /></a>
           <a href="">
             <img :src="instagram" alt="" class="mr-2" width="20" height="20" />
           </a>
@@ -190,11 +138,7 @@
                 LUANCH
 
                 <template v-slot:append>
-                  <img
-                    src="../../assets/images/cards/rokit.png"
-                    style="height: 19px; width: 19px"
-                    alt=""
-                  />
+                  <img src="../../assets/images/cards/rokit.png" style="height: 19px; width: 19px" alt="" />
                 </template>
               </v-btn>
             </div>
@@ -204,29 +148,11 @@
           <div>Choose the type of the button below.</div>
         </v-card-subtitle>
         <v-card-text>
-          <v-select
-            label="Type Of Button"
-            :items="buttonTypes"
-            item-value="value"
-            item-title="title"
-            v-model="typeOfButton"
-            class="mb-4"
-            variant="outlined"
-          ></v-select>
-          <v-select
-            label="Platform"
-            :items="platforms"
-            item-value="value"
-            item-title="title"
-            v-model="platform"
-            variant="outlined"
-          ></v-select>
-          <v-text-field
-            label="URL"
-            v-model="url"
-            class="mt-4"
-            ariant="outlined"
-          ></v-text-field>
+          <v-select label="Type Of Button" :items="buttonTypes" item-value="value" item-title="title"
+            v-model="typeOfButton" class="mb-4" variant="outlined"></v-select>
+          <v-select label="Platform" :items="platforms" item-value="value" item-title="title" v-model="platform"
+            variant="outlined"></v-select>
+          <v-text-field label="URL" v-model="url" class="mt-4" ariant="outlined"></v-text-field>
         </v-card-text>
 
         <v-card-actions>
@@ -251,6 +177,8 @@ import instagram from "@/assets/images/cards/instagram.png";
 import twiter from "@/assets/images/cards/twiter.png";
 import emojiregular from "@/assets/images/cards/emojiregular.png";
 import { ref, onMounted } from "vue";
+import store from "@/store/index.js";
+
 export default {
   data() {
     return {
@@ -297,6 +225,11 @@ export default {
     };
   },
 
+  computed: {
+    listButtons() {
+      store.getters.getButtons
+    }
+  },
   setup() {
     const imageData = ref("");
 
@@ -348,6 +281,9 @@ export default {
     //   console.log("Selected file:", selectedFile.name);
     // },
   },
+  mounted() {
+    store.dispatch('listButtons')
+  }
 };
 </script>
 <style>

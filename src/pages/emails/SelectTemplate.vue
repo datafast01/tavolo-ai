@@ -5,86 +5,43 @@
         <v-card-item class="px-0">
           <v-card-title>Select A Template</v-card-title>
 
-          <v-card-subtitle
-            >What kind of email template would you like to
-            send?</v-card-subtitle
-          >
+          <v-card-subtitle>What kind of email template would you like to
+            send?</v-card-subtitle>
         </v-card-item>
 
         <v-card-text class="px-0">
-          <!-- <VRow>
-                        <VCol v-for="category in categories" :key="category" cols="12" md="3" class="category">
-                            <v-hover v-slot="{ isHovering, props }">
-                                <v-card class="ma-4 pb-2 cursor-pointer" height="262" width="242"
-                                    @click="selectCategory(category)" v-bind="props" elevation="16" :class="isCategoryCard && categoryId == category.id
-                            ? ' selected-category '
-                            : ''
-                            ">
-                                    <div class="mt-6">
-                                        <div class="d-flex fill-height justify-center">
-                                            <div style="height: 90px; width: 80px; border-radius: 10px"
-                                                :style="category.color">
-                                                <div style="width: 100%; height: 100%"
-                                                    class="d-flex align-center justify-center">
-                                                    <v-icon size="60">{{ category.icon }}</v-icon>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mt-4 ml-4 px-2">
-                                        <p class="f-20 mb-3 font-weight-bold">
-                                            {{ category.name }}
-                                        </p>
-                                        <p class="">
-                                            {{ category.description }}
-                                        </p>
-                                    </div>
-                                    <v-overlay :model-value="isHovering" contained class="align-center justify-center">
-                                    </v-overlay>
-                                </v-card>
-                            </v-hover>
-                        </VCol>
-                    </VRow> -->
-
           <VRow>
-            <VCol
-              v-for="template in templates"
-              :key="template"
-              cols="12"
-              md="3"
-            >
-              <!-- <v-hover v-slot="{ isHovering, props }">   v-bind="props"-->
-              <div
-                style="position: relative; overflow: hidden"
-                @click="selectTemplate(template)"
-                :class="
-                  isTemplateCard && templateId == template.templateId
-                    ? ' selected-category '
-                    : ''
-                "
-              >
-                <div class="menu-btn">
-                  <img
-                  
-                    src="../../assets/images/logos/favicon.png"
-                    height="30"
-                  />
-                </div>
+            <VCol v-for="template in listTemplates" :key="template" cols="12" md="3">
 
+              <!-- <v-hover v-slot="{ isHovering, props }">   v-bind="props"-->
+              <div style="position: relative; overflow: hidden; height: 350px;" @click="selectTemplate(template)"
+                :class="isTemplateCard && templateId == template.key
+                  ? ' selected-category '
+                  : 'category'
+                  ">
                 <!-- <v-icon> mdi-dots-vertical </v-icon> -->
 
-                <div style="position: relative ; border: 2px solid transparent; border-radius: 12px; overflow: hidden;" >
-                  <img
-                  style="transform: scale(1.1);"
-                    src="../../assets/images/cards/image_31.png"
-                    cover
-                    class="text-white w-100 h-100"
-                  />
+                <div style="">
 
-                  <div class="mt-8 ml-4 px-2 template-card">
-                    <p class="text-h5">{{ template.subject }}</p>
+                  <v-card>
+                    <v-img class="bg-grey-lighten-2" max-height="425" :src="'https://test.tavolo.ai' + template.image"
+                      cover>
+                      <template v-slot:error>
+                        <v-img lass="bg-grey-lighten-2" max-height="455" cover
+                          src="https://test.tavolo.ai/assets/templates/template11.jpg"></v-img>
+                      </template>
+                    </v-img>
+                    <v-card-title class="text-h6">
+
+                    </v-card-title>
+                  </v-card>
+
+                  <div class=" ml-4 px-2 ">
+                    <p class="text-h5">{{ template.value }}</p>
                     <p class="">
-                      {{ template.body }}
+                      {{ truncateText(template.description) }}
+                      <v-tooltip activator="parent" location="start" width="200">{{ template.description
+                        }}</v-tooltip>
                     </p>
                   </div>
                 </div>
@@ -105,6 +62,8 @@
 </template>
 <script>
 import axios from "@axios";
+import store from "@/store/index.js";
+
 
 export default {
   data() {
@@ -118,125 +77,8 @@ export default {
       customeList: [],
       currentCategory: null,
       currentTemplate: null,
-      templateId: 0,
-      categories: [
-        {
-          id: 0,
-          name: "Seasonal",
-          key: "seasonal",
-          description: "Stay engaged with your customers as the seasons change",
-          icon: "mdi-wallet-giftcard",
-          color: "background-color:#9155FD",
-          templates: [
-            {
-              templateId: 0,
-              image: "images",
-              subject: "Seasonal 1",
-              body: "Email Body: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies nec.",
-            },
-            {
-              templateId: 1,
-              image: "images",
-              subject: "Seasonal 2",
-              body: "Email Body: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies nec.",
-            },
-            {
-              templateId: 2,
-              image: "images",
-              subject: "Seasonal 3",
-              body: "Email Body: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies nec.",
-            },
-            {
-              templateId: 3,
-              image: "images",
-              subject: "Seasonal 4",
-              body: "Email Body: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies nec.",
-            },
-          ],
-        },
-        {
-          id: 1,
-          name: "Promotional",
-          key: "promotional",
-          description:
-            "Promote your business by sending special discounts and promotions",
-          icon: "mdi-bullhorn",
-          color: "background-color:#56CA00;",
-          templates: [
-            {
-              templateId: 0,
-              image: "images",
-              subject: "Promotional 1",
-              body: "Email Body: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies nec.",
-            },
-          ],
-        },
-        {
-          id: 2,
-          name: "Interactive",
-          key: "interactive",
-          description:
-            "Engage with customers through surveys to enhance brand interaction",
-          icon: "mdi-chart-bar",
-          color: "background-color:#FCD831",
-          templates: [
-            {
-              templateId: 0,
-              image: "images",
-              subject: "Email Subject",
-              body: "Email Body: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies nec.",
-            },
-            {
-              templateId: 1,
-              image: "images",
-              subject: "Email Subject",
-              body: "Email Body: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies nec.",
-            },
-            {
-              templateId: 2,
-              image: "images",
-              subject: "Email Subject",
-              body: "Email Body: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies nec.",
-            },
-            {
-              templateId: 3,
-              image: "images",
-              subject: "Email Subject",
-              body: "Email Body: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies nec.",
-            },
-          ],
-        },
-        {
-          id: 3,
-          name: "New Menu Launch",
-          key: "new_menu_launch",
+      templateId: 't01',
 
-          description:
-            "Let your customers know about all the new items launched",
-          icon: "mdi-food",
-          color: "background-color: #9155FD",
-          templates: [
-            {
-              templateId: 0,
-              image: "images",
-              subject: "New Menu Launch 1",
-              body: "Email Body: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies nec.",
-            },
-            {
-              templateId: 1,
-              image: "images",
-              subject: "New Menu Launch 2",
-              body: "Email Body: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies nec.",
-            },
-            {
-              templateId: 2,
-              image: "images",
-              subject: "New Menu Launch 3",
-              body: "Email Body: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies nec.",
-            },
-          ],
-        },
-      ],
       pastDate: null,
       pastDates: [
         { key: "1_months", label: "1 Month" },
@@ -272,45 +114,48 @@ export default {
   },
 
   computed: {
+
     templates() {
       return this.categories[this.categoryId].templates;
     },
+
+    listTemplates() {
+      return store.getters.getTemplates
+    }
   },
   methods: {
-    selectCategory(category) {
-      this.isCategoryCard = true;
-      this.categoryId = category.id;
-      this.currentCategory = category;
-      console.log(this.categoryId, category.id);
-      this.listTemplates(category.key);
+    // selectCategory(category) {
+    //   this.isCategoryCard = true;
+    //   this.categoryId = category.id;
+    //   this.currentCategory = category;
+    //   console.log(this.categoryId, category.id);
+    //   this.listTemplates(category.key);
+    // },
+    truncateText(text) {
+      if (text.length > 180) {
+        return text.slice(0, 180) + '...';
+      } else {
+        return text;
+      }
     },
     selectTemplate(template) {
       this.isTemplateCard = true;
-      this.templateId = template.templateId;
+      this.templateId = template.key;
       this.currentTemplate = template;
-      console.log(this.templateId, template.templateId);
+      console.log(this.templateId, template);
     },
     checkType() {
       console.log("alkdj");
     },
-    listTemplates(template) {
-      axios
-        .get(`dashboard/list-email-templates?category=${template}`)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((err) => {
-          console.log(err.response.status);
-        });
-    },
+
     editTemplate(template) {
       this.templateData = template;
       this.$refs.editTemplate.dialog = true;
     },
   },
   mounted() {
-    this.listTemplates("seasonal");
-  },
+    store.dispatch('listTemplates')
+  }
 };
 </script>
 
@@ -318,6 +163,11 @@ export default {
 .selected-category {
   border-radius: 11px;
   border: 2px solid #9155fd !important;
+}
+
+.category {
+  border-radius: 11px;
+  border: 2px solid #626066 !important;
 }
 
 .template-card {
@@ -349,10 +199,8 @@ export default {
 
 .v-overlay__scrim,
 .v-navigation-drawer__scrim {
-  background: rgba(
-    var(--v-overlay-scrim-background),
-    var(--v-overlay-scrim-opacity)
-  ) !important;
+  background: rgba(var(--v-overlay-scrim-background),
+      var(--v-overlay-scrim-opacity)) !important;
   opacity: none !important;
 }
 

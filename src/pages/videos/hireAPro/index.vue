@@ -13,8 +13,8 @@
         <template #item.avatar="{ item }">
 
           <div class="py-3">
-            <img :src="'http://16.171.214.197:8081/' + item.avatar" alt="" width="55" height="50" srcset=""
-              style="border-radius: 50%;" v-if="item.avatar" />
+            <img :src="item.avatar" alt="" width="55" height="50" srcset="" style="border-radius: 50%;"
+              v-if="item.avatar" />
             <img :src="avatar" alt="" width="55" height="50" srcset="" style="border-radius: 50%;" v-else />
           </div>
         </template>
