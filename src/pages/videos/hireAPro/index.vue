@@ -121,16 +121,7 @@ const headers = [
     title: "Social Media Username",
     key: "userName",
   },
-  {
-    id: 3,
-    title: "Gender",
-    key: "gender",
-  },
-  {
-    id: 4,
-    title: "Audience",
-    key: "audience",
-  },
+
   {
     id: 5,
     title: "Rating",

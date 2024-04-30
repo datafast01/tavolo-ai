@@ -5,34 +5,23 @@
   <section v-else>
     <VRow class="match-height">
       <VCol cols="12" md="6">
-        <CustomInput
-          :name="`display_name`"
-          type="number"
-          v-model="display_name"
-        />
+        <CustomInput :name="`display_name`" type="number" v-model="display_name" />
         <CrmTransactions :data="transactionData" />
       </VCol>
-      <VCol
-        v-for="statistics in statisticsWithImages"
-        :key="statistics.title"
-        cols="12"
-        md="3"
-        sm="6"
-        class="d-flex flex-column align-self-end"
-      >
+      <VCol v-for="statistics in statisticsWithImages" :key="statistics.title" cols="12" md="3" sm="6"
+        class="d-flex flex-column align-self-end">
         <CardStatisticsWithImages v-bind="statistics" />
       </VCol>
     </VRow>
 
     <VRow class="match-height">
-      <VCol cols="12" md="6">
-        <CrmSalesOverview
-          v-if="!loading"
-          :dashboard="top3FoodItemsSold"
-          :totalSales="totalSales"
-        />
+      <VCol cols="12" md="4">
+        <CrmSalesOverview v-if="!loading" :dashboard="top3FoodItemsSold" :totalSales="totalSales" />
       </VCol>
-      <VCol cols="12" md="6">
+      <VCol cols="12" md="4">
+        <socialMediaAnalytics />
+      </VCol>
+      <VCol cols="12" md="4">
         <CrmActivityTimeline />
       </VCol>
     </VRow>
@@ -59,6 +48,7 @@ import illustration2 from "@images/cards/illustration-2.png";
 import miscMaskDark from "@images/pages/misc-mask-dark.png";
 import miscMaskLight from "@images/pages/misc-mask-light.png";
 import { onMounted } from "vue";
+import socialMediaAnalytics from './socialMediaAnalytics.vue'
 const authThemeMask = useGenerateImageVariant(miscMaskLight, miscMaskDark);
 
 const statisticsWithImages = [
@@ -179,7 +169,7 @@ const uploadDashboard = (file) => {
         isDasboard.value = true;
       }
     })
-    .catch((error) => {});
+    .catch((error) => { });
 };
 
 </script>

@@ -25,7 +25,9 @@
           <v-btn drak class="mr-3">
             <v-icon size="x-large">mdi-message-outline</v-icon>
           </v-btn>
-          <v-btn>Hire</v-btn>
+          <RouterLink :to="{ name: 'hiring-influencer' }">
+            <v-btn>Hire</v-btn>
+          </RouterLink>
         </div>
       </VCol>
     </VRow>
@@ -126,7 +128,8 @@ export default {
           }
           color.value = "error";
         });
-    }
+    },
+
   },
   mounted() {
     this.getInfluencerDetails()
