@@ -4,44 +4,22 @@
       <v-card-item>
         <v-card-title>Select A Template</v-card-title>
 
-        <v-card-subtitle
-          >What kind of email template would you like to send?</v-card-subtitle
-        >
+        <v-card-subtitle>What kind of email template would you like to send?</v-card-subtitle>
       </v-card-item>
 
       <v-card-text>
         <VRow>
-          <VCol
-            v-for="category in categories"
-            :key="category"
-            cols="12"
-            md="3"
-            class="category"
-          >
+          <VCol v-for="category in categories" :key="category" cols="12" md="3" class="category">
             <v-hover v-slot="{ isHovering, props }">
-              <v-card
-                class="ma-4 pb-2 cursor-pointer"
-                height="262"
-                width="242"
-                @click="selectCategory(category)"
-                v-bind="props"
-                elevation="16"
-                :class="
-                  isCategoryCard && categoryId == category.id
+              <v-card class="ma-4 pb-2 cursor-pointer" height="262" width="242" @click="selectCategory(category)"
+                v-bind="props" elevation="16" :class="isCategoryCard && categoryId == category.id
                     ? ' selected-category '
                     : ''
-                "
-              >
+                  ">
                 <div class="mt-6">
                   <div class="d-flex fill-height justify-center">
-                    <div
-                      style="height: 90px; width: 80px; border-radius: 10px"
-                      :style="category.color"
-                    >
-                      <div
-                        style="width: 100%; height: 100%"
-                        class="d-flex align-center justify-center"
-                      >
+                    <div style="height: 90px; width: 80px; border-radius: 10px" :style="category.color">
+                      <div style="width: 100%; height: 100%" class="d-flex align-center justify-center">
                         <v-icon size="60">{{ category.icon }}</v-icon>
                       </div>
                     </div>
@@ -55,11 +33,7 @@
                     {{ category.description }}
                   </p>
                 </div>
-                <v-overlay
-                  :model-value="isHovering"
-                  contained
-                  class="align-center justify-center"
-                >
+                <v-overlay :model-value="isHovering" contained class="align-center justify-center">
                 </v-overlay>
               </v-card>
             </v-hover>
@@ -69,29 +43,17 @@
         <VRow>
           <VCol v-for="template in templates" :key="template" cols="12" md="3">
             <v-hover v-slot="{ isHovering, props }">
-              <v-card
-                color="grey-lighten-1"
-                class="ma-4 cursor-pointer"
-                height="242"
-                width="242"
-                @click="selectTemplate(template)"
-                v-bind="props"
-                :class="
-                  isTemplateCard && templateId == template.templateId
+              <v-card color="grey-lighten-1" class="ma-4 cursor-pointer" height="242" width="242"
+                @click="selectTemplate(template)" v-bind="props" :class="isTemplateCard && templateId == template.templateId
                     ? ' selected-category '
                     : ''
-                "
-              >
+                  ">
                 <div class="menu-btn">
                   <v-menu transition="scale-transition">
                     <template v-slot:activator="{ props }">
-                      <v-icon
-                        class=""
-                        v-bind="props"
-                        v-if="
-                          isTemplateCard && templateId == template.templateId
-                        "
-                        >mdi-dots-vertical
+                      <v-icon class="" v-bind="props" v-if="
+                        isTemplateCard && templateId == template.templateId
+                      ">mdi-dots-vertical
                       </v-icon>
                     </template>
 
@@ -105,11 +67,7 @@
 
                 <!-- <v-icon> mdi-dots-vertical </v-icon> -->
 
-                <img
-                  src="../../../assets/images/cards/image_31.png"
-                  cover
-                  class="text-white"
-                />
+                <img src="../../../assets/images/cards/image_31.png" cover class="text-white" />
 
                 <div class="edit-action">Edit</div>
 
@@ -119,11 +77,7 @@
                     {{ template.body }}
                   </p>
                 </div>
-                <v-overlay
-                  :model-value="isHovering"
-                  contained
-                  class="align-center justify-center"
-                >
+                <v-overlay :model-value="isHovering" contained class="align-center justify-center">
                 </v-overlay>
               </v-card>
             </v-hover>
@@ -140,20 +94,10 @@
 
         <v-tabs v-model="tab">
           <VRow>
-            <VCol
-              cols="12"
-              md="6"
-              style="display: flex; justify-content: center"
-            >
-              <v-tab value="one" class="active"
-                >Filter Recipient by Criteria</v-tab
-              >
+            <VCol cols="12" md="6" style="display: flex; justify-content: center">
+              <v-tab value="one" class="active">Filter Recipient by Criteria</v-tab>
             </VCol>
-            <VCol
-              cols="12"
-              md="6"
-              style="display: flex; justify-content: center"
-            >
+            <VCol cols="12" md="6" style="display: flex; justify-content: center">
               <v-tab value="two">Use My Own Recipient List</v-tab>
             </VCol>
           </VRow>
@@ -165,68 +109,38 @@
           <v-window-item value="one" class="ml-3">
             <v-radio-group v-model="recipients">
               <v-radio label="All Customers" value="all_customers"></v-radio>
-              <v-radio
-                label="Customers who rated your business 4 stars or above"
-                value="top_rated"
-              ></v-radio>
-              <v-radio
-                label="According to Date"
-                value="according_to_date"
-                @change="checkType"
-              ></v-radio>
+              <v-radio label="Customers who rated your business 4 stars or above" value="top_rated"></v-radio>
+              <v-radio label="According to Date" value="according_to_date" @change="checkType"></v-radio>
               <div class="ml-8" v-if="recipients.includes('according_to_date')">
                 <p>Send to Customers who came:</p>
                 <div class="d-flex align-center mb-4">
                   <div class="" style="width: 130px">In the past</div>
                   <div class="ml-4">
-                    <v-select
-                      style="width: 150px"
-                      density="compact"
-                      variant="outlined"
-                      :items="pastDates"
-                      item-title="label"
-                      item-value="key"
-                      v-model="pastDate"
-                    ></v-select>
+                    <v-select style="width: 150px" density="compact" variant="outlined" :items="pastDates"
+                      item-title="label" item-value="key" v-model="pastDate"></v-select>
                   </div>
                 </div>
-                <div class="d-flex align-center mb-4" style="width: 300px">
+                <div class="d-flex align-center " style="width: 300px">
                   <label for="" class="mr-4">Choose Exact Date</label>
-                  <VTextField
-                    type="date"
-                    density="compact"
-                    variant="outlined"
-                  />
+                  <VTextField type="date" density="compact" variant="outlined" />
                 </div>
               </div>
-              <v-radio class="mb-4" value="age_group">
+              <v-radio class="" value="age_group">
                 <template v-slot:label>
                   <div style="width: 147px">Age Group</div>
                   <div v-if="recipients.includes('age_group')">
-                    <v-select
-                      style="width: 150px"
-                      variant="outlined"
-                      density="compact"
-                      :items="ageGroups"
-                      v-model="ageGroup"
-                      item-title="label"
-                      item-value="key"
-                    ></v-select>
+                    <v-select style="width: 150px" variant="outlined" density="compact" :items="ageGroups"
+                      v-model="ageGroup" item-title="label" item-value="key"></v-select>
                   </div>
                 </template>
               </v-radio>
 
-              <v-radio class="mb-4" value="gender">
+              <v-radio class="" value="gender">
                 <template v-slot:label>
                   <div style="width: 147px">Gender</div>
                   <div v-if="recipients.includes('gender')">
-                    <v-select
-                      style="width: 150px"
-                      variant="outlined"
-                      density="compact"
-                      :items="['Male', 'Female', 'Others']"
-                      v-model="gender"
-                    ></v-select>
+                    <v-select style="width: 150px" variant="outlined" density="compact"
+                      :items="['Male', 'Female', 'Others']" v-model="gender"></v-select>
                   </div>
                 </template>
               </v-radio>
@@ -234,20 +148,14 @@
                 <template v-slot:label>
                   <div style="width: 147px">Location</div>
                   <div v-if="recipients.includes('location')">
-                    <v-select
-                      style="width: 150px"
-                      variant="outlined"
-                      density="compact"
-                      v-model="location"
-                      :items="[
-                        'California',
-                        'Colorado',
-                        'Florida',
-                        'Georgia',
-                        'Texas',
-                        'Wyoming',
-                      ]"
-                    ></v-select>
+                    <v-select style="width: 150px" variant="outlined" density="compact" v-model="location" :items="[
+                      'California',
+                      'Colorado',
+                      'Florida',
+                      'Georgia',
+                      'Texas',
+                      'Wyoming',
+                    ]"></v-select>
                   </div>
                 </template>
               </v-radio>
@@ -256,12 +164,8 @@
 
           <v-window-item value="two" class="ml-3">
             <div class="d-flex align-center mb-4">
-              <v-card
-                style="width: 180px; height: 50px"
-                class="d-flex justify-center align-center cursor-pointer"
-                @click="selectFile"
-                v-ripple
-              >
+              <v-card style="width: 180px; height: 50px" class="d-flex justify-center align-center cursor-pointer"
+                @click="selectFile" v-ripple>
                 <div class="f-18">UPLOAD LIST</div>
               </v-card>
               <div class="ml-4">Note: Lorem Ipsum Dilor</div>
@@ -498,6 +402,7 @@ export default {
   border-radius: 11px;
   border: 2px solid #9155fd !important;
 }
+
 .template-card {
   position: relative;
   bottom: 85%;
@@ -514,6 +419,7 @@ export default {
   padding: 7px 12px;
   color: white;
 }
+
 .v-overlay--contained .v-overlay__scrim {
   display: none !important;
   background: none !important;
@@ -526,12 +432,11 @@ export default {
 
 .v-overlay__scrim,
 .v-navigation-drawer__scrim {
-  background: rgba(
-    var(--v-overlay-scrim-background),
-    var(--v-overlay-scrim-opacity)
-  ) !important;
+  background: rgba(var(--v-overlay-scrim-background),
+      var(--v-overlay-scrim-opacity)) !important;
   opacity: none !important;
 }
+
 .edit-action {
   display: none !important;
 }
