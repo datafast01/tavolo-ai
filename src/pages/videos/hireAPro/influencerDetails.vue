@@ -22,9 +22,9 @@
 
       <VCol class="align-self-center">
         <div class="d-flex align-center justify-center">
-          <v-btn drak class="mr-3">
+          <!-- <v-btn drak class="mr-3">
             <v-icon size="x-large">mdi-message-outline</v-icon>
-          </v-btn>
+          </v-btn> -->
           <RouterLink :to="{ name: 'hiring-influencer' }">
             <v-btn>Hire</v-btn>
           </RouterLink>
@@ -60,7 +60,7 @@
         </div>
         <v-tabs v-model="tab" color="deep-purple-accent-4" align-tabs="space-between">
           <v-tab value="1">Bio</v-tab>
-          <v-tab value="2">Projects</v-tab>
+          <!-- <v-tab value="2">Projects</v-tab> -->
           <v-tab value="3">Performance</v-tab>
           <v-tab value="4">Pricing</v-tab>
 
@@ -70,7 +70,7 @@
           <v-window-item value="1">
             <InfluencerBio :details="details.userContent" />
           </v-window-item>
-          <v-window-item value="2"> Projects component </v-window-item>
+          <!-- <v-window-item value="2"> Projects component </v-window-item> -->
           <v-window-item value="3">
             <Performance />
           </v-window-item>

@@ -24,6 +24,19 @@
             {{ item.firstName }} {{ item.lastName }}
           </div>
         </template>
+        <template #item.charges="{ item }">
+
+          <div class="py-3">
+            ${{ item.charges }}/video
+          </div>
+        </template>
+        <template #item.socialMediaUserName="{ item }">
+
+          <div class="py-3">
+            {{ item?.socialMediaUsername
+            }}
+          </div>
+        </template>
 
         <!-- Status -->
 
@@ -119,7 +132,7 @@ const headers = [
   {
     id: 2,
     title: "Social Media Username",
-    key: "userName",
+    key: "socialMediaUserName",
   },
 
   {
@@ -129,7 +142,7 @@ const headers = [
   },
   {
     id: 6,
-    title: "Charges",
+    title: "Princing",
     key: "charges",
   },
 ];
