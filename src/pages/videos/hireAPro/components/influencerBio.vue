@@ -27,9 +27,7 @@ export default {
         { key: 'about', label: 'About' },
         { key: 'profession', label: 'Profession' },
         { key: 'education', label: 'Education' },
-        { key: 'experience', label: 'Experience' },
-        { key: 'interests', label: 'Interests' },
-        { key: 'achievements', label: 'Achievements' },
+
 
 
 

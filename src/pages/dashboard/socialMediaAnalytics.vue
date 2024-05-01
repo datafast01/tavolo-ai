@@ -9,40 +9,30 @@ import avatar8 from '@images/avatars/avatar-8.png'
 const meetingSchedules = [
     {
         profile: avatar4,
-        with: 'Call with Woods',
-        dateTime: '21 Jul | 08:20-10:30',
+        with: '42.8k',
+        dateTime: 'Number of likes',
         type: 'Business',
     },
     {
         profile: avatar8,
-        with: 'Call with hilda',
-        dateTime: '24 Jul | 11:30-12:00',
+        with: '21.3k',
+        dateTime: 'Number of followers',
         type: 'Meditation',
     },
     {
         profile: avatar7,
-        with: 'Conference call',
-        dateTime: '28 Jul | 05:00-6:45',
+        with: '2.4k',
+        dateTime: 'Number of comments',
         type: 'Meditation',
     },
     {
         profile: avatar3,
-        with: 'Meeting with Mark',
-        dateTime: '03 Aug | 07:00-8:30',
+        with: '398k',
+        dateTime: 'Number of visits',
         type: 'Meetup',
     },
-    {
-        profile: avatar2,
-        with: 'Meeting in Oakland',
-        dateTime: '14 Aug | 04:15-05:30',
-        type: 'Business',
-    },
-    {
-        profile: avatar1,
-        with: 'Meeting with Carl',
-        dateTime: '05 Oct | 10:00-12:45',
-        type: 'Party',
-    },
+
+
 ]
 
 const meetingTypeUiColors = {
@@ -58,7 +48,7 @@ const meetingTypeUiColors = {
         <!-- SECTION Card Header and Menu -->
         <VCardItem>
             <!-- 👉 Title -->
-            <VCardTitle>Meeting Schedule</VCardTitle>
+            <VCardTitle>Social Media Analytics</VCardTitle>
 
             <!-- 👉 menu -->
 
@@ -85,12 +75,12 @@ const meetingTypeUiColors = {
                         {{ meeting.with }}
                     </VListItemTitle>
                     <VListItemSubtitle class="text-no-wrap text-xs">
-                        <VIcon start size="16" icon="mdi-calendar-blank" />
+                        <!-- <VIcon start size="16" icon="mdi-calendar-blank" /> -->
                         <span>{{ meeting.dateTime }}</span>
                     </VListItemSubtitle>
 
                     <!-- 👉 Business Types -->
-                    <template #append>
+                    <!-- <template #append>
                         <VListItemAction>
                             <VChip density="compact" :color="meetingTypeUiColors[meeting.type]">
                                 <span class="text-xs">
@@ -98,7 +88,7 @@ const meetingTypeUiColors = {
                                 </span>
                             </VChip>
                         </VListItemAction>
-                    </template>
+                    </template> -->
                 </VListItem>
             </VList>
         </VCardText>

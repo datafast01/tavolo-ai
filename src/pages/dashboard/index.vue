@@ -14,10 +14,22 @@
       </VCol>
     </VRow>
 
-    <VRow class="match-height">
+    <VRow class="match-height ">
       <VCol cols="12" md="4">
-        <CrmSalesOverview v-if="!loading" :dashboard="top3FoodItemsSold" :totalSales="totalSales" />
+        <div class="d-flex">
+          <div class="flex-1-0 mx-1 mb-1" v-for="statistics in statisticsVertical" :key="statistics.title">
+            <CardStatisticsVertical v-bind="statistics" />
+
+          </div>
+        </div>
+
+        <div>
+          <socialMediaMetrics />
+
+        </div>
       </VCol>
+
+
       <VCol cols="12" md="4">
         <socialMediaAnalytics />
       </VCol>
@@ -48,9 +60,32 @@ import illustration2 from "@images/cards/illustration-2.png";
 import miscMaskDark from "@images/pages/misc-mask-dark.png";
 import miscMaskLight from "@images/pages/misc-mask-light.png";
 import { onMounted } from "vue";
-import socialMediaAnalytics from './socialMediaAnalytics.vue'
+import socialMediaAnalytics from './socialMediaAnalytics.vue';
+import socialMediaMetrics from './socialMediaMetrics.vue'
 const authThemeMask = useGenerateImageVariant(miscMaskLight, miscMaskDark);
 
+const statisticsVertical = [
+  {
+    title: 'SMS Marketing',
+    color: 'primary',
+    icon: 'mdi-briefcase-variant-outline',
+    stats: '862',
+    change: -18,
+    subtitle: 'Number of opens',
+  },
+
+
+
+
+  {
+    title: 'Email Marketing',
+    color: 'info',
+    icon: 'mdi-trending-up',
+    stats: '12k',
+    change: 32,
+    subtitle: 'Number of opens',
+  },
+]
 const statisticsWithImages = [
   {
     title: "Revenue",
