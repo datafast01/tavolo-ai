@@ -76,7 +76,7 @@ export default {
     getters: {
 
         getSequences(state) {
-            return state.sequences
+            return state.sequences.data
         },
         getSegments(state) {
             return state.segments.data
@@ -85,7 +85,7 @@ export default {
             return state.templates.error
         },
         getButtons(state) {
-            return state.buttons.data
+            return state.buttons.error
         }
 
     },

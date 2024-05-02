@@ -2,6 +2,7 @@
   <div class="pa-0 pa-sm-0">
     <VCardText class="">
       <VForm class="">
+
         <VRow>
           <VCol cols="12" class="text-center">
             <div class="relative">
@@ -37,7 +38,7 @@
                 </div>
               </div>
               <div class="d-flex align-center justify-center mt-5">
-                <v-text-field label="Subject" variant="outlined">
+                <v-text-field label="Subject" variant="outlined" v-model="subject">
                   <template v-slot:append-inner>
                     <v-img :src="emojiregular" class="flex-grow-0" height="20" width="20" alt="John"></v-img>
                   </template>
@@ -68,7 +69,7 @@
                                         </div>
                                     </div>
                                 </div> -->
-                <v-text-field label="Body" variant="outlined">
+                <v-text-field label="Body" variant="outlined" v-model="text">
                   <template v-slot:append-inner>
                     <v-img :src="emojiregular" class="flex-grow-0" height="20" width="20" alt="John"></v-img>
                   </template>
@@ -87,10 +88,11 @@
               </div> -->
               <div style="position: relative" class="d-flex align-center justify-center mt-3 sequence-btn mr-3"
                 v-for="button in buttons" :key="button">
+
                 <div class="pa-2 sequence-social-btn d-flex align-center justify-center">
                   <img src="../../assets/images/logos/favicon.png" alt="" class="" width="30" height="30" />
                 </div>
-                <div class="pl-4 pr-6">Review fdf dfd on Google</div>
+                <div class="pl-4 pr-6">{{ button.typeOfButton?.name }} on {{ button.conditions?.name }}</div>
 
                 <div style="
                     position: absolute;
@@ -98,7 +100,7 @@
                     right: 3px;
                     font-size:9px;
                   ">
-                  <v-icon>mdi-close</v-icon>
+                  <v-icon @click="removeButton(button)">mdi-close</v-icon>
                 </div>
               </div>
             </div>
@@ -135,7 +137,7 @@
             <div>
               <!-- <VBtn > Add </VBtn> -->
               <v-btn @click="addButton">
-                LUANCH
+                Add Button
 
                 <template v-slot:append>
                   <img src="../../assets/images/cards/rokit.png" style="height: 19px; width: 19px" alt="" />
@@ -148,11 +150,12 @@
           <div>Choose the type of the button below.</div>
         </v-card-subtitle>
         <v-card-text>
-          <v-select label="Type Of Button" :items="buttonTypes" item-value="value" item-title="title"
-            v-model="typeOfButton" class="mb-4" variant="outlined"></v-select>
-          <v-select label="Platform" :items="platforms" item-value="value" item-title="title" v-model="platform"
-            variant="outlined"></v-select>
-          <v-text-field label="URL" v-model="url" class="mt-4" ariant="outlined"></v-text-field>
+
+          <v-select label="Type Of Button" :items="listButtons" item-value="id" item-title="name" v-model="typeOfButton"
+            class="mb-4" variant="outlined" return-object></v-select>
+          <v-select label="Platform" :items="listButtons[0].conditions" item-value="id" item-title="name"
+            v-model="platform" variant="outlined"></v-select>
+          <v-text-field label="URL" v-model="url" return-object class="mt-4" ariant="outlined"></v-text-field>
         </v-card-text>
 
         <v-card-actions>
@@ -182,13 +185,15 @@ import store from "@/store/index.js";
 export default {
   data() {
     return {
+      subject: '',
+      text: '',
       google: google,
       facebook: facebook,
       instagram: instagram,
       twiter: twiter,
       emojiregular: emojiregular,
       like: like,
-
+      buttons: [],
       done: done,
       ratingw: 0.5,
       ratingw1: 0.5,
@@ -216,7 +221,7 @@ export default {
           value: "google",
         },
       ],
-      buttons: [],
+
       url: "",
       typeOfButton: null,
       platform: null,
@@ -227,7 +232,7 @@ export default {
 
   computed: {
     listButtons() {
-      store.getters.getButtons
+      return store.getters.getButtons
     }
   },
   setup() {
@@ -253,12 +258,7 @@ export default {
     };
 
     // Retrieve the image data from local storage when the component is mounted
-    onMounted(() => {
-      const storedImageData = localStorage.getItem("imageData");
-      if (storedImageData) {
-        imageData.value = storedImageData;
-      }
-    });
+
 
     return { imageData, previewImage, openFileInput };
   },
@@ -270,7 +270,14 @@ export default {
         platform: this.platform,
         url: this.url,
       });
+      this.addAButtonDialog = false
+      this.typeOfButton = '',
+        this.platform = '',
+        this.url = ''
     },
+    removeButton(button) {
+      this.buttons.splice(button.id, 1);
+    }
     // openFileInput() {
     //   this.$refs.refInputEl.click();
     // },

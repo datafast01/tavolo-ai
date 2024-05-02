@@ -14,15 +14,14 @@
           </VCol>
 
           <VCol cols="12">
-            <VTextField v-model="schedule" :rules="[requiredValidator]" type="datetime-local" label="Schedule"
-              value="Schedule Date & Time" />
+            <VTextField v-model="schedule" :rules="[requiredValidator]" type="date" label="Schedule" />
           </VCol>
           <VCol cols="12">
-            <v-select v-model="thenStatement" :items="segments" label="If" item-value="_id" item-title="name"
+            <v-select v-model="ifStatement" :items="segments" label="If" item-value="_id" item-title="name"
               persistent-hint :rules="[requiredValidator]"></v-select>
           </VCol>
           <VCol cols="12">
-            <v-select v-model="ifStatement" :items="thenStatements" label="Then" item-value="value" item-title="title"
+            <v-select v-model="thenStatement" :items="thenStatements" label="Then" item-value="value" item-title="title"
               persistent-hint :rules="[requiredValidator]"></v-select>
           </VCol>
 
@@ -60,13 +59,13 @@ export default {
       rokit: rokit,
       ifStatement: null,
       thenStatement: null,
-      schedule: '',
+      schedule: null,
       title: '',
 
       thenStatements: [
         {
           title: 'Send email',
-          value: 'sendEmail'
+          value: 'email'
         },
 
       ]
