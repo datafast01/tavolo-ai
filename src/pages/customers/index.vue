@@ -135,12 +135,12 @@
               <VBtn icon="mdi-chevron-right" class="flip-in-rtl" density="comfortable" variant="text" color="default"
                 :disabled="options.page >= Math.ceil(totalUsers / options.itemsPerPage)
                   " @click="
-        options.page >= Math.ceil(totalUsers / options.itemsPerPage)
-          ? (options.page = Math.ceil(
-            totalUsers / options.itemsPerPage
-          ))
-          : options.page++
-        " />
+                    options.page >= Math.ceil(totalUsers / options.itemsPerPage)
+                      ? (options.page = Math.ceil(
+                        totalUsers / options.itemsPerPage
+                      ))
+                      : options.page++
+                    " />
             </div>
           </div>
         </template>
@@ -244,18 +244,18 @@ const headers = [
     key: "phone",
   },
   {
-    title: "Business Name",
-    key: "phone",
+    title: "Customer AOV",
+    key: "aov",
   },
 
   {
-    title: "Marketing Allowed",
-    key: "marketingAllowed",
+    title: "Last Dining Behaviour",
+    key: "lastDiningBehaviour",
 
   },
   {
-    title: "Birthday",
-    key: "dobDay",
+    title: "Total Visits",
+    key: "totalVisits",
   },
 
   {
