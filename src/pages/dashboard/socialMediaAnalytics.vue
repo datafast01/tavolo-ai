@@ -1,35 +1,39 @@
 <script setup>
-import avatar1 from '@images/avatars/avatar-1.png'
-import avatar2 from '@images/avatars/avatar-2.png'
-import avatar3 from '@images/avatars/avatar-3.png'
-import avatar4 from '@images/avatars/avatar-4.png'
-import avatar7 from '@images/avatars/avatar-7.png'
-import avatar8 from '@images/avatars/avatar-8.png'
+
 
 const meetingSchedules = [
     {
-        profile: avatar4,
+
         with: '42.8k',
         dateTime: 'Number of likes',
         type: 'Business',
+
+        icon: 'mdi-heart-outline',
+        color: 'error'
     },
     {
-        profile: avatar8,
+
         with: '21.3k',
         dateTime: 'Number of followers',
         type: 'Meditation',
+        icon: 'mdi-account-multiple',
+        color: 'info'
     },
     {
-        profile: avatar7,
+
         with: '2.4k',
         dateTime: 'Number of comments',
         type: 'Meditation',
+        icon: 'mdi-message-outline',
+        color: 'primary'
     },
     {
-        profile: avatar3,
+
         with: '398k',
         dateTime: 'Number of visits',
         type: 'Meetup',
+        icon: 'mdi-chart-bar',
+        color: 'success'
     },
 
 
@@ -66,7 +70,9 @@ const meetingTypeUiColors = {
                 <VListItem v-for="meeting in meetingSchedules" :key="meeting.type">
                     <!-- 👉 Avatar -->
                     <template #prepend>
-                        <VAvatar start :size="38" :image="meeting.profile" />
+                        <VAvatar v-if="meeting.icon" size="40" :color="meeting.color" class="elevation-2">
+                            <VIcon :icon="meeting.icon" size="24" />
+                        </VAvatar>
                     </template>
 
                     <!-- 👉 Title and Subtitle -->

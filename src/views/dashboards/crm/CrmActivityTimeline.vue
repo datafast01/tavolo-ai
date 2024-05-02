@@ -3,12 +3,7 @@
 <template>
   <VCard title="Activity Timeline">
     <VCardText>
-      <VTimeline
-        density="compact"
-        align="start"
-        line-inset="8"
-        truncate-line="both"
-      >
+      <VTimeline density="compact" align="start" line-inset="8" truncate-line="both">
         <VTimelineItem dot-color="error" size="x-small">
           <div class="d-flex justify-space-between align-center flex-wrap">
             <h4 class="app-timeline-title me-1 mb-2">
@@ -23,7 +18,7 @@
               icon="mdi-file-pdf-box"
               class="me-1"
             /> -->
-            <span class="font-weight-medium text-sm">$853 in sales</span>
+            <!-- <span class="font-weight-medium text-sm">$853 in sales</span> -->
           </span>
         </VTimelineItem>
 
@@ -43,9 +38,9 @@
               class="me-2"
               :image="avatar2"
             /> -->
-            <div>
+            <!-- <div>
               <p class="font-weight-medium mb-0">$1,083 in sales</p>
-            </div>
+            </div> -->
           </div>
         </VTimelineItem>
 
@@ -56,7 +51,7 @@
             </h4>
             <small class="app-timeline-meta text-no-wrap">Wednesday</small>
           </div>
-          <p class="mb-0 app-timeline-text">382k impressions in last 7 days</p>
+          <!-- <p class="mb-0 app-timeline-text">382k impressions in last 7 days</p> -->
         </VTimelineItem>
 
         <VTimelineItem dot-color="warning" size="x-small">

@@ -31,16 +31,24 @@ export default [
         ]
       },
       {
-        title: 'Messages Campaigns',
+        title: 'SMS Campaigns',
         icon: { icon: 'mdi-message-text-outline' },
-        to: { name: 'schedule-messages' },
-      },
-      {
-        title: 'Text Messages',
-        icon: { icon: 'mdi-message-text-outline' },
-        to: 'messages',
+        children: [
+          {
+            title: 'Text Messages',
+            icon: { icon: 'mdi-message-text-outline' },
+            to: 'messages',
 
+          },
+          {
+            title: 'Schedule Messages',
+            icon: { icon: 'mdi-message-text-outline' },
+            to: { name: 'schedule-messages' },
+
+          },
+        ]
       },
+
     ]
 
   },

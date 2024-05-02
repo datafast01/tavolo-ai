@@ -134,13 +134,13 @@
 
               <VBtn icon="mdi-chevron-right" class="flip-in-rtl" density="comfortable" variant="text" color="default"
                 :disabled="options.page >= Math.ceil(totalUsers / options.itemsPerPage)
-      " @click="
-      options.page >= Math.ceil(totalUsers / options.itemsPerPage)
-        ? (options.page = Math.ceil(
-          totalUsers / options.itemsPerPage
-        ))
-        : options.page++
-      " />
+                  " @click="
+        options.page >= Math.ceil(totalUsers / options.itemsPerPage)
+          ? (options.page = Math.ceil(
+            totalUsers / options.itemsPerPage
+          ))
+          : options.page++
+        " />
             </div>
           </div>
         </template>
@@ -251,7 +251,7 @@ const headers = [
   {
     title: "Marketing Allowed",
     key: "marketingAllowed",
-    width: "100",
+
   },
   {
     title: "Birthday",

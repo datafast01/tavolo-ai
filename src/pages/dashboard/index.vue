@@ -134,8 +134,8 @@ onMounted(async () => {
         label: "Transactions",
         statistics: [
           {
-            title: "Sales",
-            stats: "1.2k",
+            title: "Intractions",
+            stats: "2.5k",
             icon: "mdi-trending-up",
             color: "primary",
           },
