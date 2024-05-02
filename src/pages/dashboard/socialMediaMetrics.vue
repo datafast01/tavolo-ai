@@ -110,8 +110,8 @@ const weeklySalesData = [
 <template>
     <VCard>
         <VCardItem>
-            <VCardTitle>Social Media Matrics</VCardTitle>
-            <VCardSubtitle>Number of impressions dialy</VCardSubtitle>
+            <VCardTitle>Social Media Metrics</VCardTitle>
+            <VCardSubtitle>Number of impressions daily</VCardSubtitle>
             <VCardSubtitle>12,048</VCardSubtitle>
 
 
