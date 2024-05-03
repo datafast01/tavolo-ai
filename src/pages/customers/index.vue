@@ -130,7 +130,7 @@
 
             <div class="d-flex gap-x-2 align-center me-2">
               <VBtn icon="mdi-chevron-left" class="flip-in-rtl" variant="text" density="comfortable" color="default"
-                :disabled="options.page <= 1" @click="options.page <= 1 ? (options.page = 1) : options.page" />
+                :disabled="options.page <= 1" @click="options.page <= 1 ? (options.page = 1) : options.page--" />
 
               <VBtn icon="mdi-chevron-right" class="flip-in-rtl" density="comfortable" variant="text" color="default"
                 :disabled="options.page >= Math.ceil(totalUsers / options.itemsPerPage)
