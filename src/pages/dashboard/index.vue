@@ -98,7 +98,7 @@ const statisticsWithImages = [
   {
     title: "Repeated Customers",
     subtitle: "This Week",
-    stats: "382",
+    stats: "43",
     change: 22,
     image: illustration2,
     color: "secondary",
