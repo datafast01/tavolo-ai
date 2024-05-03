@@ -88,7 +88,7 @@ const statisticsVertical = [
 ]
 const statisticsWithImages = [
   {
-    title: "Revenue",
+    title: "Social Media Impressions",
     subtitle: "This week",
     stats: "15.3k",
     change: 15.6,
