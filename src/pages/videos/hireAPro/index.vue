@@ -142,7 +142,7 @@ const headers = [
   },
   {
     id: 6,
-    title: "Princing",
+    title: "Pricing",
     key: "charges",
   },
 ];
