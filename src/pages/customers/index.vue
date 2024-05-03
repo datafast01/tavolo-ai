@@ -319,6 +319,7 @@ const fetchCustomers = () => {
     )
     .then((response) => {
       customers.value = response.data.data;
+      totalUsers.value = response.data.count
       isLoading.value = false;
       store.dispatch("getPackageHistory");
     })
