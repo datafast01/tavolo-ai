@@ -37,12 +37,7 @@ const openFileInput = () => {
 };
 
 // Retrieve the image data from local storage when the component is mounted
-onMounted(() => {
-  const storedImageData = localStorage.getItem("imageData");
-  if (storedImageData) {
-    imageData.value = storedImageData;
-  }
-});
+
 // Define the isNameValid function
 const isNameValid = (value) => {
   return (
@@ -90,7 +85,7 @@ const updateDashboard = (file) => {
         console.log(res.data.data, "=============>>>");
       }
     })
-    .catch((error) => {});
+    .catch((error) => { });
 };
 
 // update customers data
@@ -322,14 +317,10 @@ getUserProfile();
       <VCard>
         <VCardText class="d-flex">
           <!-- 👉 Avatar -->
-          <div>
+          <div v-if="imageData.length > 0">
             <div class="relative">
-              <div v-if="imageData.length > 0">
-                <v-avatar
-                  :image="imageData"
-                  size="120"
-                  class="custom-avatar"
-                ></v-avatar>
+              <div>
+                <v-avatar :image="imageData" size="120" class="custom-avatar"></v-avatar>
               </div>
               <div class="edit-profile" @click="openFileInput">
                 <v-icon>mdi-pencil</v-icon>
@@ -337,15 +328,25 @@ getUserProfile();
             </div>
 
             <div class="file-upload-form">
-             
-              <input
-                ref="fileInput"
-                type="file"
-                @change="previewImage"
-                accept="image/*"
-                style="display: none;"
-                class="hidden"
-              />
+
+              <input ref="fileInput" type="file" @change="previewImage" accept="image/*" style="display: none;"
+                class="hidden" />
+            </div>
+          </div>
+          <div v-else>
+            <div class="relative">
+              <div>
+                <v-avatar :image="avatar1" size="120" class="custom-avatar"></v-avatar>
+              </div>
+              <div class="edit-profile" @click="openFileInput">
+                <v-icon>mdi-pencil</v-icon>
+              </div>
+            </div>
+
+            <div class="file-upload-form">
+
+              <input ref="fileInput" type="file" @change="previewImage" accept="image/*" style="display: none;"
+                class="hidden" />
             </div>
           </div>
 
@@ -358,78 +359,49 @@ getUserProfile();
             <VRow>
               <!-- 👉 First Name -->
               <VCol md="6" cols="12">
-                <VTextField
-                  v-model="userData.firstName"
-                  :rules="[requiredValidator, isNameValid, alphaValidator]"
-                  label="First Name"
-                />
+                <VTextField v-model="userData.firstName" :rules="[requiredValidator, isNameValid, alphaValidator]"
+                  label="First Name" />
               </VCol>
 
               <!-- 👉 Last Name -->
               <VCol md="6" cols="12">
-                <VTextField
-                  v-model="userData.lastName"
-                  :rules="[requiredValidator, isNameValid, alphaValidator]"
-                  label="Last Name"
-                />
+                <VTextField v-model="userData.lastName" :rules="[requiredValidator, isNameValid, alphaValidator]"
+                  label="Last Name" />
               </VCol>
 
               <!-- 👉 Email -->
               <VCol cols="12" md="6">
-                <VTextField
-                  v-model="userData.email"
-                  :rules="[requiredValidator, emailValidator]"
-                  label="E-mail"
-                  type="email"
-                />
+                <VTextField v-model="userData.email" :rules="[requiredValidator, emailValidator]" label="E-mail"
+                  type="email" />
               </VCol>
 
               <!-- 👉 Organization -->
               <VCol cols="12" md="6">
-                <VTextField
-                  v-model="userData.restaurantName"
-                  :rules="[requiredValidator]"
-                  label="Restaurant"
-                />
+                <VTextField v-model="userData.restaurantName" :rules="[requiredValidator]" label="Restaurant" />
               </VCol>
 
               <!-- 👉 Phone -->
               <VCol cols="12" md="6">
-                <VTextField
-                  v-model="userData.phoneNo"
-                  :rules="[requiredValidator, integerValidator]"
-                  label="Phone Number"
-                />
+                <VTextField v-model="userData.phoneNo" :rules="[requiredValidator, integerValidator]"
+                  label="Phone Number" />
               </VCol>
 
               <!-- 👉 Address -->
               <VCol cols="12" md="6">
-                <VTextField
-                  v-model="userData.faceBookUrl"
-                  label="Facebook URL"
-                  :rules="[requiredValidator, urlValidator]"
-                />
+                <VTextField v-model="userData.faceBookUrl" label="Facebook URL"
+                  :rules="[requiredValidator, urlValidator]" />
               </VCol>
               <VCol cols="12" md="6">
-                <VTextField
-                  v-model="userData.instaUrl"
-                  :rules="[requiredValidator, urlValidator]"
-                  label="Instagram URL"
-                />
+                <VTextField v-model="userData.instaUrl" :rules="[requiredValidator, urlValidator]"
+                  label="Instagram URL" />
               </VCol>
               <VCol cols="12" md="6">
-                <VTextField
-                  v-model="userData.tikTokUrl"
-                  :rules="[requiredValidator, urlValidator]"
-                  label="TikTok URL"
-                />
+                <VTextField v-model="userData.tikTokUrl" :rules="[requiredValidator, urlValidator]"
+                  label="TikTok URL" />
               </VCol>
               <VCol cols="12" md="6">
-                <VTextField
-                  v-model="userData.googleReviewLink"
-                  :rules="[requiredValidator, urlValidator]"
-                  label="Google Reviews Link"
-                />
+                <VTextField v-model="userData.googleReviewLink" :rules="[requiredValidator, urlValidator]"
+                  label="Google Reviews Link" />
               </VCol>
               <VCol cols="12" md="6">
                 <!-- <VTextField
@@ -437,10 +409,7 @@ getUserProfile();
                   label="Discount To New Customers"
                   type="number"
                 /> -->
-                <v-slider
-                  v-model="userData.dicountForNewCustomers"
-                  thumb-label="always"
-                ></v-slider>
+                <v-slider v-model="userData.dicountForNewCustomers" thumb-label="always"></v-slider>
               </VCol>
               <VCol cols="12" md="6">
                 <!-- <VTextField
@@ -448,10 +417,7 @@ getUserProfile();
                   label="Discount To Customers Haven't Repeated Last 30 Days"
                   type="number"
                 /> -->
-                <v-slider
-                  v-model="userData.dicountForNotRepeatingCustomers"
-                  thumb-label="always"
-                ></v-slider>
+                <v-slider v-model="userData.dicountForNotRepeatingCustomers" thumb-label="always"></v-slider>
               </VCol>
 
               <!-- 👉 State -->
@@ -479,10 +445,7 @@ getUserProfile();
                   <VBtn @click="updateProfile">Save changes</VBtn>
                 </div>
                 <div>
-                  <RouterLink
-                    class="text-primary ms-2 mb-1"
-                    :to="{ name: 'pages-authentication-login-v2' }"
-                  >
+                  <RouterLink class="text-primary ms-2 mb-1" :to="{ name: 'pages-authentication-login-v2' }">
                     Update Password?
                   </RouterLink>
                 </div>
@@ -493,11 +456,7 @@ getUserProfile();
       </VCard>
     </VCol>
     <VCol cols="6">
-      <AccountSettingsAccount
-        :instagram="instagram"
-        :igAccessToken="igAccessToken"
-        @refresh-data="getUserProfile"
-      />
+      <AccountSettingsAccount :instagram="instagram" :igAccessToken="igAccessToken" @refresh-data="getUserProfile" />
     </VCol>
 
     <VCol cols="6">
@@ -506,30 +465,17 @@ getUserProfile();
           <v-card-text class="text-center">
             <div class="mb-2 text-h5">TAVOLO</div>
             <p>for</p>
-            <img
-              src="../../assets/images/logos/clover-logo.svg"
-              alt=""
-              width="120"
-            />
+            <img src="../../assets/images/logos/clover-logo.svg" alt="" width="120" />
             <br />
 
             <div class="text--primary">
               Connect Clover POS with Tavolo<br />
             </div>
             <br />
-            <v-btn
-              v-if="!userData.cloverToken"
-              @click="connectToClover"
-              :loading="cloverLoading"
-              >Connect to clover</v-btn
-            >
-            <v-btn
-              v-else
-              @click="disConnectToClover"
-              variant="tonal"
-              :loading="cloverLoading"
-              >Disconnect to clover</v-btn
-            >
+            <v-btn v-if="!userData.cloverToken" @click="connectToClover" :loading="cloverLoading">Connect to
+              clover</v-btn>
+            <v-btn v-else @click="disConnectToClover" variant="tonal" :loading="cloverLoading">Disconnect to
+              clover</v-btn>
           </v-card-text>
           <v-card-actions class="justify-center"> </v-card-actions>
         </v-card>
@@ -554,14 +500,10 @@ getUserProfile();
   </VRow>
 
   <!-- Confirm Dialog -->
-  <ConfirmDialog
-    v-model:isDialogVisible="isConfirmDialogOpen"
-    confirmation-question="Are you sure you want to deactivate your account?"
-    confirm-title="Deactivated!"
-    confirm-msg="Your account has been deactivated successfully."
-    cancel-title="Cancelled"
-    cancel-msg="Account Deactivation Cancelled!"
-  />
+  <ConfirmDialog v-model:isDialogVisible="isConfirmDialogOpen"
+    confirmation-question="Are you sure you want to deactivate your account?" confirm-title="Deactivated!"
+    confirm-msg="Your account has been deactivated successfully." cancel-title="Cancelled"
+    cancel-msg="Account Deactivation Cancelled!" />
 </template>
 <style>
 .edit-profile {
@@ -570,12 +512,13 @@ getUserProfile();
   border-radius: 37px;
   position: absolute;
   bottom: -3px;
-    right: -14px;
+  right: -14px;
   color: #8d53f6;
   z-index: 20;
-  
+
 }
-.relative{
+
+.relative {
   position: relative !important;
 }
 </style>
