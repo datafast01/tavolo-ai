@@ -4,7 +4,7 @@
 const meetingSchedules = [
     {
 
-        with: '42.8k',
+        with: '1.4k',
         dateTime: 'Number of likes',
         type: 'Business',
 
@@ -13,7 +13,7 @@ const meetingSchedules = [
     },
     {
 
-        with: '21.3k',
+        with: '560',
         dateTime: 'Number of followers',
         type: 'Meditation',
         icon: 'mdi-account-multiple',
@@ -21,7 +21,7 @@ const meetingSchedules = [
     },
     {
 
-        with: '2.4k',
+        with: '45',
         dateTime: 'Number of comments',
         type: 'Meditation',
         icon: 'mdi-message-outline',
