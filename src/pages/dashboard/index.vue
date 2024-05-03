@@ -41,9 +41,9 @@
       <!-- <VCol cols="12" sm="12" md="4">
         <CrmTotalSales />
       </VCol> -->
-      <VCol cols="12" sm="12" md="12">
+      <!-- <VCol cols="12" sm="12" md="12">
         <CrmTransactions :data="emailStates" />
-      </VCol>
+      </VCol> -->
     </VRow>
   </section>
 </template>
