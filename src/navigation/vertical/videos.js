@@ -8,6 +8,12 @@ export default [
         icon: { icon: "mdi-account-search" },
         to: { name: "hire-a-pro" },
       },
+      {
+        title: 'Contracts',
+        icon: { icon: 'mdi-account-multiple' },
+        to: 'contracts',
+
+      },
     ],
   },
 ];

@@ -3,12 +3,8 @@
     <VRow>
       <VCol cols="12" md="3">
         <v-select :items="[
-          'California',
-          'Colorado',
-          'Florida',
-          'Georgia',
-          'Texas',
-          'Wyoming',
+
+          'New York',
         ]" variant="solo-filled" dense v-model="location">
           <template #prepend-inner>
             <v-icon color="#9155FD"> mdi-map-marker </v-icon>
@@ -44,7 +40,7 @@
 
                 <img :src="verified" alt="" srcset="" />
               </span>
-              <span> @socialmediausername </span>
+              <span> {{ details.socialMediaUsername }} </span>
             </div>
           </div>
           <div class="d-flex flex-column">
@@ -102,7 +98,7 @@ export default {
     return {
       verified: verified,
       avatar: avatar,
-      location: "California",
+      location: "New York",
       tab: null,
       details: {},
     };
