@@ -44,11 +44,18 @@
       :items-length="totalUsers" :headers="headers" class="rounded-0" @update:options="options = $event"
       :loading="isLoading">
       <!-- Email -->
-      <!-- <template #item.email="{ item }">
-          <span class="text-sm">
-            {{ item.email }}
-          </span>
-        </template> -->
+      <template #item.segmantId="{ item }">
+        <span class="text-sm">
+          {{ item.segmantId.name }}
+        </span>
+      </template>
+      <template #item.createdAt="{ item }">
+        <span class="text-sm">
+          {{ moment(item.createdAt).format("ll") }}
+
+        </span>
+      </template>
+
 
       <!-- Pagination -->
       <template #bottom>
@@ -89,6 +96,8 @@ import { getLatestBarChartConfig } from "@core/libs/chartjs/chartjsConfig";
 import { useTheme } from "vuetify";
 import { VDataTableServer } from "vuetify/lib/components/index.mjs";
 import axios from "@axios";
+import moment from "moment";
+
 // import { paginationMeta } from '@/@fake-db/utils'
 // import AddNewUserDrawer from "@/views/apps/user/list/AddNewUserDrawer.vue";
 
@@ -129,19 +138,19 @@ const options = ref({
 const headers = [
   {
     title: "Campaign Name",
-    key: "campaignName",
+    key: "subject",
   },
   {
     title: "Date Sent",
-    key: "date",
+    key: "createdAt",
   },
   {
     title: "Delivered %",
-    key: "date",
+    key: "percentage",
   },
   {
     title: "Opened %",
-    key: "date",
+    key: "opened",
   },
   {
     title: "Clicked %",
@@ -149,7 +158,7 @@ const headers = [
   },
   {
     title: "Segmentation",
-    key: "segment",
+    key: "segmantId",
   },
 ];
 const vuetifyTheme = useTheme();
