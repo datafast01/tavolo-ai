@@ -49,6 +49,11 @@
           {{ item.segmantId.name }}
         </span>
       </template>
+      <template #item.sent="{ item }">
+        <span class="text-sm">
+          {{ item.sent ? 'YES' : 'NO' }}
+        </span>
+      </template>
       <template #item.createdAt="{ item }">
         <span class="text-sm">
           {{ moment(item.createdAt).format("ll") }}
@@ -146,16 +151,13 @@ const headers = [
   },
   {
     title: "Delivered %",
-    key: "percentage",
+    key: "sent",
   },
   {
     title: "Opened %",
-    key: "opened",
+    key: "percentage",
   },
-  {
-    title: "Clicked %",
-    key: "date",
-  },
+
   {
     title: "Segmentation",
     key: "segmantId",
