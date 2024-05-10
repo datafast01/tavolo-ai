@@ -158,11 +158,12 @@ const getInfluencers = () => {
   isLoading.value = true;
   axios
     .get(
-      `influencer/list?pageNo=1&pageSize=10`
+      `influencer/list?pageNo=${options.value.page}&pageSize=${options.value.itemsPerPage}`
     )
     .then((response) => {
       console.log("user", response.data);
       influencersList.value = response.data.data;
+      totalUsers.value = response.data.count
       isLoading.value = false;
     })
     .catch((err) => {
@@ -177,7 +178,7 @@ const editMenuItemData = (data) => {
   console.log(data);
   myMenuItem.value = data;
 };
-// watchEffect(fetchMenuItems);
+watchEffect(getInfluencers);
 
 const isAddNewUserDrawerVisible = ref(false);
 

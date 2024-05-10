@@ -23,7 +23,7 @@
       </div>
       <div class="username my-2">
         <div class="d-flex justify-space-between">
-          <span class="mb-1">Imressions</span>
+          <span class="mb-1">Impressions</span>
           <span class="d-flex justify-end">50</span>
         </div>
 
@@ -88,7 +88,7 @@
       </div>
       <div class="username my-2">
         <div class="d-flex justify-space-between">
-          <span class="mb-1">Imressions</span>
+          <span class="mb-1">Impressions</span>
           <span class="d-flex justify-end">60</span>
         </div>
 
@@ -153,7 +153,7 @@
       </div>
       <div class="username my-2">
         <div class="d-flex justify-space-between">
-          <span class="mb-1">Imressions</span>
+          <span class="mb-1">Impressions</span>
           <span class="d-flex justify-end">30</span>
         </div>
 
